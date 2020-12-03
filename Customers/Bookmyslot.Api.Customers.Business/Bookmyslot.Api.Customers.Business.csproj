@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bookmyslot.Api.Customers.Contracts\Bookmyslot.Api.Customers.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>
