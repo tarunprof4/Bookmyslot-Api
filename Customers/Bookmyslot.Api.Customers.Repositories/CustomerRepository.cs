@@ -1,6 +1,5 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
-using System;
 
 namespace Bookmyslot.Api.Customers.Repositories
 {

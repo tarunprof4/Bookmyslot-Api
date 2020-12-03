@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
-using System;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 
 namespace Bookmyslot.Api.Customers.Business

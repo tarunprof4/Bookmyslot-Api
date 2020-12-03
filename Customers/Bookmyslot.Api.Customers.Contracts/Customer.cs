@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Bookmyslot.Api.Customers.Contracts
+﻿namespace Bookmyslot.Api.Customers.Contracts
 {
     public class Customer
     {

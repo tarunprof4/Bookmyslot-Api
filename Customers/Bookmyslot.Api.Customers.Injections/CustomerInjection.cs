@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Bookmyslot.Api.Customers.Injections
 {

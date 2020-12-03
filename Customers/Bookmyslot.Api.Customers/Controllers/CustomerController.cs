@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +29,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-         
+
         [HttpGet("{email}")]
         public Customer Get(string email)
         {
