@@ -33,19 +33,19 @@ namespace Bookmyslot.Api.Customers.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        // GET api/<CustomerController>/5
-        //[HttpGet("{email}")]
-        //public Customer Get(string email)
-        //{
-        //    return customerBusiness.GetCustomer(email);
-        //}
-
-
-        [HttpGet]
+         
+        [HttpGet("{email}")]
         public Customer Get(string email)
         {
             return customerBusiness.GetCustomer(email);
         }
+
+
+        //[HttpGet]
+        //public Customer Get(string email)
+        //{
+        //    return customerBusiness.GetCustomer(email);
+        //}
 
         // POST api/<CustomerController>
         [HttpPost]
