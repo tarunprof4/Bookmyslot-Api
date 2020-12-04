@@ -12,7 +12,7 @@ namespace Bookmyslot.Api.Customers.Business
         {
             this.customerRepository = customerRepository;
         }
-        public Response<Customer> GetCustomer(string email)
+        public Response<CustomerModel> GetCustomer(string email)
         {
             Log.Information("Email recorded " + email);
             return customerRepository.GetCustomer(email);

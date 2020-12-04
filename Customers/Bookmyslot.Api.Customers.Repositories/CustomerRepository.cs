@@ -6,9 +6,9 @@ namespace Bookmyslot.Api.Customers.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public Response<Customer> GetCustomer(string email)
+        public Response<CustomerModel> GetCustomer(string email)
         {
-            return new Response<Customer>() { Result = new Customer() { Prefix = "Mr", FirstName = "Tar", LastName = "Lk", Email = "a@gmail.com" } };
+            return new Response<CustomerModel>() { Result = new CustomerModel() { Prefix = "Mr", FirstName = "Tar", LastName = "Lk", Email = "a@gmail.com" } };
         }
     }
 }

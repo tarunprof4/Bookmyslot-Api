@@ -9,4 +9,9 @@
     <ProjectReference Include="..\Bookmyslot.Api.Customers.Contracts\Bookmyslot.Api.Customers.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EntityFactory\" />
+    <Folder Include="ModelFactory\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace Bookmyslot.Api.Customers.Contracts
 {
-    public class Customer
+    public class CustomerModel
     {
         public string Prefix { get; set; }
         public string FirstName { get; set; }

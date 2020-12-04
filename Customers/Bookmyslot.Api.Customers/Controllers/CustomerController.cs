@@ -32,7 +32,7 @@ namespace Bookmyslot.Api.Customers.Controllers
 
 
         [HttpGet("{email}")]
-        public Response<Customer> Get(string email)
+        public Response<CustomerModel> Get(string email)
         {
             var customerResponse =  customerBusiness.GetCustomer(email);
             return customerResponse;
