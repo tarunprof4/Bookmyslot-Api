@@ -1,10 +1,9 @@
-﻿using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
 
 namespace Bookmyslot.Api.Customers.Business.Tests
 {
-    [TestFixture]
     public class CustomerBusinessTests
     {
         private CustomerBusiness customerBusiness;
