@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bookmyslot.Api.Customers.Business\Bookmyslot.Api.Customers.Business.csproj" />
-    <ProjectReference Include="..\Bookmyslot.Api.Customers.Contracts\Bookmyslot.Api.Customers.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
