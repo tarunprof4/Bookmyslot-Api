@@ -47,7 +47,7 @@ namespace Bookmyslot.Api.Customers.Controllers
 
         // POST api/<CustomerController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] CustomerModel CustomerModel)
         {
         }
 

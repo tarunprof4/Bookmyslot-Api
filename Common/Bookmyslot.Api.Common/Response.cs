@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Bookmyslot.Api.Common
 {
-    public class Response<T> where T : class
+    public class Response<T> 
     {
         public T Result { get;  set; }
         public ResultType ResultType { get; set; }
