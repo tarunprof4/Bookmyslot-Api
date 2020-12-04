@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Serilog;
 
@@ -11,7 +12,7 @@ namespace Bookmyslot.Api.Customers.Business
         {
             this.customerRepository = customerRepository;
         }
-        public Customer GetCustomer(string email)
+        public Response<Customer> GetCustomer(string email)
         {
             Log.Information("Email recorded " + email);
             return customerRepository.GetCustomer(email);

@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,9 +32,10 @@ namespace Bookmyslot.Api.Customers.Controllers
 
 
         [HttpGet("{email}")]
-        public Customer Get(string email)
+        public Response<Customer> Get(string email)
         {
-            return customerBusiness.GetCustomer(email);
+            var customerResponse =  customerBusiness.GetCustomer(email);
+            return customerResponse;
         }
 
 

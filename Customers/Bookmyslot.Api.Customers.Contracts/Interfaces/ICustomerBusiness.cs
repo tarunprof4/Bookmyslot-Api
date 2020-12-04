@@ -1,7 +1,9 @@
-﻿namespace Bookmyslot.Api.Customers.Contracts.Interfaces
+﻿using Bookmyslot.Api.Common;
+
+namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 {
     public interface ICustomerBusiness
     {
-        Customer GetCustomer(string email);
+        Response<Customer> GetCustomer(string email);
     }
 }
