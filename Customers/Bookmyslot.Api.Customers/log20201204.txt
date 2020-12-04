@@ -1,0 +1,8 @@
+2020-12-04 14:17:54.244 +05:30 [INF] Starting web host
+2020-12-04 14:22:07.538 +05:30 [INF] Starting web host
+2020-12-04 14:23:06.608 +05:30 [INF] Email recordedasas
+2020-12-04 14:47:12.609 +05:30 [INF] Starting web host
+2020-12-04 14:47:36.274 +05:30 [INF] Email recorded kk
+14:49 (1.0.0) [Information] (1) Starting web host
+14:50 (1.0.0) [Information] (13) Email recorded jjj
+14:51 (1.0.0) [Information] () Starting web host
