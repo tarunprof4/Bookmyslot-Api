@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Customers.Repositories
 
         public async Task<Response<bool>> DeleteCustomer(string email)
         {
-            await this.connection.DeleteAsync<CustomerEntity>(email);
+            await this.connection.DeleteAsync<CustomerEntity>(email.ToLowerInvariant());
             return new Response<bool>() { Result = true };
         }
 

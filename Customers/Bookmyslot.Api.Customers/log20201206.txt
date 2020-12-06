@@ -96,3 +96,5 @@ System.AggregateException: Some services are not able to be constructed (Error w
 19:57 (1.0.0) [Information] (7) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
 19:59 (1.0.0) [Information] (20) Get all Customers 
 19:59 (1.0.0) [Information] (22) Delete Customer a@gmail.com
+23:35 (1.0.0) [Information] (1) Starting web host
+23:35 (1.0.0) [Information] (8) Get all Customers 

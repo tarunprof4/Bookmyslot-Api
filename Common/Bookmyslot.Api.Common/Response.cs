@@ -1,15 +1,19 @@
-﻿namespace Bookmyslot.Api.Common
+﻿using System.Collections.Generic;
+
+namespace Bookmyslot.Api.Common
 {
     public class Response<T> 
     {
         public T Result { get;  set; }
         public ResultType ResultType { get; set; }
-        public string Message { get; set; }
+        public List<string> Messages { get; set; }
 
         public Response()
         {
             this.ResultType = ResultType.Success;
         }
+
+
         public bool HasResult
         {
             get
@@ -26,19 +30,19 @@
         }
 
 
-        public static  Response<T> Failed(string errorMessage)
+        public static  Response<T> Failed(List<string> errorMessages)
         {
-            var response = new Response<T> { ResultType = ResultType.Error, Message = errorMessage };
+            var response = new Response<T> { ResultType = ResultType.Error, Messages = errorMessages };
 
             return response;
         }
 
-        public static Response<T> ValidationError(string validationMessage)
+        public static Response<T> ValidationError(List<string> validationMessage)
         {
             var response = new Response<T>
             {
                 ResultType = ResultType.ValidationError,
-                Message = validationMessage,
+                Messages = validationMessage,
             };
 
             return response;

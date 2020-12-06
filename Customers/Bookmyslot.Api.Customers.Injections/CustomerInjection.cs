@@ -16,6 +16,7 @@ namespace Bookmyslot.Api.Customers.Injections
         public static void CustomerRepositoryInjections(IServiceCollection services)
         {
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            //services.AddTransient<ICustomerRepository, CustomerRepository>();
         }
     }
 }

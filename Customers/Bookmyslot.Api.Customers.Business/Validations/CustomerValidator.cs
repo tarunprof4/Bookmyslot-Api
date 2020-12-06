@@ -1,5 +1,7 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Customers.Contracts;
 using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace Bookmyslot.Api.Customers.Business.Validations
 {
@@ -7,17 +9,22 @@ namespace Bookmyslot.Api.Customers.Business.Validations
     {
         public CustomerValidator()
         {
-            RuleFor(x => x.GenderPrefix).NotEmpty();
-            RuleFor(x => x.FirstName).NotEmpty().WithMessage("Please specify a first name");
-            RuleFor(x => x.LastName).NotEmpty().WithMessage("Please specify a last name");
-            RuleFor(x => x.Gender).NotEmpty().WithMessage("Please specify gender");
-            RuleFor(x => x.Email).Must(BeAValidEmailId).WithMessage("Please specify a valid email id");
+            RuleFor(x => x.GenderPrefix).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Constants.GenderPrefixInValid);
+            RuleFor(x => x.FirstName).Cascade(CascadeMode.Stop).NotEmpty().Must(isNameValid).WithMessage(Constants.FistNameInValid);
+            RuleFor(x => x.MiddleName).Cascade(CascadeMode.Stop).NotEmpty().Must(isNameValid).WithMessage(Constants.MiddleNameInValid);
+            RuleFor(x => x.LastName).Cascade(CascadeMode.Stop).NotEmpty().Must(isNameValid).WithMessage(Constants.LastNameInValid);
+            RuleFor(x => x.Gender).Cascade(CascadeMode.Stop).NotEmpty().Must(isNameValid).WithMessage(Constants.GenderNotValid);
+            RuleFor(x => x.Email).Cascade(CascadeMode.Stop).NotEmpty().Must(isEmailValid).WithMessage(Constants.EmailIdNotValid);
         }
 
-        private bool BeAValidEmailId(string email)
+        private bool isNameValid(string name)
         {
-            return true;
+            return Regex.IsMatch(name, Regexes.Name);
+        }
+
+        private bool isEmailValid(string email)
+        {
+            return Regex.IsMatch(email, Regexes.Email);
         }
     }
-
 }
