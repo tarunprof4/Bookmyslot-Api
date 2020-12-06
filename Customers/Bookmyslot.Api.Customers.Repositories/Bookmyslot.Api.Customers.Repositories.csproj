@@ -10,8 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntityFactory\" />
-    <Folder Include="ModelFactory\" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.2.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
 </Project>

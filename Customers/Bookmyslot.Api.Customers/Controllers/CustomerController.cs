@@ -2,6 +2,8 @@
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,19 +25,22 @@ namespace Bookmyslot.Api.Customers.Controllers
             this.customerBusiness = customerBusiness;
         }
 
-        // GET: api/<CustomerController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        //GET: api/<CustomerController>
+        [HttpGet]
+        public IEnumerable<CustomerModel> Get()
+        {
+            Log.Information("Get all Customers ");
+            var customerResponse = customerBusiness.GetAllCustomers();
+            return customerResponse.Result;
+        }
 
 
         [HttpGet("{email}")]
-        public Response<CustomerModel> Get(string email)
+        public CustomerModel Get(string email)
         {
+            Log.Information("Get Customer Email " + email);
             var customerResponse =  customerBusiness.GetCustomer(email);
-            return customerResponse;
+            return customerResponse.Result;
         }
 
 
@@ -47,20 +52,29 @@ namespace Bookmyslot.Api.Customers.Controllers
 
         // POST api/<CustomerController>
         [HttpPost]
-        public void Post([FromBody] CustomerModel CustomerModel)
+        public void Post([FromBody] CustomerModel customerModel)
         {
+            Log.Information("Create Customer " + customerModel);
+            var customerResponse = customerBusiness.CreateCustomer(customerModel);
+            //return customerResponse.Result;
         }
 
         // PUT api/<CustomerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{email}")]
+        public void Put(string email, [FromBody] CustomerModel customerModel)
         {
+            Log.Information("Update Customer " + customerModel);
+            var customerResponse = customerBusiness.UpdateCustomer(customerModel);
+
         }
 
         // DELETE api/<CustomerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{email}")]
+        public void Delete(string email)
         {
+            Log.Information("Delete Customer " + email);
+            var customerResponse = customerBusiness.DeleteCustomer(email);
+
         }
     }
 }

@@ -4,6 +4,7 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using FluentValidation.Results;
 using Serilog;
+using System.Collections.Generic;
 
 namespace Bookmyslot.Api.Customers.Business
 {
@@ -24,18 +25,28 @@ namespace Bookmyslot.Api.Customers.Business
                 return customerRepository.CreateCustomer(customerModel);
 
             else
-                return new Response<bool>() { ResultType = ResultType.ValidationError }
+                return new Response<bool>() { ResultType = ResultType.ValidationError };
+        }
+
+        public Response<bool> DeleteCustomer(string email)
+        {
+            return this.customerRepository.DeleteCustomer(email);
+        }
+
+        public Response<IEnumerable<CustomerModel>> GetAllCustomers()
+        {
+            return this.customerRepository.GetAllCustomers();
         }
 
         public Response<CustomerModel> GetCustomer(string email)
         {
-            Log.Information("Email recorded " + email);
+
             return customerRepository.GetCustomer(email);
         }
 
         public Response<bool> UpdateCustomer(CustomerModel customerModel)
         {
-            throw new System.NotImplementedException();
+            return this.customerRepository.UpdateCustomer(customerModel);
         }
     }
 }

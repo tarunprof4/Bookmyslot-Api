@@ -1,0 +1,98 @@
+19:28 (1.0.0) [Information] (1) Starting web host
+19:28 (1.0.0) [Fatal] (1) Host terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerBusiness Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Business.CustomerBusiness': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.) (Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerRepository Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Repositories.CustomerRepository': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerBusiness Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Business.CustomerBusiness': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type serviceType, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.<>c__DisplayClass7_0.<GetCallSite>b__0(Type type)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type serviceType, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at Bookmyslot.Api.Customers.Program.Main(String[] args) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Program.cs:line 30
+ ---> (Inner Exception #1) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerRepository Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Repositories.CustomerRepository': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type serviceType, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+19:29 (1.0.0) [Information] (1) Starting web host
+19:29 (1.0.0) [Fatal] (1) Host terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerBusiness Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Business.CustomerBusiness': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.) (Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerRepository Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Repositories.CustomerRepository': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerBusiness Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Business.CustomerBusiness': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type serviceType, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.<>c__DisplayClass7_0.<GetCallSite>b__0(Type type)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type serviceType, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(IServiceCollection containerBuilder)
+   at Microsoft.Extensions.Hosting.Internal.ServiceFactoryAdapter`1.CreateServiceProvider(Object containerBuilder)
+   at Microsoft.Extensions.Hosting.HostBuilder.CreateServiceProvider()
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at Bookmyslot.Api.Customers.Program.Main(String[] args) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Program.cs:line 30
+ ---> (Inner Exception #1) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Bookmyslot.Api.Customers.Contracts.Interfaces.ICustomerRepository Lifetime: Transient ImplementationType: Bookmyslot.Api.Customers.Repositories.CustomerRepository': Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'System.String' while attempting to activate 'Bookmyslot.Api.Customers.Repositories.CustomerRepository'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type serviceType, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(IEnumerable`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+19:31 (1.0.0) [Information] (1) Starting web host
+19:31 (1.0.0) [Information] (4) Get all Customers 
+19:32 (1.0.0) [Information] (14) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:34 (1.0.0) [Information] (1) Starting web host
+19:34 (1.0.0) [Information] (10) Get all Customers 
+19:35 (1.0.0) [Information] (13) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:38 (1.0.0) [Information] (1) Starting web host
+19:38 (1.0.0) [Information] (4) Get all Customers 
+19:40 (1.0.0) [Information] (1) Starting web host
+19:40 (1.0.0) [Information] (5) Get all Customers 
+19:40 (1.0.0) [Information] (5) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:41 (1.0.0) [Information] (6) Get Customer Email a@gmail.com
+19:42 (1.0.0) [Information] (17) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:54 (1.0.0) [Information] (1) Starting web host
+19:55 (1.0.0) [Information] (5) Get all Customers 
+19:57 (1.0.0) [Information] (7) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:59 (1.0.0) [Information] (20) Get all Customers 
+19:59 (1.0.0) [Information] (22) Delete Customer a@gmail.com
