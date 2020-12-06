@@ -1,7 +1,5 @@
 ﻿using Dapper;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Customers.Repositories.Enitites
 {
@@ -20,7 +18,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
 
         public string Gender { get; set; }
 
-        //public DateTime ModifiedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
 
     }
 }

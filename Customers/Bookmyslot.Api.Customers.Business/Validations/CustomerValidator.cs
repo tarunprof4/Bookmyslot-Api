@@ -1,8 +1,5 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Customers.Business.Validations
 {
