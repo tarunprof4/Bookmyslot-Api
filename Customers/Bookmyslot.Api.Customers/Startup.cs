@@ -1,9 +1,11 @@
+using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Customers.Injections;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace Bookmyslot.Api.Customers
 {
@@ -19,11 +21,22 @@ namespace Bookmyslot.Api.Customers
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Dictionary<string, string> appConfigurations = GetAppConfigurations();
+
             CustomerInjection.CustomerBusinessInjections(services);
-            CustomerInjection.CustomerRepositoryInjections(services);
+            CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
             services.AddControllers();
 
             services.AddSwaggerGen();
+        }
+
+        private Dictionary<string, string> GetAppConfigurations()
+        {
+            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
+            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurations.BookMySlotDatabase);
+            appConfigurations.Add(AppConfigurations.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
+
+            return appConfigurations;
         }
 
 
