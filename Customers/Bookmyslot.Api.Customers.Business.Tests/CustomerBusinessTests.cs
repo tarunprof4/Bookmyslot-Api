@@ -75,7 +75,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
             Assert.IsTrue(customer.Messages.Contains(Constants.GenderPrefixInValid));
-            Assert.IsTrue(customer.Messages.Contains(Constants.FistNameInValid));
+            Assert.IsTrue(customer.Messages.Contains(Constants.FirstNameInValid));
             Assert.IsTrue(customer.Messages.Contains(Constants.LastNameInValid));
             Assert.IsTrue(customer.Messages.Contains(Constants.GenderNotValid));
             Assert.IsTrue(customer.Messages.Contains(Constants.EmailIdNotValid));
@@ -89,7 +89,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
-            Assert.IsTrue(customer.Messages.Contains(Constants.FistNameInValid));
+            Assert.IsTrue(customer.Messages.Contains(Constants.FirstNameInValid));
             Assert.IsTrue(customer.Messages.Contains(Constants.MiddleNameInValid));
             Assert.IsTrue(customer.Messages.Contains(Constants.EmailIdNotValid));
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
