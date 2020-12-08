@@ -20,9 +20,17 @@ namespace Bookmyslot.Api.Customers.Repositories
         }
         public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
         {
-            var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
-            await this.connection.InsertAsync<string, CustomerEntity>(customerEntity);
-            return new Response<bool>() { Result = true };
+            try
+            {
+                var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
+                await this.connection.InsertAsync<string, CustomerEntity>(customerEntity);
+                return new Response<bool>() { Result = true };
+            }
+
+            catch (SqlException ex) when (ex.Number == ErrorCodes.PrimaryKeyRecordExists)
+            {
+                return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { Constants.EmailIdExists } };
+            }
         }
 
         public async Task<Response<bool>> DeleteCustomer(string email)

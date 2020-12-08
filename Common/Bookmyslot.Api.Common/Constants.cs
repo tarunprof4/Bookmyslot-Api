@@ -9,6 +9,7 @@ namespace Bookmyslot.Api.Common
         public const string CustomerNotFound = "Customer Doesnt Exists";
         public const string BadRequest = "Bad Request";
         public const string EmailIdNotValid = "Email id is not valid";
+        public const string EmailIdExists = "Email id exists";
 
         public const string FirstNameInValid = "Fist name is not Valid";
         public const string MiddleNameInValid = "Middle name is not Valid";
