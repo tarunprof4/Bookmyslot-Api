@@ -48,9 +48,10 @@ namespace Bookmyslot.Api.Customers
             {
                 app.UseDeveloperExceptionPage();
             }
-
+           
             app.UseHttpsRedirection();
 
+            app.ConfigureGlobalExceptionHandler();
 
             app.UseSwagger();
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Controllers
 {
+    //[Route("api/v1/customers")]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
@@ -28,8 +29,8 @@ namespace Bookmyslot.Api.Customers.Controllers
         //GET: api/<CustomerController>
         [HttpGet]
         public async Task<IEnumerable<CustomerModel>> Get()
-        {
-            Log.Information("Get all Customers ");
+       {
+            Log.Information("Get all Customers");
             var customerResponse = await customerBusiness.GetAllCustomers();
             return customerResponse.Result;
         }

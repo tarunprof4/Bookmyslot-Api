@@ -17,7 +17,6 @@ namespace Bookmyslot.Api.Customers.Repositories
         public CustomerRepository(IDbConnection connection)
         {
             this.connection = connection;
-            //this.connection = new SqlConnection("Data Source=.;Initial Catalog=Bookmyslot;Integrated Security=True");
         }
         public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
         {

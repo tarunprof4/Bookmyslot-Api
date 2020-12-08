@@ -6,6 +6,8 @@
 //using Dapper;
 //using Bookmyslot.Api.Customers.Repositories.Enitites;
 //using System;
+//using Bookmyslot.Api.Common;
+//using Moq.Dapper;
 
 //namespace Bookmyslot.Api.Customers.Repositories.Tests
 //{
@@ -33,13 +35,21 @@
 //        public async Task CustomerBusiness_GetCustomerByEmail_CallsDatabaseAndReturnCustomerResponse()
 //        {
 //            var customerEntity = CreateCustomerEntity();
-//            dbConnectionMock.Setup(c => c.GetAsync<CustomerEntity>(EMAIL))
-//              .Returns(expected);
-//            dbConnectionMock.Setup(a => a.GetAsync<CustomerEntity>(EMAIL)).Returns(Task.FromResult(customerEntity));
+//            dbConnectionMock.SetupDapperAsync(m => m.GetAsync<CustomerEntity>(It.IsAny<string>())).Returns(Task.FromResult(customerEntity));
+//            dbConnectionMock.Setup(m => m.GetAsync<CustomerEntity>(It.IsAny<string>())).Returns(Task.FromResult(customerEntity));
 
-//            var customer = await customerRepository.GetCustomer(EMAIL);
 
-//            dbConnectionMock.Verify((m => m.GetAsync<CustomerEntity>("")
+//            var customerModelResponse = await customerRepository.GetCustomer(EMAIL);
+//            var customerModel = customerModelResponse.Result;
+
+//            dbConnectionMock.Verify((m => m.GetAsync<CustomerEntity>(EMAIL, null, null)), Times.Once());
+//            Assert.AreEqual(customerModelResponse.ResultType, ResultType.Error);
+//            Assert.AreEqual(GENDERPREFIX, customerModel.GenderPrefix);
+//            Assert.AreEqual(FIRSTNAME, customerModel.FirstName);
+//            Assert.AreEqual(MIDDLENAME, customerModel.MiddleName);
+//            Assert.AreEqual(LASTNAME, customerModel.LastName);
+//            Assert.AreEqual(GENDER, customerModel.Gender);
+//            Assert.AreEqual(EMAIL, customerModel.Email);
 //        }
 
 //        private CustomerModel CreateCustomer()

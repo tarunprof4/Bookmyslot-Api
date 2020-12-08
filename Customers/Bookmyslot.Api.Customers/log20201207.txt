@@ -1,7 +1,0 @@
-00:15 (1.0.0) [Information] (1) Starting web host
-00:15 (1.0.0) [Information] (9) Get all Customers 
-00:16 (1.0.0) [Information] (6) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
-00:16 (1.0.0) [Information] (17) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
-13:19 (1.0.0) [Information] (1) Starting web host
-13:19 (1.0.0) [Information] (5) Get all Customers 
-13:19 (1.0.0) [Information] (4) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
