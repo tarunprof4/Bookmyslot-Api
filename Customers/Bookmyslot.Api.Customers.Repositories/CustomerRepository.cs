@@ -19,18 +19,18 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             this.connection = connection;
         }
-        public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
+        public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
             try
             {
                 var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
                 await this.connection.InsertAsync<string, CustomerEntity>(customerEntity);
-                return new Response<bool>() { Result = true };
+                return new Response<string>() { Result = customerModel.Email };
             }
 
             catch (SqlException ex) when (ex.Number == ErrorCodes.PrimaryKeyRecordExists)
             {
-                return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
+                return new Response<string>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
             }
         }
 
@@ -44,12 +44,22 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             var customerEntities = await this.connection.GetListAsync<CustomerEntity>();
             var customerModels = ModelFactory.ModelFactory.CreateCustomerModels(customerEntities);
+            if (customerModels.Count == 0)
+            {
+                return new Response<IEnumerable<CustomerModel>>();
+            }
+
             return new Response<IEnumerable<CustomerModel>>() { Result = customerModels };
         }
 
         public async Task<Response<CustomerModel>> GetCustomer(string email)
         {
             var customerEntity = await this.connection.GetAsync<CustomerEntity>(email);
+            if (customerEntity == null)
+            {
+                return new Response<CustomerModel>();
+            }
+
             var customerModel = ModelFactory.ModelFactory.CreateCustomerModel(customerEntity);
             return new Response<CustomerModel>() { Result = customerModel };
         }

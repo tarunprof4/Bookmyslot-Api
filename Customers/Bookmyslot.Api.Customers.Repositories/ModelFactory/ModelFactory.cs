@@ -20,7 +20,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
         }
 
 
-        internal static IEnumerable<CustomerModel> CreateCustomerModels(IEnumerable<CustomerEntity> customerEntities)
+        internal static List<CustomerModel> CreateCustomerModels(IEnumerable<CustomerEntity> customerEntities)
         {
             List<CustomerModel> customerModels = new List<CustomerModel>();
             foreach (var customerEntity in customerEntities)

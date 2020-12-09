@@ -1,9 +1,10 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,7 +13,7 @@ namespace Bookmyslot.Api.Customers.Controllers
     //[Route("api/v1/customers")]
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController : BaseApiController
     {
         private readonly ICustomerBusiness customerBusiness;
 
@@ -28,47 +29,49 @@ namespace Bookmyslot.Api.Customers.Controllers
 
         //GET: api/<CustomerController>
         [HttpGet]
-        public async Task<IEnumerable<CustomerModel>> Get()
-       {
+        public async Task<IActionResult> Get()
+        {
             Log.Information("Get all Customers");
             var customerResponse = await customerBusiness.GetAllCustomers();
-            return customerResponse.Result;
+            return this.CreateGetHttpResponse(customerResponse);
         }
 
 
         [HttpGet("{email}")]
-        public async Task<CustomerModel> Get(string email)
+        public async Task<IActionResult> Get(string email)
         {
             Log.Information("Get Customer Email " + email);
             var customerResponse = await customerBusiness.GetCustomer(email);
-            return customerResponse.Result;
+            return this.CreateGetHttpResponse(customerResponse);
         }
 
 
         // POST api/<CustomerController>
         [HttpPost]
-        public async Task Post([FromBody] CustomerModel customerModel)
+        public async Task<IActionResult> Post([FromBody] CustomerModel customerModel)
         {
             Log.Information("Create Customer " + customerModel);
             var customerResponse = await customerBusiness.CreateCustomer(customerModel);
-            //return customerResponse.Result;
+            return this.CreatePostHttpResponse(customerResponse);
         }
 
         // PUT api/<CustomerController>/5
         [HttpPut("{email}")]
-        public async Task Put([FromBody] CustomerModel customerModel)
+        public async Task<IActionResult> Put([FromBody] CustomerModel customerModel)
         {
             Log.Information("Update Customer " + customerModel);
             var customerResponse = await customerBusiness.UpdateCustomer(customerModel);
+            return this.CreatePutHttpResponse(customerResponse);
 
         }
 
         // DELETE api/<CustomerController>/5
         [HttpDelete("{email}")]
-        public async Task Delete(string email)
+        public async Task<IActionResult> Delete(string email)
         {
             Log.Information("Delete Customer " + email);
             var customerResponse = await customerBusiness.DeleteCustomer(email);
+            return this.CreateDeleteHttpResponse(customerResponse);
         }
     }
 }

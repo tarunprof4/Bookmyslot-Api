@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.Customers.Business
             this.customerRepository = customerRepository;
         }
 
-        public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
+        public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
             var validator = new CustomerValidator();
             ValidationResult results = validator.Validate(customerModel);
@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Customers.Business
                 return await customerRepository.CreateCustomer(customerModel);
 
             else
-                return new Response<bool>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a=>a.ErrorMessage).ToList() };
+                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a=>a.ErrorMessage).ToList() };
         }
 
         public async Task<Response<bool>> DeleteCustomer(string email)
