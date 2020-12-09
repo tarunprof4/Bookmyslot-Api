@@ -1,4 +1,4 @@
-using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Injections;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

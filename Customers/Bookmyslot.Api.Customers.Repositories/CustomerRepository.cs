@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
@@ -29,7 +30,7 @@ namespace Bookmyslot.Api.Customers.Repositories
 
             catch (SqlException ex) when (ex.Number == ErrorCodes.PrimaryKeyRecordExists)
             {
-                return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { Constants.EmailIdExists } };
+                return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
             }
         }
 

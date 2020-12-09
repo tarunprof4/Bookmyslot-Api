@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common
+﻿namespace Bookmyslot.Api.Common.Contracts
 {
     public class Regexes
     {

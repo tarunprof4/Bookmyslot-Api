@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using FluentValidation;
 using System.Text.RegularExpressions;
@@ -9,12 +10,12 @@ namespace Bookmyslot.Api.Customers.Business.Validations
     {
         public CustomerValidator()
         {
-            RuleFor(x => x.GenderPrefix).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Constants.GenderPrefixInValid);
-            RuleFor(x => x.FirstName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Constants.FirstNameInValid).Must(isNameValid).WithMessage(Constants.FirstNameInValid);
-            RuleFor(x => x.MiddleName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Constants.MiddleNameInValid).Must(isNameValid).WithMessage(Constants.MiddleNameInValid);
-            RuleFor(x => x.LastName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Constants.LastNameInValid).Must(isNameValid).WithMessage(Constants.LastNameInValid);
-            RuleFor(x => x.Gender).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Constants.GenderNotValid).Must(isNameValid).WithMessage(Constants.GenderNotValid);
-            RuleFor(x => x.Email).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Constants.EmailIdNotValid).Must(isEmailValid).WithMessage(Constants.EmailIdNotValid);
+            RuleFor(x => x.GenderPrefix).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.GenderPrefixInValid);
+            RuleFor(x => x.FirstName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.FirstNameInValid).Must(isNameValid).WithMessage(AppBusinessMessages.FirstNameInValid);
+            RuleFor(x => x.MiddleName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.MiddleNameInValid).Must(isNameValid).WithMessage(AppBusinessMessages.MiddleNameInValid);
+            RuleFor(x => x.LastName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.LastNameInValid).Must(isNameValid).WithMessage(AppBusinessMessages.LastNameInValid);
+            RuleFor(x => x.Gender).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.GenderNotValid).Must(isNameValid).WithMessage(AppBusinessMessages.GenderNotValid);
+            RuleFor(x => x.Email).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.EmailIdNotValid).Must(isEmailValid).WithMessage(AppBusinessMessages.EmailIdNotValid);
         }
 
         private bool isNameValid(string name)

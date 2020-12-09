@@ -1,11 +1,12 @@
-using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using System.Linq;
-using Bookmyslot.Api.Customers.Contracts;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business.Tests
 {
@@ -45,7 +46,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             Assert.AreEqual(customer.HasResult, false);
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(customer.Messages.First(), Constants.EmailIdNotValid);
+            Assert.AreEqual(customer.Messages.First(), AppBusinessMessages.EmailIdNotValid);
         }
 
         [Test]
@@ -74,11 +75,11 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
-            Assert.IsTrue(customer.Messages.Contains(Constants.GenderPrefixInValid));
-            Assert.IsTrue(customer.Messages.Contains(Constants.FirstNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(Constants.LastNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(Constants.GenderNotValid));
-            Assert.IsTrue(customer.Messages.Contains(Constants.EmailIdNotValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.GenderPrefixInValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.FirstNameInValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.LastNameInValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.GenderNotValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.EmailIdNotValid));
             Assert.AreEqual(customer.ResultType,ResultType.ValidationError);
         }
 
@@ -89,9 +90,9 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
-            Assert.IsTrue(customer.Messages.Contains(Constants.FirstNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(Constants.MiddleNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(Constants.EmailIdNotValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.FirstNameInValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.MiddleNameInValid));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.EmailIdNotValid));
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
         }
 
@@ -113,7 +114,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         public async Task CustomerBusiness_UpdateNotExistingCustomer_ReturnsCustomerNotFoundError()
         {
             var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { Constants.CustomerNotFound } };
+            Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { AppBusinessMessages.CustomerNotFound } };
             customerRepositoryMock.Setup(a => a.GetCustomer(customerModel.Email)).Returns(Task.FromResult(customerModelErrorResponse));
             
             var customer = await customerBusiness.UpdateCustomer(customerModel);
@@ -121,7 +122,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerRepositoryMock.Verify((m => m.GetCustomer(customerModel.Email)), Times.Once());
             customerRepositoryMock.Verify((m => m.UpdateCustomer(customerModel)), Times.Never());
             Assert.AreEqual(customer.ResultType, ResultType.Error);
-            Assert.IsTrue(customer.Messages.Contains(Constants.CustomerNotFound));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerNotFound));
         }
 
         [Test]
@@ -141,7 +142,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         public async Task CustomerBusiness_DeletNotExistingCustomer_ReturnsCustomerNotFoundError()
         {
             var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { Constants.CustomerNotFound } };
+            Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { AppBusinessMessages.CustomerNotFound } };
             customerRepositoryMock.Setup(a => a.GetCustomer(customerModel.Email)).Returns(Task.FromResult(customerModelErrorResponse));
 
             var customer = await customerBusiness.DeleteCustomer(customerModel.Email);
@@ -149,7 +150,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerRepositoryMock.Verify((m => m.GetCustomer(customerModel.Email)), Times.Once());
             customerRepositoryMock.Verify((m => m.DeleteCustomer(customerModel.Email)), Times.Never());
             Assert.AreEqual(customer.ResultType, ResultType.Error);
-            Assert.IsTrue(customer.Messages.Contains(Constants.CustomerNotFound));
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerNotFound));
         }
 
         private CustomerModel CreateCustomer()

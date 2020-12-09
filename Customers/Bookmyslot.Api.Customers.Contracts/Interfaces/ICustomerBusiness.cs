@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common;
+﻿using Bookmyslot.Api.Common.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

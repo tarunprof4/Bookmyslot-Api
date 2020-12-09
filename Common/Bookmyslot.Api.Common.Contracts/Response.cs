@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bookmyslot.Api.Common
+namespace Bookmyslot.Api.Common.Contracts
 {
     public class Response<T> 
     {

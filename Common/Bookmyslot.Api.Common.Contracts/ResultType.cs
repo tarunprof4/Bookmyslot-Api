@@ -1,9 +1,9 @@
-﻿namespace Bookmyslot.Api.Common
+﻿namespace Bookmyslot.Api.Common.Contracts
 {
     public enum ResultType
     {
+        Success,
         ValidationError,
         Error,
-        Success,
     }
 }

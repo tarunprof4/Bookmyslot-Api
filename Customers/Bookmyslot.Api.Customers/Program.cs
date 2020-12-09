@@ -1,4 +1,4 @@
-using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Logging.Contracts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -12,7 +12,6 @@ namespace Bookmyslot.Api.Customers
         public static void Main(string[] args)
         {
             //CreateHostBuilder(args).Build().Run();
-
 
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()

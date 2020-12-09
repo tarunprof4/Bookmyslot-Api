@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Business;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories;

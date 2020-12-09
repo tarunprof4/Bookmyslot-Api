@@ -1,11 +1,12 @@
-﻿using Bookmyslot.Api.Common;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Business.Validations;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using FluentValidation.Results;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business
 {
@@ -33,7 +34,7 @@ namespace Bookmyslot.Api.Customers.Business
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                return new Response<bool>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { Constants.EmailIdNotValid } };
+                return new Response<bool>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.EmailIdNotValid } };
             }
 
             var customerExists = await CheckIfCustomerExists(email);
@@ -41,7 +42,7 @@ namespace Bookmyslot.Api.Customers.Business
             {
                 return await this.customerRepository.DeleteCustomer(email);
             }
-            return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { Constants.CustomerNotFound } };
+            return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
         }
 
         public async Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers()
@@ -53,7 +54,7 @@ namespace Bookmyslot.Api.Customers.Business
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { Constants.EmailIdNotValid } };
+                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.EmailIdNotValid } };
             }
 
             return await customerRepository.GetCustomer(email);
@@ -67,7 +68,7 @@ namespace Bookmyslot.Api.Customers.Business
                 return await this.customerRepository.UpdateCustomer(customerModel);
             }
 
-            return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { Constants.CustomerNotFound } };
+            return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
         }
 
         private async Task<bool> CheckIfCustomerExists(string email)

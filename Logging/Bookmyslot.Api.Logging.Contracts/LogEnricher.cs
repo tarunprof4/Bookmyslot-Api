@@ -2,7 +2,7 @@
 using Serilog.Events;
 using System.Threading;
 
-namespace Bookmyslot.Api.Common
+namespace Bookmyslot.Api.Logging.Contracts
 {
     public class LogEnricher : ILogEventEnricher
     {
