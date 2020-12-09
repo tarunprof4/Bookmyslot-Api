@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Bookmyslot.Api.Customers
+namespace Bookmyslot.Api.Common.Contracts
 {
     public class ErrorDetails
     {

@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.Customers
+namespace Bookmyslot.Api.SlotScheduler
 {
     public static class GlobalExceptionHandler
     {
@@ -34,4 +38,3 @@ namespace Bookmyslot.Api.Customers
         }
     }
 }
-
