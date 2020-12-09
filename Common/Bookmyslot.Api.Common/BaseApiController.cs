@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Common
         {
             if (response.ResultType == ResultType.Success)
             {
-                return this.Created("", response.Result);
+                return this.Created(string.Empty, response.Result);
             }
 
             else if (response.ResultType == ResultType.ValidationError)
