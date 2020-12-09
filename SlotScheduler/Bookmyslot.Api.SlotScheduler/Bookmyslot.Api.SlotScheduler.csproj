@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,6 +9,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common\Bookmyslot.Api.Common.csproj" />
+    <ProjectReference Include="..\..\Logging\Bookmyslot.Api.Logging.Contracts\Bookmyslot.Api.Logging.Contracts.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.SlotScheduler.Contracts\Bookmyslot.Api.SlotScheduler.Contracts.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.SlotScheduler.Injections\Bookmyslot.Api.SlotScheduler.Injections.csproj" />
   </ItemGroup>
 
 
