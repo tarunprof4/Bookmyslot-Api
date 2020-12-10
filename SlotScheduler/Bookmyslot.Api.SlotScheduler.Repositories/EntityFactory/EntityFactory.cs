@@ -21,6 +21,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
         internal static SlotEntity UpdateSlotEntity(SlotModel slotModel)
         {
             var slotEntity = CreateSlotEntity(slotModel);
+            slotEntity.Id = slotModel.Id;
             slotEntity.ModifiedDate = DateTime.UtcNow;
             return slotEntity;
         }

@@ -3,7 +3,7 @@ using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 {
-    [Table("Customer")]
+    [Table("Slot")]
     public class SlotEntity
     {
         [Key]
@@ -14,8 +14,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
-
-        public TimeSpan SlotDuration { get; set; }
 
         //public Money Amount { get; set; }
 
