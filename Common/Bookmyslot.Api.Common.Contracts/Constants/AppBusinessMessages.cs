@@ -2,6 +2,7 @@
 {
     public class AppBusinessMessages
     {
+        public const string CustomerDetailsMissing = "Customer details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
         public const string EmailIdNotValid = "Email id is not valid";
         public const string EmailIdExists = "Email id exists";
@@ -12,5 +13,13 @@
         public const string GenderPrefixInValid = "Gender Prefix is not valid";
         public const string GenderNotValid = "Gender is not valid";
         public const string NoRecordsFound = "no records";
+
+        public const string UserIdMissing = "user id is missing";
+        public const string SlotDetailsMissing = "slot details missing";
+        public const string SlotStartDateInvalid = "slot start date cannot be less than todays date";
+        public const string SlotEndDateInvalid = "slot end date cannot be less than start date";
+
+        public const string SlotIdInvalid = "slot id is not valid";
+        public const string SlotIdDoesNotExists = "slot id does not exists";
     }
 }

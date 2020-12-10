@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.Customers.Repositories
                 return new Response<string>() { Result = customerModel.Email };
             }
 
-            catch (SqlException ex) when (ex.Number == ErrorCodes.PrimaryKeyRecordExists)
+            catch (SqlException ex) when (ex.Number == SqlDatabaseErrorCodes.PrimaryKeyRecordExists)
             {
                 return new Response<string>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
             }

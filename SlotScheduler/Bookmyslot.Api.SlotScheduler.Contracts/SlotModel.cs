@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Money;
-using System;
+﻿using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
@@ -13,8 +12,14 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 
         public DateTime EndTime { get; set; }
 
-        public TimeSpan SlotDuration { get; set; }
+        public TimeSpan SlotDuration
+        {
+            get
+            {
+                return EndTime - StartTime;
+            }
+        }
 
-        public Money Amount { get; set; }
+        //public Money Amount { get; set; }
     }
 }

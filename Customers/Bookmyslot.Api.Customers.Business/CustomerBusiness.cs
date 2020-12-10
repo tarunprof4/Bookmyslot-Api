@@ -62,13 +62,22 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
         {
-            var customerExists = await CheckIfCustomerExists(customerModel.Email);
-            if (customerExists)
+            var validator = new CustomerValidator();
+            ValidationResult results = validator.Validate(customerModel);
+
+            if (results.IsValid)
             {
-                return await this.customerRepository.UpdateCustomer(customerModel);
+                var customerExists = await CheckIfCustomerExists(customerModel.Email);
+                if (customerExists)
+                {
+                    return await this.customerRepository.UpdateCustomer(customerModel);
+                }
+
+                return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
             }
 
-            return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
+            else
+                return new Response<bool>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
 
         private async Task<bool> CheckIfCustomerExists(string email)

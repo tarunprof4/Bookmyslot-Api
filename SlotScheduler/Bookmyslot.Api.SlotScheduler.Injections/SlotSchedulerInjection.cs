@@ -3,7 +3,6 @@ using Bookmyslot.Api.SlotScheduler.Business;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;

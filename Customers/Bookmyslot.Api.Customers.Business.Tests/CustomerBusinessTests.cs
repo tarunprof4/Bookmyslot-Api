@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
         [Test]
-        public async Task CustomerBusiness_GetCustomerByEmail_CallsGetCustomerByEmailRepository()
+        public async Task GetCustomerByEmail_ValidCustomerEmail_CallsGetCustomerByEmailRepository()
         {
             var customer = await customerBusiness.GetCustomer(EMAIL);
 
@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
         [TestCase("")]
         [TestCase("   ")]
-        public async Task CustomerBusiness_InvalidEmailId_ReturnsValidationErrorResponse(string email)
+        public async Task GetCustomerByEmail_InvalidEmailId_ReturnsValidationErrorResponse(string email)
         {
             var customer = await customerBusiness.GetCustomer(email);
 
@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
         [Test]
-        public async Task CustomerBusiness_GetAllCustomers_CallsGetAllCustomersRepository()
+        public async Task GetAllCustomers_Valid_CallsGetAllCustomersRepository()
         {
             var customer = await customerBusiness.GetAllCustomers();
 
@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
 
         [Test]
-        public async Task CustomerBusiness_CreateCustomers_ReturnsSuccess()
+        public async Task CreateCustomer_ValidCustomerDetails_ReturnsSuccess()
         {
             var customerModel = CreateCustomer();
 
@@ -69,7 +69,16 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
         [Test]
-        public async Task CustomerBusiness_CreateInvalidCustomer_ReturnsValidationError()
+        public async Task CreateCustomer_CreateMissingCustomerDetails_ReturnsValidationError()
+        {
+            var customer = await customerBusiness.CreateCustomer(null);
+
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerDetailsMissing));
+            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
+        }
+
+        [Test]
+        public async Task CreateCustomer_CreateInvalidCustomer_ReturnsValidationError()
         {
             var customerModel = new CustomerModel();
 
@@ -83,8 +92,9 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             Assert.AreEqual(customer.ResultType,ResultType.ValidationError);
         }
 
+
         [Test]
-        public async Task CustomerBusiness_CreateCustomerWithInvalidCustomerNameAndEmail_ReturnsValidationError()
+        public async Task CreateCustomer_WithInvalidCustomerNameAndEmail_ReturnsValidationError()
         {
             var customerModel = new CustomerModel() { FirstName="12", MiddleName = "2@", Email ="asdf.com" };
 
@@ -98,7 +108,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
 
         [Test]
-        public async Task CustomerBusiness_UpdateCustomer_ReturnsSuccess()
+        public async Task UpdateCustomer_ValidCustomerDetails_ReturnsSuccess()
         {
             var customerModel = CreateCustomer();
             Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { Result = customerModel };
@@ -111,7 +121,16 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
         [Test]
-        public async Task CustomerBusiness_UpdateNotExistingCustomer_ReturnsCustomerNotFoundError()
+        public async Task UpdateCustomer_MissingCustomerDetails_ReturnsValidationError()
+        {
+            var customer = await customerBusiness.UpdateCustomer(null);
+
+            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerDetailsMissing));
+            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
+        }
+
+        [Test]
+        public async Task UpdateCustomer_UpdateNotExistingCustomer_ReturnsCustomerNotFoundError()
         {
             var customerModel = CreateCustomer();
             Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { AppBusinessMessages.CustomerNotFound } };
@@ -126,7 +145,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
         [Test]
-        public async Task CustomerBusiness_DeleteCustomer_ReturnsSuccess()
+        public async Task DeleteCustomer_ValidCustomerEmail_ReturnsSuccess()
         {
             var customerModel = CreateCustomer();
             Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { Result = customerModel };
@@ -139,7 +158,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
         [Test]
-        public async Task CustomerBusiness_DeletNotExistingCustomer_ReturnsCustomerNotFoundError()
+        public async Task DeleteCustomer_DeletNotExistingCustomer_ReturnsCustomerNotFoundError()
         {
             var customerModel = CreateCustomer();
             Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { AppBusinessMessages.CustomerNotFound } };
