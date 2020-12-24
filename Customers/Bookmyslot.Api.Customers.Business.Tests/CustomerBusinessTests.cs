@@ -96,7 +96,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task CreateCustomer_WithInvalidCustomerNameAndEmail_ReturnsValidationError()
         {
-            var customerModel = new CustomerModel() { FirstName="12", MiddleName = "2@", Email ="asdf.com" };
+            var customerModel = new CustomerModel() { FirstName=" 12 ", MiddleName = "2@", Email ="asdf.com" };
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 

@@ -18,16 +18,22 @@ namespace Bookmyslot.Api.Customers.Business
             this.customerRepository = customerRepository;
         }
 
+        
+
         public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
             var validator = new CustomerValidator();
             ValidationResult results = validator.Validate(customerModel);
 
             if (results.IsValid)
+            {
+                SanitizeCustomerModel(customerModel);
                 return await customerRepository.CreateCustomer(customerModel);
+            }
+                
 
             else
-                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a=>a.ErrorMessage).ToList() };
+                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
 
         public async Task<Response<bool>> DeleteCustomer(string email)
@@ -67,6 +73,7 @@ namespace Bookmyslot.Api.Customers.Business
 
             if (results.IsValid)
             {
+                SanitizeCustomerModel(customerModel);
                 var customerExists = await CheckIfCustomerExists(customerModel.Email);
                 if (customerExists)
                 {
@@ -87,6 +94,15 @@ namespace Bookmyslot.Api.Customers.Business
                 return true;
 
             return false;
+        }
+
+        private void SanitizeCustomerModel(CustomerModel customerModel)
+        {
+            customerModel.FirstName = customerModel.FirstName.Trim();
+            customerModel.MiddleName = customerModel.MiddleName.Trim();
+            customerModel.LastName = customerModel.LastName.Trim();
+            customerModel.Gender = customerModel.Gender.Trim();
+            customerModel.Email = customerModel.Email.Trim();
         }
     }
 }
