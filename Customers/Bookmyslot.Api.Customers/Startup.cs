@@ -27,7 +27,27 @@ namespace Bookmyslot.Api.Customers
             CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
             services.AddControllers();
 
-            services.AddSwaggerGen();
+            services.AddOpenApiDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Bookmyslot Customer API";
+                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "Shayne Boyer",
+                        Email = string.Empty,
+                        Url = "https://twitter.com/spboyer"
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = "Use under LICX",
+                        Url = "https://example.com/license"
+                    };
+                };
+            });
         }
 
         private Dictionary<string, string> GetAppConfigurations()
@@ -53,15 +73,10 @@ namespace Bookmyslot.Api.Customers
 
             app.ConfigureGlobalExceptionHandler();
 
-            app.UseSwagger();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
-
+            
             app.UseRouting();
 
             app.UseAuthorization();

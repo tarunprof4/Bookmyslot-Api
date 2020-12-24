@@ -77,7 +77,7 @@ namespace Bookmyslot.Api.Common
                 return this.BadRequest(response.Messages.First());
             }
 
-            return this.BadRequest(response.Messages.First());
+            return InternalServerError(response);
         }
     }
 }
