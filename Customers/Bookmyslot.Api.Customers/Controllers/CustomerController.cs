@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Controllers
 {
-    //[Route("api/v1/customers")]
+    //[Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Consumes("application/json")]
     [ApiController]
     public class CustomerController : BaseApiController
     {
@@ -31,7 +32,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// <summary>
         /// Gets customers
         /// </summary>
-        /// <returns >returns customers</returns>
+        /// <returns>returns customers</returns>
         /// <response code="200">Returns all customers</response>
         /// <response code="404">no customer found</response>
         /// <response code="400">validation error bad request</response>
@@ -53,7 +54,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// Gets customer by email
         /// </summary>
         /// <param name="email">customer email id</param>
-        /// <returns >customer details/returns>
+        /// <returns >customer details</returns>
         /// <response code="200">Returns customer details</response>
         /// <response code="404">no customer found</response>
         /// <response code="400">validation error bad request</response>
@@ -75,7 +76,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// Create new customer
         /// </summary>
         /// <param name="customerModel">customer model</param>
-        /// <returns >returns email id of created customer/returns>
+        /// <returns >returns email id of created customer</returns>
         /// <response code="201">Returns email id of created customer</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="500">internal server error</response>
@@ -95,7 +96,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// Update existing customer
         /// </summary>
         /// <param name="customerModel">customer model</param>
-        /// <returns >success or failure bool/returns>
+        /// <returns >success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="500">internal server error</response>
@@ -116,7 +117,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// Delete existing customer
         /// </summary>
         /// <param name="email">customer email</param>
-        /// <returns >success or failure bool/returns>
+        /// <returns >success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="500">internal server error</response>
