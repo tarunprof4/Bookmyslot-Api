@@ -21,9 +21,9 @@ namespace Bookmyslot.Api.Common.Contracts
             return response;
         }
 
-        public static Response<T> Empty(string emptyMessage)
+        public static Response<T> Empty(List<string> errorMessages)
         {
-            var response = new Response<T> { ResultType = ResultType.Empty, Messages = new List<string>() { emptyMessage } };
+            var response = new Response<T> { ResultType = ResultType.Empty, Messages = errorMessages };
 
             return response;
         }

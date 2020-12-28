@@ -4,19 +4,14 @@ namespace Bookmyslot.Api.Customers.Contracts
 {
     public class CustomerModel
     {
-        [Required]
         public string FirstName { get; set; }
-
 
         public string MiddleName { get; set; }
 
-        [Required]
         public string LastName { get; set; }
 
-        [Required]
         public string Gender { get; set; }
 
-        [Required]
         public string Email { get; set; }
     }
 }
