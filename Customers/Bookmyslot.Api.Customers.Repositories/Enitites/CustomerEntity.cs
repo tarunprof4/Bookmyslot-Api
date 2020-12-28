@@ -9,7 +9,6 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
         [Key]
         public string Email { get; set; }
 
-        public string GenderPrefix { get; set; }
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }

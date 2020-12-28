@@ -13,18 +13,17 @@ namespace Bookmyslot.Api.Common.Contracts
             this.ResultType = ResultType.Success;
         }
 
-
-        public bool HasResult
-        {
-            get
-            {
-                return this.Result != null;
-            }
-        }
-
+      
         public static Response<T> Success(T result)
         {
             var response = new Response<T> { ResultType = ResultType.Success, Result = result };
+
+            return response;
+        }
+
+        public static Response<T> Empty(string emptyMessage)
+        {
+            var response = new Response<T> { ResultType = ResultType.Empty, Messages = new List<string>() { emptyMessage } };
 
             return response;
         }

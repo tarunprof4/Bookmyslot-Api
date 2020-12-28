@@ -18,11 +18,13 @@ namespace Bookmyslot.Api.Common
         {
             if (response.ResultType == ResultType.Success)
             {
-                if (response.HasResult)
-                    return this.Ok(response.Result);
+                return this.Ok(response.Result);
+                    
+            }
 
-                else
-                    return StatusCode(StatusCodes.Status404NotFound, AppBusinessMessages.NoRecordsFound);
+            else if (response.ResultType == ResultType.Empty)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, response.Messages.First());
             }
 
             else if (response.ResultType == ResultType.ValidationError)
@@ -61,6 +63,11 @@ namespace Bookmyslot.Api.Common
                 return this.BadRequest(response.Messages.First());
             }
 
+            if (response.ResultType == ResultType.Empty)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, response.Messages.First());
+            }
+
             return InternalServerError(response);
         }
 
@@ -75,6 +82,11 @@ namespace Bookmyslot.Api.Common
             else if (response.ResultType == ResultType.ValidationError)
             {
                 return this.BadRequest(response.Messages.First());
+            }
+
+            if (response.ResultType == ResultType.Empty)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, response.Messages.First());
             }
 
             return InternalServerError(response);

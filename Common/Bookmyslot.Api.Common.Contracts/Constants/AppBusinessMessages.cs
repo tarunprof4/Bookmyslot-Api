@@ -10,7 +10,6 @@
         public const string FirstNameInValid = "Fist name is not Valid";
         public const string MiddleNameInValid = "Middle name is not Valid";
         public const string LastNameInValid = "Last name is not valid";
-        public const string GenderPrefixInValid = "Gender Prefix is not valid";
         public const string GenderNotValid = "Gender is not valid";
         public const string NoRecordsFound = "no records";
 

@@ -3,6 +3,7 @@
     public enum ResultType
     {
         Success,
+        Empty,
         ValidationError,
         Error,
     }

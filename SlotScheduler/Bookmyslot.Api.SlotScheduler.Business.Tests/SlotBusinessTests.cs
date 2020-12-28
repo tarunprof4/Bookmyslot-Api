@@ -44,7 +44,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.HasResult, false);
             Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessages.SlotIdInvalid);
             slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
         }
@@ -59,7 +58,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel);
 
             Assert.AreEqual(slotModelResponseMock.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelResponseMock.HasResult, true);
             Assert.AreEqual(slotModelResponseMock.Result, SlotId);
 
             slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Once());
@@ -107,8 +105,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotBusiness.UpdateSlot(slotModel);
 
             Assert.AreEqual(slotModelUpdateResponseMock.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelUpdateResponseMock.HasResult, true);
-            Assert.AreEqual(slotModelUpdateResponseMock.Result, true);
 
             slotRepositoryMock.Verify((m => m.UpdateSlot(slotModel)), Times.Once());
             slotRepositoryMock.Verify((m => m.GetSlot(slotModel.Id)), Times.Once());
@@ -121,7 +117,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotBusiness.UpdateSlot(null);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Result, false);
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotDetailsMissing));
 
             slotRepositoryMock.Verify((m => m.UpdateSlot(null)), Times.Never());
@@ -156,7 +151,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotBusiness.DeleteSlot(slotModel.Id);
 
             Assert.AreEqual(slotModelDeleteResponseMock.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelDeleteResponseMock.HasResult, true);
             Assert.AreEqual(slotModelDeleteResponseMock.Result, true);
 
             slotRepositoryMock.Verify((m => m.DeleteSlot(slotModel)), Times.Once());

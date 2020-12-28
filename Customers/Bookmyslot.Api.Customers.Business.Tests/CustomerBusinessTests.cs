@@ -14,7 +14,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
     public class CustomerBusinessTests
     {
         private const string EMAIL = "a@gmail.com";
-        private const string GENDERPREFIX = "genderprefix";
         private const string FIRSTNAME = "fisrtname";
         private const string MIDDLENAME = "middlename";
         private const string LASTNAME = "lastname";
@@ -44,7 +43,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         {
             var customer = await customerBusiness.GetCustomer(email);
 
-            Assert.AreEqual(customer.HasResult, false);
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
             Assert.AreEqual(customer.Messages.First(), AppBusinessMessages.EmailIdNotValid);
         }
@@ -62,9 +60,12 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         public async Task CreateCustomer_ValidCustomerDetails_ReturnsSuccess()
         {
             var customerModel = CreateCustomer();
+            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Empty };
+            customerRepositoryMock.Setup(a => a.GetCustomer(customerModel.Email)).Returns(Task.FromResult(customerModelResponse));
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
+            customerRepositoryMock.Verify((m => m.GetCustomer(customerModel.Email)), Times.Once());
             customerRepositoryMock.Verify((m => m.CreateCustomer(customerModel)), Times.Once());
         }
 
@@ -84,12 +85,26 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.GenderPrefixInValid));
+            Assert.IsFalse(customer.Messages.Contains(AppBusinessMessages.MiddleNameInValid));
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.FirstNameInValid));
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.LastNameInValid));
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.GenderNotValid));
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.EmailIdNotValid));
             Assert.AreEqual(customer.ResultType,ResultType.ValidationError);
+        }
+
+        [Test]
+        public async Task CreateCustomer_CustomerWithSameEmailIdAlreadyExists_ReturnsError()
+        {
+            var customerModel = CreateCustomer();
+            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Success };
+            customerRepositoryMock.Setup(a => a.GetCustomer(customerModel.Email)).Returns(Task.FromResult(customerModelResponse));
+
+            var customer = await customerBusiness.CreateCustomer(customerModel);
+
+            customerRepositoryMock.Verify((m => m.GetCustomer(customerModel.Email)), Times.Once());
+            customerRepositoryMock.Verify((m => m.CreateCustomer(customerModel)), Times.Never());
+            Assert.AreEqual(customer.ResultType, ResultType.Error);
         }
 
 
@@ -140,7 +155,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             customerRepositoryMock.Verify((m => m.GetCustomer(customerModel.Email)), Times.Once());
             customerRepositoryMock.Verify((m => m.UpdateCustomer(customerModel)), Times.Never());
-            Assert.AreEqual(customer.ResultType, ResultType.Error);
+            Assert.AreEqual(customer.ResultType, ResultType.Empty);
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerNotFound));
         }
 
@@ -168,14 +183,13 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             customerRepositoryMock.Verify((m => m.GetCustomer(customerModel.Email)), Times.Once());
             customerRepositoryMock.Verify((m => m.DeleteCustomer(customerModel.Email)), Times.Never());
-            Assert.AreEqual(customer.ResultType, ResultType.Error);
+            Assert.AreEqual(customer.ResultType, ResultType.Empty);
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerNotFound));
         }
 
         private CustomerModel CreateCustomer()
         {
             var customerModel = new CustomerModel();
-            customerModel.GenderPrefix = GENDERPREFIX;
             customerModel.FirstName = FIRSTNAME;
             customerModel.MiddleName = MIDDLENAME;
             customerModel.LastName = LASTNAME;

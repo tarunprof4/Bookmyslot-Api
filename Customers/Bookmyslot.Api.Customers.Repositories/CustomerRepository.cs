@@ -21,17 +21,9 @@ namespace Bookmyslot.Api.Customers.Repositories
         }
         public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
-            try
-            {
-                var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
-                await this.connection.InsertAsync<string, CustomerEntity>(customerEntity);
-                return new Response<string>() { Result = customerModel.Email };
-            }
-
-            catch (SqlException ex) when (ex.Number == SqlDatabaseErrorCodes.PrimaryKeyRecordExists)
-            {
-                return new Response<string>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
-            }
+            var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
+            await this.connection.InsertAsync<string, CustomerEntity>(customerEntity);
+            return new Response<string>() { Result = customerModel.Email };
         }
 
         public async Task<Response<bool>> DeleteCustomer(string email)
@@ -46,7 +38,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             var customerModels = ModelFactory.ModelFactory.CreateCustomerModels(customerEntities);
             if (customerModels.Count == 0)
             {
-                return new Response<IEnumerable<CustomerModel>>();
+                return Response<IEnumerable<CustomerModel>>.Empty(AppBusinessMessages.NoRecordsFound);
             }
 
             return new Response<IEnumerable<CustomerModel>>() { Result = customerModels };
@@ -57,11 +49,11 @@ namespace Bookmyslot.Api.Customers.Repositories
             var customerEntity = await this.connection.GetAsync<CustomerEntity>(email);
             if (customerEntity == null)
             {
-                return new Response<CustomerModel>();
+                return Response<CustomerModel>.Empty(AppBusinessMessages.CustomerNotFound);
             }
 
             var customerModel = ModelFactory.ModelFactory.CreateCustomerModel(customerEntity);
-            return new Response<CustomerModel>() { Result = customerModel };
+            return Response<CustomerModel>.Success(customerModel);
         }
 
         public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)

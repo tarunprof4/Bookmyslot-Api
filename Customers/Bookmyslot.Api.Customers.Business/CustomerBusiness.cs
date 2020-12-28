@@ -28,7 +28,15 @@ namespace Bookmyslot.Api.Customers.Business
             if (results.IsValid)
             {
                 SanitizeCustomerModel(customerModel);
-                return await customerRepository.CreateCustomer(customerModel);
+
+                var customerExists = await CheckIfCustomerExists(customerModel.Email);
+                if (!customerExists)
+                {
+                    return await customerRepository.CreateCustomer(customerModel);
+                }
+
+
+                return new Response<string>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
             }
                 
 
@@ -48,7 +56,7 @@ namespace Bookmyslot.Api.Customers.Business
             {
                 return await this.customerRepository.DeleteCustomer(email);
             }
-            return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
+            return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
         }
 
         public async Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers()
@@ -80,7 +88,7 @@ namespace Bookmyslot.Api.Customers.Business
                     return await this.customerRepository.UpdateCustomer(customerModel);
                 }
 
-                return new Response<bool>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
+                return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
             }
 
             else
@@ -90,7 +98,7 @@ namespace Bookmyslot.Api.Customers.Business
         private async Task<bool> CheckIfCustomerExists(string email)
         {
             var customer = await customerRepository.GetCustomer(email);
-            if (customer.HasResult)
+            if (customer.ResultType == ResultType.Success)
                 return true;
 
             return false;

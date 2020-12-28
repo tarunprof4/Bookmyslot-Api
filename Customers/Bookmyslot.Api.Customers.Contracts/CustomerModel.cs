@@ -4,7 +4,6 @@ namespace Bookmyslot.Api.Customers.Contracts
 {
     public class CustomerModel
     {
-        public string GenderPrefix { get; set; }
         [Required]
         public string FirstName { get; set; }
 

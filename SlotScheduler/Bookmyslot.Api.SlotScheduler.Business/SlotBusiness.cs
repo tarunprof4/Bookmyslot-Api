@@ -83,7 +83,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         private async Task<Tuple<bool, SlotModel>> CheckIfCustomerExists(Guid slotId)
         {
             var slotModelResponse = await this.slotRepository.GetSlot(slotId);
-            if (slotModelResponse.HasResult)
+            if (slotModelResponse.ResultType  == ResultType.Success)
                 return new Tuple<bool, SlotModel>(true, slotModelResponse.Result);
 
             return new Tuple<bool, SlotModel>(false, slotModelResponse.Result);
