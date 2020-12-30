@@ -140,6 +140,21 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         }
 
         [Test]
+        public async Task UpdateSlot_SlotDoesntExists_ReturnsSlotNotFoundResponse()
+        {
+            var slotModel = CreateSlotModel();
+            Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { ResultType = ResultType.Empty };
+            slotRepositoryMock.Setup(a => a.GetSlot(It.IsAny<Guid>())).Returns(Task.FromResult(slotModelGetResponseMock));
+
+            var slotModelResponse = await this.slotBusiness.UpdateSlot(slotModel);
+
+            Assert.AreEqual(slotModelResponse.ResultType, ResultType.Empty);
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotIdDoesNotExists));
+            slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<Guid>())), Times.Once());
+            slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Never());
+        }
+
+        [Test]
         public async Task DeleteSlot_ValidSlotId_ReturnsSlotDeletedSuccessfully()
         {
             var slotModel = CreateSlotModel();
@@ -168,6 +183,21 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             slotRepositoryMock.Verify((m => m.DeleteSlot(null)), Times.Never());
             slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
+        }
+
+        [Test]
+        public async Task DeleteSlot_SlotDoesntExists_ReturnsSlotNotFoundResponse()
+        {
+            var slotModel = new SlotModel();
+            Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { ResultType = ResultType.Empty };
+            slotRepositoryMock.Setup(a => a.GetSlot(It.IsAny<Guid>())).Returns(Task.FromResult(slotModelGetResponseMock));
+
+            var slotModelResponse = await this.slotBusiness.DeleteSlot(Guid.NewGuid());
+
+            Assert.AreEqual(slotModelResponse.ResultType, ResultType.Empty);
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotIdDoesNotExists));
+            slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<Guid>())), Times.Once());
+            slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<SlotModel>())), Times.Never());
         }
 
 
