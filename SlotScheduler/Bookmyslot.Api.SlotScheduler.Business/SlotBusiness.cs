@@ -18,13 +18,21 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             this.slotRepository = slotRepository;
         }
+
+        private void SanitizeSlotModel(SlotModel slotModel)
+        {
+            slotModel.Title = slotModel.Title.Trim();
+        }
         public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
         {
             var validator = new SlotValidator();
             ValidationResult results = validator.Validate(slotModel);
 
             if (results.IsValid)
+            {
+                SanitizeSlotModel(slotModel);
                 return await slotRepository.CreateSlot(slotModel);
+            }
 
             else
                 return Response<Guid>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
@@ -37,13 +45,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return  Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotIdInvalid });
             }
 
-            var checkSlotExistsResponse = await CheckIfCustomerExists(slotId);
+            var checkSlotExistsResponse = await CheckIfSlotExists(slotId);
             if (checkSlotExistsResponse.Item1)
             {
                 return await this.slotRepository.DeleteSlot(checkSlotExistsResponse.Item2);
             }
 
-            return Response<bool>.Failed(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
+            return Response<bool>.Empty(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
         }
 
         public async Task<Response<IEnumerable<SlotModel>>> GetAllSlotsDateRange(DateTime startDate, DateTime endDate)
@@ -68,19 +76,20 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
             if (results.IsValid)
             {
-                var checkSlotExistsResponse = await CheckIfCustomerExists(slotModel.Id);
+                SanitizeSlotModel(slotModel);
+                var checkSlotExistsResponse = await CheckIfSlotExists(slotModel.Id);
                 if (checkSlotExistsResponse.Item1)
                 {
                     return await this.slotRepository.UpdateSlot(slotModel);
                 }
 
-                return Response<bool>.Failed(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
+                return Response<bool>.Empty(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
             }
 
             return Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
         }
 
-        private async Task<Tuple<bool, SlotModel>> CheckIfCustomerExists(Guid slotId)
+        private async Task<Tuple<bool, SlotModel>> CheckIfSlotExists(Guid slotId)
         {
             var slotModelResponse = await this.slotRepository.GetSlot(slotId);
             if (slotModelResponse.ResultType  == ResultType.Success)

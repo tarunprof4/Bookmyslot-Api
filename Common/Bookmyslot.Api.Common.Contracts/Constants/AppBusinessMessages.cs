@@ -4,6 +4,7 @@
     {
         public const string CustomerDetailsMissing = "Customer details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
+        
         public const string EmailIdNotValid = "Email id is not valid";
         public const string EmailIdExists = "Email id exists";
         public const string EmailIdDoesNotExists = "Email id does not exists";
@@ -19,6 +20,6 @@
         public const string SlotEndDateInvalid = "slot end date cannot be less than start date";
 
         public const string SlotIdInvalid = "slot id is not valid";
-        public const string SlotIdDoesNotExists = "slot id does not exists";
+        public const string SlotIdDoesNotExists = "slot does not exists";
     }
 }

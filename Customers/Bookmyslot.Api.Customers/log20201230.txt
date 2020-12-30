@@ -20,3 +20,6 @@
 13:34 (1.0.0) [Information] (14) Get Customer Email aa@gmail.com
 13:34 (1.0.0) [Information] (13) Get all Customers
 13:34 (1.0.0) [Information] (19) Get Customer Email b@gmail.com
+13:40 (1.0.0) [Information] (1) Starting web host
+13:44 (1.0.0) [Information] (5) Get Customer Email b@gmail.com
+13:44 (1.0.0) [Information] (5) Get Customer Email b@gmail.com

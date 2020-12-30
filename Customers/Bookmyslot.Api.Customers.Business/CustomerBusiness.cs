@@ -56,7 +56,7 @@ namespace Bookmyslot.Api.Customers.Business
             {
                 return await this.customerRepository.DeleteCustomer(email);
             }
-            return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
+            return Response<bool>.Empty(new List<string>() { AppBusinessMessages.CustomerNotFound });
         }
 
         public async Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers()

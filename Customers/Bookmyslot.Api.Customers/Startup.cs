@@ -37,14 +37,14 @@ namespace Bookmyslot.Api.Customers
                     document.Info.TermsOfService = "None";
                     document.Info.Contact = new NSwag.OpenApiContact
                     {
-                        Name = "Shayne Boyer",
+                        Name = "Tarun Aggarwal",
                         Email = string.Empty,
-                        Url = "https://twitter.com/spboyer"
+                        //Url = "https://twitter.com/spboyer"
                     };
                     document.Info.License = new NSwag.OpenApiLicense
                     {
-                        Name = "Use under LICX",
-                        Url = "https://example.com/license"
+                        //Name = "Use under LICX",
+                        //Url = "https://example.com/license"
                     };
                 };
             });

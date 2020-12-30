@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
@@ -43,7 +44,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var slotEntity = await this.connection.GetAsync<SlotEntity>(slotId);
             if (slotEntity == null)
             {
-                return new Response<SlotModel>();
+                return Response<SlotModel>.Empty(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
             }
 
             var customerModel = ModelFactory.ModelFactory.CreateSlotModel(slotEntity);

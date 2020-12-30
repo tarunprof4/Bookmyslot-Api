@@ -4,7 +4,6 @@ using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 

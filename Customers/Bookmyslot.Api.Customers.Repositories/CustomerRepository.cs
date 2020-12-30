@@ -6,7 +6,6 @@ using Bookmyslot.Api.Customers.Repositories.Enitites;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Repositories
