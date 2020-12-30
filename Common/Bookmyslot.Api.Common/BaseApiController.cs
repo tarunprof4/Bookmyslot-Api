@@ -4,25 +4,17 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
 using System.Linq;
 
 namespace Bookmyslot.Api.Common
 {
     public class BaseApiController : ControllerBase
     {
-        private IActionResult InternalServerError<T>(Response<T> response)
+        private IActionResult HandleUnSuccessfulResponse<T>(Response<T> response)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, response.Messages);
-        }
-        protected virtual IActionResult CreateGetHttpResponse<T>(Response<T> response)
-        {
-            if (response.ResultType == ResultType.Success)
-            {
-                return this.Ok(response.Result);
-                    
-            }
-
-            else if (response.ResultType == ResultType.Empty)
+            if (response.ResultType == ResultType.Empty)
             {
                 return StatusCode(StatusCodes.Status404NotFound, response.Messages);
             }
@@ -32,23 +24,29 @@ namespace Bookmyslot.Api.Common
                 return this.BadRequest(response.Messages);
             }
 
-            return InternalServerError(response);
+            return StatusCode(StatusCodes.Status500InternalServerError, response.Messages);
+        }
+        protected virtual IActionResult CreateGetHttpResponse<T>(Response<T> response)
+        {
+            if (response.ResultType == ResultType.Success)
+            {
+                return this.Ok(response.Result);
+
+            }
+
+            return HandleUnSuccessfulResponse(response);
         }
 
 
         protected virtual IActionResult CreatePostHttpResponse<T>(Response<T> response)
         {
+            
             if (response.ResultType == ResultType.Success)
             {
                 return this.Created(string.Empty, response.Result);
             }
 
-            else if (response.ResultType == ResultType.ValidationError)
-            {
-                return this.BadRequest(response.Messages);
-            }
-
-            return InternalServerError(response);
+            return HandleUnSuccessfulResponse(response);
         }
 
         protected virtual IActionResult CreatePutHttpResponse<T>(Response<T> response)
@@ -58,17 +56,7 @@ namespace Bookmyslot.Api.Common
                 return this.NoContent();
             }
 
-            else if (response.ResultType == ResultType.ValidationError)
-            {
-                return this.BadRequest(response.Messages);
-            }
-
-            if (response.ResultType == ResultType.Empty)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, response.Messages);
-            }
-
-            return InternalServerError(response);
+            return HandleUnSuccessfulResponse(response);
         }
 
 
@@ -79,17 +67,7 @@ namespace Bookmyslot.Api.Common
                 return this.NoContent();
             }
 
-            else if (response.ResultType == ResultType.ValidationError)
-            {
-                return this.BadRequest(response.Messages);
-            }
-
-            if (response.ResultType == ResultType.Empty)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, response.Messages);
-            }
-
-            return InternalServerError(response);
+            return HandleUnSuccessfulResponse(response);
         }
     }
 }

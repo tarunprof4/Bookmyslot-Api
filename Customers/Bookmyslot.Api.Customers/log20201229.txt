@@ -1,0 +1,220 @@
+12:59 (1.0.0) [Information] (1) Starting web host
+13:01 (1.0.0) [Information] (13) Get all Customers
+13:03 (1.0.0) [Information] (1) Starting web host
+13:07 (1.0.0) [Information] (5) Get Customer Email ansjd@gmail.com
+13:07 (1.0.0) [Information] (19) Get Customer Email ansjd@gmail.com
+13:08 (1.0.0) [Information] (16) Get Customer Email a@gmail.com
+14:53 (1.0.0) [Information] (1) Starting web host
+14:54 (1.0.0) [Information] (5) Get all Customers
+14:58 (1.0.0) [Information] (18) Get Customer Email a@gmail.com
+14:59 (1.0.0) [Information] (23) Get Customer Email a@gmail.com
+14:59 (1.0.0) [Information] (24) Get Customer Email a@gmail.com
+15:00 (1.0.0) [Information] (1) Starting web host
+15:00 (1.0.0) [Error] (9) Attempted to divide by zero.
+
+15:00 (1.0.0) [Error] (9)    at Bookmyslot.Api.Customers.Controllers.CustomerController.Get(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Controllers\CustomerController.cs:line 72
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+15:00 (1.0.0) [Error] (10) Attempted to divide by zero.
+
+15:00 (1.0.0) [Error] (10)    at Bookmyslot.Api.Customers.Controllers.CustomerController.Get(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Controllers\CustomerController.cs:line 72
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+15:01 (1.0.0) [Error] (9) Attempted to divide by zero.
+
+15:01 (1.0.0) [Error] (9)    at Bookmyslot.Api.Customers.Controllers.CustomerController.Get(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Controllers\CustomerController.cs:line 72
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+15:02 (1.0.0) [Information] (1) Starting web host
+15:02 (1.0.0) [Error] (10) Exception of type 'System.Exception' was thrown.
+
+15:02 (1.0.0) [Error] (10)    at Bookmyslot.Api.Customers.Controllers.CustomerController.Get(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Controllers\CustomerController.cs:line 72
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+15:03 (1.0.0) [Information] (1) Starting web host
+15:03 (1.0.0) [Information] (10) Get Customer Email a@gmail.com
+15:03 (1.0.0) [Information] (10) Get Customer Email a@gmail.com
+15:03 (1.0.0) [Information] (10) Get Customer Email a@gmail.com
+15:03 (1.0.0) [Information] (14) Get Customer Email a@gmail.com
+15:03 (1.0.0) [Information] (14) Get Customer Email a@gmail.com
+15:06 (1.0.0) [Information] (1) Starting web host
+15:06 (1.0.0) [Error] (9) Exception of type 'System.Exception' was thrown.
+
+15:06 (1.0.0) [Error] (9)    at Bookmyslot.Api.Customers.Controllers.CustomerController.Get(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Controllers\CustomerController.cs:line 72
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+15:07 (1.0.0) [Information] (1) Starting web host
+15:12 (1.0.0) [Information] (1) Starting web host
+15:13 (1.0.0) [Information] (1) Starting web host
+15:15 (1.0.0) [Information] (1) Starting web host
+15:17 (1.0.0) [Information] (1) Starting web host
+15:19 (1.0.0) [Information] (1) Starting web host
+15:19 (1.0.0) [Error] (10) Attempted to divide by zero.
+
+15:19 (1.0.0) [Error] (10)    at Bookmyslot.Api.Customers.Controllers.CustomerController.Get(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers\Controllers\CustomerController.cs:line 74
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+15:45 (1.0.0) [Information] (1) Starting web host
+15:45 (1.0.0) [Information] (9) Get Customer Email a@gmail.com
+15:46 (1.0.0) [Information] (13) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+15:46 (1.0.0) [Information] (13) Get Customer Email a@gmail.com
+17:58 (1.0.0) [Information] (1) Starting web host
+18:00 (1.0.0) [Information] (5) Get Customer Email a@gmail.com
+18:00 (1.0.0) [Information] (17) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:02 (1.0.0) [Information] (22) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:03 (1.0.0) [Information] (28) Get Customer Email a@gmail.com
+18:03 (1.0.0) [Information] (31) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:04 (1.0.0) [Information] (28) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:06 (1.0.0) [Information] (34) Get Customer Email a@gmail.com
+18:07 (1.0.0) [Information] (36) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:08 (1.0.0) [Information] (37) Get Customer Email a@gmail.com
+18:08 (1.0.0) [Information] (37) Get Customer Email a@gmail.com
+18:08 (1.0.0) [Information] (37) Get Customer Email a@gmail.com
+18:08 (1.0.0) [Information] (37) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:09 (1.0.0) [Information] (41) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:10 (1.0.0) [Information] (44) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:10 (1.0.0) [Information] (50) Get all Customers
+18:10 (1.0.0) [Information] (53) Get Customer Email a@gmail.com
+18:11 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+18:11 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+18:11 (1.0.0) [Information] (51) Get Customer Email a@gmail.com
+18:11 (1.0.0) [Information] (54) Get Customer Email a@gmail.com
+18:11 (1.0.0) [Information] (57) Get Customer Email a@gmail.com
+18:11 (1.0.0) [Information] (57) Get Customer Email a@gmail.com
+18:11 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+18:12 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+18:12 (1.0.0) [Information] (58) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:13 (1.0.0) [Information] (60) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:14 (1.0.0) [Information] (63) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:16 (1.0.0) [Information] (68) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:17 (1.0.0) [Information] (69) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:18 (1.0.0) [Information] (72) Delete Customer asjk@fm.com
+18:18 (1.0.0) [Information] (77) Delete Customer asjk@fm.com
+18:19 (1.0.0) [Information] (80) Delete Customer asjk@fm.com
+18:19 (1.0.0) [Information] (81) Get Customer Email a@gmail.com
+18:20 (1.0.0) [Information] (82) Get all Customers
+18:21 (1.0.0) [Information] (1) Starting web host
+18:23 (1.0.0) [Information] (12) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:28 (1.0.0) [Information] (1) Starting web host
+18:29 (1.0.0) [Information] (7) Get Customer Email a@gmail.com
+18:29 (1.0.0) [Information] (7) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:30 (1.0.0) [Information] (18) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:31 (1.0.0) [Information] (23) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:49 (1.0.0) [Information] (30) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:50 (1.0.0) [Information] (30) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+18:51 (1.0.0) [Information] (1) Starting web host
+18:52 (1.0.0) [Information] (4) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:05 (1.0.0) [Information] (1) Starting web host
+19:05 (1.0.0) [Information] (4) Get Customer Email a@gmail.com
+19:05 (1.0.0) [Information] (4) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:07 (1.0.0) [Information] (1) Starting web host
+19:08 (1.0.0) [Information] (6) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:12 (1.0.0) [Information] (1) Starting web host
+19:13 (1.0.0) [Information] (12) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:14 (1.0.0) [Information] (17) Get all Customers
+19:14 (1.0.0) [Information] (14) Delete Customer a@gmail.com
+19:15 (1.0.0) [Information] (13) Get all Customers
+19:15 (1.0.0) [Information] (8) Get Customer Email aa@gmail.com
+19:16 (1.0.0) [Information] (24) Get Customer Email aa@gmail.com

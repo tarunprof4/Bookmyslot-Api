@@ -4,6 +4,7 @@ using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
@@ -60,7 +61,6 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// <response code="400">validation error bad request</response>
         /// <response code="500">internal server error</response>
         // GET api/<CustomerController>/email
-        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -110,6 +110,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] CustomerModel customerModel)
         {
+            
             Log.Information("Update Customer " + customerModel);
             var customerResponse = await customerBusiness.UpdateCustomer(customerModel);
             return this.CreatePutHttpResponse(customerResponse);
