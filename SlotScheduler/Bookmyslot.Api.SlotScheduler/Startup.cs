@@ -1,7 +1,9 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.ExceptionHandlers;
 using Bookmyslot.Api.SlotScheduler.Injections;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +30,38 @@ namespace Bookmyslot.Api.SlotScheduler
 
             services.AddControllers();
 
-            services.AddSwaggerGen();
+            services.AddOpenApiDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Bookmyslot Customer API";
+                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "TA",
+                        Email = string.Empty,
+                        //Url = "https://twitter.com/spboyer"
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = "",
+                        //Url = "https://example.com/license"
+                    };
+                };
+            });
+
+            services.AddMvc()
+     .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+     .ConfigureApiBehaviorOptions(options =>
+     {
+         options.InvalidModelStateResponseFactory = context =>
+         {
+             var problems = new BadRequestExceptionHandler(context);
+             return new BadRequestObjectResult(problems.ErrorMessages);
+         };
+     });
         }
 
         private Dictionary<string, string> GetAppConfigurations()
@@ -52,14 +85,10 @@ namespace Bookmyslot.Api.SlotScheduler
 
             app.ConfigureGlobalExceptionHandler();
 
-            app.UseSwagger();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+
 
 
             app.UseRouting();
