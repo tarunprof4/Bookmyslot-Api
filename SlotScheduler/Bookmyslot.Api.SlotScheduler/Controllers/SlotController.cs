@@ -86,18 +86,18 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         /// <response code="404">no slot found</response>
         /// <response code="500">internal server error</response>
         // PUT api/<SlotController>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] SlotModel slotModel)
-        {
-            Log.Information("Update Customer Slot " + slotModel);
-            var slotResponse = await slotBusiness.UpdateSlot(slotModel);
-            return this.CreatePutHttpResponse(slotResponse);
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[HttpPut]
+        //public async Task<IActionResult> Put([FromBody] SlotModel slotModel)
+        //{
+        //    Log.Information("Update Customer Slot " + slotModel);
+        //    var slotResponse = await slotBusiness.UpdateSlot(slotModel);
+        //    return this.CreatePutHttpResponse(slotResponse);
 
-        }
+        //}
 
         /// <summary>
         /// Delete User slot

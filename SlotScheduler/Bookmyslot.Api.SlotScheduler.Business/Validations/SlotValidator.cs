@@ -8,10 +8,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
 {
     public class SlotValidator : AbstractValidator<SlotModel>
     {
-        public SlotValidator()
+        public SlotValidator(DateTime currentDate)
         {
+            RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.SlotTitleMissing);
             RuleFor(x => x.CreatedBy).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.UserIdMissing);
-            RuleFor(x => x.StartTime).Cascade(CascadeMode.Stop).GreaterThan(x => DateTime.UtcNow).WithMessage(AppBusinessMessages.SlotStartDateInvalid);
+            RuleFor(x => x.TimeZone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.TimeZoneMissing);
+            RuleFor(x => x.SlotDate.Date).Cascade(CascadeMode.Stop).GreaterThan(x => currentDate.Date).WithMessage(AppBusinessMessages.SlotStartDateInvalid);
             RuleFor(x => x.EndTime).Cascade(CascadeMode.Stop).GreaterThan(x => x.StartTime).WithMessage(AppBusinessMessages.SlotEndDateInvalid);
         }
 

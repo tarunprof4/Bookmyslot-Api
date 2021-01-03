@@ -14,8 +14,10 @@
         public const string GenderNotValid = "Gender is not valid";
         public const string NoRecordsFound = "no records";
 
+        public const string SlotTitleMissing = "slot title is missing";
         public const string UserIdMissing = "user id is missing";
         public const string SlotDetailsMissing = "slot details missing";
+        public const string TimeZoneMissing = "time zone missing";
         public const string SlotStartDateInvalid = "slot start date cannot be less than todays date";
         public const string SlotEndDateInvalid = "slot end date cannot be less than start date";
 

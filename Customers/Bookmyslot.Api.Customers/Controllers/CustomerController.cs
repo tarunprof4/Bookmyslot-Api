@@ -126,16 +126,16 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// <response code="404">no customer found</response>
         /// <response code="500">internal server error</response>
         // DELETE api/<CustomerController>/email
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("{email}")]
-        public async Task<IActionResult> Delete(string email)
-        {
-            Log.Information("Delete Customer " + email);
-            var customerResponse = await customerBusiness.DeleteCustomer(email);
-            return this.CreateDeleteHttpResponse(customerResponse);
-        }
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[HttpDelete("{email}")]
+        //public async Task<IActionResult> Delete(string email)
+        //{
+        //    Log.Information("Delete Customer " + email);
+        //    var customerResponse = await customerBusiness.DeleteCustomer(email);
+        //    return this.CreateDeleteHttpResponse(customerResponse);
+        //}
     }
 }

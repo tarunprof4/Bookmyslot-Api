@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Business.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -22,10 +23,15 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         private void SanitizeSlotModel(SlotModel slotModel)
         {
             slotModel.Title = slotModel.Title.Trim();
+            slotModel.SlotDate = slotModel.SlotDate.Date;
         }
         public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
         {
-            var validator = new SlotValidator();
+            var currentDate = DateTime.Now;
+            currentDate = currentDate.GetDateTimeByTimeZone(slotModel.TimeZone);
+            slotModel.CreatedBy = UserService.GetUser();
+
+            var validator = new SlotValidator(currentDate);
             ValidationResult results = validator.Validate(slotModel);
 
             if (results.IsValid)
@@ -71,7 +77,10 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
         public async Task<Response<bool>> UpdateSlot(SlotModel slotModel)
         {
-            var validator = new SlotValidator();
+            var currentDate = DateTime.Now;
+            currentDate = currentDate.GetDateTimeByTimeZone(slotModel.TimeZone);
+
+            var validator = new SlotValidator(currentDate);
             ValidationResult results = validator.Validate(slotModel);
 
             if (results.IsValid)
