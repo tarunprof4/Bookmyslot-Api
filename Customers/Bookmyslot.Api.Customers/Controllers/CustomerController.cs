@@ -45,7 +45,6 @@ namespace Bookmyslot.Api.Customers.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            throw new System.Exception();
             Log.Information("Get all Customers");
             var customerResponse = await customerBusiness.GetAllCustomers();
             return this.CreateGetHttpResponse(customerResponse);
@@ -97,7 +96,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         /// Update existing customer
         /// </summary>
         /// <param name="customerModel">customer model</param>
-        /// <returns >success or failure bool</returns>
+        /// <returns>success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="404">no customer found</response>
@@ -110,7 +109,6 @@ namespace Bookmyslot.Api.Customers.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] CustomerModel customerModel)
         {
-            
             Log.Information("Update Customer " + customerModel);
             var customerResponse = await customerBusiness.UpdateCustomer(customerModel);
             return this.CreatePutHttpResponse(customerResponse);
