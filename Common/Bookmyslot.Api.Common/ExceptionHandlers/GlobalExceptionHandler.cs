@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -7,7 +6,7 @@ using Serilog;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Bookmyslot.Api.SlotScheduler
+namespace Bookmyslot.Api.Common.ExceptionHandlers
 {
     public static class GlobalExceptionHandler
     {
@@ -25,6 +24,12 @@ namespace Bookmyslot.Api.SlotScheduler
                         Log.Error(contextFeature.Error.Message + "\n");
                         Log.Error(contextFeature.Error.StackTrace);
 
+                        //await context.Response.WriteAsync(new ErrorDetails()
+                        //{
+                        //    StatusCode = context.Response.StatusCode,
+                        //    Message = "Internal Server Error."
+                        //}.ToString());
+
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(new List<string>() { "Internal Server Error" }));
                     }
                 });
@@ -32,3 +37,4 @@ namespace Bookmyslot.Api.SlotScheduler
         }
     }
 }
+

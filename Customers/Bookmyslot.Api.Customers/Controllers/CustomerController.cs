@@ -45,6 +45,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            throw new System.Exception();
             Log.Information("Get all Customers");
             var customerResponse = await customerBusiness.GetAllCustomers();
             return this.CreateGetHttpResponse(customerResponse);
