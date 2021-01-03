@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -7,7 +6,7 @@ using Serilog;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Bookmyslot.Api.SlotScheduler
+namespace Bookmyslot.Api.Common.ExceptionHandlers
 {
     public static class GlobalExceptionHandler
     {
@@ -38,3 +37,4 @@ namespace Bookmyslot.Api.SlotScheduler
         }
     }
 }
+

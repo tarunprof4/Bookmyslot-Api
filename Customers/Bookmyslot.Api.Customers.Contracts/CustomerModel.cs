@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Bookmyslot.Api.Customers.Contracts
+﻿namespace Bookmyslot.Api.Customers.Contracts
 {
     public class CustomerModel
     {

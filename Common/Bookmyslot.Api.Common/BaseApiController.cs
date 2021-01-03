@@ -1,12 +1,8 @@
 ﻿
 
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
 
 namespace Bookmyslot.Api.Common
 {

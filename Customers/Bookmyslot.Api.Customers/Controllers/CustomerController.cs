@@ -4,7 +4,6 @@ using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
@@ -46,6 +45,7 @@ namespace Bookmyslot.Api.Customers.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            throw new System.Exception();
             Log.Information("Get all Customers");
             var customerResponse = await customerBusiness.GetAllCustomers();
             return this.CreateGetHttpResponse(customerResponse);
