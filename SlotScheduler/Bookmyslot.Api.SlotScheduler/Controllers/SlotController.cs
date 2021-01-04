@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -24,13 +25,14 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
             this.slotBusiness = slotBusiness;
         }
 
-        //[HttpGet("{email}")]
-        //public async Task<IActionResult> Get(Date)
-        //{
-        //    Log.Information("Get all Customers");
-        //    var customerResponse = await slotBusiness.GetAllSlotsDateRange();
-        //    return this.CreateGetHttpResponse(customerResponse);
-        //}
+        //[HttpGet("{pageParameterModel}")]
+        [HttpGet()]
+        public async Task<IActionResult> Get([FromBody] PageParameterModel pageParameterModel)
+        {
+            Log.Information("Get all slots");
+            var customerResponse = await slotBusiness.GetAllSlots(pageParameterModel);
+            return this.CreateGetHttpResponse(customerResponse);
+        }
 
 
         /// <summary>
@@ -47,7 +49,7 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("{id}")]
+        [HttpGet("{slotId}")]
         public async Task<IActionResult> Get(Guid slotId)
         {
             Log.Information("Get Customer Slot " + slotId);

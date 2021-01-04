@@ -20,6 +20,20 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             this.connection = connection;
         }
 
+        public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
+        {
+            var sql = "select * from slot where IsDeleted = false";
+            var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
+                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, string.Empty);
+            var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
+            if (slotModels.Count == 0)
+            {
+                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
+            }
+
+            return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+        }
+
         public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
         {
             var slotEntity = EntityFactory.EntityFactory.CreateSlotEntity(slotModel);
@@ -34,7 +48,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return new Response<bool>() { Result = true };
         }
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetAllSlotsDateRange(DateTime startDate, DateTime endDate)
+
+
+        public Task<Response<IEnumerable<SlotModel>>> GetAllSlotsDateRange(DateTime startDate, DateTime endDate)
         {
             throw new NotImplementedException();
         }

@@ -48,7 +48,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             if (slotId == Guid.Empty)
             {
-                return  Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotIdInvalid });
+                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotIdInvalid });
             }
 
             var checkSlotExistsResponse = await CheckIfSlotExists(slotId);
@@ -101,10 +101,15 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         private async Task<Tuple<bool, SlotModel>> CheckIfSlotExists(Guid slotId)
         {
             var slotModelResponse = await this.slotRepository.GetSlot(slotId);
-            if (slotModelResponse.ResultType  == ResultType.Success)
+            if (slotModelResponse.ResultType == ResultType.Success)
                 return new Tuple<bool, SlotModel>(true, slotModelResponse.Result);
 
             return new Tuple<bool, SlotModel>(false, slotModelResponse.Result);
+        }
+
+        public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
+        {
+            return await this.slotRepository.GetAllSlots(pageParameterModel);
         }
     }
 }

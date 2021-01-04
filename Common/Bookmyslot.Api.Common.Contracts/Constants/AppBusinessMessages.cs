@@ -12,7 +12,7 @@
         public const string MiddleNameInValid = "Middle name is not Valid";
         public const string LastNameInValid = "Last name is not valid";
         public const string GenderNotValid = "Gender is not valid";
-        public const string NoRecordsFound = "no records";
+        public const string NoRecordsFound = "no records found";
 
         public const string SlotTitleMissing = "slot title is missing";
         public const string UserIdMissing = "user id is missing";

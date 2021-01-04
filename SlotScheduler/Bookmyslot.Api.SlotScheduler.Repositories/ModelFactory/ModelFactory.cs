@@ -21,7 +21,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
         }
 
 
-        internal static List<SlotModel> CreateCustomerModels(IEnumerable<SlotEntity> slotEntities)
+        internal static List<SlotModel> CreateSlotModels(IEnumerable<SlotEntity> slotEntities)
         {
             List<SlotModel> slotModels = new List<SlotModel>();
             foreach (var slotEntity in slotEntities)
