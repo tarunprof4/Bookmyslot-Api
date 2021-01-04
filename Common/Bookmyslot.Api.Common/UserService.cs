@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Common
+﻿namespace Bookmyslot.Api.Common
 {
     public static class UserService
     {
