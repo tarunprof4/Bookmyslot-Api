@@ -14,9 +14,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
         public string TimeZone { get; set; }
 
         public DateTime SlotDate { get; set; }
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan SlotStartTime { get; set; }
 
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan SlotEndTime { get; set; }
 
         //public Money Amount { get; set; }
 

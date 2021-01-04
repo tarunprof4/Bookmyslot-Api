@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
             RuleFor(x => x.CreatedBy).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.UserIdMissing);
             RuleFor(x => x.TimeZone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.TimeZoneMissing);
             RuleFor(x => x.SlotDate.Date).Cascade(CascadeMode.Stop).GreaterThan(x => currentDate.Date).WithMessage(AppBusinessMessages.SlotStartDateInvalid);
-            RuleFor(x => x.EndTime).Cascade(CascadeMode.Stop).GreaterThan(x => x.StartTime).WithMessage(AppBusinessMessages.SlotEndDateInvalid);
+            RuleFor(x => x.SlotEndTime.TotalMinutes).Cascade(CascadeMode.Stop).GreaterThanOrEqualTo(x => x.SlotStartTime.TotalMinutes + SlotConstants.MinimumSlotDuration).WithMessage(AppBusinessMessages.SlotEndTimeInvalid);
         }
 
         protected override bool PreValidate(ValidationContext<SlotModel> context, ValidationResult result)

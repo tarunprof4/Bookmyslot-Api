@@ -19,7 +19,7 @@
         public const string SlotDetailsMissing = "slot details missing";
         public const string TimeZoneMissing = "time zone missing";
         public const string SlotStartDateInvalid = "slot start date cannot be less than todays date";
-        public const string SlotEndDateInvalid = "slot end date cannot be less than start date";
+        public const string SlotEndTimeInvalid = "slot end time  cannot be less than slot start time";
 
         public const string SlotIdInvalid = "slot id is not valid";
         public const string SlotIdDoesNotExists = "slot does not exists";

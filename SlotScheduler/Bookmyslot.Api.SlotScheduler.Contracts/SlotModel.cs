@@ -21,18 +21,18 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]
         [DefaultValue("10:00:00")]
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan SlotStartTime { get; set; }
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]
         [DefaultValue("11:00:00")]
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan SlotEndTime { get; set; }
 
         [JsonIgnore]
         public TimeSpan SlotDuration
         {
             get
             {
-                return EndTime - StartTime;
+                return SlotEndTime - SlotStartTime;
             }
         }
     }
