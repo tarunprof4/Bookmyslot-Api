@@ -1,0 +1,1 @@
+delete from [Bookmyslot].[dbo].[Customer]

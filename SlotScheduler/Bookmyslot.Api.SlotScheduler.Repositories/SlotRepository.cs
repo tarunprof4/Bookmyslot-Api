@@ -24,8 +24,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         {
             var parameters = new { IsDeleted = false };
             var sql = "where IsDeleted = @IsDeleted";
+            var orderBy = "SlotDate";
             var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
-                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, string.Empty, parameters);
+                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, orderBy, parameters);
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
             {
