@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -25,14 +24,13 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
             this.slotBusiness = slotBusiness;
         }
 
-        //[HttpGet("{pageParameterModel}")]
-        [HttpGet()]
-        public async Task<IActionResult> Get([FromQuery] PageParameterModel pageParameterModel)
-        {
-            Log.Information("Get all slots");
-            var customerResponse = await slotBusiness.GetAllSlots(pageParameterModel);
-            return this.CreateGetHttpResponse(customerResponse);
-        }
+        //[HttpGet()]
+        //public async Task<IActionResult> Get([FromQuery] PageParameterModel pageParameterModel)
+        //{
+        //    Log.Information("Get all slots");
+        //    var customerResponse = await slotBusiness.GetAllSlots(pageParameterModel);
+        //    return this.CreateGetHttpResponse(customerResponse);
+        //}
 
 
         /// <summary>

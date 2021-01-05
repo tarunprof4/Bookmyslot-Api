@@ -14,12 +14,14 @@ namespace Bookmyslot.Api.SlotScheduler.Injections
         public static void SlotSchedulerBusinessInjections(IServiceCollection services)
         {
             services.AddTransient<ISlotBusiness, SlotBusiness>();
+            services.AddTransient<ICustomerSlotBusiness, CustomerSlotBusiness>();
         }
 
 
         public static void SlotSchedulerRepositoryInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddTransient<ISlotRepository, SlotRepository>();
+            services.AddTransient<ICustomerSlotRepository, CustomerSlotRepository>();
             services.AddTransient<IDbConnection>((sp) => new SqlConnection(appConfigurations[AppConfigurations.BookMySlotDatabaseConnectionString]));
         }
     }
