@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
 
         //[HttpGet("{pageParameterModel}")]
         [HttpGet()]
-        public async Task<IActionResult> Get([FromBody] PageParameterModel pageParameterModel)
+        public async Task<IActionResult> Get([FromQuery] PageParameterModel pageParameterModel)
         {
             Log.Information("Get all slots");
             var customerResponse = await slotBusiness.GetAllSlots(pageParameterModel);

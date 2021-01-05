@@ -22,9 +22,10 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
         {
-            var sql = "select * from slot where IsDeleted = false";
+            var parameters = new { IsDeleted = false };
+            var sql = "where IsDeleted = @IsDeleted";
             var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
-                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, string.Empty);
+                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, string.Empty, parameters);
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
             {

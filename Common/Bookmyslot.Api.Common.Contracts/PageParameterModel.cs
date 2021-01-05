@@ -1,18 +1,18 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Contracts
 {
     public class PageParameterModel
     {
         [Required]
+        [DefaultValue("1")]
         public int PageNumber { get; set; }
 
         [JsonIgnore]
+        [DefaultValue("10")]
         public int PageSize
         {
             get
