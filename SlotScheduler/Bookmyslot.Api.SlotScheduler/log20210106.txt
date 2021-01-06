@@ -382,3 +382,37 @@ Invalid usage of the option Next in the FETCH statement.
 16:27 (1.0.0) [Information] (6) Get all available slots for the customer
 17:05 (1.0.0) [Information] (1) Starting web host
 17:05 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+17:39 (1.0.0) [Information] (1) Starting web host
+17:41 (1.0.0) [Information] (16) Get all distinct customers nearest single slot
+17:43 (1.0.0) [Information] (20) Get all distinct customers nearest single slot
+17:43 (1.0.0) [Information] (20) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (1) Starting web host
+17:45 (1.0.0) [Information] (5) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (19) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (23) Get all distinct customers nearest single slot
+17:47 (1.0.0) [Information] (27) Get all distinct customers nearest single slot
+17:48 (1.0.0) [Information] (29) Get all distinct customers nearest single slot
+17:49 (1.0.0) [Information] (32) Get all distinct customers nearest single slot
+17:49 (1.0.0) [Information] (33) Get all distinct customers nearest single slot
+17:50 (1.0.0) [Information] (37) Get all distinct customers nearest single slot
+17:55 (1.0.0) [Information] (42) Get all distinct customers nearest single slot
+17:55 (1.0.0) [Information] (45) Get all distinct customers nearest single slot
+17:57 (1.0.0) [Information] (47) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (52) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (52) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (53) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (55) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (54) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (54) Get all distinct customers nearest single slot
+18:00 (1.0.0) [Information] (57) Get all distinct customers nearest single slot
+18:00 (1.0.0) [Information] (57) Get all distinct customers nearest single slot
+18:02 (1.0.0) [Information] (59) Get all distinct customers nearest single slot
+18:02 (1.0.0) [Information] (61) Get all distinct customers nearest single slot
+18:05 (1.0.0) [Information] (67) Get all distinct customers nearest single slot
+18:06 (1.0.0) [Information] (69) Get all distinct customers nearest single slot
+18:06 (1.0.0) [Information] (71) Get all distinct customers nearest single slot
+18:07 (1.0.0) [Information] (74) Get all distinct customers nearest single slot
+18:11 (1.0.0) [Information] (1) Starting web host
+18:12 (1.0.0) [Information] (5) Get all available slots for the customer
+18:12 (1.0.0) [Information] (13) Get all available slots for the customer
+18:12 (1.0.0) [Information] (5) Get all available slots for the customer
