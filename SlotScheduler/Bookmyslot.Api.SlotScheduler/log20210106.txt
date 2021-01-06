@@ -374,3 +374,9 @@ Invalid usage of the option Next in the FETCH statement.
    at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
 14:44 (1.0.0) [Information] (1) Starting web host
 14:44 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+16:24 (1.0.0) [Information] (1) Starting web host
+16:24 (1.0.0) [Information] (14) Get all available slots for the customer
+16:24 (1.0.0) [Information] (14) Get all available slots for the customer
+16:26 (1.0.0) [Information] (1) Starting web host
+16:26 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+16:27 (1.0.0) [Information] (6) Get all available slots for the customer

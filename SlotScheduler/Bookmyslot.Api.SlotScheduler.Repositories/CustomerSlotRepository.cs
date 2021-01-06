@@ -41,8 +41,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
         {
             var parameters = new { IsDeleted = false, CreatedBy= email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
-            var sql = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and CreatedBy= @CreatedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime
-  OFFSET @PageNumber ROWS FETCH Next @PageSize ROWS ONLY";
+            var sql = SlotTableQueries.GetCustomerAvailableSlotsFromTodayQuery;
 
             var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
 
