@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private CustomerSlotBusiness customerSlotBusiness;
         private Mock<ICustomerSlotRepository> customerSlotRepositoryMock;
         private Mock<ICustomerBusiness> customerBusinessMock;
-        
+
 
         [SetUp]
         public void Setup()
@@ -39,24 +39,19 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModels = GetValidSlotModels();
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
             customerSlotRepositoryMock.Setup(a => a.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())).Returns(Task.FromResult(slotModelResponseMock));
-            Response<CustomerModel> customerModelResponseMock1 = new Response<CustomerModel>() { Result = GetValidCustomerModelByEmail(CreatedBy1) };
-            Response<CustomerModel> customerModelResponseMock2 = new Response<CustomerModel>() { Result = GetValidCustomerModelByEmail(CreatedBy2) };
-            Response<CustomerModel> customerModelResponseMock3 = new Response<CustomerModel>() { Result = GetValidCustomerModelByEmail(CreatedBy3) };
-
-            customerBusinessMock.SetupSequence(a => a.GetCustomer(It.IsAny<string>()))
-                .Returns(Task.FromResult(customerModelResponseMock1))
-                .Returns(Task.FromResult(customerModelResponseMock2))
-                .Returns(Task.FromResult(customerModelResponseMock3));
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByEmail(CreatedBy1), GetValidCustomerModelByEmail(CreatedBy2), GetValidCustomerModelByEmail(CreatedBy3) } };
+            customerBusinessMock.Setup(a => a.GetCustomersByEmails(It.IsAny<IEnumerable<string>>()))
+                .Returns(Task.FromResult(customerModelsMock));
 
 
-            var customerSlotModelResponse =  await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
-            
+            var customerSlotModelResponse = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
+
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(customerSlotModelResponse.Result[0].SlotModels.First().CreatedBy, CreatedBy1);
             Assert.NotNull(customerSlotModelResponse.Result[0].SlotModels);
             Assert.NotNull(customerSlotModelResponse.Result[0].CustomerModel);
             customerSlotRepositoryMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Once());
-            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.AtLeastOnce());
+            customerBusinessMock.Verify((m => m.GetCustomersByEmails(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
 
         [Test]
@@ -117,7 +112,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
             customerSlotRepositoryMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
 
-            var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, string.Empty);
+            var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, CreatedBy1);
 
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Empty);
             customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
@@ -135,7 +130,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private IEnumerable<SlotModel> GetValidSlotModels()
         {
             List<SlotModel> slotModels = new List<SlotModel>();
-            
+
             var slotModel = new SlotModel();
             slotModel.CreatedBy = CreatedBy1;
             slotModels.Add(slotModel);

@@ -11,5 +11,7 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
         Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers();
         Task<Response<CustomerModel>> GetCustomer(string email);
         Task<Response<bool>> UpdateCustomer(CustomerModel customerModel);
+
+        Task<Response<List<CustomerModel>>> GetCustomersByEmails(IEnumerable<string> emails);
     }
 }

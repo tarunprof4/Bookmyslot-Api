@@ -52,19 +52,18 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
             {
                 var customerSlotModels = new List<CustomerSlotModel>();
-
                 var distinctCustomersLatestSlot = allCustomerSlotsResponse.Result;
 
-                var responses = distinctCustomersLatestSlot.Select(async distinctCustomerLatestSlot =>
+                var emails = distinctCustomersLatestSlot.Select(a=>a.CreatedBy);
+                var customerModels = await this.customerBusiness.GetCustomersByEmails(emails);
+
+                foreach(var customerModel in customerModels.Result)
                 {
                     var customerSlotModel = new CustomerSlotModel();
-                    var customerModelResponse = await this.customerBusiness.GetCustomer(distinctCustomerLatestSlot.CreatedBy);
-                    customerSlotModel.SlotModels = new List<SlotModel>() { distinctCustomerLatestSlot };
-                    customerSlotModel.CustomerModel = customerModelResponse.Result;
+                    customerSlotModel.SlotModels = distinctCustomersLatestSlot.Where(a => a.CreatedBy == customerModel.Email).ToList();
+                    customerSlotModel.CustomerModel = customerModel;
                     customerSlotModels.Add(customerSlotModel);
-                });
-
-                await Task.WhenAll(responses);
+                }
 
                 return Response<List<CustomerSlotModel>>.Success(customerSlotModels);
             }

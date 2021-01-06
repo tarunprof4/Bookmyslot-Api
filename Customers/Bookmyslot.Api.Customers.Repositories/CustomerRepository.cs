@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
@@ -53,6 +54,21 @@ namespace Bookmyslot.Api.Customers.Repositories
 
             var customerModel = ModelFactory.ModelFactory.CreateCustomerModel(customerEntity);
             return Response<CustomerModel>.Success(customerModel);
+        }
+
+        public async Task<Response<List<CustomerModel>>> GetCustomersByEmails(IEnumerable<string> emails)
+        {
+            var parameters = new { Emails = emails };
+            var sql = CustomerTableQueries.GetCustomersByEmailsQuery;
+
+            var customerEntities = await this.connection.QueryAsync<CustomerEntity>(sql, parameters);
+            var customerModels = ModelFactory.ModelFactory.CreateCustomerModels(customerEntities);
+            if (customerModels.Count == 0)
+            {
+                return Response<List<CustomerModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
+            }
+
+            return new Response<List<CustomerModel>>() { Result = customerModels };
         }
 
         public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)

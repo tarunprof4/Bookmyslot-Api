@@ -74,6 +74,11 @@ namespace Bookmyslot.Api.Customers.Business
             return await customerRepository.GetCustomer(email);
         }
 
+        public async Task<Response<List<CustomerModel>>> GetCustomersByEmails(IEnumerable<string> emails)
+        {
+            return await this.customerRepository.GetCustomersByEmails(emails);
+        }
+
         public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
         {
             var validator = new CustomerValidator();
