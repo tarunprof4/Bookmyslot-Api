@@ -1,4 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Compression;
+using Bookmyslot.Api.Common.Compression.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Business;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories;
@@ -14,12 +16,17 @@ namespace Bookmyslot.Api.SlotScheduler.Injections
 {
     public class SlotSchedulerInjection
     {
+
+        public static void SlotSchedulerCommonInjections(IServiceCollection services)
+        {
+            services.AddTransient<IKeyEncryptor, KeyEncryptor>();
+        }
+
         public static void SlotSchedulerBusinessInjections(IServiceCollection services)
         {
             services.AddTransient<ISlotBusiness, SlotBusiness>();
             services.AddTransient<ICustomerSlotBusiness, CustomerSlotBusiness>();
             services.AddTransient<ICustomerBusiness, CustomerBusiness>();
-
         }
 
 
