@@ -5,7 +5,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;

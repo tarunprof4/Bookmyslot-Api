@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Common.Compression.Interfaces
+﻿namespace Bookmyslot.Api.Common.Compression.Interfaces
 {
     public interface IKeyEncryptor
     {

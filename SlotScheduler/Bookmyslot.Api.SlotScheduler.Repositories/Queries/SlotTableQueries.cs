@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
+﻿namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
 {
-    
+
     public class SlotTableQueries
     {
 
