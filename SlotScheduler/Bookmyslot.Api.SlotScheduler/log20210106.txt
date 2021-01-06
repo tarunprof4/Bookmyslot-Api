@@ -1,0 +1,418 @@
+00:07 (1.0.0) [Information] (1) Starting web host
+00:08 (1.0.0) [Information] (11) Get all distinct customers nearest single slot
+00:08 (1.0.0) [Error] (10) Incorrect syntax near the keyword 'where'.
+
+00:08 (1.0.0) [Error] (10)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 30
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+00:09 (1.0.0) [Information] (1) Starting web host
+00:11 (1.0.0) [Information] (6) Get all distinct customers nearest single slot
+00:11 (1.0.0) [Error] (14) Unable to cast object of type 'System.Collections.Generic.List`1[System.Object]' to type 'System.Collections.Generic.IEnumerable`1[Bookmyslot.Api.SlotScheduler.Repositories.Enitites.SlotEntity]'.
+
+00:11 (1.0.0) [Error] (14)    at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 31
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+00:24 (1.0.0) [Information] (1) Starting web host
+00:25 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+13:50 (1.0.0) [Information] (1) Starting web host
+13:51 (1.0.0) [Information] (1) Starting web host
+13:51 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+13:53 (1.0.0) [Error] (15) There is already an open DataReader associated with this Command which must be closed first.
+
+13:53 (1.0.0) [Error] (15)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Dapper.SimpleCRUD.GetAsync[T](IDbConnection connection, Object id, IDbTransaction transaction, Nullable`1 commandTimeout)
+   at Bookmyslot.Api.Customers.Repositories.CustomerRepository.GetCustomer(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers.Repositories\CustomerRepository.cs:line 48
+   at Bookmyslot.Api.Customers.Business.CustomerBusiness.GetCustomer(String email) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers.Business\CustomerBusiness.cs:line 74
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.<>c__DisplayClass4_0.<<GetDistinctCustomersNearestSlotFromToday>b__0>d.MoveNext() in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 61
+--- End of stack trace from previous location where exception was thrown ---
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 67
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+13:53 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:18 (1.0.0) [Information] (1) Starting web host
+14:18 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:18 (1.0.0) [Error] (5) Invalid column name 'false'.
+
+14:18 (1.0.0) [Error] (5)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 36
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:24 (1.0.0) [Information] (1) Starting web host
+14:25 (1.0.0) [Information] (13) Get all distinct customers nearest single slot
+14:25 (1.0.0) [Error] (15) Incorrect syntax near 'OFFSET'.
+Invalid usage of the option Next in the FETCH statement.
+
+14:25 (1.0.0) [Error] (15)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 38
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:26 (1.0.0) [Information] (1) Starting web host
+14:27 (1.0.0) [Information] (13) Get all distinct customers nearest single slot
+14:27 (1.0.0) [Error] (13) Must declare the scalar variable "@IsDeleted".
+Invalid usage of the option Next in the FETCH statement.
+
+14:27 (1.0.0) [Error] (13)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 37
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:28 (1.0.0) [Information] (1) Starting web host
+14:28 (1.0.0) [Information] (10) Get all distinct customers nearest single slot
+14:29 (1.0.0) [Error] (6) Incorrect syntax near 'OFFSET'.
+Invalid usage of the option Next in the FETCH statement.
+
+14:29 (1.0.0) [Error] (6)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 37
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:29 (1.0.0) [Information] (1) Starting web host
+14:30 (1.0.0) [Information] (13) Get all distinct customers nearest single slot
+14:30 (1.0.0) [Error] (16) Incorrect syntax near 'OFFSET'.
+Invalid usage of the option Next in the FETCH statement.
+
+14:30 (1.0.0) [Error] (16)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 37
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:31 (1.0.0) [Information] (1) Starting web host
+14:31 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:31 (1.0.0) [Error] (10) Incorrect syntax near 'OFFSET'.
+Invalid usage of the option Next in the FETCH statement.
+
+14:31 (1.0.0) [Error] (10)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 35
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:32 (1.0.0) [Information] (1) Starting web host
+14:33 (1.0.0) [Information] (9) Get all distinct customers nearest single slot
+14:33 (1.0.0) [Error] (4) Incorrect syntax near '@PageNumber'.
+Invalid usage of the option Next in the FETCH statement.
+
+14:33 (1.0.0) [Error] (4)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 35
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:34 (1.0.0) [Information] (1) Starting web host
+14:35 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:35 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:36 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:36 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:36 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+14:37 (1.0.0) [Information] (1) Starting web host
+14:39 (1.0.0) [Information] (6) Get all distinct customers nearest single slot
+14:39 (1.0.0) [Error] (14) Invalid column name 'false'.
+
+14:39 (1.0.0) [Error] (14)    at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__126_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 418
+   at Bookmyslot.Api.SlotScheduler.Repositories.CustomerSlotRepository.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories\CustomerSlotRepository.cs:line 35
+   at Bookmyslot.Api.SlotScheduler.Business.CustomerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSlotBusiness.cs:line 51
+   at Bookmyslot.Api.SlotScheduler.Controllers.CustomerSlotController.Get(PageParameterModel pageParameterModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler\Controllers\CustomerSlotController.cs:line 27
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:44 (1.0.0) [Information] (1) Starting web host
+14:44 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+16:24 (1.0.0) [Information] (1) Starting web host
+16:24 (1.0.0) [Information] (14) Get all available slots for the customer
+16:24 (1.0.0) [Information] (14) Get all available slots for the customer
+16:26 (1.0.0) [Information] (1) Starting web host
+16:26 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+16:27 (1.0.0) [Information] (6) Get all available slots for the customer
+17:05 (1.0.0) [Information] (1) Starting web host
+17:05 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+17:39 (1.0.0) [Information] (1) Starting web host
+17:41 (1.0.0) [Information] (16) Get all distinct customers nearest single slot
+17:43 (1.0.0) [Information] (20) Get all distinct customers nearest single slot
+17:43 (1.0.0) [Information] (20) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (1) Starting web host
+17:45 (1.0.0) [Information] (5) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (19) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (23) Get all distinct customers nearest single slot
+17:47 (1.0.0) [Information] (27) Get all distinct customers nearest single slot
+17:48 (1.0.0) [Information] (29) Get all distinct customers nearest single slot
+17:49 (1.0.0) [Information] (32) Get all distinct customers nearest single slot
+17:49 (1.0.0) [Information] (33) Get all distinct customers nearest single slot
+17:50 (1.0.0) [Information] (37) Get all distinct customers nearest single slot
+17:55 (1.0.0) [Information] (42) Get all distinct customers nearest single slot
+17:55 (1.0.0) [Information] (45) Get all distinct customers nearest single slot
+17:57 (1.0.0) [Information] (47) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (52) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (52) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (53) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (55) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (54) Get all distinct customers nearest single slot
+17:58 (1.0.0) [Information] (54) Get all distinct customers nearest single slot
+18:00 (1.0.0) [Information] (57) Get all distinct customers nearest single slot
+18:00 (1.0.0) [Information] (57) Get all distinct customers nearest single slot
+18:02 (1.0.0) [Information] (59) Get all distinct customers nearest single slot
+18:02 (1.0.0) [Information] (61) Get all distinct customers nearest single slot
+18:05 (1.0.0) [Information] (67) Get all distinct customers nearest single slot
+18:06 (1.0.0) [Information] (69) Get all distinct customers nearest single slot
+18:06 (1.0.0) [Information] (71) Get all distinct customers nearest single slot
+18:07 (1.0.0) [Information] (74) Get all distinct customers nearest single slot
+18:11 (1.0.0) [Information] (1) Starting web host
+18:12 (1.0.0) [Information] (5) Get all available slots for the customer
+18:12 (1.0.0) [Information] (13) Get all available slots for the customer
+18:12 (1.0.0) [Information] (5) Get all available slots for the customer
