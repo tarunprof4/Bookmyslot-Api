@@ -4,6 +4,8 @@
     public class SlotTableQueries
     {
 
+        public const string GetAllSlotsQuery = @"SELECT * FROM Slot order by SlotDate OFFSET @PageNumber ROWS FETCH Next @PageSize ROWS ONLY";
+
         public const string GetDistinctCustomersNearestSlotFromTodayQuery = @"select * from (
 SELECT id, title, CreatedBy, SlotStartTime, SlotEndTime, IsDeleted, ModifiedDate, TimeZone, SlotDate,
        ROW_NUMBER() OVER(PARTITION BY CreatedBy ORDER BY slotDate ASC) AS RowNumber

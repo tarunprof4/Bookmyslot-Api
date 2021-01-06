@@ -21,6 +21,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
         public async Task<Response<List<CustomerSlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessages.EmailIdMissing });
+            }
+
             var allCustomerSlotsResponse = await this.customerSlotRepository.GetCustomerAvailableSlots(pageParameterModel, email);
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
             {

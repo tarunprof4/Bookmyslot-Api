@@ -1,4 +1,5 @@
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -93,6 +94,20 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.NotNull(customerSlotModelResponse.Result[0].CustomerModel);
             customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Once());
+        }
+
+
+        [Test]
+        public async Task GetCustomerAvailableSlots_EmailIdMissing_ReturnsValidationResponse()
+        {
+            var pageParameterModel = GetValidPageParameterModel();
+
+            var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, string.Empty);
+
+            Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.ValidationError);
+            Assert.IsTrue(customerSlotModelResponse.Messages.Contains(AppBusinessMessages.EmailIdMissing));
+            customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Never());
+            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Never());
         }
 
         [Test]

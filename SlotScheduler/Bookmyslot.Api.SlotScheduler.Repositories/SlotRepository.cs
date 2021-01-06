@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
         {
-            var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
-                (pageParameterModel.PageNumber, pageParameterModel.PageSize, string.Empty, string.Empty, string.Empty);
+            var parameters = new { PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
+            var sql = SlotTableQueries.GetAllSlotsQuery;
+
+            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
+
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
             {
