@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -24,15 +25,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
         {
             var parameters = new { IsDeleted = false, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
-            var sql = @"select * from (
-SELECT id, title, CreatedBy, SlotStartTime, SlotEndTime, IsDeleted, ModifiedDate, TimeZone, SlotDate,
-       ROW_NUMBER() OVER(PARTITION BY CreatedBy ORDER BY slotDate ASC) AS RowNumber
-FROM Slot
-where IsDeleted = @IsDeleted  and SlotDate > GETDATE()
-) 
-as resultSet where resultSet.RowNumber = 1 order by resultSet.Id ASC OFFSET @PageNumber ROWS  FETCH Next @PageSize ROWS ONLY";
+            var sql = SlotTableQueries.GetDistinctCustomersNearestSlotFromTodayQuery;
 
-            var slotEntities =  await this.connection.QueryAsync<SlotEntity>(sql, parameters);
+            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
 
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)

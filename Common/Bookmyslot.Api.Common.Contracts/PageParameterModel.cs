@@ -8,7 +8,7 @@ namespace Bookmyslot.Api.Common.Contracts
     public class PageParameterModel
     {
         [Required]
-        [DefaultValue("1")]
+        [DefaultValue("0")]
         public int PageNumber { get; set; }
 
         [JsonIgnore]
