@@ -46,9 +46,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             return Response<List<CustomerSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
         }
 
-        public async Task<Response<List<CustomerSlotModel>>> GetDistinctCustomersLatestSlot(PageParameterModel pageParameterModel)
+        public async Task<Response<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
         {
-            var allCustomerSlotsResponse = await this.customerSlotRepository.GetDistinctCustomersLatestSlot(pageParameterModel);
+            var allCustomerSlotsResponse = await this.customerSlotRepository.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
             {
                 var customerSlotModels = new List<CustomerSlotModel>();

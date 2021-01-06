@@ -4,6 +4,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -20,13 +21,14 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         }
 
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetDistinctCustomersLatestSlot(PageParameterModel pageParameterModel)
+        public async Task<Response<IEnumerable<SlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
         {
-            var parameters = new { IsDeleted = false };
-            var sql = "where IsDeleted = @IsDeleted";
-            var orderBy = "SlotDate";
-            var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
-                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, orderBy, parameters);
+            var parameters = new { IsDeleted = false, SlotDate = DateTime.Now.Date };
+            var sql = "select distinct CreatedBy FROM Slot where  IsDeleted = @IsDeleted and SlotDate > @SlotDate";
+            //var orderBy = "SlotDate";
+
+            var slotEntities =  await this.connection.QueryAsync<SlotEntity>(sql, parameters);
+
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
             {
@@ -38,7 +40,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(PageParameterModel pageParameterModel, string email)
         {
-            var parameters = new { IsDeleted = false, CreatedBy= email };
+            var parameters = new { IsDeleted = false, CreatedBy = email };
             var sql = "where IsDeleted = @IsDeleted && CreatedBy = @CreatedBy";
             var orderBy = "SlotDate";
             var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
@@ -52,6 +54,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
         }
 
-      
+
     }
 }

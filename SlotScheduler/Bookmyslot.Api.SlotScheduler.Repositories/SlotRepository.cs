@@ -22,11 +22,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
         {
-            var parameters = new { IsDeleted = false };
-            var sql = "where IsDeleted = @IsDeleted";
-            
             var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
-                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, string.Empty, parameters);
+                (pageParameterModel.PageNumber, pageParameterModel.PageSize, string.Empty, string.Empty, string.Empty);
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
             {
@@ -35,22 +32,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
         }
-
-        //public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
-        //{
-        //    var parameters = new { IsDeleted = false };
-        //    var sql = "where IsDeleted = @IsDeleted";
-        //    var orderBy = "SlotDate";
-        //    var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
-        //        (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, orderBy, parameters);
-        //    var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
-        //    if (slotModels.Count == 0)
-        //    {
-        //        return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-        //    }
-
-        //    return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
-        //}
 
         public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
         {
@@ -64,13 +45,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var slotEntity = EntityFactory.EntityFactory.DeleteSlotEntity(slotModel);
             await this.connection.UpdateAsync<SlotEntity>(slotEntity);
             return new Response<bool>() { Result = true };
-        }
-
-
-
-        public Task<Response<IEnumerable<SlotModel>>> GetAllSlotsDateRange(DateTime startDate, DateTime endDate)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Response<SlotModel>> GetSlot(Guid slotId)
