@@ -8,8 +8,12 @@ namespace Bookmyslot.Api.Common.Contracts
     public class PageParameterModel
     {
         [Required]
-        [DefaultValue("1")]
+        [DefaultValue("0")]
         public int PageNumber { get; set; }
+
+        const int maxPageSize = PaginationConstants.PageSize;
+
+        private int pageSize;
 
         [JsonIgnore]
         [DefaultValue("10")]
@@ -17,7 +21,12 @@ namespace Bookmyslot.Api.Common.Contracts
         {
             get
             {
-                return PaginationConstants.PageSize;
+                return pageSize;
+            }
+
+            set
+            {
+                pageSize = (value > maxPageSize) ? maxPageSize : value;
             }
         }
     }

@@ -60,11 +60,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             return Response<bool>.Empty(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
         }
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetAllSlotsDateRange(DateTime startDate, DateTime endDate)
-        {
-            return await this.slotRepository.GetAllSlotsDateRange(DateTime.Now, DateTime.Now);
-        }
-
         public async Task<Response<SlotModel>> GetSlot(Guid slotId)
         {
             if (slotId == Guid.Empty)

@@ -25,6 +25,7 @@ namespace Bookmyslot.Api.SlotScheduler
         {
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
+            SlotSchedulerInjection.SlotSchedulerCommonInjections(services);
             SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
             SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
 

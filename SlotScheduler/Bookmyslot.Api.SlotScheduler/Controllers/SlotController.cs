@@ -25,7 +25,6 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
             this.slotBusiness = slotBusiness;
         }
 
-        //[HttpGet("{pageParameterModel}")]
         [HttpGet()]
         public async Task<IActionResult> Get([FromQuery] PageParameterModel pageParameterModel)
         {
