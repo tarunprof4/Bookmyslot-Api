@@ -5,6 +5,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -86,11 +87,12 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         {
             foreach(var customerSlotModel in customerSlotModels)
             {
+                customerSlotModel.Information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(customerSlotModel));
+
                 customerSlotModel.CustomerModel.Email = string.Empty;
                 customerSlotModel.CustomerModel.Gender = string.Empty;
 
                 customerSlotModel.SlotModels = new List<SlotModel>();
-                customerSlotModel.Information = string.Empty;
             }
         }
 
@@ -99,14 +101,14 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         {
             foreach (var customerSlotModel in customerSlotModels)
             {
+                customerSlotModel.Information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(customerSlotModel));
+
                 customerSlotModel.CustomerModel.Email = string.Empty;
                 customerSlotModel.CustomerModel.Gender = string.Empty;
                 foreach (var slotModel in customerSlotModel.SlotModels)
                 {
                     slotModel.CreatedBy = string.Empty;
                 }
-                    
-                customerSlotModel.Information = string.Empty;
             }
         }
     }
