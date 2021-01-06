@@ -72,6 +72,43 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Never());
         }
 
+
+
+        [Test]
+        public async Task GetCustomerAvailableSlots_ValidInput_ReturnsCustomerSlotModelSuccessResponse()
+        {
+            var pageParameterModel = GetValidPageParameterModel();
+            var slotModels = GetValidSlotModels();
+            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            customerSlotRepositoryMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
+            Response<CustomerModel> customerModelResponseMock1 = new Response<CustomerModel>() { Result = GetValidCustomerModelByEmail(CreatedBy1) };
+            customerBusinessMock.Setup(a => a.GetCustomer(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponseMock1));
+
+
+            var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, CreatedBy1);
+
+            Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Success);
+            Assert.AreEqual(customerSlotModelResponse.Result[0].SlotModels.First().CreatedBy, CreatedBy1);
+            Assert.NotNull(customerSlotModelResponse.Result[0].SlotModels);
+            Assert.NotNull(customerSlotModelResponse.Result[0].CustomerModel);
+            customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Once());
+        }
+
+        [Test]
+        public async Task GetCustomerAvailableSlots_NoRecordsFound_ReturnsEmptyResponse()
+        {
+            var pageParameterModel = GetValidPageParameterModel();
+            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
+            customerSlotRepositoryMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
+
+            var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, string.Empty);
+
+            Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Empty);
+            customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Never());
+        }
+
         private PageParameterModel GetValidPageParameterModel()
         {
             return new PageParameterModel()

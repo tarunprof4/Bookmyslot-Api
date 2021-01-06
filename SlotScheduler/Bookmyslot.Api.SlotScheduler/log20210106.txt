@@ -372,3 +372,5 @@ Invalid usage of the option Next in the FETCH statement.
    at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
    at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+14:44 (1.0.0) [Information] (1) Starting web host
+14:44 (1.0.0) [Information] (4) Get all distinct customers nearest single slot

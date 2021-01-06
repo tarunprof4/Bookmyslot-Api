@@ -38,13 +38,14 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
         }
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(PageParameterModel pageParameterModel, string email)
+        public async Task<Response<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
         {
-            var parameters = new { IsDeleted = false, CreatedBy = email };
-            var sql = "where IsDeleted = @IsDeleted && CreatedBy = @CreatedBy";
-            var orderBy = "SlotDate";
-            var slotEntities = await this.connection.GetListPagedAsync<SlotEntity>
-                (pageParameterModel.PageNumber, pageParameterModel.PageSize, sql, orderBy, parameters);
+            var parameters = new { IsDeleted = false, CreatedBy= email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
+            var sql = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and CreatedBy= @CreatedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime
+  OFFSET @PageNumber ROWS FETCH Next @PageSize ROWS ONLY";
+
+            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
+
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
             {

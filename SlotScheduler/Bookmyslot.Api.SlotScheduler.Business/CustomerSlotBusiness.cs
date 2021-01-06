@@ -19,26 +19,21 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             this.customerBusiness = customerBusiness;
         }
 
-        public async Task<Response<List<CustomerSlotModel>>> GetCustomerSlots(PageParameterModel pageParameterModel, string email)
+        public async Task<Response<List<CustomerSlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
         {
-            var allCustomerSlotsResponse = await this.customerSlotRepository.GetCustomerSlots(pageParameterModel, email);
+            var allCustomerSlotsResponse = await this.customerSlotRepository.GetCustomerAvailableSlots(pageParameterModel, email);
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
             {
-                var customerSlotModels = new List<CustomerSlotModel>();
-
                 var allCustomerSlots = allCustomerSlotsResponse.Result;
-                var distinctCustomers = allCustomerSlots.GroupBy(x => x.CreatedBy).Select(y => y.First().CreatedBy);
 
-                var responses = distinctCustomers.Select(async customerEmail =>
+                var customerModelResponse = await this.customerBusiness.GetCustomer(email);
+                var customerSlotModels = new List<CustomerSlotModel>();
+                var customerSlotModel = new CustomerSlotModel
                 {
-                    var customerSlotModel = new CustomerSlotModel();
-                    var customerModelResponse = await this.customerBusiness.GetCustomer(customerEmail);
-                    customerSlotModel.SlotModels = allCustomerSlots.Where(a => a.CreatedBy == customerEmail).ToList();
-                    customerSlotModel.CustomerModel = customerModelResponse.Result;
-                    customerSlotModels.Add(customerSlotModel);
-                });
-
-                await Task.WhenAll(responses);
+                    SlotModels = allCustomerSlots.ToList(),
+                    CustomerModel = customerModelResponse.Result
+                };
+                customerSlotModels.Add(customerSlotModel);
 
                 return Response<List<CustomerSlotModel>>.Success(customerSlotModels);
             }
