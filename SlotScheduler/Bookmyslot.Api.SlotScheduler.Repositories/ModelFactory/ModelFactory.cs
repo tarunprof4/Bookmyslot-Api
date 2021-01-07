@@ -10,13 +10,14 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
         {
             return new SlotModel()
             {
-               Id = slotEntity.Id,
-               Title = slotEntity.Title,
-               CreatedBy = slotEntity.CreatedBy,
-               TimeZone = slotEntity.TimeZone,
-               SlotDate = slotEntity.SlotDate,
-               SlotStartTime = slotEntity.SlotStartTime,
-               SlotEndTime = slotEntity.SlotEndTime,
+                Id = slotEntity.Id,
+                Title = slotEntity.Title,
+                CreatedBy = slotEntity.CreatedBy,
+                BookedBy = slotEntity.BookedBy,
+                TimeZone = slotEntity.TimeZone,
+                SlotDate = slotEntity.SlotDate,
+                SlotStartTime = slotEntity.SlotStartTime,
+                SlotEndTime = slotEntity.SlotEndTime,
             };
         }
 

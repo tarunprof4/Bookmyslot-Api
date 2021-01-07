@@ -13,6 +13,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
                 Id = Guid.NewGuid(),
                 Title = slotModel.Title,
                 CreatedBy = slotModel.CreatedBy,
+                BookedBy = slotModel.BookedBy,
                 TimeZone = slotModel.TimeZone,
                 SlotDate = slotModel.SlotDate,
                 SlotStartTime = slotModel.SlotStartTime,

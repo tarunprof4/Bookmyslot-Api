@@ -24,6 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             slotModel.Title = slotModel.Title.Trim();
             slotModel.SlotDate = slotModel.SlotDate.Date;
+            slotModel.BookedBy = string.Empty;
         }
         public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
         {

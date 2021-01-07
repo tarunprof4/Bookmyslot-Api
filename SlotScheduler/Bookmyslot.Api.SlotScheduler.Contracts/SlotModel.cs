@@ -13,8 +13,9 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         [Required]
         public string Title { get; set; }
 
-        [JsonIgnore]
         public string CreatedBy { get; set; }
+        
+        public string BookedBy { get; set; }
 
         [DefaultValue("India Standard Time")]
         [Required]

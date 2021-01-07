@@ -11,6 +11,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
         public string Title { get; set; }
         public string CreatedBy { get; set; }
 
+        public string BookedBy { get; set; }
+
         public string TimeZone { get; set; }
 
         public DateTime SlotDate { get; set; }

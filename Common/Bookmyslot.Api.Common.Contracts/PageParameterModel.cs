@@ -15,7 +15,6 @@ namespace Bookmyslot.Api.Common.Contracts
 
         private int pageSize;
 
-        [JsonIgnore]
         [DefaultValue("10")]
         [Range(1, PaginationConstants.PageSize)]
         public int PageSize

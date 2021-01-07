@@ -25,6 +25,8 @@ namespace Bookmyslot.Api.SlotScheduler.Injections
         public static void SlotSchedulerBusinessInjections(IServiceCollection services)
         {
             services.AddTransient<ISlotBusiness, SlotBusiness>();
+            services.AddTransient<ISlotSchedulerBusiness, SlotSchedulerBusiness>();
+            
             services.AddTransient<ICustomerSlotBusiness, CustomerSlotBusiness>();
             services.AddTransient<ICustomerBusiness, CustomerBusiness>();
         }

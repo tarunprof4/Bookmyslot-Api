@@ -19,31 +19,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             this.customerBusiness = customerBusiness;
         }
 
-        public async Task<Response<CustomerSlotModel>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                return Response<CustomerSlotModel>.ValidationError(new List<string>() { AppBusinessMessages.EmailIdMissing });
-            }
-
-            var allCustomerSlotsResponse = await this.customerSlotRepository.GetCustomerAvailableSlots(pageParameterModel, email);
-            if (allCustomerSlotsResponse.ResultType == ResultType.Success)
-            {
-                var allCustomerSlots = allCustomerSlotsResponse.Result;
-
-                var customerModelResponse = await this.customerBusiness.GetCustomer(email);
-                var customerSlotModel = new CustomerSlotModel
-                {
-                    SlotModels = allCustomerSlots.ToList(),
-                    CustomerModel = customerModelResponse.Result
-                };
-
-                return Response<CustomerSlotModel>.Success(customerSlotModel);
-            }
-
-            return Response<CustomerSlotModel>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
-        }
-
+       
         public async Task<Response<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
         {
             var allCustomerSlotsResponse = await this.customerSlotRepository.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
@@ -67,6 +43,36 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             }
 
             return Response<List<CustomerSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
+        }
+
+        public async Task<Response<BookSlotModel>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return Response<BookSlotModel>.ValidationError(new List<string>() { AppBusinessMessages.EmailIdMissing });
+            }
+
+            var allCustomerSlotsResponse = await this.customerSlotRepository.GetCustomerAvailableSlots(pageParameterModel, email);
+            if (allCustomerSlotsResponse.ResultType == ResultType.Success)
+            {
+                var allCustomerSlots = allCustomerSlotsResponse.Result;
+
+                var customerModelResponse = await this.customerBusiness.GetCustomer(email);
+                var bookSlotModel = new BookSlotModel
+                {
+                    CustomerModel = customerModelResponse.Result,
+                    SlotModelsInforamtion = new List<BmsKeyValuePair<SlotModel, string>>()
+                };
+
+                foreach(var allCustomerSlot in allCustomerSlots)
+                {
+                    bookSlotModel.SlotModelsInforamtion.Add(new BmsKeyValuePair<SlotModel, string>(allCustomerSlot, string.Empty));
+                }
+
+                return Response<BookSlotModel>.Success(bookSlotModel);
+            }
+
+            return Response<BookSlotModel>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
         }
     }
 }

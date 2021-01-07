@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -60,7 +61,7 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         /// Gets customer slots
         /// </summary>
         /// <param name="pageParameterModel">pageParameterModel</param>
-        /// <param name="key">slotKey</param>
+        /// <param name="key">customer and its slot informations</param>
         /// <returns>returns slot model</returns>
         /// <response code="200">Returns customer slot information</response>
         /// <response code="404">no slots found</response>
@@ -80,12 +81,12 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
 
             if (customerSlotModel != null)
             {
-                var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerSlotModel.CustomerModel.Email);
-                if (customerSlotModelResponse.ResultType == ResultType.Success)
+                var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerSlotModel.CustomerModel.Email);
+                if (bookSlotModelResponse.ResultType == ResultType.Success)
                 {
-                    HideUncessaryDetailsForGetCustomerAvailableSlots(customerSlotModelResponse.Result);
+                    HideUncessaryDetailsForGetCustomerAvailableSlots(bookSlotModelResponse.Result);
                 }
-                return this.CreateGetHttpResponse((Response<CustomerSlotModel>)customerSlotModelResponse);
+                return this.CreateGetHttpResponse(bookSlotModelResponse);
             }
 
             var validationErrorResponse = Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
@@ -106,16 +107,16 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         }
 
 
-        private void HideUncessaryDetailsForGetCustomerAvailableSlots(CustomerSlotModel customerSlotModel)
+        private void HideUncessaryDetailsForGetCustomerAvailableSlots(BookSlotModel bookSlotModel)
         {
-            customerSlotModel.Information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(customerSlotModel));
-
-            customerSlotModel.CustomerModel.Email = string.Empty;
-            customerSlotModel.CustomerModel.Gender = string.Empty;
-            foreach (var slotModel in customerSlotModel.SlotModels)
+            foreach (var slotModel in bookSlotModel.SlotModelsInforamtion)
             {
-                slotModel.CreatedBy = string.Empty;
+                slotModel.Value = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(slotModel));
+                slotModel.Key.CreatedBy = string.Empty;
             }
+
+            bookSlotModel.CustomerModel.Email = string.Empty;
+            bookSlotModel.CustomerModel.Gender = string.Empty;
         }
     }
 }
