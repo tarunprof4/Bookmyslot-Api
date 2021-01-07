@@ -61,7 +61,7 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         /// Gets customer slots
         /// </summary>
         /// <param name="pageParameterModel">pageParameterModel</param>
-        /// <param name="key">customer and its slot informations</param>
+        /// <param name="customerSlotModelKey">customer and its slot informations</param>
         /// <returns>returns slot model</returns>
         /// <response code="200">Returns customer slot information</response>
         /// <response code="404">no slots found</response>
@@ -74,10 +74,10 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSlot/GetCustomerAvailableSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string key)
+        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerSlotModelKey)
         {
             Log.Information("Get all available slots for the customer");
-            var customerSlotModel = JsonConvert.DeserializeObject<CustomerSlotModel>(this.keyEncryptor.Decrypt(key));
+            var customerSlotModel = JsonConvert.DeserializeObject<CustomerSlotModel>(this.keyEncryptor.Decrypt(customerSlotModelKey));
 
             if (customerSlotModel != null)
             {
