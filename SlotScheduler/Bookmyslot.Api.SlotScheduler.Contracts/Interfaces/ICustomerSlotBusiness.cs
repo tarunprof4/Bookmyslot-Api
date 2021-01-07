@@ -8,6 +8,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
     {
         Task<Response<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel);
 
-        Task<Response<List<CustomerSlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email);
+        Task<Response<CustomerSlotModel>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email);
     }
 }

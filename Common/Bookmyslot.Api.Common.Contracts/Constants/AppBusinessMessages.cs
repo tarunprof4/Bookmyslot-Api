@@ -5,6 +5,7 @@
         public const string CustomerDetailsMissing = "Customer details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
 
+
         public const string EmailIdMissing = "Email id is missing";
         public const string EmailIdNotValid = "Email id is not valid";
         public const string EmailIdExists = "Email id exists";
@@ -24,5 +25,7 @@
 
         public const string SlotIdInvalid = "slot id is not valid";
         public const string SlotIdDoesNotExists = "slot does not exists";
+
+        public const string CorruptData = "Data is corrupt";
     }
 }

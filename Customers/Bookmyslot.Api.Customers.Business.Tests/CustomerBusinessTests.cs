@@ -15,7 +15,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
     {
         private const string EMAIL = "a@gmail.com";
         private const string FIRSTNAME = "fisrtname";
-        private const string MIDDLENAME = "middlename";
         private const string LASTNAME = "lastname";
         private const string GENDER = "gender";
         private CustomerBusiness customerBusiness;
@@ -111,7 +110,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task CreateCustomer_WithInvalidCustomerNameAndEmail_ReturnsValidationError()
         {
-            var customerModel = new CustomerModel() { FirstName=" 12 ", MiddleName = "2@", Email ="asdf.com" };
+            var customerModel = new CustomerModel() { FirstName=" 12 ",  Email ="asdf.com" };
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
@@ -191,7 +190,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         {
             var customerModel = new CustomerModel();
             customerModel.FirstName = FIRSTNAME;
-            customerModel.MiddleName = MIDDLENAME;
             customerModel.LastName = LASTNAME;
             customerModel.Gender = GENDER;
             customerModel.Email = EMAIL;

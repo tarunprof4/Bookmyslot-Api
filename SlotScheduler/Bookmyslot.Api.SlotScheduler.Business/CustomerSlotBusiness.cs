@@ -19,11 +19,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             this.customerBusiness = customerBusiness;
         }
 
-        public async Task<Response<List<CustomerSlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
+        public async Task<Response<CustomerSlotModel>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                return Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessages.EmailIdMissing });
+                return Response<CustomerSlotModel>.ValidationError(new List<string>() { AppBusinessMessages.EmailIdMissing });
             }
 
             var allCustomerSlotsResponse = await this.customerSlotRepository.GetCustomerAvailableSlots(pageParameterModel, email);
@@ -32,18 +32,16 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 var allCustomerSlots = allCustomerSlotsResponse.Result;
 
                 var customerModelResponse = await this.customerBusiness.GetCustomer(email);
-                var customerSlotModels = new List<CustomerSlotModel>();
                 var customerSlotModel = new CustomerSlotModel
                 {
                     SlotModels = allCustomerSlots.ToList(),
                     CustomerModel = customerModelResponse.Result
                 };
-                customerSlotModels.Add(customerSlotModel);
 
-                return Response<List<CustomerSlotModel>>.Success(customerSlotModels);
+                return Response<CustomerSlotModel>.Success(customerSlotModel);
             }
 
-            return Response<List<CustomerSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
+            return Response<CustomerSlotModel>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
         }
 
         public async Task<Response<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)

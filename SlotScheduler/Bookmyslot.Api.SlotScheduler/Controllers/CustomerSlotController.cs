@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -47,7 +48,7 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         {
             Log.Information("Get all distinct customers nearest single slot");
             var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
-            if(customerSlotModels.ResultType == ResultType.Success)
+            if (customerSlotModels.ResultType == ResultType.Success)
             {
                 HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(customerSlotModels.Result);
             }
@@ -59,7 +60,7 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         /// Gets customer slots
         /// </summary>
         /// <param name="pageParameterModel">pageParameterModel</param>
-        /// <param name="email">customer email id</param>
+        /// <param name="key">slotKey</param>
         /// <returns>returns slot model</returns>
         /// <response code="200">Returns customer slot information</response>
         /// <response code="404">no slots found</response>
@@ -72,20 +73,28 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSlot/GetCustomerAvailableSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string email)
+        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string key)
         {
             Log.Information("Get all available slots for the customer");
-            var customerSlotModels = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, email);
-            if (customerSlotModels.ResultType == ResultType.Success)
+            var customerSlotModel = JsonConvert.DeserializeObject<CustomerSlotModel>(this.keyEncryptor.Decrypt(key));
+
+            if (customerSlotModel != null)
             {
-                HideUncessaryDetailsForGetCustomerAvailableSlots(customerSlotModels.Result);
+                var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerSlotModel.CustomerModel.Email);
+                if (customerSlotModelResponse.ResultType == ResultType.Success)
+                {
+                    HideUncessaryDetailsForGetCustomerAvailableSlots(customerSlotModelResponse.Result);
+                }
+                return this.CreateGetHttpResponse((Response<CustomerSlotModel>)customerSlotModelResponse);
             }
-            return this.CreateGetHttpResponse(customerSlotModels);
+
+            var validationErrorResponse = Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
+            return this.CreateGetHttpResponse(validationErrorResponse);
         }
 
         private void HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(List<CustomerSlotModel> customerSlotModels)
         {
-            foreach(var customerSlotModel in customerSlotModels)
+            foreach (var customerSlotModel in customerSlotModels)
             {
                 customerSlotModel.Information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(customerSlotModel));
 
@@ -97,18 +106,15 @@ namespace Bookmyslot.Api.SlotScheduler.Controllers
         }
 
 
-        private void HideUncessaryDetailsForGetCustomerAvailableSlots(List<CustomerSlotModel> customerSlotModels)
+        private void HideUncessaryDetailsForGetCustomerAvailableSlots(CustomerSlotModel customerSlotModel)
         {
-            foreach (var customerSlotModel in customerSlotModels)
-            {
-                customerSlotModel.Information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(customerSlotModel));
+            customerSlotModel.Information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(customerSlotModel));
 
-                customerSlotModel.CustomerModel.Email = string.Empty;
-                customerSlotModel.CustomerModel.Gender = string.Empty;
-                foreach (var slotModel in customerSlotModel.SlotModels)
-                {
-                    slotModel.CreatedBy = string.Empty;
-                }
+            customerSlotModel.CustomerModel.Email = string.Empty;
+            customerSlotModel.CustomerModel.Gender = string.Empty;
+            foreach (var slotModel in customerSlotModel.SlotModels)
+            {
+                slotModel.CreatedBy = string.Empty;
             }
         }
     }

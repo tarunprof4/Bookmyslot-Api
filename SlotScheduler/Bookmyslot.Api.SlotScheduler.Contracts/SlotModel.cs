@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         [Required]
         public TimeSpan SlotEndTime { get; set; }
 
-        [JsonIgnore]
+        [JsonConverter(typeof(JsonTimeSpanConverter))]
         public TimeSpan SlotDuration
         {
             get

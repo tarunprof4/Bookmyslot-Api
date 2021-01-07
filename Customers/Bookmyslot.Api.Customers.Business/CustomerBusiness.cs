@@ -112,7 +112,6 @@ namespace Bookmyslot.Api.Customers.Business
         private void SanitizeCustomerModel(CustomerModel customerModel)
         {
             customerModel.FirstName = customerModel.FirstName.Trim();
-            customerModel.MiddleName = customerModel.MiddleName.Trim();
             customerModel.LastName = customerModel.LastName.Trim();
             customerModel.Gender = customerModel.Gender.Trim();
             customerModel.Email = customerModel.Email.Trim();

@@ -1,2 +1,0 @@
-23:33 (1.0.0) [Information] (1) Starting web host
-23:33 (1.0.0) [Information] (4) Create Customer Bookmyslot.Api.Customers.Contracts.CustomerModel

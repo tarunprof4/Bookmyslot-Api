@@ -12,7 +12,6 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
             {
                 Email = customerEntity.Email.ToLowerInvariant(),
                 FirstName = customerEntity.FirstName,
-                MiddleName = customerEntity.MiddleName,
                 LastName = customerEntity.LastName,
                 Gender = customerEntity.Gender,
             };

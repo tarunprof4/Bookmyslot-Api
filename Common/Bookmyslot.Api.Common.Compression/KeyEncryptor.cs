@@ -37,6 +37,11 @@ namespace Bookmyslot.Api.Common.Compression
 
         public string Decrypt(string strValue)
         {
+            if(string.IsNullOrWhiteSpace(strValue))
+            {
+                return string.Empty;
+            }
+
             strValue = HttpUtility.UrlDecode(strValue);
             byte[] results;
             var encryptKey = CompressionConstants.BookMySlotEncryptionKey;
