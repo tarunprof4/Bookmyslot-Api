@@ -4,7 +4,7 @@
     public class CustomerTableQueries
     {
 
-        public const string GetCustomersByEmailsQuery = @"select * from Customer where Email IN @Emails";
+        public const string GetCustomersByCustomerIdsQuery = @"select * from Customer where UniqueId IN @CustomerIds";
 
         public const string GetCustomerByEmailsQuery = @"select * from Customer where Email = @Email";
 

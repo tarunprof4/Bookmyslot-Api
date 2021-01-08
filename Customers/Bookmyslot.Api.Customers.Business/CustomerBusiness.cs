@@ -60,19 +60,31 @@ namespace Bookmyslot.Api.Customers.Business
             return await this.customerRepository.GetAllCustomers();
         }
 
-        public async Task<Response<CustomerModel>> GetCustomer(string email)
+       
+
+        public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
                 return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.EmailIdNotValid } };
             }
 
-            return await customerRepository.GetCustomer(email);
+            return await customerRepository.GetCustomerByEmail(email);
         }
 
-        public async Task<Response<List<CustomerModel>>> GetCustomersByEmails(IEnumerable<string> emails)
+        public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
-            return await this.customerRepository.GetCustomersByEmails(emails);
+            if (string.IsNullOrWhiteSpace(customerId))
+            {
+                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.CustomerIdNotValid } };
+            }
+
+            return await customerRepository.GetCustomerById(customerId);
+        }
+
+        public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
+        {
+            return await this.customerRepository.GetCustomersByCustomerIds(customerIds);
         }
 
         public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
@@ -100,7 +112,7 @@ namespace Bookmyslot.Api.Customers.Business
 
         private async Task<Tuple<bool, CustomerModel>> CheckIfCustomerExists(string email)
         {
-            var customerModelResponse = await customerRepository.GetCustomer(email);
+            var customerModelResponse = await customerRepository.GetCustomerByEmail(email);
             if (customerModelResponse.ResultType == ResultType.Success)
                 return new Tuple<bool, CustomerModel>(true, customerModelResponse.Result);
 

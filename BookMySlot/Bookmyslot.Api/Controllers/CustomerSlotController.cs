@@ -60,7 +60,7 @@ namespace Bookmyslot.Api.Controllers
         /// Gets customer slots
         /// </summary>
         /// <param name="pageParameterModel">pageParameterModel</param>
-        /// <param name="customerSlotModelKey">customer and its slot informations</param>
+        /// <param name="customerInfo">customer info</param>
         /// <returns>returns slot model</returns>
         /// <response code="200">Returns customer slot information</response>
         /// <response code="404">no slots found</response>
@@ -73,31 +73,22 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSlot/GetCustomerAvailableSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerSlotModelKey)
+        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerInfo)
         {
             Log.Information("Get all available slots for the customer");
-            var customerSlotModel = JsonConvert.DeserializeObject<CustomerSlotModel>(this.keyEncryptor.Decrypt(customerSlotModelKey));
 
-            if (customerSlotModel != null)
+            var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);
+            if (bookSlotModelResponse.ResultType == ResultType.Success)
             {
-                var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerSlotModel.CustomerModel.Email);
-                if (bookSlotModelResponse.ResultType == ResultType.Success)
-                {
-                    HideUncessaryDetailsForGetCustomerAvailableSlots(bookSlotModelResponse.Result);
-                }
-                return this.CreateGetHttpResponse(bookSlotModelResponse);
+                HideUncessaryDetailsForGetCustomerAvailableSlots(bookSlotModelResponse.Result);
             }
-
-            var validationErrorResponse = Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
-            return this.CreateGetHttpResponse(validationErrorResponse);
+            return this.CreateGetHttpResponse(bookSlotModelResponse);
         }
 
         private void HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(List<CustomerSlotModel> customerSlotModels)
         {
             foreach (var customerSlotModel in customerSlotModels)
             {
-                customerSlotModel.Information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(customerSlotModel));
-
                 customerSlotModel.CustomerModel.Email = string.Empty;
                 customerSlotModel.CustomerModel.Gender = string.Empty;
 

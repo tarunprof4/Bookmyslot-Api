@@ -68,7 +68,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get(string email)
         {
             Log.Information("Get Customer Email " + email);
-            var customerResponse = await customerBusiness.GetCustomer(email);
+            var customerResponse = await customerBusiness.GetCustomerByEmail(email);
             return this.CreateGetHttpResponse(customerResponse);
         }
 

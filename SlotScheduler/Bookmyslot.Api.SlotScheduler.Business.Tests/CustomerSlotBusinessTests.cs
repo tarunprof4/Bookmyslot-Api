@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
             customerSlotRepositoryMock.Setup(a => a.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())).Returns(Task.FromResult(slotModelResponseMock));
             Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByEmail(CreatedBy1), GetValidCustomerModelByEmail(CreatedBy2), GetValidCustomerModelByEmail(CreatedBy3) } };
-            customerBusinessMock.Setup(a => a.GetCustomersByEmails(It.IsAny<IEnumerable<string>>()))
+            customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
 
 
@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.NotNull(customerSlotModelResponse.Result[0].SlotModels);
             Assert.NotNull(customerSlotModelResponse.Result[0].CustomerModel);
             customerSlotRepositoryMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Once());
-            customerBusinessMock.Verify((m => m.GetCustomersByEmails(It.IsAny<IEnumerable<string>>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
 
         [Test]

@@ -9,9 +9,11 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
         Task<Response<string>> CreateCustomer(CustomerModel customerModel);
         Task<Response<bool>> DeleteCustomer(string email);
         Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers();
-        Task<Response<CustomerModel>> GetCustomer(string email);
+        Task<Response<CustomerModel>> GetCustomerByEmail(string email);
+
+        Task<Response<CustomerModel>> GetCustomerById(string customerId);
         Task<Response<bool>> UpdateCustomer(CustomerModel customerModel);
 
-        Task<Response<List<CustomerModel>>> GetCustomersByEmails(IEnumerable<string> emails);
+        Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds);
     }
 }

@@ -8,6 +8,7 @@
 
         public const string EmailIdMissing = "Email id is missing";
         public const string EmailIdNotValid = "Email id is not valid";
+        public const string CustomerIdNotValid = "Customer id is not valid";
         public const string EmailIdExists = "Email id exists";
         public const string EmailIdDoesNotExists = "Email id does not exists";
         public const string FirstNameInValid = "Fist name is not Valid";

@@ -307,3 +307,7 @@ The statement has been terminated.
 19:09 (1.0.0) [Information] (14) Get Customer Email ll@gmail.com
 19:10 (1.0.0) [Information] (18) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
 19:10 (1.0.0) [Information] (18) Update Customer Bookmyslot.Api.Customers.Contracts.CustomerModel
+19:54 (1.0.0) [Information] (1) Starting web host
+19:54 (1.0.0) [Information] (4) Get all distinct customers nearest single slot
+19:55 (1.0.0) [Information] (16) Get all available slots for the customer
+19:56 (1.0.0) [Information] (20) Get all available slots for the customer
