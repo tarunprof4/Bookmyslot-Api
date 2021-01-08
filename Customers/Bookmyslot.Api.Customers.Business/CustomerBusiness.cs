@@ -4,6 +4,7 @@ using Bookmyslot.Api.Customers.Business.Validations;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using FluentValidation.Results;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,8 +19,6 @@ namespace Bookmyslot.Api.Customers.Business
             this.customerRepository = customerRepository;
         }
 
-        
-
         public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
             var validator = new CustomerValidator();
@@ -27,18 +26,15 @@ namespace Bookmyslot.Api.Customers.Business
 
             if (results.IsValid)
             {
-                SanitizeCustomerModel(customerModel);
-
                 var customerExists = await CheckIfCustomerExists(customerModel.Email);
-                if (!customerExists)
+                if (!customerExists.Item1)
                 {
+                    SanitizeCustomerModel(customerModel);
                     return await customerRepository.CreateCustomer(customerModel);
                 }
 
-
                 return new Response<string>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
             }
-                
 
             else
                 return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
@@ -52,7 +48,7 @@ namespace Bookmyslot.Api.Customers.Business
             }
 
             var customerExists = await CheckIfCustomerExists(email);
-            if (customerExists)
+            if (customerExists.Item1)
             {
                 return await this.customerRepository.DeleteCustomer(email);
             }
@@ -86,10 +82,12 @@ namespace Bookmyslot.Api.Customers.Business
 
             if (results.IsValid)
             {
-                SanitizeCustomerModel(customerModel);
                 var customerExists = await CheckIfCustomerExists(customerModel.Email);
-                if (customerExists)
+                if (customerExists.Item1)
                 {
+                    SanitizeCustomerModel(customerModel);
+                    customerModel.Id = customerExists.Item2.Id;
+
                     return await this.customerRepository.UpdateCustomer(customerModel);
                 }
 
@@ -100,13 +98,13 @@ namespace Bookmyslot.Api.Customers.Business
                 return new Response<bool>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
 
-        private async Task<bool> CheckIfCustomerExists(string email)
+        private async Task<Tuple<bool, CustomerModel>> CheckIfCustomerExists(string email)
         {
-            var customer = await customerRepository.GetCustomer(email);
-            if (customer.ResultType == ResultType.Success)
-                return true;
+            var customerModelResponse = await customerRepository.GetCustomer(email);
+            if (customerModelResponse.ResultType == ResultType.Success)
+                return new Tuple<bool, CustomerModel>(true, customerModelResponse.Result);
 
-            return false;
+            return new Tuple<bool, CustomerModel>(false, customerModelResponse.Result);
         }
 
         private void SanitizeCustomerModel(CustomerModel customerModel)

@@ -11,6 +11,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
             return new CustomerModel()
             {
                 Email = customerEntity.Email.ToLowerInvariant(),
+                Id= customerEntity.UniqueId,
                 FirstName = customerEntity.FirstName,
                 LastName = customerEntity.LastName,
                 Gender = customerEntity.Gender,

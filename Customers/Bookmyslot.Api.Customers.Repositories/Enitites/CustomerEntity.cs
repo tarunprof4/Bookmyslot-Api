@@ -7,7 +7,8 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
     public class CustomerEntity
     {
         [Key]
-        public string Email { get; set; }
+        public string UniqueId { get; set; }
+
 
         public string FirstName { get; set; }
 
@@ -15,7 +16,9 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
 
         public string Gender { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
+        public string Email { get; set; }
+       
 
+        public DateTime? ModifiedDate { get; set; }
     }
 }

@@ -46,7 +46,10 @@ namespace Bookmyslot.Api.Customers.Repositories
 
         public async Task<Response<CustomerModel>> GetCustomer(string email)
         {
-            var customerEntity = await this.connection.GetAsync<CustomerEntity>(email);
+            var parameters = new { Email = email };
+            var sql = CustomerTableQueries.GetCustomerByEmailsQuery;
+            var customerEntity = await this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters);
+
             if (customerEntity == null)
             {
                 return Response<CustomerModel>.Empty(new List<string>() { AppBusinessMessages.CustomerNotFound });

@@ -10,6 +10,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
         {
             return new CustomerEntity()
             {
+                UniqueId = Guid.NewGuid().ToString().Replace("-", string.Empty),
                 Email = customerModel.Email.ToLowerInvariant(),
                 FirstName = customerModel.FirstName,
                 LastName = customerModel.LastName,
@@ -20,6 +21,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
         internal static CustomerEntity UpdateCustomerEntity(CustomerModel customerModel)
         {
             var customerEntity = CreateCustomerEntity(customerModel);
+            customerEntity.UniqueId = customerModel.Id;
             customerEntity.ModifiedDate = DateTime.UtcNow;
             return customerEntity;
         }

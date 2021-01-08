@@ -6,7 +6,7 @@
 
         public const string GetCustomersByEmailsQuery = @"select * from Customer where Email IN @Emails";
 
-       
+        public const string GetCustomerByEmailsQuery = @"select * from Customer where Email = @Email";
 
     }
 }
