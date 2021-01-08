@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Common.Contracts
+﻿namespace Bookmyslot.Api.Common.Contracts
 {
     public class BmsKeyValuePair<TKey, TValue>
     {

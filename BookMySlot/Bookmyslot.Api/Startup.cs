@@ -1,5 +1,7 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.ExceptionHandlers;
+using Bookmyslot.Api.Customers.Injections;
+using Bookmyslot.Api.SlotScheduler.Injections;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,15 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Dictionary<string, string> appConfigurations = GetAppConfigurations();
+
+            CustomerInjection.CustomerBusinessInjections(services);
+            CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
+
+            SlotSchedulerInjection.SlotSchedulerCommonInjections(services);
+            SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
+            SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
+
 
             services.AddControllers();
 
@@ -82,6 +93,8 @@ namespace Bookmyslot.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.ConfigureGlobalExceptionHandler();
 
             app.UseRouting();
 

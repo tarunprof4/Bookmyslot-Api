@@ -11,7 +11,7 @@ using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.SlotScheduler.Controllers
+namespace Bookmyslot.Api.Controllers
 {
     //[Route("api/v1/[controller]")]
     [Produces("application/json")]

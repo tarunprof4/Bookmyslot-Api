@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business
