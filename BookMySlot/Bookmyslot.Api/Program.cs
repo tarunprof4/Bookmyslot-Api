@@ -1,4 +1,4 @@
-using Bookmyslot.Api.Logging.Contracts;
+using Bookmyslot.Api.Common.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;

@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common\Bookmyslot.Api.Common.csproj" />
-    <ProjectReference Include="..\..\Logging\Bookmyslot.Api.Logging.Contracts\Bookmyslot.Api.Logging.Contracts.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.SlotScheduler.Contracts\Bookmyslot.Api.SlotScheduler.Contracts.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.SlotScheduler.Injections\Bookmyslot.Api.SlotScheduler.Injections.csproj" />
   </ItemGroup>
