@@ -30,14 +30,14 @@ namespace Bookmyslot.Api.Controllers
 
         [Route("api/v1/SlotScheduler")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] SlotScheduleModel slotScheduleModel)
+        public async Task<IActionResult> Post([FromBody] SlotSchedulerModel slotSchedulerModel)
         {
-            Log.Information("Get all available slots for the customer");
-            var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotScheduleModel.SlotModelKey));
+            Log.Information("Schedule Slot for customer");
+            var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerModel.SlotModelKey));
 
             if (customerSlotModel != null)
             {
-                var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel.Key, slotScheduleModel.BookedBy);
+                var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel.Key);
                 return this.CreatePostHttpResponse(slotScheduleResponse);
             }
 
