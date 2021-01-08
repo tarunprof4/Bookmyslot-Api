@@ -16,9 +16,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
     public class CustomerSlotBusinessTests
     {
         private const int PageParameterModelPageNumber = 1;
-        private const string CreatedBy1 = "a@gmail.com";
-        private const string CreatedBy2 = "b@gmail.com";
-        private const string CreatedBy3 = "c@gmail.com";
+        private const string CreatedBy1 = "CreatedBy1";
+        private const string CreatedBy2 = "CreatedBy2";
+        private const string CreatedBy3 = "CreatedBy3";
         private CustomerSlotBusiness customerSlotBusiness;
         private Mock<ICustomerSlotRepository> customerSlotRepositoryMock;
         private Mock<ICustomerBusiness> customerBusinessMock;
@@ -39,7 +39,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModels = GetValidSlotModels();
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
             customerSlotRepositoryMock.Setup(a => a.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())).Returns(Task.FromResult(slotModelResponseMock));
-            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByEmail(CreatedBy1), GetValidCustomerModelByEmail(CreatedBy2), GetValidCustomerModelByEmail(CreatedBy3) } };
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
 
@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Empty);
             customerSlotRepositoryMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Once());
-            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Never());
+            customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Never());
         }
 
 
@@ -77,8 +77,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModels = GetValidSlotModels();
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
             customerSlotRepositoryMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
-            Response<CustomerModel> customerModelResponseMock1 = new Response<CustomerModel>() { Result = GetValidCustomerModelByEmail(CreatedBy1) };
-            customerBusinessMock.Setup(a => a.GetCustomer(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponseMock1));
+            Response<CustomerModel> customerModelResponseMock1 = new Response<CustomerModel>() { Result = GetValidCustomerModelByCustomerId(CreatedBy1) };
+            customerBusinessMock.Setup(a => a.GetCustomerById(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponseMock1));
 
 
             var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, CreatedBy1);
@@ -88,21 +88,21 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(customerSlotModelResponse.Result.SlotModelsInforamtion[0].Key.CreatedBy, CreatedBy1);
             Assert.NotNull(customerSlotModelResponse.Result.CustomerModel);
             customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
-            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Once());
         }
 
 
         [Test]
-        public async Task GetCustomerAvailableSlots_EmailIdMissing_ReturnsValidationResponse()
+        public async Task GetCustomerAvailableSlots_CustomerIdMissing_ReturnsValidationResponse()
         {
             var pageParameterModel = GetValidPageParameterModel();
 
             var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, string.Empty);
 
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.IsTrue(customerSlotModelResponse.Messages.Contains(AppBusinessMessages.EmailIdMissing));
+            Assert.IsTrue(customerSlotModelResponse.Messages.Contains(AppBusinessMessages.CustomerIdNotValid));
             customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Never());
-            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Never());
+            customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Never());
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Empty);
             customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
-            customerBusinessMock.Verify((m => m.GetCustomer(It.IsAny<string>())), Times.Never());
+            customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Never());
         }
 
         private PageParameterModel GetValidPageParameterModel()
@@ -146,11 +146,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             return slotModels;
         }
 
-        private CustomerModel GetValidCustomerModelByEmail(string email)
+        private CustomerModel GetValidCustomerModelByCustomerId(string customerId)
         {
             return new CustomerModel()
             {
-                Email = email
+                Id = customerId
             };
         }
 
