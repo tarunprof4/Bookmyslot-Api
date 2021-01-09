@@ -1,0 +1,8 @@
+00:05 (1.0.0) [Information] (1) Starting web host
+00:06 (1.0.0) [Information] (14) Get all distinct customers nearest single slot
+00:06 (1.0.0) [Information] (14) Get all available slots for the customer
+00:12 (1.0.0) [Information] (23) Get all available slots for the customer
+00:12 (1.0.0) [Information] (23) Get all distinct customers nearest single slot
+00:12 (1.0.0) [Information] (23) Get all available slots for the customer
+00:12 (1.0.0) [Information] (27) Schedule Slot for customer
+00:13 (1.0.0) [Information] (28) Schedule Slot for customer

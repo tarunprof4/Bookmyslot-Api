@@ -28,5 +28,7 @@
         public const string SlotIdDoesNotExists = "slot does not exists";
 
         public const string CorruptData = "Data is corrupt";
+
+        public const string NoSlotsFound = "no slots found";
     }
 }

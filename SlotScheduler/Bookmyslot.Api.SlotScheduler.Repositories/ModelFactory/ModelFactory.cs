@@ -31,5 +31,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             }
             return slotModels;
         }
+
+
     }
+
 }
