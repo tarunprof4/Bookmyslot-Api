@@ -1,7 +1,4 @@
-﻿
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Contracts;
-using System.Collections.Generic;
+﻿using Bookmyslot.Api.Customers.Contracts;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts
 {

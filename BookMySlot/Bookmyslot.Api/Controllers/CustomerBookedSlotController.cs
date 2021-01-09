@@ -5,48 +5,22 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
 {
-    //[Route("api/v1/[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    public class CustomerSharedSlotController : BaseApiController
+    public class CustomerBookedSlotController : BaseApiController
     {
-        private readonly ICustomerSharedSlotBusiness customerSharedSlotBusiness;
+        private readonly ICustomerBookedSlotBusiness customerBookedSlotBusiness;
 
-        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness)
+        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness)
         {
-            this.customerSharedSlotBusiness = customerSharedSlotBusiness;
-        }
-
-        /// <summary>
-        /// Gets customer slots
-        /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
-        /// <response code="404">no slots found</response>
-        /// <response code="400">validation error</response>
-        /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots")]
-        [HttpGet()]
-        public async Task<IActionResult> GetCustomerYetToBeBookedSlots()
-        {
-            Log.Information("Get customer YetToBeBookedSlots");
-            var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots();
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
-            {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
-            }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+            this.customerBookedSlotBusiness = customerBookedSlotBusiness;
         }
 
 
@@ -68,12 +42,12 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerBookedSlots()
         {
             Log.Information("Get customer GetCustomerBookedSlots");
-            var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerBookedSlots();
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
+            var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots();
+            if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
+                HideUncessaryDetailsForGetCustomerBookedSlots(customerBookedSlotModels.Result);
             }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+            return this.CreateGetHttpResponse(customerBookedSlotModels);
         }
 
 
@@ -95,12 +69,12 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCompletedSlots()
         {
             Log.Information("Get customer GetCustomerCompletedSlots");
-            var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots();
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
+            var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots();
+            if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
+                HideUncessaryDetailsForGetCustomerBookedSlots(customerBookedSlotModels.Result);
             }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+            return this.CreateGetHttpResponse(customerBookedSlotModels);
         }
 
 
@@ -123,23 +97,28 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCancelledSlots()
         {
             Log.Information("Get customer GetCustomerCancelledSlots");
-            var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerCancelledSlots();
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
+            var customercancelledSlotModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots();
+            if (customercancelledSlotModels.ResultType == ResultType.Success)
             {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
+                foreach (var customercancelledSlotModel in customercancelledSlotModels.Result)
+                {
+                    customercancelledSlotModel.Id = Guid.Empty;
+                    customercancelledSlotModel.CreatedBy = string.Empty;
+                    customercancelledSlotModel.CancelledBy = string.Empty;
+                }
             }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+            return this.CreateGetHttpResponse(customercancelledSlotModels);
         }
 
-        private void HideUncessaryDetailsForGetCustomerSharedSlots(IEnumerable<SharedSlotModel> sharedSlotModels)
+        private void HideUncessaryDetailsForGetCustomerBookedSlots(IEnumerable<BookedSlotModel> bookSlotModels)
         {
-            foreach (var sharedSlotModel in sharedSlotModels)
+            foreach (var bookSlotModel in bookSlotModels)
             {
-                sharedSlotModel.BookedByCustomerModel.Id = string.Empty;
-                sharedSlotModel.BookedByCustomerModel.Email = string.Empty;
-                sharedSlotModel.BookedByCustomerModel.Gender = string.Empty;
+                bookSlotModel.CreatedByCustomerModel.Id = string.Empty;
+                bookSlotModel.CreatedByCustomerModel.Email = string.Empty;
+                bookSlotModel.CreatedByCustomerModel.Gender = string.Empty;
 
-                sharedSlotModel.SlotModel.BookedBy = string.Empty;
+                bookSlotModel.SlotModel.BookedBy = string.Empty;
             }
         }
     }

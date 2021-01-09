@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerYetToBeBookedSlots(string customerId)
         {
             var parameters = new { IsDeleted = false, CreatedBy = customerId };
-            var sql = SlotTableQueries.GetCustomerYetToBeBookedSlotsQuery;
+            var sql = SlotTableQueries.GetCustomerSharedByYetToBeBookedSlotsQuery;
 
             return await GetCustomerSlots(sql, parameters);
         }
@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerBookedSlots(string customerId)
         {
             var parameters = new { IsDeleted = false, CreatedBy = customerId };
-            var sql = SlotTableQueries.GetCustomerBookedSlotsQuery;
+            var sql = SlotTableQueries.GetCustomerSharedByBookedSlotsQuery;
 
             return await GetCustomerSlots(sql, parameters);
         }
@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerCompletedSlots(string customerId)
         {
             var parameters = new { IsDeleted = false, CreatedBy = customerId };
-            var sql = SlotTableQueries.GetCustomerCompletedSlotsQuery;
+            var sql = SlotTableQueries.GetCustomerSharedByCompletedSlotsQuery;
 
             return await GetCustomerSlots(sql, parameters);
         }
@@ -49,9 +49,17 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerCancelledSlots(string customerId)
         {
             var parameters = new { IsDeleted = true, CreatedBy = customerId };
-            var sql = SlotTableQueries.GetCustomerCancelledSlotsQuery;
+            var sql = SlotTableQueries.GetCustomerSharedByCancelledSlotsQuery;
 
-            return await GetCustomerSlots(sql, parameters);
+            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
+
+            var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
+            if (slotModels.Count == 0)
+            {
+                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
+            }
+
+            return new Response<IEnumerable<SlotModel>>() { Result = slotModels }; 
         }
 
 

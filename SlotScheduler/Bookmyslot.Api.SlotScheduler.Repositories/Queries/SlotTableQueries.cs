@@ -17,15 +17,24 @@ FROM Slot where IsDeleted = @IsDeleted  and SlotDate > GETDATE()
    OFFSET @PageNumber ROWS FETCH Next @PageSize ROWS ONLY";
 
 
-        public const string GetCustomerYetToBeBookedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy IS Null and CreatedBy=@CreatedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime";
+        public const string GetCustomerSharedByYetToBeBookedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy IS Null and CreatedBy=@CreatedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime";
 
 
-        public const string GetCustomerBookedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy IS Not Null and CreatedBy=@CreatedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime";
+        public const string GetCustomerSharedByBookedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy IS Not Null and CreatedBy=@CreatedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime";
 
 
-        public const string GetCustomerCompletedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy IS Not Null and CreatedBy=@CreatedBy order by SlotDate Desc, SlotStartTime Desc";
+        public const string GetCustomerSharedByCompletedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy IS Not Null and CreatedBy=@CreatedBy and SlotDate < GETDATE() order by SlotDate Desc, SlotStartTime Desc";
 
 
-        public const string GetCustomerCancelledSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and CreatedBy=@CreatedBy  order by SlotDate Desc, SlotStartTime Desc";
+        public const string GetCustomerSharedByCancelledSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and CreatedBy=@CreatedBy  order by SlotDate Desc, SlotStartTime Desc";
+
+
+        public const string GetCustomerBookedByBookedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy=@BookedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime";
+
+
+        public const string GetCustomerBookedByCompletedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy=@BookedBy and SlotDate < GETDATE() order by SlotDate Desc, SlotStartTime Desc";
+
+
+        public const string GetCustomerBookedByCancelledSlotsQuery = @"SELECT * FROM CancelledSlot where  CancelledBy=@CancelledBy  order by SlotDate Desc, SlotStartTime Desc";
     }
 }

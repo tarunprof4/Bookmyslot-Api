@@ -1,5 +1,4 @@
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -71,7 +70,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModels = GetValidSlotModels();
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
-            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByBookedByCustomerId(BookedBy1), GetValidCustomerModelByBookedByCustomerId(BookedBy2), GetValidCustomerModelByBookedByCustomerId(BookedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
 
@@ -80,7 +79,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
             Assert.NotNull(customerSharedSlotModelResponse.Result.First().SlotModel);
             Assert.NotNull(customerSharedSlotModelResponse.Result.First().BookedByCustomerModel);
-            customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerYetToBeBookedSlots(It.IsAny<string>())), Times.Once());
+            customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
 
@@ -94,7 +93,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerBookedSlots();
 
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Empty);
-            customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerYetToBeBookedSlots(It.IsAny<string>())), Times.Once());
+            customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Never());
         }
 
@@ -135,7 +134,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModels = GetValidSlotModels();
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
-            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByBookedByCustomerId(BookedBy1), GetValidCustomerModelByBookedByCustomerId(BookedBy2), GetValidCustomerModelByBookedByCustomerId(BookedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
 
@@ -184,11 +183,19 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             return slotModels;
         }
 
-        private CustomerModel GetValidCustomerModelByCustomerId(string customerId)
+        private CustomerModel GetValidCustomerModelByCreatedByCustomerId(string createdBy)
         {
             return new CustomerModel()
             {
-                Id = customerId
+                Id = createdBy,
+            };
+        }
+
+        private CustomerModel GetValidCustomerModelByBookedByCustomerId(string bookedBy)
+        {
+            return new CustomerModel()
+            {
+                Id = bookedBy,
             };
         }
 

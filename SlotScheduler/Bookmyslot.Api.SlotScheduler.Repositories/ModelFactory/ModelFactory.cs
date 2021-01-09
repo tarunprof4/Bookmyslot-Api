@@ -33,6 +33,33 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
         }
 
 
+
+        internal static CancelledSlotModel CreateCancelledSlotModel(CancelledSlotEntity cancelledSlotEntity)
+        {
+            return new CancelledSlotModel()
+            {
+                Id = cancelledSlotEntity.Id,
+                Title = cancelledSlotEntity.Title,
+                CreatedBy = cancelledSlotEntity.CreatedBy,
+                CancelledBy = cancelledSlotEntity.CancelledBy,
+                TimeZone = cancelledSlotEntity.TimeZone,
+                SlotDate = cancelledSlotEntity.SlotDate,
+                SlotStartTime = cancelledSlotEntity.SlotStartTime,
+                SlotEndTime = cancelledSlotEntity.SlotEndTime,
+            };
+        }
+
+        internal static List<CancelledSlotModel> CreateCancelledSlotModels(IEnumerable<CancelledSlotEntity> cancelledSlotlotEntities)
+        {
+            var cancelledSlotModels = new List<CancelledSlotModel>();
+            foreach (var cancelledSlotlotEntity in cancelledSlotlotEntities)
+            {
+                cancelledSlotModels.Add(CreateCancelledSlotModel(cancelledSlotlotEntity));
+            }
+            return cancelledSlotModels;
+        }
+
+
     }
 
 }
