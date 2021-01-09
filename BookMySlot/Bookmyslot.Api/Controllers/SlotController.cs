@@ -104,6 +104,7 @@ namespace Bookmyslot.Api.Controllers
         /// Delete User slot
         /// </summary>
         /// <param name="slotId">user slot id</param>
+        /// <param name="deletedBy">user slot id</param>
         /// <returns >success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
@@ -115,10 +116,10 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("{slotId}")]
-        public async Task<IActionResult> Delete(Guid slotId)
+        public async Task<IActionResult> Delete(Guid slotId, string deletedBy)
         {
             Log.Information("Delete Customer Slot  " + slotId);
-            var slotResponse = await slotBusiness.DeleteSlot(slotId);
+            var slotResponse = await slotBusiness.DeleteSlot(slotId, deletedBy);
             return this.CreateDeleteHttpResponse(slotResponse);
         }
     }

@@ -13,6 +13,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 
         Task<Response<Guid>> CreateSlot(SlotModel slot);
         Task<Response<bool>> UpdateSlot(SlotModel slot);
-        Task<Response<bool>> DeleteSlot(Guid slotId);
+        Task<Response<bool>> DeleteSlot(Guid slotId, string deletedBy);
     }
 }

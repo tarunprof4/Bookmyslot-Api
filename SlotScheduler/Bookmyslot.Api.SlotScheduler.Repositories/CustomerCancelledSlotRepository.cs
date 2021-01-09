@@ -20,9 +20,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             this.connection = connection;
         }
 
-        public Task<Response<CancelledSlotModel>> CreateCustomerCancelledSlots(CancelledSlotModel cancelledSlotModel)
+        public async Task<Response<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel)
         {
-            throw new System.NotImplementedException();
+            var customerEntity = EntityFactory.EntityFactory.CreateCancelledSlotEntity(cancelledSlotModel);
+            await this.connection.InsertAsync<string, CancelledSlotEntity>(customerEntity);
+            return new Response<bool>() { Result = true };
         }
 
         public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId)

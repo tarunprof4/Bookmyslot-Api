@@ -35,5 +35,22 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
             slotEntity.IsDeleted = true;
             return slotEntity;
         }
+
+        internal static CancelledSlotEntity CreateCancelledSlotEntity(CancelledSlotModel cancelledSlotModel)
+        {
+            return new CancelledSlotEntity()
+            {
+                Id = cancelledSlotModel.Id,
+                Title = cancelledSlotModel.Title,
+                CreatedBy = cancelledSlotModel.CreatedBy,
+                CancelledBy = cancelledSlotModel.CancelledBy,
+                TimeZone = cancelledSlotModel.TimeZone,
+                SlotDate = cancelledSlotModel.SlotDate,
+                SlotStartTime = cancelledSlotModel.SlotStartTime,
+                SlotEndTime = cancelledSlotModel.SlotEndTime,
+                CreatedDate = DateTime.UtcNow
+            };
+        }
+
     }
 }

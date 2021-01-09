@@ -15,9 +15,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business
     public class SlotBusiness : ISlotBusiness
     {
         private readonly ISlotRepository slotRepository;
-        public SlotBusiness(ISlotRepository slotRepository)
+        private readonly ICustomerCancelledSlotRepository customerCancelledSlotRepository;
+
+        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository)
         {
             this.slotRepository = slotRepository;
+            this.customerCancelledSlotRepository = customerCancelledSlotRepository;
         }
 
         private void SanitizeSlotModel(SlotModel slotModel)
@@ -45,7 +48,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<Guid>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
         }
 
-        public async Task<Response<bool>> DeleteSlot(Guid slotId)
+        public async Task<Response<bool>> DeleteSlot(Guid slotId, string deletedBy)
         {
             if (slotId == Guid.Empty)
             {
@@ -55,10 +58,40 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             var checkSlotExistsResponse = await CheckIfSlotExists(slotId);
             if (checkSlotExistsResponse.Item1)
             {
-                return await this.slotRepository.DeleteSlot(checkSlotExistsResponse.Item2);
+                var slotModel = checkSlotExistsResponse.Item2;
+                CancelledSlotModel cancelledSlotModel;
+                if (deletedBy == slotModel.CreatedBy)
+                {
+                    await this.slotRepository.DeleteSlot(slotModel);
+                    cancelledSlotModel = CreateCancelledSlotModel(slotModel, slotModel.CreatedBy);
+                }
+                else
+                {
+                    slotModel.BookedBy = string.Empty;
+                    await this.slotRepository.UpdateSlot(slotModel);
+                    cancelledSlotModel = CreateCancelledSlotModel(slotModel, slotModel.BookedBy);
+                }
+                
+                await this.customerCancelledSlotRepository.CreateCustomerCancelledSlot(cancelledSlotModel);
+                return new Response<bool>() { Result = true };
             }
 
             return Response<bool>.Empty(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
+        }
+
+        private CancelledSlotModel CreateCancelledSlotModel(SlotModel slotModel, string cancelledBy)
+        {
+            return new CancelledSlotModel()
+            {
+                Id = slotModel.Id,
+                Title = slotModel.Title,
+                CreatedBy = slotModel.CreatedBy,
+                CancelledBy = cancelledBy,
+                TimeZone = slotModel.TimeZone,
+                SlotDate = slotModel.SlotDate,
+                SlotStartTime = slotModel.SlotStartTime,
+                SlotEndTime = slotModel.SlotEndTime
+            };
         }
 
         public async Task<Response<SlotModel>> GetSlot(Guid slotId)

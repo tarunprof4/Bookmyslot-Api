@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface ICustomerCancelledSlotRepository
     {
-        Task<Response<CancelledSlotModel>> CreateCustomerCancelledSlots(CancelledSlotModel cancelledSlotModel);
+        Task<Response<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel);
 
         Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId);
     }
