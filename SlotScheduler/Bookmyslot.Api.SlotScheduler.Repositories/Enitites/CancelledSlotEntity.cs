@@ -6,12 +6,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
     [Table("CancelledSlot")]
     public class CancelledSlotEntity
     {
-        
+        [Key]
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string CreatedBy { get; set; }
 
-        [Key]
+        
         public string CancelledBy { get; set; }
 
         public string TimeZone { get; set; }

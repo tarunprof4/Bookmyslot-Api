@@ -135,9 +135,9 @@ namespace Bookmyslot.Api.Controllers
         {
             foreach (var sharedSlotModel in sharedSlotModels)
             {
-                sharedSlotModel.BookedByCustomerModel.Id = string.Empty;
-                sharedSlotModel.BookedByCustomerModel.Email = string.Empty;
-                sharedSlotModel.BookedByCustomerModel.Gender = string.Empty;
+                //sharedSlotModel.BookedByCustomerModel?.Id = string.Empty;
+                //sharedSlotModel.BookedByCustomerModel.Email = string.Empty;
+                //sharedSlotModel.BookedByCustomerModel.Gender = string.Empty;
 
                 sharedSlotModel.SlotModel.BookedBy = string.Empty;
             }
