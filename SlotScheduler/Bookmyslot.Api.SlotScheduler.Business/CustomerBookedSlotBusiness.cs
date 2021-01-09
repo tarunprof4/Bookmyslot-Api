@@ -20,15 +20,13 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             this.customerBusiness = customerBusiness;
         }
 
-        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots()
+        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId)
         {
-            var customerId = UserService.GetUser();
             return await this.customerCancelledSlotRepository.GetCustomerCancelledSlots(customerId);
         }
 
-        public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerBookedSlots()
+        public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerBookedSlots(string customerId)
         {
-            var customerId = UserService.GetUser();
             var customerSlotModelsResponse = await this.customerBookedSlotRepository.GetCustomerBookedSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)
@@ -39,9 +37,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             return Response<IEnumerable<BookedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
         }
 
-        public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerCompletedSlots()
+        public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerCompletedSlots(string customerId)
         {
-            var customerId = UserService.GetUser();
             var customerSlotModelsResponse = await this.customerBookedSlotRepository.GetCustomerCompletedSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)

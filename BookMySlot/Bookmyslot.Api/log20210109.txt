@@ -6,3 +6,28 @@
 00:12 (1.0.0) [Information] (23) Get all available slots for the customer
 00:12 (1.0.0) [Information] (27) Schedule Slot for customer
 00:13 (1.0.0) [Information] (28) Schedule Slot for customer
+21:20 (1.0.0) [Information] (1) Starting web host
+21:20 (1.0.0) [Error] (5) The method 'get' on path '/api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots' is registered multiple times.
+
+21:20 (1.0.0) [Error] (5)    at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.AddOperationDescriptionsToDocument(OpenApiDocument document, Type controllerType, List`1 operations, OpenApiDocumentGenerator swaggerGenerator, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateForControllers(OpenApiDocument document, IGrouping`2[] apiGroups, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateAsync(ApiDescriptionGroupCollection apiDescriptionGroups)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateAsync(Object serviceProvider)
+   at NSwag.AspNetCore.OpenApiDocumentProvider.GenerateAsync(String documentName)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.GenerateDocumentAsync(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.GetDocumentAsync(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+21:21 (1.0.0) [Information] (1) Starting web host
+21:21 (1.0.0) [Error] (5) The method 'get' on path '/api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots' is registered multiple times.
+
+21:21 (1.0.0) [Error] (5)    at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.AddOperationDescriptionsToDocument(OpenApiDocument document, Type controllerType, List`1 operations, OpenApiDocumentGenerator swaggerGenerator, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateForControllers(OpenApiDocument document, IGrouping`2[] apiGroups, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateAsync(ApiDescriptionGroupCollection apiDescriptionGroups)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateAsync(Object serviceProvider)
+   at NSwag.AspNetCore.OpenApiDocumentProvider.GenerateAsync(String documentName)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.GenerateDocumentAsync(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.GetDocumentAsync(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+21:23 (1.0.0) [Information] (1) Starting web host

@@ -19,9 +19,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
         }
 
 
-        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerYetToBeBookedSlots()
+        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerYetToBeBookedSlots(string customerId)
         {
-            var customerId = UserService.GetUser();
             var customerSlotModelsResponse = await this.customerSharedSlotRepository.GetCustomerYetToBeBookedSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)
@@ -40,9 +39,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 
      
 
-        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCancelledSlots()
+        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCancelledSlots(string customerId)
         {
-            var customerId = UserService.GetUser();
             var customerSlotModelsResponse = await this.customerSharedSlotRepository.GetCustomerCancelledSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)
@@ -59,9 +57,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
         }
 
-        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerBookedSlots()
+        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerBookedSlots(string customerId)
         {
-            var customerId = UserService.GetUser();
             var customerSlotModelsResponse = await this.customerSharedSlotRepository.GetCustomerBookedSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)
@@ -85,9 +82,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
         }
 
-        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCompletedSlots()
+        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCompletedSlots(string customerId)
         {
-            var customerId = UserService.GetUser();
             var customerSlotModelsResponse = await this.customerSharedSlotRepository.GetCustomerCompletedSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)

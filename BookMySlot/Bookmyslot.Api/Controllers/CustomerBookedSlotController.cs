@@ -37,12 +37,12 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots")]
+        [Route("api/v1/CustomerBookedSlot/GetCustomerBookedSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerBookedSlots()
+        public async Task<IActionResult> GetCustomerBookedSlots(string customerId)
         {
             Log.Information("Get customer GetCustomerBookedSlots");
-            var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots();
+            var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(customerId);
             if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
                 HideUncessaryDetailsForGetCustomerBookedSlots(customerBookedSlotModels.Result);
@@ -64,12 +64,12 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/CustomerSharedSlot/GetCustomerCompletedSlots")]
+        [Route("api/v1/CustomerBookedSlot/GetCustomerCompletedSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerCompletedSlots()
+        public async Task<IActionResult> GetCustomerCompletedSlots(string customerId)
         {
             Log.Information("Get customer GetCustomerCompletedSlots");
-            var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots();
+            var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(customerId);
             if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
                 HideUncessaryDetailsForGetCustomerBookedSlots(customerBookedSlotModels.Result);
@@ -92,12 +92,12 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/CustomerSharedSlot/GetCustomerCancelledSlots")]
+        [Route("api/v1/CustomerBookedSlot/GetCustomerCancelledSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerCancelledSlots()
+        public async Task<IActionResult> GetCustomerCancelledSlots(string customerId)
         {
             Log.Information("Get customer GetCustomerCancelledSlots");
-            var customercancelledSlotModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots();
+            var customercancelledSlotModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (customercancelledSlotModels.ResultType == ResultType.Success)
             {
                 foreach (var customercancelledSlotModel in customercancelledSlotModels.Result)
