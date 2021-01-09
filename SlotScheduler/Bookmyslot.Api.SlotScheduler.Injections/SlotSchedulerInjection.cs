@@ -26,7 +26,9 @@ namespace Bookmyslot.Api.SlotScheduler.Injections
         {
             services.AddTransient<ISlotBusiness, SlotBusiness>();
             services.AddTransient<ISlotSchedulerBusiness, SlotSchedulerBusiness>();
-            
+            services.AddTransient<ICustomerSharedSlotBusiness, CustomerSharedSlotBusiness>();
+            services.AddTransient<ICustomerBookedSlotBusiness, CustomerBookedSlotBusiness>();
+
             services.AddTransient<ICustomerSlotBusiness, CustomerSlotBusiness>();
             services.AddTransient<ICustomerBusiness, CustomerBusiness>();
         }
@@ -35,6 +37,10 @@ namespace Bookmyslot.Api.SlotScheduler.Injections
         public static void SlotSchedulerRepositoryInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddTransient<ISlotRepository, SlotRepository>();
+            services.AddTransient<ICustomerSharedSlotRepository, CustomerSharedSlotRepository>();
+            services.AddTransient<ICustomerBookedSlotRepository, CustomerBookedSlotRepository>();
+            services.AddTransient<ICustomerCancelledSlotRepository, CustomerCancelledSlotRepository>();
+
 
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ICustomerSlotRepository, CustomerSlotRepository>();
