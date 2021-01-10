@@ -8,6 +8,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
     {
         Task<Response<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel);
 
-        Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId);
+        Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerSharedCancelledSlots(string customerId);
+
+        Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerBookedCancelledSlots(string customerId);
     }
 }

@@ -62,8 +62,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 CancelledSlotModel cancelledSlotModel;
                 if (deletedBy == slotModel.CreatedBy)
                 {
+                    var cancelledBy = slotModel.CreatedBy;
                     await this.slotRepository.DeleteSlot(slotModel);
-                    cancelledSlotModel = CreateCancelledSlotModel(slotModel, slotModel.CreatedBy);
+                    cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
                 }
                 else
                 {
@@ -88,6 +89,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 Title = slotModel.Title,
                 CreatedBy = slotModel.CreatedBy,
                 CancelledBy = cancelledBy,
+                BookedBy = slotModel.BookedBy,
                 TimeZone = slotModel.TimeZone,
                 SlotDate = slotModel.SlotDate,
                 SlotStartTime = slotModel.SlotStartTime,

@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Controllers;
+﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -25,10 +26,12 @@ namespace Bookmyslot.Api.Injections.Tests
         public void StartupTest()
         {
             var customerSharedSlotBusiness = serviceProvider.GetService<ICustomerSharedSlotBusiness>();
-            
-            var controller = new CustomerSharedSlotController(customerSharedSlotBusiness);
+            var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
+
+            var controller = new CustomerSharedSlotController(customerSharedSlotBusiness, keyEncryptor);
 
             Assert.IsNotNull(customerSharedSlotBusiness);
+            Assert.IsNotNull(keyEncryptor);
             Assert.IsNotNull(controller);
         }
     }

@@ -116,8 +116,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var cancelledSlotModels = GetValidSlotCancellationModel();
             Response<IEnumerable<CancelledSlotModel>> cancelledSlotModelResponseMock = new Response<IEnumerable<CancelledSlotModel>>() { Result = cancelledSlotModels };
-            customerCancelledSlotRepositoryMock.Setup(a => a.GetCustomerCancelledSlots(It.IsAny<string>())).Returns(Task.FromResult(cancelledSlotModelResponseMock));
-            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
+            customerCancelledSlotRepositoryMock.Setup(a => a.GetCustomerBookedCancelledSlots(It.IsAny<string>())).Returns(Task.FromResult(cancelledSlotModelResponseMock));
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CancelledBy1), GetValidCustomerModelByCustomerId(CancelledBy2), GetValidCustomerModelByCustomerId(CancelledBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
 
@@ -125,7 +125,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(cancelledSlotModelResponse.ResultType, ResultType.Success);
             Assert.NotNull(cancelledSlotModelResponse.Result);
-            customerCancelledSlotRepositoryMock.Verify((m => m.GetCustomerCancelledSlots(It.IsAny<string>())), Times.Once());
+            customerCancelledSlotRepositoryMock.Verify((m => m.GetCustomerBookedCancelledSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
 
@@ -133,13 +133,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task GetCustomerCancelledSlots_InValidCustomer_ReturnsEmptyResponse()
         {
             Response<IEnumerable<CancelledSlotModel>> cancelledSlotModelResponseMock = new Response<IEnumerable<CancelledSlotModel>>() { ResultType = ResultType.Empty };
-            customerCancelledSlotRepositoryMock.Setup(a => a.GetCustomerCancelledSlots(It.IsAny<string>())).Returns(Task.FromResult(cancelledSlotModelResponseMock));
+            customerCancelledSlotRepositoryMock.Setup(a => a.GetCustomerBookedCancelledSlots(It.IsAny<string>())).Returns(Task.FromResult(cancelledSlotModelResponseMock));
 
             var cancelledSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(CustomerId);
 
             Assert.AreEqual(cancelledSlotModelResponse.ResultType, ResultType.Empty);
             Assert.Null(cancelledSlotModelResponse.Result);
-            customerCancelledSlotRepositoryMock.Verify((m => m.GetCustomerCancelledSlots(It.IsAny<string>())), Times.Once());
+            customerCancelledSlotRepositoryMock.Verify((m => m.GetCustomerBookedCancelledSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Never());
         }
 

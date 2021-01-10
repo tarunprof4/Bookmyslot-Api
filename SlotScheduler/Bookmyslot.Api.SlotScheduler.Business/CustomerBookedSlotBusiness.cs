@@ -21,11 +21,11 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 
         public async Task<Response<IEnumerable<CancelledSlotInformationModel>>> GetCustomerCancelledSlots(string customerId)
         {
-            var cancelledSlotsResponse =  await this.customerCancelledSlotRepository.GetCustomerCancelledSlots(customerId);
+            var cancelledSlotsResponse =  await this.customerCancelledSlotRepository.GetCustomerBookedCancelledSlots(customerId);
 
             if (cancelledSlotsResponse.ResultType == ResultType.Success)
             {
-                var customerIds = cancelledSlotsResponse.Result.Select(a => a.CreatedBy);
+                var customerIds = cancelledSlotsResponse.Result.Select(a => a.CancelledBy);
                 var customerModelsResponse = await this.customerBusiness.GetCustomersByCustomerIds(customerIds);
 
                 var cancelledSlotInformationModels = new List<CancelledSlotInformationModel>();
@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 {
                     var cancelledSlotInformationModel = new CancelledSlotInformationModel();
                     cancelledSlotInformationModel.CancelledSlotModel = cancelledSlotResponse;
-                    cancelledSlotInformationModel.CreatedByCustomerModel = customerModelsResponse.Result.First(a => a.Id == cancelledSlotResponse.CreatedBy);
+                    cancelledSlotInformationModel.CancelledByCustomerModel = customerModelsResponse.Result.First(a => a.Id == cancelledSlotResponse.CancelledBy);
 
                     cancelledSlotInformationModels.Add(cancelledSlotInformationModel);
                 }

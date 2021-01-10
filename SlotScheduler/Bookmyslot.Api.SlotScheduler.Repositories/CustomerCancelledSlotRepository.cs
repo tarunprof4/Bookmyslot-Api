@@ -28,13 +28,31 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return new Response<bool>() { Result = true };
         }
 
-        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId)
+
+        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerSharedCancelledSlots(string customerId)
         {
             var parameters = new { IsDeleted = true, CancelledBy = customerId };
+            var sql = SlotTableQueries.GetCustomerSharedByCancelledSlotsQuery;
+
+            var cancelledSlotEntities = await this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters);
+
+            return GetCancelledSlotModels(cancelledSlotEntities);
+        }
+
+        
+
+        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerBookedCancelledSlots(string customerId)
+        {
+            var parameters = new { IsDeleted = true, CancelledBy = customerId, BookedBy = customerId };
             var sql = SlotTableQueries.GetCustomerBookedByCancelledSlotsQuery;
 
             var cancelledSlotEntities = await this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters);
 
+            return GetCancelledSlotModels(cancelledSlotEntities);
+        }
+
+        private static Response<IEnumerable<CancelledSlotModel>> GetCancelledSlotModels(IEnumerable<CancelledSlotEntity> cancelledSlotEntities)
+        {
             var slotModels = ModelFactory.ModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
             if (slotModels.Count == 0)
             {
@@ -43,5 +61,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             return new Response<IEnumerable<CancelledSlotModel>>() { Result = slotModels };
         }
+
+
     }
 }

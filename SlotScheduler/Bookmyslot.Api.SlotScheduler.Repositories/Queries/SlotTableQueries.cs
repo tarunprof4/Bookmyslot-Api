@@ -25,6 +25,7 @@ FROM Slot where IsDeleted = @IsDeleted  and SlotDate > GETDATE()
 
         public const string GetCustomerSharedByCompletedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy IS Not Null and CreatedBy=@CreatedBy and SlotDate < GETDATE() order by SlotDate Desc, SlotStartTime Desc";
 
+        public const string GetCustomerSharedByCancelledSlotsQuery = @"SELECT * FROM CancelledSlot where  CancelledBy=@CancelledBy  order by SlotDate Desc, SlotStartTime Desc";
 
 
         public const string GetCustomerBookedByBookedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy=@BookedBy and SlotDate > GETDATE() order by SlotDate, SlotStartTime";
@@ -33,6 +34,6 @@ FROM Slot where IsDeleted = @IsDeleted  and SlotDate > GETDATE()
         public const string GetCustomerBookedByCompletedSlotsQuery = @"SELECT * FROM Slot where IsDeleted=@IsDeleted and BookedBy=@BookedBy and SlotDate < GETDATE() order by SlotDate Desc, SlotStartTime Desc";
 
 
-        public const string GetCustomerBookedByCancelledSlotsQuery = @"SELECT * FROM CancelledSlot where  CancelledBy=@CancelledBy  order by SlotDate Desc, SlotStartTime Desc";
+        public const string GetCustomerBookedByCancelledSlotsQuery = @"SELECT * FROM CancelledSlot where  CancelledBy=@CancelledBy  or BookedBy=@BookedBy order by SlotDate Desc, SlotStartTime Desc";
     }
 }

@@ -1,37 +1,44 @@
 ﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Bookmyslot.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
+
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
     public class SlotController : BaseApiController
     {
         private readonly ISlotBusiness slotBusiness;
+        private readonly IKeyEncryptor keyEncryptor;
 
-        public SlotController(ISlotBusiness slotBusiness)
+        public SlotController(ISlotBusiness slotBusiness, IKeyEncryptor keyEncryptor)
         {
             this.slotBusiness = slotBusiness;
+            this.keyEncryptor = keyEncryptor;
         }
 
-        [HttpGet()]
-        public async Task<IActionResult> Get([FromQuery] PageParameterModel pageParameterModel)
-        {
-            Log.Information("Get all slots");
-            var customerResponse = await slotBusiness.GetAllSlots(pageParameterModel);
-            return this.CreateGetHttpResponse(customerResponse);
-        }
+        //[Route("api/v1/Slot")]
+        //[HttpGet()]
+        //public async Task<IActionResult> Get([FromQuery] PageParameterModel pageParameterModel)
+        //{
+        //    Log.Information("Get all slots");
+        //    var customerResponse = await slotBusiness.GetAllSlots(pageParameterModel);
+        //    return this.CreateGetHttpResponse(customerResponse);
+        //}
 
 
         /// <summary>
@@ -48,7 +55,8 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("{slotId}")]
+        [HttpGet()]
+        [Route("api/v1/Slot")]
         public async Task<IActionResult> Get(Guid slotId)
         {
             Log.Information("Get Customer Slot " + slotId);
@@ -70,6 +78,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
+        [Route("api/v1/Slot")]
         public async Task<IActionResult> Post([FromBody] SlotModel slotModel)
         {
             Log.Information("Create Customer Slot " + slotModel);
@@ -100,27 +109,73 @@ namespace Bookmyslot.Api.Controllers
 
         //}
 
+        ///// <summary>
+        ///// Delete User slot
+        ///// </summary>
+        ///// <param name="slotKey">user slot id</param>
+        ///// <param name="deletedBy">user slot id</param>
+        ///// <returns >success or failure bool</returns>
+        ///// <response code="204">Returns success or failure bool</response>
+        ///// <response code="400">validation error bad request</response>
+        ///// <response code="404">no slot found</response>
+        ///// <response code="500">internal server error</response>
+        //// DELETE api/<SlotController>/email
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[HttpDelete("{slotId}")]
+        //[Route("api/v1/Slot/DeleteSharedSlot")]
+        //public async Task<IActionResult> DeleteSharedSlot(string slotKey, string deletedBy)
+        //{
+        //    Log.Information("Delete Customer Slot  " + slotKey);
+
+        //    var customerSharedSlotModel = JsonConvert.DeserializeObject<SharedSlotModel>(this.keyEncryptor.Decrypt(slotKey));
+
+        //    if (customerSharedSlotModel != null)
+        //    {
+        //        var slotResponse = await slotBusiness.DeleteSlot(customerSharedSlotModel.SlotModel.Id, deletedBy);
+        //        return this.CreateDeleteHttpResponse(slotResponse);
+        //    }
+
+        //    var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
+        //    return this.CreateDeleteHttpResponse(validationErrorResponse);
+        //}
+
+
         /// <summary>
         /// Delete User slot
         /// </summary>
-        /// <param name="slotId">user slot id</param>
-        /// <param name="deletedBy">user slot id</param>
+        /// <param name="cancelSlot">user slot id</param>
         /// <returns >success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="404">no slot found</response>
         /// <response code="500">internal server error</response>
         // DELETE api/<SlotController>/email
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("{slotId}")]
-        public async Task<IActionResult> Delete(Guid slotId, string deletedBy)
+        [HttpPost()]
+        [Route("api/v1/Slot/CancelSlot")]
+
+        public async Task<IActionResult> CancelSlot([FromBody] CancelSlot cancelSlot)
         {
-            Log.Information("Delete Customer Slot  " + slotId);
-            var slotResponse = await slotBusiness.DeleteSlot(slotId, deletedBy);
-            return this.CreateDeleteHttpResponse(slotResponse);
+            Log.Information("Delete Customer Slot  " + cancelSlot.SlotKey);
+            var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(cancelSlot.SlotKey));
+
+            if (slotModel != null)
+            {
+                var slotResponse = await slotBusiness.DeleteSlot(slotModel.Id, cancelSlot.CancelledBy);
+                return this.CreatePostHttpResponse(slotResponse);
+            }
+
+            var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
+            return this.CreatePostHttpResponse(validationErrorResponse);
         }
     }
+
+
+   
 }

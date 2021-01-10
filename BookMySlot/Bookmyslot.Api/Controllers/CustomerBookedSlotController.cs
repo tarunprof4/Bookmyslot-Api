@@ -1,9 +1,11 @@
 ﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,12 @@ namespace Bookmyslot.Api.Controllers
     public class CustomerBookedSlotController : BaseApiController
     {
         private readonly ICustomerBookedSlotBusiness customerBookedSlotBusiness;
+        private readonly IKeyEncryptor keyEncryptor;
 
-        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness)
+        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, IKeyEncryptor keyEncryptor)
         {
             this.customerBookedSlotBusiness = customerBookedSlotBusiness;
+            this.keyEncryptor = keyEncryptor;
         }
 
 
@@ -97,26 +101,41 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCancelledSlots(string customerId)
         {
             Log.Information("Get customer GetCustomerCancelledSlots");
-            var customercancelledSlotModelsInformation = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
-            if (customercancelledSlotModelsInformation.ResultType == ResultType.Success)
+            var customercancelledSlotInformationModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
+            if (customercancelledSlotInformationModels.ResultType == ResultType.Success)
             {
-                foreach (var customercancelledSlotModel in customercancelledSlotModelsInformation.Result)
-                {
-                    customercancelledSlotModel.CreatedByCustomerModel.Email = string.Empty;
-                }
+                HideUncessaryDetailsForGetCustomerCancelledSlots(customercancelledSlotInformationModels.Result);
             }
-            return this.CreateGetHttpResponse(customercancelledSlotModelsInformation);
+            return this.CreateGetHttpResponse(customercancelledSlotInformationModels);
         }
 
         private void HideUncessaryDetailsForGetCustomerBookedSlots(IEnumerable<BookedSlotModel> bookSlotModels)
         {
             foreach (var bookSlotModel in bookSlotModels)
             {
+                bookSlotModel.BookedSlotModelInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookSlotModel.SlotModel));
+                bookSlotModel.SlotModel.Id = Guid.Empty;
+                bookSlotModel.SlotModel.BookedBy = string.Empty;
+                bookSlotModel.SlotModel.CreatedBy = string.Empty;
+
                 bookSlotModel.CreatedByCustomerModel.Id = string.Empty;
                 bookSlotModel.CreatedByCustomerModel.Email = string.Empty;
                 bookSlotModel.CreatedByCustomerModel.Gender = string.Empty;
+            }
+        }
 
-                bookSlotModel.SlotModel.BookedBy = string.Empty;
+        private void HideUncessaryDetailsForGetCustomerCancelledSlots(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels)
+        {
+            foreach (var cancelledSlotInformationModel in cancelledSlotInformationModels)
+            {
+                cancelledSlotInformationModel.CancelledSlotModel.Id = Guid.Empty;
+                cancelledSlotInformationModel.CancelledSlotModel.CreatedBy = string.Empty;
+                cancelledSlotInformationModel.CancelledSlotModel.CancelledBy = string.Empty;
+                cancelledSlotInformationModel.CancelledSlotModel.BookedBy = string.Empty;
+
+                cancelledSlotInformationModel.CancelledByCustomerModel.Id = string.Empty;
+                cancelledSlotInformationModel.CancelledByCustomerModel.Gender = string.Empty;
+                cancelledSlotInformationModel.CancelledByCustomerModel.Email = string.Empty;
             }
         }
     }

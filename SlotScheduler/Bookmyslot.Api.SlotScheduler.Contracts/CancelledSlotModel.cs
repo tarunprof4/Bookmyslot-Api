@@ -17,6 +17,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         
         public string CancelledBy { get; set; }
 
+        public string BookedBy { get; set; }
+
         [DefaultValue("India Standard Time")]
         [Required]
         public string TimeZone { get; set; }

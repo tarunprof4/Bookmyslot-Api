@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 
         public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId)
         {
-            return await this.customerCancelledSlotRepository.GetCustomerCancelledSlots(customerId);
+            return await this.customerCancelledSlotRepository.GetCustomerSharedCancelledSlots(customerId);
         }
 
         

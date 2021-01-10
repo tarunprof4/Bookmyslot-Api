@@ -1,0 +1,17 @@
+00:05 (1.0.0) [Information] (1) Starting web host
+00:05 (1.0.0) [Error] (5) The method 'post' on path '/api/v1/Slot/CancelSlot' is registered multiple times.
+
+00:05 (1.0.0) [Error] (5)    at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.AddOperationDescriptionsToDocument(OpenApiDocument document, Type controllerType, List`1 operations, OpenApiDocumentGenerator swaggerGenerator, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateForControllers(OpenApiDocument document, IGrouping`2[] apiGroups, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateAsync(ApiDescriptionGroupCollection apiDescriptionGroups)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateAsync(Object serviceProvider)
+   at NSwag.AspNetCore.OpenApiDocumentProvider.GenerateAsync(String documentName)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.GenerateDocumentAsync(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.GetDocumentAsync(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+00:06 (1.0.0) [Information] (1) Starting web host
+00:08 (1.0.0) [Information] (6) Get customer GetCustomerBookedSlots
+00:09 (1.0.0) [Information] (18) Get customer YetToBeBookedSlots
+00:09 (1.0.0) [Information] (18) Get customer GetCustomerCompletedSlots
+00:09 (1.0.0) [Information] (19) Get customer GetCustomerCancelledSlots

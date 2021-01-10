@@ -1,10 +1,13 @@
 ﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,10 +20,12 @@ namespace Bookmyslot.Api.Controllers
     public class CustomerSharedSlotController : BaseApiController
     {
         private readonly ICustomerSharedSlotBusiness customerSharedSlotBusiness;
+        private readonly IKeyEncryptor keyEncryptor;
 
-        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness)
+        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, IKeyEncryptor keyEncryptor)
         {
             this.customerSharedSlotBusiness = customerSharedSlotBusiness;
+            this.keyEncryptor = keyEncryptor;
         }
 
         /// <summary>
@@ -135,11 +140,18 @@ namespace Bookmyslot.Api.Controllers
         {
             foreach (var sharedSlotModel in sharedSlotModels)
             {
-                //sharedSlotModel.BookedByCustomerModel?.Id = string.Empty;
-                //sharedSlotModel.BookedByCustomerModel.Email = string.Empty;
-                //sharedSlotModel.BookedByCustomerModel.Gender = string.Empty;
+                sharedSlotModel.SharedSlotModelInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(sharedSlotModel.SlotModel));
 
+                sharedSlotModel.SlotModel.Id = Guid.Empty;
+                sharedSlotModel.SlotModel.CreatedBy = string.Empty;
                 sharedSlotModel.SlotModel.BookedBy = string.Empty;
+
+                if (sharedSlotModel.BookedByCustomerModel != null)
+                {
+                    sharedSlotModel.BookedByCustomerModel.Id = string.Empty;
+                    sharedSlotModel.BookedByCustomerModel.Email = string.Empty;
+                    sharedSlotModel.BookedByCustomerModel.Gender = string.Empty;
+                }
             }
         }
 
@@ -148,7 +160,10 @@ namespace Bookmyslot.Api.Controllers
         {
             foreach (var cancelledSlotModel in cancelledSlotModels)
             {
+                cancelledSlotModel.Id = Guid.Empty;
                 cancelledSlotModel.CreatedBy = string.Empty;
+                cancelledSlotModel.CancelledBy = string.Empty;
+                cancelledSlotModel.BookedBy = string.Empty;
             }
         }
     }
