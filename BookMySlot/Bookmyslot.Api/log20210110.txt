@@ -1,0 +1,206 @@
+11:55 (1.0.0) [Information] (1) Starting web host
+11:57 (1.0.0) [Information] (13) Get customer GetCustomerBookedSlots
+11:59 (1.0.0) [Information] (20) Get customer GetCustomerBookedSlots
+12:00 (1.0.0) [Information] (24) Get customer GetCustomerBookedSlots
+12:00 (1.0.0) [Error] (27) Value cannot be null. (Parameter 'source')
+
+12:00 (1.0.0) [Error] (27)    at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Func`2 predicate, Boolean& found)
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.CustomerSharedSlotBusiness.GetCustomerBookedSlots(String customerId) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSharedSlotBusiness.cs:line 73
+   at Bookmyslot.Api.Controllers.CustomerSharedSlotController.GetCustomerBookedSlots(String customerId) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\BookMySlot\Bookmyslot.Api\Controllers\CustomerSharedSlotController.cs:line 71
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+12:01 (1.0.0) [Information] (24) Get customer GetCustomerBookedSlots
+12:01 (1.0.0) [Error] (26) Value cannot be null. (Parameter 'source')
+
+12:01 (1.0.0) [Error] (26)    at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Func`2 predicate, Boolean& found)
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.CustomerSharedSlotBusiness.GetCustomerBookedSlots(String customerId) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSharedSlotBusiness.cs:line 73
+   at Bookmyslot.Api.Controllers.CustomerSharedSlotController.GetCustomerBookedSlots(String customerId) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\BookMySlot\Bookmyslot.Api\Controllers\CustomerSharedSlotController.cs:line 71
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+12:01 (1.0.0) [Information] (24) Get customer GetCustomerBookedSlots
+12:02 (1.0.0) [Error] (29) Value cannot be null. (Parameter 'source')
+
+12:02 (1.0.0) [Error] (29)    at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Func`2 predicate, Boolean& found)
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.CustomerSharedSlotBusiness.GetCustomerBookedSlots(String customerId) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\CustomerSharedSlotBusiness.cs:line 73
+   at Bookmyslot.Api.Controllers.CustomerSharedSlotController.GetCustomerBookedSlots(String customerId) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\BookMySlot\Bookmyslot.Api\Controllers\CustomerSharedSlotController.cs:line 71
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+12:04 (1.0.0) [Information] (24) Get customer GetCustomerBookedSlots
+12:04 (1.0.0) [Information] (24) Get customer GetCustomerBookedSlots
+12:05 (1.0.0) [Information] (39) Get customer GetCustomerBookedSlots
+12:07 (1.0.0) [Information] (46) Get customer GetCustomerBookedSlots
+12:10 (1.0.0) [Information] (48) Get customer GetCustomerBookedSlots
+12:10 (1.0.0) [Information] (50) Get customer GetCustomerBookedSlots
+12:10 (1.0.0) [Information] (48) Get customer GetCustomerBookedSlots
+12:11 (1.0.0) [Information] (55) Get customer GetCustomerBookedSlots
+12:16 (1.0.0) [Information] (61) Get customer GetCustomerBookedSlots
+12:16 (1.0.0) [Information] (61) Get customer GetCustomerBookedSlots
+12:18 (1.0.0) [Information] (67) Get customer GetCustomerBookedSlots
+12:18 (1.0.0) [Information] (67) Get customer GetCustomerBookedSlots
+12:21 (1.0.0) [Information] (72) Get customer GetCustomerBookedSlots
+12:21 (1.0.0) [Information] (74) Get customer GetCustomerBookedSlots
+12:23 (1.0.0) [Information] (76) Get customer GetCustomerBookedSlots
+12:24 (1.0.0) [Information] (81) Get customer GetCustomerBookedSlots
+12:24 (1.0.0) [Information] (80) Get customer GetCustomerBookedSlots
+12:24 (1.0.0) [Information] (80) Get customer YetToBeBookedSlots
+12:29 (1.0.0) [Information] (90) Get customer GetCustomerBookedSlots
+12:29 (1.0.0) [Information] (90) Get customer YetToBeBookedSlots
+12:29 (1.0.0) [Information] (90) Get customer YetToBeBookedSlots
+12:29 (1.0.0) [Information] (90) Get customer YetToBeBookedSlots
+12:31 (1.0.0) [Information] (96) Get customer GetCustomerBookedSlots
+12:31 (1.0.0) [Information] (95) Get customer YetToBeBookedSlots
+12:31 (1.0.0) [Information] (97) Get customer GetCustomerCompletedSlots
+12:32 (1.0.0) [Information] (95) Get customer GetCustomerCancelledSlots
+12:32 (1.0.0) [Information] (95) Get customer YetToBeBookedSlots
+12:32 (1.0.0) [Information] (101) Get customer GetCustomerBookedSlots
+12:32 (1.0.0) [Information] (95) Get customer GetCustomerCancelledSlots
+12:32 (1.0.0) [Information] (102) Get customer YetToBeBookedSlots
+12:32 (1.0.0) [Information] (99) Get customer GetCustomerCancelledSlots
+12:36 (1.0.0) [Information] (104) Get customer GetCustomerBookedSlots
+12:36 (1.0.0) [Information] (104) Get customer YetToBeBookedSlots
+12:36 (1.0.0) [Information] (104) Get customer GetCustomerCompletedSlots
+12:36 (1.0.0) [Information] (104) Get customer GetCustomerCancelledSlots
+12:38 (1.0.0) [Information] (108) Get customer GetCustomerBookedSlots
+12:38 (1.0.0) [Information] (108) Get customer GetCustomerBookedSlots
+12:42 (1.0.0) [Information] (115) Get customer GetCustomerBookedSlots
+12:43 (1.0.0) [Information] (118) Get customer GetCustomerBookedSlots
+12:43 (1.0.0) [Information] (119) Get customer GetCustomerCancelledSlots
+12:44 (1.0.0) [Information] (121) Get customer GetCustomerBookedSlots
+12:44 (1.0.0) [Information] (124) Get customer GetCustomerCancelledSlots
+12:44 (1.0.0) [Information] (121) Get customer GetCustomerBookedSlots
+12:44 (1.0.0) [Information] (121) Get customer GetCustomerCancelledSlots
+12:45 (1.0.0) [Information] (127) Get customer GetCustomerBookedSlots
+12:45 (1.0.0) [Information] (131) Get customer GetCustomerCancelledSlots
+12:45 (1.0.0) [Information] (127) Get customer GetCustomerBookedSlots
+12:45 (1.0.0) [Information] (127) Get customer GetCustomerCancelledSlots
+12:45 (1.0.0) [Information] (131) Get customer GetCustomerBookedSlots
+12:45 (1.0.0) [Information] (127) Get customer GetCustomerCancelledSlots
+12:45 (1.0.0) [Information] (127) Get customer GetCustomerBookedSlots
+12:47 (1.0.0) [Information] (132) Get customer GetCustomerBookedSlots
+12:47 (1.0.0) [Information] (133) Get all distinct customers nearest single slot
+12:47 (1.0.0) [Information] (135) Get customer GetCustomerBookedSlots
+12:47 (1.0.0) [Information] (138) Get customer GetCustomerBookedSlots
+12:47 (1.0.0) [Information] (138) Get customer GetCustomerCancelledSlots
+12:48 (1.0.0) [Information] (138) Get customer GetCustomerBookedSlots
+12:49 (1.0.0) [Information] (143) Get customer GetCustomerBookedSlots
+12:49 (1.0.0) [Information] (143) Get customer GetCustomerCompletedSlots
+12:49 (1.0.0) [Information] (143) Get customer GetCustomerBookedSlots
+12:49 (1.0.0) [Information] (143) Get customer GetCustomerCompletedSlots
+12:50 (1.0.0) [Information] (143) Get customer GetCustomerCompletedSlots
+12:50 (1.0.0) [Information] (143) Get customer GetCustomerBookedSlots
+12:50 (1.0.0) [Information] (143) Get customer GetCustomerBookedSlots
+12:50 (1.0.0) [Information] (143) Get customer GetCustomerBookedSlots
+12:51 (1.0.0) [Information] (143) Get customer GetCustomerBookedSlots
+12:51 (1.0.0) [Information] (143) Get customer GetCustomerCompletedSlots
+12:51 (1.0.0) [Information] (143) Get customer GetCustomerBookedSlots
+12:51 (1.0.0) [Information] (150) Get customer GetCustomerCompletedSlots
+12:51 (1.0.0) [Information] (145) Get customer GetCustomerBookedSlots
+12:51 (1.0.0) [Information] (149) Get customer GetCustomerCancelledSlots
+12:51 (1.0.0) [Information] (145) Get customer GetCustomerCompletedSlots
+12:51 (1.0.0) [Information] (149) Get customer GetCustomerCancelledSlots
+12:52 (1.0.0) [Information] (151) Get customer GetCustomerBookedSlots
+12:52 (1.0.0) [Information] (151) Get customer YetToBeBookedSlots
+12:52 (1.0.0) [Information] (153) Get customer GetCustomerCompletedSlots
+12:52 (1.0.0) [Information] (154) Get customer GetCustomerCancelledSlots
+12:54 (1.0.0) [Information] (155) Get customer GetCustomerBookedSlots
+12:54 (1.0.0) [Information] (160) Get customer YetToBeBookedSlots
+12:54 (1.0.0) [Information] (160) Get customer GetCustomerCompletedSlots
+12:54 (1.0.0) [Information] (159) Get customer GetCustomerCancelledSlots
+12:54 (1.0.0) [Information] (161) Get customer GetCustomerBookedSlots
+12:54 (1.0.0) [Information] (159) Get customer GetCustomerCancelledSlots
+13:03 (1.0.0) [Information] (152) Get customer GetCustomerBookedSlots
+13:03 (1.0.0) [Information] (152) Get customer GetCustomerCancelledSlots
+13:03 (1.0.0) [Information] (152) Get customer GetCustomerBookedSlots
+13:04 (1.0.0) [Information] (141) Get customer GetCustomerBookedSlots
+13:06 (1.0.0) [Information] (137) Get customer GetCustomerBookedSlots
+13:06 (1.0.0) [Information] (137) Get customer GetCustomerBookedSlots
+13:06 (1.0.0) [Information] (139) Get customer GetCustomerCancelledSlots
+13:07 (1.0.0) [Information] (135) Get customer GetCustomerBookedSlots
+13:07 (1.0.0) [Information] (135) Get customer GetCustomerCompletedSlots
+13:07 (1.0.0) [Information] (135) Get customer GetCustomerCancelledSlots
+13:07 (1.0.0) [Information] (135) Get customer YetToBeBookedSlots
+13:07 (1.0.0) [Information] (134) Get customer GetCustomerBookedSlots
+13:07 (1.0.0) [Information] (132) Get customer YetToBeBookedSlots
+13:07 (1.0.0) [Information] (135) Get customer YetToBeBookedSlots
+13:07 (1.0.0) [Information] (129) Get customer GetCustomerBookedSlots
+13:07 (1.0.0) [Information] (135) Get customer YetToBeBookedSlots
+13:07 (1.0.0) [Information] (134) Get customer GetCustomerCompletedSlots
+13:07 (1.0.0) [Information] (135) Get customer YetToBeBookedSlots
+13:28 (1.0.0) [Information] (123) Get customer GetCustomerBookedSlots
+13:29 (1.0.0) [Information] (120) Get customer GetCustomerBookedSlots
+13:29 (1.0.0) [Information] (120) Get customer GetCustomerBookedSlots
+13:30 (1.0.0) [Information] (117) Get customer GetCustomerBookedSlots
+13:31 (1.0.0) [Information] (117) Get customer GetCustomerBookedSlots
+13:32 (1.0.0) [Information] (110) Get customer GetCustomerBookedSlots
+13:33 (1.0.0) [Information] (106) Get customer GetCustomerBookedSlots
+13:33 (1.0.0) [Information] (105) Get customer GetCustomerCompletedSlots
+13:33 (1.0.0) [Information] (104) Get customer GetCustomerBookedSlots
+13:33 (1.0.0) [Information] (106) Get customer GetCustomerCompletedSlots
+13:33 (1.0.0) [Information] (106) Get customer GetCustomerCompletedSlots
+13:33 (1.0.0) [Information] (102) Get customer GetCustomerBookedSlots
+13:35 (1.0.0) [Information] (100) Get customer GetCustomerBookedSlots
+13:40 (1.0.0) [Information] (93) Get customer GetCustomerBookedSlots
+13:40 (1.0.0) [Information] (93) Get customer GetCustomerCompletedSlots
+13:41 (1.0.0) [Information] (89) Get customer GetCustomerCompletedSlots
+13:41 (1.0.0) [Information] (87) Get customer GetCustomerBookedSlots
+13:41 (1.0.0) [Information] (93) Get customer GetCustomerCompletedSlots
+13:41 (1.0.0) [Information] (93) Get customer GetCustomerBookedSlots
+13:42 (1.0.0) [Information] (85) Get customer GetCustomerBookedSlots
+13:43 (1.0.0) [Information] (84) Get customer GetCustomerBookedSlots
+13:43 (1.0.0) [Information] (85) Get customer GetCustomerCompletedSlots
+13:43 (1.0.0) [Information] (83) Get customer GetCustomerCompletedSlots
+13:43 (1.0.0) [Information] (81) Get customer GetCustomerBookedSlots
+13:44 (1.0.0) [Information] (85) Get customer GetCustomerBookedSlots
+13:45 (1.0.0) [Information] (84) Get customer GetCustomerBookedSlots
+13:46 (1.0.0) [Information] (84) Get customer GetCustomerBookedSlots

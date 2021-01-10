@@ -19,9 +19,29 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             this.customerBusiness = customerBusiness;
         }
 
-        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId)
+        public async Task<Response<IEnumerable<CancelledSlotInformationModel>>> GetCustomerCancelledSlots(string customerId)
         {
-            return await this.customerCancelledSlotRepository.GetCustomerCancelledSlots(customerId);
+            var cancelledSlotsResponse =  await this.customerCancelledSlotRepository.GetCustomerCancelledSlots(customerId);
+
+            if (cancelledSlotsResponse.ResultType == ResultType.Success)
+            {
+                var customerIds = cancelledSlotsResponse.Result.Select(a => a.CreatedBy);
+                var customerModelsResponse = await this.customerBusiness.GetCustomersByCustomerIds(customerIds);
+
+                var cancelledSlotInformationModels = new List<CancelledSlotInformationModel>();
+                foreach (var cancelledSlotResponse in cancelledSlotsResponse.Result)
+                {
+                    var cancelledSlotInformationModel = new CancelledSlotInformationModel();
+                    cancelledSlotInformationModel.CancelledSlotModel = cancelledSlotResponse;
+                    cancelledSlotInformationModel.CreatedByCustomerModel = customerModelsResponse.Result.First(a => a.Id == cancelledSlotResponse.CreatedBy);
+
+                    cancelledSlotInformationModels.Add(cancelledSlotInformationModel);
+                }
+
+                return new Response<IEnumerable<CancelledSlotInformationModel>>() { Result = cancelledSlotInformationModels };
+            }
+
+            return Response<IEnumerable<CancelledSlotInformationModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
         }
 
         public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerBookedSlots(string customerId)

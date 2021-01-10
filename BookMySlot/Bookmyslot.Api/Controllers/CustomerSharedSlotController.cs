@@ -123,12 +123,12 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCancelledSlots(string customerId)
         {
             Log.Information("Get customer GetCustomerCancelledSlots");
-            var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerCancelledSlots(customerId);
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
+            var cancelledSlotModels = await this.customerSharedSlotBusiness.GetCustomerCancelledSlots(customerId);
+            if (cancelledSlotModels.ResultType == ResultType.Success)
             {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
+                HideUncessaryDetailsForGetCustomerCancelledSlots(cancelledSlotModels.Result);
             }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+            return this.CreateGetHttpResponse(cancelledSlotModels);
         }
 
         private void HideUncessaryDetailsForGetCustomerSharedSlots(IEnumerable<SharedSlotModel> sharedSlotModels)
@@ -140,6 +140,15 @@ namespace Bookmyslot.Api.Controllers
                 //sharedSlotModel.BookedByCustomerModel.Gender = string.Empty;
 
                 sharedSlotModel.SlotModel.BookedBy = string.Empty;
+            }
+        }
+
+
+        private void HideUncessaryDetailsForGetCustomerCancelledSlots(IEnumerable<CancelledSlotModel> cancelledSlotModels)
+        {
+            foreach (var cancelledSlotModel in cancelledSlotModels)
+            {
+                cancelledSlotModel.CreatedBy = string.Empty;
             }
         }
     }

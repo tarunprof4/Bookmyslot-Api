@@ -46,21 +46,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return await GetCustomerSlots(sql, parameters);
         }
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetCustomerCancelledSlots(string customerId)
-        {
-            var parameters = new { IsDeleted = true, CreatedBy = customerId };
-            var sql = SlotTableQueries.GetCustomerSharedByCancelledSlotsQuery;
-
-            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
-
-            var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
-            if (slotModels.Count == 0)
-            {
-                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-            }
-
-            return new Response<IEnumerable<SlotModel>>() { Result = slotModels }; 
-        }
+        
 
 
         private async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(string sql, object parameters)

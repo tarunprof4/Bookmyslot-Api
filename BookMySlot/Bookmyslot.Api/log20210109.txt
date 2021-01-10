@@ -108,3 +108,7 @@ The statement has been terminated.
    at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
    at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+22:40 (1.0.0) [Information] (1) Starting web host
+22:40 (1.0.0) [Information] (14) Get customer GetCustomerCancelledSlots
+22:40 (1.0.0) [Information] (14) Get customer GetCustomerCancelledSlots
+22:41 (1.0.0) [Information] (20) Get customer GetCustomerCancelledSlots

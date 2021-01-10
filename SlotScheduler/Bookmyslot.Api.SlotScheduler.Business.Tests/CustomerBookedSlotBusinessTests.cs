@@ -21,6 +21,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private const string BookedBy1 = "BookedBy1";
         private const string BookedBy2 = "BookedBy2";
         private const string BookedBy3 = "BookedBy3";
+        private const string CancelledBy1 = "CancelledBy1";
+        private const string CancelledBy2 = "CancelledBy2";
+        private const string CancelledBy3 = "CancelledBy3";
 
         private CustomerBookedSlotBusiness customerBookedSlotBusiness;
         private Mock<ICustomerBookedSlotRepository> customerBookedSlotRepositoryMock;
@@ -106,6 +109,40 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Never());
         }
 
+
+
+        [Test]
+        public async Task GetCustomerCancelledSlots_ValidCustomer_ReturnsCustomerSharedSlotModelSuccessResponse()
+        {
+            var cancelledSlotModels = GetValidSlotCancellationModel();
+            Response<IEnumerable<CancelledSlotModel>> cancelledSlotModelResponseMock = new Response<IEnumerable<CancelledSlotModel>>() { Result = cancelledSlotModels };
+            customerCancelledSlotRepositoryMock.Setup(a => a.GetCustomerCancelledSlots(It.IsAny<string>())).Returns(Task.FromResult(cancelledSlotModelResponseMock));
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
+            customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
+                .Returns(Task.FromResult(customerModelsMock));
+
+            var cancelledSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(CustomerId);
+
+            Assert.AreEqual(cancelledSlotModelResponse.ResultType, ResultType.Success);
+            Assert.NotNull(cancelledSlotModelResponse.Result);
+            customerCancelledSlotRepositoryMock.Verify((m => m.GetCustomerCancelledSlots(It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
+        }
+
+        [Test]
+        public async Task GetCustomerCancelledSlots_InValidCustomer_ReturnsEmptyResponse()
+        {
+            Response<IEnumerable<CancelledSlotModel>> cancelledSlotModelResponseMock = new Response<IEnumerable<CancelledSlotModel>>() { ResultType = ResultType.Empty };
+            customerCancelledSlotRepositoryMock.Setup(a => a.GetCustomerCancelledSlots(It.IsAny<string>())).Returns(Task.FromResult(cancelledSlotModelResponseMock));
+
+            var cancelledSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(CustomerId);
+
+            Assert.AreEqual(cancelledSlotModelResponse.ResultType, ResultType.Empty);
+            Assert.Null(cancelledSlotModelResponse.Result);
+            customerCancelledSlotRepositoryMock.Verify((m => m.GetCustomerCancelledSlots(It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Never());
+        }
+
         private IEnumerable<SlotModel> GetValidSlotModels()
         {
             List<SlotModel> slotModels = new List<SlotModel>();
@@ -123,6 +160,28 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             slotModel = new SlotModel();
             slotModel.CreatedBy = CreatedBy3;
             slotModel.BookedBy = BookedBy3;
+            slotModels.Add(slotModel);
+
+            return slotModels;
+        }
+
+        private IEnumerable<CancelledSlotModel> GetValidSlotCancellationModel()
+        {
+            List<CancelledSlotModel> slotModels = new List<CancelledSlotModel>();
+
+            var slotModel = new CancelledSlotModel();
+            slotModel.CreatedBy = CreatedBy1;
+            slotModel.CancelledBy = CancelledBy1;
+            slotModels.Add(slotModel);
+
+            slotModel = new CancelledSlotModel();
+            slotModel.CreatedBy = CreatedBy2;
+            slotModel.CancelledBy = CancelledBy2;
+            slotModels.Add(slotModel);
+
+            slotModel = new CancelledSlotModel();
+            slotModel.CreatedBy = CreatedBy3;
+            slotModel.CancelledBy = CancelledBy3;
             slotModels.Add(slotModel);
 
             return slotModels;

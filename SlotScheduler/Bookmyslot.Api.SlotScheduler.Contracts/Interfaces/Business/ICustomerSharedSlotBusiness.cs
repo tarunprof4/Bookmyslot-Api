@@ -12,6 +12,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 
         Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCompletedSlots(string customerId);
 
-        Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCancelledSlots(string customerId);
+        Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId);
     }
 }

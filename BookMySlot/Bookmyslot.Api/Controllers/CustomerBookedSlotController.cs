@@ -97,17 +97,15 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCancelledSlots(string customerId)
         {
             Log.Information("Get customer GetCustomerCancelledSlots");
-            var customercancelledSlotModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
-            if (customercancelledSlotModels.ResultType == ResultType.Success)
+            var customercancelledSlotModelsInformation = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
+            if (customercancelledSlotModelsInformation.ResultType == ResultType.Success)
             {
-                foreach (var customercancelledSlotModel in customercancelledSlotModels.Result)
+                foreach (var customercancelledSlotModel in customercancelledSlotModelsInformation.Result)
                 {
-                    customercancelledSlotModel.Id = Guid.Empty;
-                    customercancelledSlotModel.CreatedBy = string.Empty;
-                    customercancelledSlotModel.CancelledBy = string.Empty;
+                    customercancelledSlotModel.CreatedByCustomerModel.Email = string.Empty;
                 }
             }
-            return this.CreateGetHttpResponse(customercancelledSlotModels);
+            return this.CreateGetHttpResponse(customercancelledSlotModelsInformation);
         }
 
         private void HideUncessaryDetailsForGetCustomerBookedSlots(IEnumerable<BookedSlotModel> bookSlotModels)
