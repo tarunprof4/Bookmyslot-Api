@@ -3,6 +3,6 @@
     public class ResendSlotInformation
     {
         public string SlotKey { get; set; }
-        public string customer { get; set; }
+        public string ResendTo { get; set; }
     }
 }
