@@ -22,8 +22,8 @@ namespace Bookmyslot.Api.Common.Email
             this.smtpClient = new SmtpClient(configuration.GetSection("SmtpHost").Value);
             this.smtpClient.Port = 587;
             this.smtpClient.Credentials = new NetworkCredential(
-                configuration.GetSection("User").Value,
-                configuration.GetSection("Password").Value);
+                configuration.GetSection("EmailUserName").Value,
+                configuration.GetSection("EmailPassword").Value);
             this.smtpClient.EnableSsl = true;
         }
 

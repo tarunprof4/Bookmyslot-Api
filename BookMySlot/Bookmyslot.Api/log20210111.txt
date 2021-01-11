@@ -15,3 +15,4 @@
 00:09 (1.0.0) [Information] (18) Get customer YetToBeBookedSlots
 00:09 (1.0.0) [Information] (18) Get customer GetCustomerCompletedSlots
 00:09 (1.0.0) [Information] (19) Get customer GetCustomerCancelledSlots
+16:59 (1.0.0) [Information] (1) Starting web host
