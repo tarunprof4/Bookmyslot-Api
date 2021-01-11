@@ -1,0 +1,64 @@
+00:01 (1.0.0) [Information] (1) Starting web host
+00:10 (1.0.0) [Information] (1) Starting web host
+00:11 (1.0.0) [Error] (14) 'string' does not contain a definition for 'resendTo'
+
+00:11 (1.0.0) [Error] (14)    at CallSite.Target(Closure , CallSite , Object )
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute1[T0,TRet](CallSite site, T0 arg0)
+   at CompiledRazorTemplates.Dynamic.RazorEngine_4a446f86011e45ad8e1ce239792670ff.ExecuteAsync()
+   at RazorEngine.Templating.TemplateBase.Run(ExecuteContext context, TextWriter reader)
+   at RazorEngine.Templating.RazorEngineCore.RunTemplate(ICompiledTemplate template, TextWriter writer, Object model, DynamicViewBag viewBag)
+   at RazorEngine.Templating.RazorEngineService.Run(ITemplateKey key, TextWriter writer, Type modelType, Object model, DynamicViewBag viewBag)
+   at RazorEngine.Templating.RazorEngineService.RunCompile(ITemplateKey key, TextWriter writer, Type modelType, Object model, DynamicViewBag viewBag)
+   at RazorEngine.Templating.DynamicWrapperService.RunCompile(ITemplateKey key, TextWriter writer, Type modelType, Object model, DynamicViewBag viewBag)
+   at RazorEngine.Templating.RazorEngineServiceExtensions.RunCompile(IRazorEngineService service, String name, TextWriter writer, Type modelType, Object model, DynamicViewBag viewBag)
+   at RazorEngine.Templating.RazorEngineServiceExtensions.<>c__DisplayClass16_0.<RunCompile>b__0(TextWriter writer)
+   at RazorEngine.Templating.RazorEngineServiceExtensions.WithWriter(Action`1 withWriter)
+   at RazorEngine.Templating.RazorEngineServiceExtensions.RunCompile(IRazorEngineService service, String name, Type modelType, Object model, DynamicViewBag viewBag)
+   at RazorEngine.Templating.RazorEngineServiceExtensions.RunCompile(IRazorEngineService service, String templateSource, String name, Type modelType, Object model, DynamicViewBag viewBag)
+   at Bookmyslot.Api.Customers.Emails.CustomerEmailTemplateFactory.GetResendSlotInformationTemplate(SlotModel slotModel, CustomerModel resendTo) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Customers\Bookmyslot.Api.Customers.Emails\CustomerEmailTemplateFactory.cs:line 32
+   at Bookmyslot.Api.SlotScheduler.Business.ResendSlotInformationBusiness.ResendSlotMeetingInformation(SlotModel slotModel, String resendTo) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\ResendSlotInformationBusiness.cs:line 29
+   at Bookmyslot.Api.Controllers.EmailController.ResendSlotMeetingInformation1(ResendSlotInformation resendSlotInformation) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\BookMySlot\Bookmyslot.Api\Controllers\EmailController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+00:13 (1.0.0) [Information] (1) Starting web host
+00:15 (1.0.0) [Information] (1) Starting web host
+00:18 (1.0.0) [Information] (1) Starting web host
+00:21 (1.0.0) [Information] (1) Starting web host
+00:23 (1.0.0) [Information] (1) Starting web host
+00:23 (1.0.0) [Error] (5) Object reference not set to an instance of an object.
+
+00:23 (1.0.0) [Error] (5)    at Bookmyslot.Api.Common.Email.EmailInteraction.SendEmail(EmailModel emailModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Common\Bookmyslot.Api.Common.Email\EmailInteraction.cs:line 26
+   at Bookmyslot.Api.SlotScheduler.Business.ResendSlotInformationBusiness.ResendSlotMeetingInformation(SlotModel slotModel, String resendTo) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\ResendSlotInformationBusiness.cs:line 32
+   at Bookmyslot.Api.Controllers.EmailController.ResendSlotMeetingInformation1(ResendSlotInformation resendSlotInformation) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\BookMySlot\Bookmyslot.Api\Controllers\EmailController.cs:line 39
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.SwaggerUiIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
+   at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)

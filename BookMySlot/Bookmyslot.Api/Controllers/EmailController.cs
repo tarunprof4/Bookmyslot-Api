@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace Bookmyslot.Api.Controllers
     [ApiController]
     public class EmailController : BaseApiController
     {
-        
+
         private readonly IKeyEncryptor keyEncryptor;
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
         public EmailController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness)
@@ -30,6 +31,14 @@ namespace Bookmyslot.Api.Controllers
             this.keyEncryptor = keyEncryptor;
             this.resendSlotInformationBusiness = resendSlotInformationBusiness;
         }
+
+        //[HttpPost()]
+        //[Route("api/v1/email/ResendSlotMeetingInformation1")]
+        //public async Task<IActionResult> ResendSlotMeetingInformation1([FromBody] ResendSlotInformation resendSlotInformation)
+        //{
+        //    var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(null, resendSlotInformation.ResendTo);
+        //    return this.CreatePostHttpResponse(resendSlotInformationResponse);
+        //}
 
 
         /// <summary>
@@ -46,16 +55,16 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost()]
-        [Route("api/v1/Email/ResendSlotInformation")]
+        [Route("api/v1/email/ResendSlotMeetingInformation")]
 
-        public async Task<IActionResult> ResendSlotInformation([FromBody] ResendSlotInformation resendSlotInformation)
+        public async Task<IActionResult> ResendSlotMeetingInformation([FromBody] ResendSlotInformation resendSlotInformation)
         {
             Log.Information("Resend Email Slot key  " + resendSlotInformation.ResendSlotModel);
             var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformation.ResendSlotModel));
 
             if (slotModel != null)
             {
-                var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotInformation(slotModel, resendSlotInformation.ResendTo);
+                var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, resendSlotInformation.ResendTo);
                 return this.CreatePostHttpResponse(resendSlotInformationResponse);
             }
 
@@ -65,5 +74,5 @@ namespace Bookmyslot.Api.Controllers
     }
 
 
-   
+
 }

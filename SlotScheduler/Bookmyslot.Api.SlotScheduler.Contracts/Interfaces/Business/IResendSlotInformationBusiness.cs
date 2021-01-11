@@ -6,6 +6,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface IResendSlotInformationBusiness
     {
-        Task<Response<bool>> ResendSlotInformation(SlotModel slotModel, string resendTo);
+        Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo);
     }
 }
