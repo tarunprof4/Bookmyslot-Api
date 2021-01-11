@@ -2,7 +2,7 @@
 {
     public class ResendSlotInformation
     {
-        public string SlotKey { get; set; }
+        public string ResendSlotModel { get; set; }
         public string ResendTo { get; set; }
     }
 }

@@ -50,8 +50,8 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> ResendSlotInformation([FromBody] ResendSlotInformation resendSlotInformation)
         {
-            Log.Information("Delete Customer Slot  " + resendSlotInformation.SlotKey);
-            var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformation.SlotKey));
+            Log.Information("Resend Email Slot key  " + resendSlotInformation.ResendSlotModel);
+            var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformation.ResendSlotModel));
 
             if (slotModel != null)
             {
