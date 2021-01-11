@@ -86,69 +86,14 @@ namespace Bookmyslot.Api.Controllers
             return this.CreatePostHttpResponse(slotResponse);
         }
 
-        /// <summary>
-        /// Update existing slot
-        /// </summary>
-        /// <param name="slotModel">slot model</param>
-        /// <returns >success or failure bool</returns>
-        /// <response code="204">Returns success or failure bool</response>
-        /// <response code="400">validation error bad request</response>
-        /// <response code="404">no slot found</response>
-        /// <response code="500">internal server error</response>
-        // PUT api/<SlotController>
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[HttpPut]
-        //public async Task<IActionResult> Put([FromBody] SlotModel slotModel)
-        //{
-        //    Log.Information("Update Customer Slot " + slotModel);
-        //    var slotResponse = await slotBusiness.UpdateSlot(slotModel);
-        //    return this.CreatePutHttpResponse(slotResponse);
-
-        //}
-
-        ///// <summary>
-        ///// Delete User slot
-        ///// </summary>
-        ///// <param name="slotKey">user slot id</param>
-        ///// <param name="deletedBy">user slot id</param>
-        ///// <returns >success or failure bool</returns>
-        ///// <response code="204">Returns success or failure bool</response>
-        ///// <response code="400">validation error bad request</response>
-        ///// <response code="404">no slot found</response>
-        ///// <response code="500">internal server error</response>
-        //// DELETE api/<SlotController>/email
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[HttpDelete("{slotId}")]
-        //[Route("api/v1/Slot/DeleteSharedSlot")]
-        //public async Task<IActionResult> DeleteSharedSlot(string slotKey, string deletedBy)
-        //{
-        //    Log.Information("Delete Customer Slot  " + slotKey);
-
-        //    var customerSharedSlotModel = JsonConvert.DeserializeObject<SharedSlotModel>(this.keyEncryptor.Decrypt(slotKey));
-
-        //    if (customerSharedSlotModel != null)
-        //    {
-        //        var slotResponse = await slotBusiness.DeleteSlot(customerSharedSlotModel.SlotModel.Id, deletedBy);
-        //        return this.CreateDeleteHttpResponse(slotResponse);
-        //    }
-
-        //    var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
-        //    return this.CreateDeleteHttpResponse(validationErrorResponse);
-        //}
-
+       
 
         /// <summary>
-        /// Delete User slot
+        /// Cancel User slot
         /// </summary>
-        /// <param name="cancelSlot">user slot id</param>
+        /// <param name="cancelSlot">user slot information</param>
         /// <returns >success or failure bool</returns>
-        /// <response code="204">Returns success or failure bool</response>
+        /// <response code="201">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="404">no slot found</response>
         /// <response code="500">internal server error</response>

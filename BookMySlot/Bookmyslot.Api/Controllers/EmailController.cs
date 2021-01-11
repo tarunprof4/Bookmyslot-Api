@@ -27,15 +27,16 @@ namespace Bookmyslot.Api.Controllers
             this.keyEncryptor = keyEncryptor;
         }
 
-        /// Delete User slot
+
+        /// <summary>
+        /// Resend slot information email to the customers
         /// </summary>
-        /// <param name="cancelSlot">user slot id</param>
+        /// <param name="resendSlotInformation">slot information</param>
         /// <returns >success or failure bool</returns>
-        /// <response code="204">Returns success or failure bool</response>
+        /// <response code="201">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="404">no slot found</response>
         /// <response code="500">internal server error</response>
-        // DELETE api/<SlotController>/email
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

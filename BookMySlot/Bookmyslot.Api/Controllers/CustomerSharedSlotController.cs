@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
 {
-    //[Route("api/v1/[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
@@ -29,14 +28,13 @@ namespace Bookmyslot.Api.Controllers
         }
 
         /// <summary>
-        /// Gets customer slots
+        /// Gets customer YetToBeBookedSlots
         /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
+        /// <returns>returns customer  YetToBeBookedSlots</returns>
+        /// <response code="200">Returns customer  YetToBeBookedSlots information</response>
         /// <response code="404">no slots found</response>
         /// <response code="400">validation error</response>
         /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,14 +54,13 @@ namespace Bookmyslot.Api.Controllers
 
 
         /// <summary>
-        /// Gets customer slots
+        /// Gets customer BookedSlots
         /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
+        /// <returns>returns customer BookedSlots  model</returns>
+        /// <response code="200">Returns customer BookedSlots information</response>
         /// <response code="404">no slots found</response>
         /// <response code="400">validation error</response>
         /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -83,14 +80,13 @@ namespace Bookmyslot.Api.Controllers
 
 
         /// <summary>
-        /// Gets customer slots
+        /// Gets customer CompletedSlots
         /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
+        /// <returns>returns customer CompletedSlots</returns>
+        /// <response code="200">Returns customer CompletedSlots information</response>
         /// <response code="404">no slots found</response>
         /// <response code="400">validation error</response>
         /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -111,14 +107,13 @@ namespace Bookmyslot.Api.Controllers
 
 
         /// <summary>
-        /// Gets customer slots
+        /// Gets customer CancelledSlots
         /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
+        /// <returns>returns customer CancelledSlots model</returns>
+        /// <response code="200">Returns customer CancelledSlots information</response>
         /// <response code="404">no slots found</response>
         /// <response code="400">validation error</response>
         /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -29,14 +29,13 @@ namespace Bookmyslot.Api.Controllers
 
 
         /// <summary>
-        /// Gets customer slots
+        /// Gets customer booked slots
         /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
+        /// <returns>returns customer booked slots</returns>
+        /// <response code="200">Returns customer booked slots information</response>
         /// <response code="404">no slots found</response>
         /// <response code="400">validation error</response>
         /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,14 +55,13 @@ namespace Bookmyslot.Api.Controllers
 
 
         /// <summary>
-        /// Gets customer slots
+        /// Gets customer completed slots
         /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
+        /// <returns>returns customer completed slots</returns>
+        /// <response code="200">Returns customer completed slot information</response>
         /// <response code="404">no slots found</response>
         /// <response code="400">validation error</response>
         /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -84,14 +82,13 @@ namespace Bookmyslot.Api.Controllers
 
 
         /// <summary>
-        /// Gets customer slots
+        /// Gets customer cancelled slots
         /// </summary>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot information</response>
+        /// <returns>returns customer cancelled slot model</returns>
+        /// <response code="200">Returns customer cancelled slot information</response>
         /// <response code="404">no slots found</response>
         /// <response code="400">validation error</response>
         /// <response code="500">internal server error</response>
-        // GET: api/<CustomerSlot>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
