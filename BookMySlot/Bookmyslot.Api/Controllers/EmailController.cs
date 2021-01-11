@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -21,10 +22,13 @@ namespace Bookmyslot.Api.Controllers
     [ApiController]
     public class EmailController : BaseApiController
     {
+        
         private readonly IKeyEncryptor keyEncryptor;
-        public EmailController(IKeyEncryptor keyEncryptor)
+        private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
+        public EmailController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness)
         {
             this.keyEncryptor = keyEncryptor;
+            this.resendSlotInformationBusiness = resendSlotInformationBusiness;
         }
 
 
@@ -51,7 +55,8 @@ namespace Bookmyslot.Api.Controllers
 
             if (slotModel != null)
             {
-               
+                var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotInformation(slotModel, resendSlotInformation.ResendTo);
+                return this.CreatePostHttpResponse(resendSlotInformationResponse);
             }
 
             var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
