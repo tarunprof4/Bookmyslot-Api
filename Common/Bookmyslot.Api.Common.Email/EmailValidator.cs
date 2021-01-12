@@ -1,10 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Common.Email
 {
@@ -16,15 +13,6 @@ namespace Bookmyslot.Api.Common.Email
             List<string> validationErrors = new List<string>();
             RequiredAttribute requiredAttribute = new RequiredAttribute();
             EmailAddressAttribute emailAddressAttribute = new EmailAddressAttribute();
-            if (!requiredAttribute.IsValid(emailModel.From))
-            {
-                 validationErrors.Add(EmailConstants.EmailFromAddressIsRequired);
-            }
-
-            if (!emailAddressAttribute.IsValid(emailModel.From))
-            {
-                validationErrors.Add(string.Format(EmailConstants.EmailFromAddressIsInvalid, emailModel.From));
-            }
 
             if (emailModel.To == null || emailModel.To.Count == 0)
             {

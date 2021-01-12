@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
@@ -28,17 +27,16 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
             var resendEmailMessage = CustomerEmailTemplateFactory.GetResendSlotInformationTemplate(slotModel, resendToCustomerModel);
 
-            var emailModel = CreateEmailModel(resendToCustomerModel, resendEmailMessage);
+            var emailModel = CreateEmailModel(resendToCustomerModel, resendEmailMessage, resendToCustomerModel);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
         private static EmailModel CreateEmailModel(CustomerModel resendToCustomerModel, string resendEmailMessage)
         {
             var emailModel = new EmailModel();
-            emailModel.Subject = "Slot Meeting Details- Title- Date";
+            emailModel.Subject = TemplateConstants.ResendSlotInformationTemplateSubject;
             emailModel.Body = resendEmailMessage;
             emailModel.To = new List<string>() { resendToCustomerModel.Email };
-            emailModel.From = "";
             emailModel.IsBodyHtml = true;
             return emailModel;
         }

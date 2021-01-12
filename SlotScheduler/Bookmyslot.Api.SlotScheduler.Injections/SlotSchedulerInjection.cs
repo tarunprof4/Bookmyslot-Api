@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Compression;
+﻿using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Compression;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
@@ -24,6 +25,7 @@ namespace Bookmyslot.Api.SlotScheduler.Injections
             services.AddTransient<IKeyEncryptor, KeyEncryptor>();
             services.AddTransient<IEmailInteraction, EmailInteraction>();
             services.AddTransient<IEmailClient, EmailClient>();
+            services.AddSingleton<IAppConfiguration, AppConfiguration>();
         }
 
         public static void SlotSchedulerBusinessInjections(IServiceCollection services)

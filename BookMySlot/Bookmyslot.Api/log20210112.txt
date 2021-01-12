@@ -62,3 +62,51 @@
    at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
    at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+00:51 (1.0.0) [Information] (1) Starting web host
+00:53 (1.0.0) [Information] (10) Sending Email FailedSystem.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.EndSend(IAsyncResult result)
+   at System.Net.Mail.SendMailAsyncResult.SendMailFromCompleted(IAsyncResult result)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(Exception source)
+   at System.Net.Mail.SendMailAsyncResult.End(IAsyncResult result)
+   at System.Net.Mail.SmtpClient.SendMailCallback(IAsyncResult result)
+--- End of stack trace from previous location where exception was thrown ---
+   at Bookmyslot.Api.Common.Email.EmailClient.SendEmail(EmailModel emailModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Common\Bookmyslot.Api.Common.Email\EmailClient.cs:line 36
+00:53 (1.0.0) [Information] (17) Sending Email FailedSystem.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.EndSend(IAsyncResult result)
+   at System.Net.Mail.SendMailAsyncResult.SendMailFromCompleted(IAsyncResult result)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw(Exception source)
+   at System.Net.Mail.SendMailAsyncResult.End(IAsyncResult result)
+   at System.Net.Mail.SmtpClient.SendMailCallback(IAsyncResult result)
+--- End of stack trace from previous location where exception was thrown ---
+   at Bookmyslot.Api.Common.Email.EmailClient.SendEmail(EmailModel emailModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Common\Bookmyslot.Api.Common.Email\EmailClient.cs:line 36
+12:35 (1.0.0) [Information] (1) Starting web host
+12:39 (1.0.0) [Information] (1) Starting web host
+12:45 (1.0.0) [Information] (1) Starting web host
+12:49 (1.0.0) [Information] (1) Starting web host
+12:50 (1.0.0) [Information] (11) Sending Email FailedSystem.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.Send(SmtpConnection conn, Byte[] command, MailAddress from, Boolean allowUnicode)
+   at System.Net.Mail.SmtpTransport.SendMail(MailAddress sender, MailAddressCollection recipients, String deliveryNotify, Boolean allowUnicode, SmtpFailedRecipientException& exception)
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at Bookmyslot.Api.Common.Email.EmailClient.SendEmail(EmailModel emailModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Common\Bookmyslot.Api.Common.Email\EmailClient.cs:line 41
+13:01 (1.0.0) [Information] (1) Starting web host
+13:02 (1.0.0) [Information] (9) Sending Email FailedSystem.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.Send(SmtpConnection conn, Byte[] command, MailAddress from, Boolean allowUnicode)
+   at System.Net.Mail.SmtpTransport.SendMail(MailAddress sender, MailAddressCollection recipients, String deliveryNotify, Boolean allowUnicode, SmtpFailedRecipientException& exception)
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at Bookmyslot.Api.Common.Email.EmailClient.SendEmail(EmailModel emailModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Common\Bookmyslot.Api.Common.Email\EmailClient.cs:line 39
+13:03 (1.0.0) [Information] (1) Starting web host
+13:06 (1.0.0) [Information] (5) Sending Email FailedSystem.Net.Mail.SmtpException: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at
+   at System.Net.Mail.MailCommand.CheckResponse(SmtpStatusCode statusCode, String response)
+   at System.Net.Mail.MailCommand.Send(SmtpConnection conn, Byte[] command, MailAddress from, Boolean allowUnicode)
+   at System.Net.Mail.SmtpTransport.SendMail(MailAddress sender, MailAddressCollection recipients, String deliveryNotify, Boolean allowUnicode, SmtpFailedRecipientException& exception)
+   at System.Net.Mail.SmtpClient.Send(MailMessage message)
+   at Bookmyslot.Api.Common.Email.EmailClient.SendEmail(EmailModel emailModel) in C:\Users\taruna\Desktop\BookMySlot\BookMySlot\Common\Bookmyslot.Api.Common.Email\EmailClient.cs:line 57
+13:07 (1.0.0) [Information] (1) Starting web host
+13:11 (1.0.0) [Information] (1) Starting web host
+13:13 (1.0.0) [Information] (1) Starting web host

@@ -1,30 +1,32 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
-using Microsoft.Extensions.Configuration;
-using System.Net;
-using Serilog;
-using Bookmyslot.Api.Common.Contracts.Constants;
 
 namespace Bookmyslot.Api.Common.Email
 {
     public class EmailClient : IEmailClient
     {
         private readonly SmtpClient smtpClient;
+        private readonly string fromEmailAddress;
 
-        public EmailClient(IConfiguration configuration)
+        public EmailClient(IAppConfiguration appConfiguration)
         {
-            this.smtpClient = new SmtpClient(configuration.GetSection("SmtpHost").Value);
-            this.smtpClient.Port = 587;
-            this.smtpClient.Credentials = new NetworkCredential(
-                configuration.GetSection("EmailUserName").Value,
-                configuration.GetSection("EmailPassword").Value);
+            this.smtpClient = new SmtpClient();
+            this.smtpClient.UseDefaultCredentials = false;
             this.smtpClient.EnableSsl = true;
+            this.smtpClient.Port = Convert.ToInt32(appConfiguration.EmailPort);
+            this.smtpClient.Host = appConfiguration.EmailStmpHost;
+            this.smtpClient.Credentials = new NetworkCredential(appConfiguration.EmailUserName,appConfiguration.EmailPassword);
+            this.smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            this.fromEmailAddress = appConfiguration.EmailUserName;
         }
 
 
@@ -46,7 +48,7 @@ namespace Bookmyslot.Api.Common.Email
         private MailMessage CreateMailMessage(EmailModel emailModel)
         {
             var mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(emailModel.From);
+            mailMessage.From = new MailAddress(this.fromEmailAddress);
             foreach (var recipient in emailModel.To)
             {
                 mailMessage.To.Add(recipient);
