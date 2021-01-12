@@ -44,7 +44,6 @@ namespace Bookmyslot.Api.Common.Tests
             Assert.AreEqual(validateEmailResponse.Result, false);
             Assert.IsTrue(validateEmailResponse.Messages.Contains(EmailConstants.EmailSubjectIsRequired));
             Assert.IsTrue(validateEmailResponse.Messages.Contains(EmailConstants.EmailBodyIsRequired));
-            Assert.IsTrue(validateEmailResponse.Messages.Contains(EmailConstants.EmailFromAddressIsRequired));
             Assert.IsTrue(validateEmailResponse.Messages.Contains(EmailConstants.EmailToAddressIsRequired));
         }
 
@@ -57,7 +56,6 @@ namespace Bookmyslot.Api.Common.Tests
 
             Assert.AreEqual(validateEmailResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(validateEmailResponse.Result, false);
-            Assert.IsTrue(validateEmailResponse.Messages.Contains(string.Format(EmailConstants.EmailFromAddressIsInvalid, InvalidFrom)));
             Assert.IsTrue(validateEmailResponse.Messages.Contains(string.Format(EmailConstants.EmailToAddressIsInvalid, InvalidTo)));
             Assert.IsTrue(validateEmailResponse.Messages.Contains(string.Format(EmailConstants.EmailccAddressIsInvalid, InvalidCC)));
             Assert.IsTrue(validateEmailResponse.Messages.Contains(string.Format(EmailConstants.EmailBccAddressIsInvalid, InvalidBcc)));

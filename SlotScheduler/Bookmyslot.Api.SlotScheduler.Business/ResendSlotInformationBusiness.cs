@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
             var resendEmailMessage = CustomerEmailTemplateFactory.GetResendSlotInformationTemplate(slotModel, resendToCustomerModel);
 
-            var emailModel = CreateEmailModel(resendToCustomerModel, resendEmailMessage, resendToCustomerModel);
+            var emailModel = CreateEmailModel(resendToCustomerModel, resendEmailMessage);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
