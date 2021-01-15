@@ -25,20 +25,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);
             var resendToCustomerModel = customerModelsResponse.Result;
 
-            var resendEmailMessage = CustomerEmailTemplateFactory.GetResendSlotInformationTemplate(slotModel, resendToCustomerModel);
-
-            var emailModel = CreateEmailModel(resendToCustomerModel, resendEmailMessage);
+            var emailModel = CustomerEmailTemplateFactory.GetResendSlotInformationEmailTemplate(slotModel, resendToCustomerModel);
             return await this.emailInteraction.SendEmail(emailModel);
         }
-
-        private static EmailModel CreateEmailModel(CustomerModel resendToCustomerModel, string resendEmailMessage)
-        {
-            var emailModel = new EmailModel();
-            emailModel.Subject = TemplateConstants.ResendSlotInformationTemplateSubject;
-            emailModel.Body = resendEmailMessage;
-            emailModel.To = new List<string>() { resendToCustomerModel.Email };
-            emailModel.IsBodyHtml = true;
-            return emailModel;
-        }
+     
     }
 }

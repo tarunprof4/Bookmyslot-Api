@@ -110,3 +110,281 @@
 13:07 (1.0.0) [Information] (1) Starting web host
 13:11 (1.0.0) [Information] (1) Starting web host
 13:13 (1.0.0) [Information] (1) Starting web host
+13:58 (1.0.0) [Information] (1) Starting web host
+14:00 (1.0.0) [Information] (13) Get customer GetCustomerBookedSlots
+14:00 (1.0.0) [Information] (14) Get all distinct customers nearest single slot
+14:00 (1.0.0) [Information] (13) Get all distinct customers nearest single slot
+14:00 (1.0.0) [Information] (13) Get all available slots for the customer
+14:00 (1.0.0) [Information] (13) Schedule Slot for customer
+14:11 (1.0.0) [Information] (24) Get all distinct customers nearest single slot
+14:11 (1.0.0) [Information] (26) Get Customer Email a@gmail.com
+14:12 (1.0.0) [Information] (29) Get all distinct customers nearest single slot
+14:12 (1.0.0) [Information] (29) Get Customer Email a@gmail.com
+14:12 (1.0.0) [Information] (29) Get all distinct customers nearest single slot
+14:13 (1.0.0) [Information] (29) Get Customer Email a@gmail.com
+14:14 (1.0.0) [Information] (35) Get all distinct customers nearest single slot
+14:14 (1.0.0) [Information] (35) Get Customer Email a@gmail.com
+14:17 (1.0.0) [Information] (38) Get all distinct customers nearest single slot
+14:17 (1.0.0) [Information] (39) Get Customer Email a@gmail.com
+14:32 (1.0.0) [Information] (44) Get all distinct customers nearest single slot
+14:32 (1.0.0) [Information] (44) Get Customer Email a@gmail.com
+14:35 (1.0.0) [Information] (49) Get Customer Email a@gmail.com
+14:35 (1.0.0) [Information] (50) Get all distinct customers nearest single slot
+14:35 (1.0.0) [Information] (51) Get Customer Email a@gmail.com
+14:35 (1.0.0) [Information] (53) Get all distinct customers nearest single slot
+14:35 (1.0.0) [Information] (53) Get Customer Email a@gmail.com
+14:37 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+14:37 (1.0.0) [Information] (55) Get all distinct customers nearest single slot
+14:37 (1.0.0) [Information] (58) Get Customer Email a@gmail.com
+14:38 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+14:38 (1.0.0) [Information] (58) Get all distinct customers nearest single slot
+14:38 (1.0.0) [Information] (58) Get Customer Email a@gmail.com
+14:38 (1.0.0) [Information] (55) Get all available slots for the customer
+14:38 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+14:39 (1.0.0) [Information] (55) Get all distinct customers nearest single slot
+14:39 (1.0.0) [Information] (61) Get Customer Email a@gmail.com
+14:39 (1.0.0) [Information] (62) Get Customer Email a@gmail.com
+14:39 (1.0.0) [Information] (55) Get Customer Email a@gmail.com
+14:39 (1.0.0) [Information] (62) Get customer GetCustomerBookedSlots
+14:39 (1.0.0) [Information] (55) Get all distinct customers nearest single slot
+14:39 (1.0.0) [Information] (62) Get Customer Email a@gmail.com
+14:47 (1.0.0) [Information] (67) Get Customer Email a@gmail.com
+14:47 (1.0.0) [Information] (67) Get all distinct customers nearest single slot
+16:38 (1.0.0) [Information] (75) Get Customer Email a@gmail.com
+16:38 (1.0.0) [Information] (76) Get all distinct customers nearest single slot
+16:39 (1.0.0) [Information] (83) Get Customer Email a@gmail.com
+16:39 (1.0.0) [Information] (86) Get all distinct customers nearest single slot
+16:39 (1.0.0) [Information] (84) Get Customer Email a@gmail.com
+16:39 (1.0.0) [Information] (84) Get all distinct customers nearest single slot
+16:45 (1.0.0) [Information] (80) Get Customer Email a@gmail.com
+16:45 (1.0.0) [Information] (79) Get all distinct customers nearest single slot
+16:49 (1.0.0) [Information] (74) Get Customer Email a@gmail.com
+16:49 (1.0.0) [Information] (71) Get all distinct customers nearest single slot
+16:49 (1.0.0) [Information] (74) Get Customer Email a@gmail.com
+16:49 (1.0.0) [Information] (70) Get all distinct customers nearest single slot
+16:50 (1.0.0) [Information] (74) Get Customer Email a@gmail.com
+16:50 (1.0.0) [Information] (74) Get all distinct customers nearest single slot
+16:50 (1.0.0) [Information] (74) Get Customer Email a@gmail.com
+16:50 (1.0.0) [Information] (62) Get all distinct customers nearest single slot
+16:50 (1.0.0) [Information] (74) Get Customer Email a@gmail.com
+16:50 (1.0.0) [Information] (63) Get all distinct customers nearest single slot
+16:51 (1.0.0) [Information] (61) Get Customer Email a@gmail.com
+16:51 (1.0.0) [Information] (61) Get all distinct customers nearest single slot
+16:56 (1.0.0) [Information] (53) Get Customer Email a@gmail.com
+16:56 (1.0.0) [Information] (50) Get all distinct customers nearest single slot
+16:57 (1.0.0) [Information] (49) Get Customer Email a@gmail.com
+16:57 (1.0.0) [Information] (48) Get all distinct customers nearest single slot
+16:57 (1.0.0) [Information] (49) Get Customer Email a@gmail.com
+16:57 (1.0.0) [Information] (46) Get all distinct customers nearest single slot
+16:57 (1.0.0) [Information] (49) Get Customer Email a@gmail.com
+16:57 (1.0.0) [Information] (46) Get all distinct customers nearest single slot
+16:59 (1.0.0) [Information] (43) Get Customer Email a@gmail.com
+16:59 (1.0.0) [Information] (42) Get all distinct customers nearest single slot
+16:59 (1.0.0) [Information] (43) Get all distinct customers nearest single slot
+17:00 (1.0.0) [Information] (43) Get Customer Email a@gmail.com
+17:00 (1.0.0) [Information] (36) Get all distinct customers nearest single slot
+17:00 (1.0.0) [Information] (43) Get all distinct customers nearest single slot
+17:02 (1.0.0) [Information] (33) Get all distinct customers nearest single slot
+17:02 (1.0.0) [Information] (33) Get Customer Email a@gmail.com
+17:03 (1.0.0) [Information] (28) Get Customer Email a@gmail.com
+17:03 (1.0.0) [Information] (24) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get Customer Email a@gmail.com
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get Customer Email a@gmail.com
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (25) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (24) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (25) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (21) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (23) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (28) Get all distinct customers nearest single slot
+17:03 (1.0.0) [Information] (21) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (18) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (16) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (18) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (18) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (18) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (18) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (14) Get all distinct customers nearest single slot
+17:04 (1.0.0) [Information] (13) Get Customer Email a@gmail.com
+17:04 (1.0.0) [Information] (5) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (84) Get Customer Email a@gmail.com
+17:08 (1.0.0) [Information] (88) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (84) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (84) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (84) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (88) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (87) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (87) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (89) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (87) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (88) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (89) Get all distinct customers nearest single slot
+17:08 (1.0.0) [Information] (93) Get all distinct customers nearest single slot
+17:09 (1.0.0) [Information] (92) Get Customer Email a@gmail.com
+17:09 (1.0.0) [Information] (94) Get all distinct customers nearest single slot
+17:09 (1.0.0) [Information] (97) Get Customer Email a@gmail.com
+17:09 (1.0.0) [Information] (99) Get all distinct customers nearest single slot
+17:11 (1.0.0) [Information] (103) Get Customer Email a@gmail.com
+17:11 (1.0.0) [Information] (106) Get all distinct customers nearest single slot
+17:11 (1.0.0) [Information] (103) Get Customer Email a@gmail.com
+17:11 (1.0.0) [Information] (109) Get all distinct customers nearest single slot
+17:11 (1.0.0) [Information] (103) Get Customer Email a@gmail.com
+17:11 (1.0.0) [Information] (107) Get all distinct customers nearest single slot
+17:12 (1.0.0) [Information] (114) Get Customer Email a@gmail.com
+17:12 (1.0.0) [Information] (116) Get all distinct customers nearest single slot
+17:13 (1.0.0) [Information] (118) Get Customer Email a@gmail.com
+17:13 (1.0.0) [Information] (121) Get all distinct customers nearest single slot
+17:14 (1.0.0) [Information] (122) Get Customer Email a@gmail.com
+17:14 (1.0.0) [Information] (123) Get all distinct customers nearest single slot
+17:14 (1.0.0) [Information] (122) Get all distinct customers nearest single slot
+17:14 (1.0.0) [Information] (126) Get Customer Email a@gmail.com
+17:14 (1.0.0) [Information] (127) Get all distinct customers nearest single slot
+17:14 (1.0.0) [Information] (126) Get all distinct customers nearest single slot
+17:14 (1.0.0) [Information] (129) Get all distinct customers nearest single slot
+17:15 (1.0.0) [Information] (130) Get Customer Email a@gmail.com
+17:15 (1.0.0) [Information] (130) Get all distinct customers nearest single slot
+17:15 (1.0.0) [Information] (130) Get all distinct customers nearest single slot
+17:15 (1.0.0) [Information] (136) Get Customer Email a@gmail.com
+17:15 (1.0.0) [Information] (137) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (136) Get Customer Email a@gmail.com
+17:16 (1.0.0) [Information] (140) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (136) Get Customer Email a@gmail.com
+17:16 (1.0.0) [Information] (139) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (139) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (140) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (140) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (136) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (136) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (136) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (139) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (140) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (139) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (141) Get all distinct customers nearest single slot
+17:16 (1.0.0) [Information] (139) Get all distinct customers nearest single slot
+17:18 (1.0.0) [Information] (144) Get Customer Email a@gmail.com
+17:18 (1.0.0) [Information] (147) Get all distinct customers nearest single slot
+17:22 (1.0.0) [Information] (149) Get Customer Email a@gmail.com
+17:22 (1.0.0) [Information] (150) Get all distinct customers nearest single slot
+17:23 (1.0.0) [Information] (153) Get Customer Email a@gmail.com
+17:23 (1.0.0) [Information] (153) Get all distinct customers nearest single slot
+17:23 (1.0.0) [Information] (157) Get Customer Email a@gmail.com
+17:23 (1.0.0) [Information] (158) Get all distinct customers nearest single slot
+17:23 (1.0.0) [Information] (162) Get Customer Email a@gmail.com
+17:23 (1.0.0) [Information] (160) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (161) Get Customer Email a@gmail.com
+17:26 (1.0.0) [Information] (159) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (161) Get Customer Email a@gmail.com
+17:26 (1.0.0) [Information] (160) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (161) Get Customer Email a@gmail.com
+17:26 (1.0.0) [Information] (160) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (161) Get Customer Email a@gmail.com
+17:26 (1.0.0) [Information] (161) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (161) Get Customer Email a@gmail.com
+17:26 (1.0.0) [Information] (158) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (154) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (161) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (153) Get Customer Email a@gmail.com
+17:26 (1.0.0) [Information] (152) Get all distinct customers nearest single slot
+17:26 (1.0.0) [Information] (148) Get Customer Email a@gmail.com
+17:26 (1.0.0) [Information] (150) Get all distinct customers nearest single slot
+17:30 (1.0.0) [Information] (146) Get Customer Email a@gmail.com
+17:30 (1.0.0) [Information] (143) Get all distinct customers nearest single slot
+17:30 (1.0.0) [Information] (146) Get Customer Email a@gmail.com
+17:30 (1.0.0) [Information] (146) Get all distinct customers nearest single slot
+17:30 (1.0.0) [Information] (142) Get Customer Email a@gmail.com
+17:30 (1.0.0) [Information] (139) Get all distinct customers nearest single slot
+17:30 (1.0.0) [Information] (138) Get Customer Email a@gmail.com
+17:30 (1.0.0) [Information] (136) Get all distinct customers nearest single slot
+17:31 (1.0.0) [Information] (142) Get Customer Email a@gmail.com
+17:31 (1.0.0) [Information] (141) Get all distinct customers nearest single slot
+17:31 (1.0.0) [Information] (141) Get Customer Email a@gmail.com
+17:31 (1.0.0) [Information] (138) Get all distinct customers nearest single slot
+17:31 (1.0.0) [Information] (134) Get Customer Email a@gmail.com
+17:31 (1.0.0) [Information] (130) Get all distinct customers nearest single slot
+17:31 (1.0.0) [Information] (132) Get Customer Email a@gmail.com
+17:31 (1.0.0) [Information] (134) Get all distinct customers nearest single slot
+17:32 (1.0.0) [Information] (129) Get Customer Email a@gmail.com
+17:32 (1.0.0) [Information] (126) Get all distinct customers nearest single slot
+17:33 (1.0.0) [Information] (124) Get Customer Email a@gmail.com
+17:33 (1.0.0) [Information] (125) Get all distinct customers nearest single slot
+17:33 (1.0.0) [Information] (125) Get Customer Email a@gmail.com
+17:33 (1.0.0) [Information] (125) Get all distinct customers nearest single slot
+17:33 (1.0.0) [Information] (124) Get Customer Email a@gmail.com
+17:33 (1.0.0) [Information] (120) Get all distinct customers nearest single slot
+17:33 (1.0.0) [Information] (124) Get Customer Email a@gmail.com
+17:33 (1.0.0) [Information] (123) Get all distinct customers nearest single slot
+17:33 (1.0.0) [Information] (124) Get Customer Email a@gmail.com
+17:33 (1.0.0) [Information] (124) Get all distinct customers nearest single slot
+17:33 (1.0.0) [Information] (124) Get Customer Email a@gmail.com
+17:33 (1.0.0) [Information] (123) Get all distinct customers nearest single slot
+17:33 (1.0.0) [Information] (124) Get all distinct customers nearest single slot
+17:34 (1.0.0) [Information] (124) Get all distinct customers nearest single slot
+17:34 (1.0.0) [Information] (118) Get all distinct customers nearest single slot
+17:35 (1.0.0) [Information] (118) Get Customer Email a@gmail.com
+17:35 (1.0.0) [Information] (116) Get all distinct customers nearest single slot
+17:35 (1.0.0) [Information] (115) Get Customer Email a@gmail.com
+17:35 (1.0.0) [Information] (114) Get all distinct customers nearest single slot
+17:35 (1.0.0) [Information] (115) Get all distinct customers nearest single slot
+17:35 (1.0.0) [Information] (115) Get all distinct customers nearest single slot
+17:35 (1.0.0) [Information] (115) Get all distinct customers nearest single slot
+17:35 (1.0.0) [Information] (115) Get Customer Email a@gmail.com
+17:35 (1.0.0) [Information] (115) Get all distinct customers nearest single slot
+17:35 (1.0.0) [Information] (115) Get Customer Email a@gmail.com
+17:35 (1.0.0) [Information] (114) Get all distinct customers nearest single slot
+17:36 (1.0.0) [Information] (115) Get Customer Email a@gmail.com
+17:36 (1.0.0) [Information] (115) Get all distinct customers nearest single slot
+17:36 (1.0.0) [Information] (115) Get all distinct customers nearest single slot
+17:36 (1.0.0) [Information] (114) Get all distinct customers nearest single slot
+17:39 (1.0.0) [Information] (108) Get all distinct customers nearest single slot
+17:39 (1.0.0) [Information] (108) Get all distinct customers nearest single slot
+17:40 (1.0.0) [Information] (103) Get all distinct customers nearest single slot
+17:40 (1.0.0) [Information] (103) Get all distinct customers nearest single slot
+17:40 (1.0.0) [Information] (103) Get all distinct customers nearest single slot
+17:41 (1.0.0) [Information] (99) Get Customer Email a@gmail.com
+17:41 (1.0.0) [Information] (97) Get all distinct customers nearest single slot
+17:41 (1.0.0) [Information] (100) Get Customer Email a@gmail.com
+17:41 (1.0.0) [Information] (95) Get all distinct customers nearest single slot
+17:43 (1.0.0) [Information] (91) Get Customer Email a@gmail.com
+17:43 (1.0.0) [Information] (94) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (92) Get Customer Email a@gmail.com
+17:44 (1.0.0) [Information] (92) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (94) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (92) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (91) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (92) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (92) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (94) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (92) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (93) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (91) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (92) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (94) Get all distinct customers nearest single slot
+17:44 (1.0.0) [Information] (92) Get Customer Email a@gmail.com
+17:44 (1.0.0) [Information] (92) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (87) Get Customer Email a@gmail.com
+17:46 (1.0.0) [Information] (87) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (87) Get Customer Email a@gmail.com
+17:46 (1.0.0) [Information] (84) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (87) Get Customer Email a@gmail.com
+17:46 (1.0.0) [Information] (87) Get all distinct customers nearest single slot
+17:46 (1.0.0) [Information] (87) Get Customer Email a@gmail.com
+17:46 (1.0.0) [Information] (87) Get all distinct customers nearest single slot
+17:47 (1.0.0) [Information] (87) Get Customer Email a@gmail.com
+17:47 (1.0.0) [Information] (88) Get all distinct customers nearest single slot
+17:48 (1.0.0) [Information] (9) Get Customer Email a@gmail.com
+17:48 (1.0.0) [Information] (90) Get all distinct customers nearest single slot
+17:48 (1.0.0) [Information] (9) Get all distinct customers nearest single slot
+17:48 (1.0.0) [Information] (90) Get all distinct customers nearest single slot
+17:48 (1.0.0) [Information] (93) Get Customer Email a@gmail.com
+17:48 (1.0.0) [Information] (90) Get all distinct customers nearest single slot
+17:52 (1.0.0) [Information] (91) Get Customer Email a@gmail.com
+17:52 (1.0.0) [Information] (93) Get all distinct customers nearest single slot
+17:55 (1.0.0) [Information] (85) Get Customer Email a@gmail.com
+17:55 (1.0.0) [Information] (93) Get all distinct customers nearest single slot

@@ -1,31 +1,71 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using RazorEngine;
 using RazorEngine.Templating;
+using System.Collections.Generic;
 
 namespace Bookmyslot.Api.Customers.Emails
 {
     public static class CustomerEmailTemplateFactory
     {
 
-        public static string GetBookedBySlotSchedulerTemplate(SlotModel slotModel, CustomerModel bookedBy)
+        public static EmailModel GetCustomerRegistrationWelcomeEmailTemplate(CustomerModel newCustomerModel)
         {
-            if (!Engine.Razor.IsTemplateCached(TemplateConstants.ResendSlotInformationTemplateKey, typeof(CustomerModel)))
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(CustomerModel)))
             {
-                return Engine.Razor.RunCompile(TemplateConstants.ResendSlotInformationTemplateBody, TemplateConstants.ResendSlotInformationTemplateKey, typeof(CustomerModel), bookedBy);
+                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.CustomerRegistrationWelcomeEmailTemplateBody, TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(CustomerModel), newCustomerModel);
+                return CreateEmailModel(newCustomerModel, TemplateConstants.CustomerRegistrationWelcomeEmailSubject, compiledMessageBody);
             }
 
-            return Engine.Razor.Run(TemplateConstants.ResendSlotInformationTemplateKey, typeof(CustomerModel), bookedBy);
+            var messageBody =  Engine.Razor.Run(TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(CustomerModel), newCustomerModel);
+            return CreateEmailModel(newCustomerModel, TemplateConstants.CustomerRegistrationWelcomeEmailSubject, messageBody);
         }
 
-        public static string GetResendSlotInformationTemplate(SlotModel slotModel, CustomerModel resendTo)
+        public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, CustomerModel bookedBy)
         {
-            if (!Engine.Razor.IsTemplateCached(TemplateConstants.ResendSlotInformationTemplateKey, typeof(CustomerModel)))
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(CustomerModel)))
             {
-                return Engine.Razor.RunCompile(TemplateConstants.ResendSlotInformationTemplateBody, TemplateConstants.ResendSlotInformationTemplateKey, typeof(CustomerModel), resendTo);
+                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.SlotScheduledTemplateBody, TemplateConstants.SlotScheduledEmailTemplateKey, typeof(CustomerModel), bookedBy);
+                return CreateEmailModel(bookedBy, TemplateConstants.SlotScheduledEmailSubject, compiledMessageBody);
             }
 
-            return Engine.Razor.Run(TemplateConstants.ResendSlotInformationTemplateKey, typeof(CustomerModel), resendTo);
+            var messageBody = Engine.Razor.Run(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(CustomerModel), bookedBy);
+            return CreateEmailModel(bookedBy, TemplateConstants.SlotScheduledEmailSubject, messageBody);
+        }
+
+        public static EmailModel GetResendSlotInformationEmailTemplate(SlotModel slotModel, CustomerModel resendTo)
+        {
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel)))
+            {
+                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.ResendSlotInformationTemplateBody, TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel), resendTo);
+                return CreateEmailModel(resendTo, TemplateConstants.ResendSlotInformationEmailSubject, compiledMessageBody);
+            }
+
+            var messageBody = Engine.Razor.Run(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel), resendTo);
+            return CreateEmailModel(resendTo, TemplateConstants.ResendSlotInformationEmailSubject, messageBody);
+        }
+
+        public static EmailModel SlotCancelledEmailTemplate(CustomerModel cancelledByCustomerModel)
+        {
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(CustomerModel)))
+            {
+                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.SlotCancelledTemplateBody, TemplateConstants.SlotCancelledEmailTemplateKey, typeof(CustomerModel), cancelledByCustomerModel);
+                return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, compiledMessageBody);
+            }
+
+            var messageBody = Engine.Razor.Run(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(CustomerModel), cancelledByCustomerModel);
+            return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
+        }
+
+        private static EmailModel CreateEmailModel(CustomerModel resendToCustomerModel, string subject, string messageBody)
+        {
+            var emailModel = new EmailModel();
+            emailModel.Subject = subject;
+            emailModel.Body = messageBody;
+            emailModel.To = new List<string>() { "tarun.aggarwal4@gmail.com" };
+            emailModel.IsBodyHtml = true;
+            return emailModel;
         }
     }
 }
