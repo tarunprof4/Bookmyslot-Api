@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts;
+using Bookmyslot.Api.Customers.Emails.ViewModels;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using RazorEngine;
 using RazorEngine.Templating;
@@ -18,19 +19,20 @@ namespace Bookmyslot.Api.Customers.Emails
                 return CreateEmailModel(newCustomerModel, TemplateConstants.CustomerRegistrationWelcomeEmailSubject, compiledMessageBody);
             }
 
-            var messageBody =  Engine.Razor.Run(TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(CustomerModel), newCustomerModel);
+            var messageBody = Engine.Razor.Run(TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(CustomerModel), newCustomerModel);
             return CreateEmailModel(newCustomerModel, TemplateConstants.CustomerRegistrationWelcomeEmailSubject, messageBody);
         }
 
         public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, CustomerModel bookedBy)
         {
-            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(CustomerModel)))
+            var slotSchedulerViewModel = new SlotSchedulerViewModel() { SlotModel = slotModel, CustomerModel = bookedBy };
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(SlotSchedulerViewModel)))
             {
-                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.SlotScheduledTemplateBody, TemplateConstants.SlotScheduledEmailTemplateKey, typeof(CustomerModel), bookedBy);
+                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.SlotScheduledTemplateBody, TemplateConstants.SlotScheduledEmailTemplateKey, typeof(SlotSchedulerViewModel), slotSchedulerViewModel);
                 return CreateEmailModel(bookedBy, TemplateConstants.SlotScheduledEmailSubject, compiledMessageBody);
             }
 
-            var messageBody = Engine.Razor.Run(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(CustomerModel), bookedBy);
+            var messageBody = Engine.Razor.Run(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(SlotSchedulerViewModel), slotSchedulerViewModel);
             return CreateEmailModel(bookedBy, TemplateConstants.SlotScheduledEmailSubject, messageBody);
         }
 
@@ -58,7 +60,7 @@ namespace Bookmyslot.Api.Customers.Emails
             return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
         }
 
-        private static EmailModel CreateEmailModel(CustomerModel resendToCustomerModel, string subject, string messageBody)
+        private static EmailModel CreateEmailModel(CustomerModel customerModel, string subject, string messageBody)
         {
             var emailModel = new EmailModel();
             emailModel.Subject = subject;
