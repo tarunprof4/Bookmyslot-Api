@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
 {
-
+    [LogAttributeFilter]
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
@@ -59,7 +59,6 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/Slot")]
         public async Task<IActionResult> Get(Guid slotId)
         {
-            Log.Information("Get Customer Slot " + slotId);
             var slotResponse = await slotBusiness.GetSlot(slotId);
             return this.CreateGetHttpResponse(slotResponse);
         }
@@ -81,7 +80,6 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/Slot")]
         public async Task<IActionResult> Post([FromBody] SlotModel slotModel)
         {
-            Log.Information("Create Customer Slot " + slotModel);
             var slotResponse = await slotBusiness.CreateSlot(slotModel);
             return this.CreatePostHttpResponse(slotResponse);
         }
@@ -107,7 +105,6 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> CancelSlot([FromBody] CancelSlot cancelSlot)
         {
-            Log.Information("Delete Customer Slot  " + cancelSlot.SlotKey);
             var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(cancelSlot.SlotKey));
 
             if (slotModel != null)

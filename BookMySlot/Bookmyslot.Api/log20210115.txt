@@ -1,3 +1,6 @@
-18:34 (1.0.0) [Information] (1) Starting web host
-18:50 (1.0.0) [Information] (1) Starting web host
-18:52 (1.0.0) [Information] (1) Starting web host
+23:03 (1.0.0) [Information] (1) Starting web host
+23:04 (1.0.0) [Information] (4) 28ec36d0-71e3-4e0e-a8d9-10b028bade21
+23:04 (1.0.0) [Information] (4) Action Method Bookmyslot.Api.Controllers.SlotController.Post (Bookmyslot.Api) executing at 15-01-2021 17:34:22
+23:06 (1.0.0) [Information] (4) Create Customer Slot Bookmyslot.Api.SlotScheduler.Contracts.SlotModel
+23:06 (1.0.0) [Information] (4) 28ec36d0-71e3-4e0e-a8d9-10b028bade21
+23:06 (1.0.0) [Information] (4) Action Method Bookmyslot.Api.Controllers.SlotController.Post (Bookmyslot.Api) executed at 15-01-2021 17:36:02
