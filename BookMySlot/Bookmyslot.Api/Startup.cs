@@ -1,3 +1,4 @@
+using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.ExceptionHandlers;
 using Bookmyslot.Api.Customers.Injections;
@@ -92,6 +93,9 @@ namespace Bookmyslot.Api
                 app.UseDeveloperExceptionPage();
             }
 
+
+            app.UseRequestResponseLogging();
+
             app.UseHttpsRedirection();
 
             app.ConfigureGlobalExceptionHandler();
@@ -109,6 +113,11 @@ namespace Bookmyslot.Api
             {
                 endpoints.MapControllers();
             });
+
+         
+
+
+
         }
     }
 }

@@ -1,0 +1,1182 @@
+18:51 (1.0.0) [Information] (1) Starting web host
+18:51 (1.0.0) [Information] (4) Http Request Information:
+Request Id: f5060935-63db-4301-9a0d-973eb9b02333 Executing At: 16-01-2021 13:21:05 Schema:https Host: localhost:44382 Path: /swagger/index.html QueryString:  Request Body: 
+18:51 (1.0.0) [Information] (4) Http Response Information:
+Request Id: f5060935-63db-4301-9a0d-973eb9b02333 Executed At: 16-01-2021 13:21:06 Schema:https Host: localhost:44382 Path: /swagger/index.html QueryString:  Response Body: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+    
+    
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script>
+window.onload = function() {
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = undefined;
+  }
+  var urls = [{"url":"/swagger/v1/swagger.json","name":"v1"}];
+
+  const disableTryItOutPlugin = function() {
+    return {
+      statePlugins: {
+      spec: {
+        wrapSelectors: {
+          allowTryItOutFor: function() {
+            return function() {
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Build a system
+  var ui = SwaggerUIBundle({
+    url: url,
+    urls: urls,  
+    validatorUrl: null,
+    oauth2RedirectUrl: window.location.origin + "/swagger/oauth2-redirect.html",
+
+    docExpansion: "none", 
+    operationsSorter: "none", 
+    defaultModelsExpandDepth: 1, 
+    defaultModelExpandDepth: 1, 
+    tagsSorter: "none", 
+    
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+        SwaggerUIBundle.plugins.DownloadUrl,
+        disableTryItOutPlugin
+    ],
+    layout: "StandaloneLayout"
+  });
+
+  if ("client_id") {
+    ui.initOAuth({
+      clientId: "client_id",
+      clientSecret: "client_secret",
+      realm: "realm",
+      appName: "app_name",
+      scopeSeparator: " ",
+      additionalQueryStringParams: {},
+      usePkceWithAuthorizationCodeGrant: false
+    });
+  }
+
+  window.ui = ui;
+}
+    </script>
+    
+  </body>
+</html>
+
+18:51 (1.0.0) [Information] (5) Http Request Information:
+Request Id: 8e17b3a9-b7c5-44df-956f-3c685564e987 Executing At: 16-01-2021 13:21:06 Schema:https Host: localhost:44382 Path: /swagger/v1/swagger.json QueryString:  Request Body: 
+18:51 (1.0.0) [Information] (5) Http Response Information:
+Request Id: 8e17b3a9-b7c5-44df-956f-3c685564e987 Executed At: 16-01-2021 13:21:08 Schema:https Host: localhost:44382 Path: /swagger/v1/swagger.json QueryString:  Response Body: {
+  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v12.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bookmyslot Customer API",
+    "description": "Bookmyslot Customer API to manage customer data",
+    "termsOfService": "None",
+    "contact": {
+      "name": "TA",
+      "email": ""
+    },
+    "license": {
+      "name": ""
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:44382"
+    }
+  ],
+  "paths": {
+    "/api/v1/CustomerBookedSlot/GetCustomerBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer booked slots",
+        "operationId": "CustomerBookedSlot_GetCustomerBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer booked slots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerBookedSlot/GetCustomerCompletedSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer completed slots",
+        "operationId": "CustomerBookedSlot_GetCustomerCompletedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer completed slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerBookedSlot/GetCustomerCancelledSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer cancelled slots",
+        "operationId": "CustomerBookedSlot_GetCustomerCancelledSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer cancelled slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Customer": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Gets customers",
+        "operationId": "Customer_Get",
+        "responses": {
+          "200": {
+            "description": "Returns all customers"
+          },
+          "404": {
+            "description": "no customer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Create new customer",
+        "operationId": "Customer_Post",
+        "requestBody": {
+          "x-name": "customerModel",
+          "description": "customer model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns email id of created customer"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Update existing customer",
+        "operationId": "Customer_Put",
+        "requestBody": {
+          "x-name": "customerModel",
+          "description": "customer model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no customer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Customer/{email}": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Gets customer by email",
+        "operationId": "Customer_Get2",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "customer email id",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer details"
+          },
+          "404": {
+            "description": "no customer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer YetToBeBookedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerYetToBeBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer  YetToBeBookedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer BookedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer BookedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerCompletedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer CompletedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerCompletedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer CompletedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerCancelledSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer CancelledSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerCancelledSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer CancelledSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday": {
+      "get": {
+        "tags": [
+          "CustomerSlot"
+        ],
+        "summary": "Gets customer slots",
+        "operationId": "CustomerSlot_GetDistinctCustomersNearestSlotFromToday",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "0"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "10",
+              "maximum": 10.0,
+              "minimum": 1.0
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSlot/GetCustomerAvailableSlots": {
+      "get": {
+        "tags": [
+          "CustomerSlot"
+        ],
+        "summary": "Gets customer slots",
+        "operationId": "CustomerSlot_GetCustomerAvailableSlots",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "0"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "10",
+              "maximum": 10.0,
+              "minimum": 1.0
+            },
+            "x-position": 2
+          },
+          {
+            "name": "customerInfo",
+            "in": "query",
+            "description": "customer info",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/email/ResendSlotMeetingInformation": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "summary": "Resend slot information email to the customers",
+        "operationId": "Email_ResendSlotMeetingInformation",
+        "requestBody": {
+          "x-name": "resendSlotInformation",
+          "description": "slot information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendSlotInformation"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Slot": {
+      "get": {
+        "tags": [
+          "Slot"
+        ],
+        "summary": "Gets slot",
+        "operationId": "Slot_Get",
+        "parameters": [
+          {
+            "name": "slotId",
+            "in": "query",
+            "description": "slot id",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer slot"
+          },
+          "404": {
+            "description": "no slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "slot id inappropriate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Slot"
+        ],
+        "summary": "Create new slot for the user",
+        "operationId": "Slot_Post",
+        "requestBody": {
+          "x-name": "slotModel",
+          "description": "slot model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SlotModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns slot id of created slot"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Slot/CancelSlot": {
+      "post": {
+        "tags": [
+          "Slot"
+        ],
+        "summary": "Cancel User slot",
+        "operationId": "Slot_CancelSlot",
+        "requestBody": {
+          "x-name": "cancelSlot",
+          "description": "user slot information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelSlot"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/SlotScheduler": {
+      "post": {
+        "tags": [
+          "SlotScheduler"
+        ],
+        "operationId": "SlotScheduler_Post",
+        "requestBody": {
+          "x-name": "slotSchedulerModel",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SlotSchedulerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensions": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      },
+      "CustomerModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "firstName",
+          "lastName",
+          "gender"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "gender": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ResendSlotInformation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resendSlotModel": {
+            "type": "string",
+            "nullable": true
+          },
+          "resendTo": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SlotModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "timeZone",
+          "slotDate",
+          "slotStartTime",
+          "slotEndTime"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid",
+            "default": "00000000-0000-0000-0000-000000000000"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeZone": {
+            "type": "string",
+            "default": "India Standard Time",
+            "minLength": 1
+          },
+          "slotDate": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1
+          },
+          "slotStartTime": {
+            "type": "string",
+            "format": "time-span",
+            "default": "10:00:00",
+            "minLength": 1
+          },
+          "slotEndTime": {
+            "type": "string",
+            "format": "time-span",
+            "default": "11:00:00",
+            "minLength": 1
+          },
+          "slotDuration": {
+            "type": "string",
+            "format": "time-span"
+          }
+        }
+      },
+      "CancelSlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slotKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelledBy": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SlotSchedulerModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slotModelKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookedBy": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+}
+18:51 (1.0.0) [Information] (8) Http Request Information:
+Request Id: 551765cf-4afa-4433-98f7-19aeaf7be2b8 Executing At: 16-01-2021 13:21:29 Schema:https Host: localhost:44382 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday QueryString: ?PageNumber=1&PageSize=5 Request Body: 
+18:51 (1.0.0) [Information] (8) Get all distinct customers nearest single slot
+18:51 (1.0.0) [Information] (14) Http Response Information:
+Request Id: 551765cf-4afa-4433-98f7-19aeaf7be2b8 Executed At: 16-01-2021 13:21:30 Schema:https Host: localhost:44382 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday QueryString: ?PageNumber=1&PageSize=5 Response Body: [{"slotModels":[],"customerModel":{"id":"1a2d9ae0f60a466a92a9f18b52a2549c","firstName":"FE","lastName":"LE","gender":"","email":""}},{"slotModels":[],"customerModel":{"id":"b66217ed3c0f49fdafb9c9d20dad12f4","firstName":"FF","lastName":"LF","gender":"","email":""}},{"slotModels":[],"customerModel":{"id":"d4572c45fc894833a7969af389f94669","firstName":"FC","lastName":"LC","gender":"","email":""}},{"slotModels":[],"customerModel":{"id":"ea3fd505edc04fca8ece1347a889055f","firstName":"FD","lastName":"LD","gender":"","email":""}},{"slotModels":[],"customerModel":{"id":"ec50e126e8c842bea85b86b954b71626","firstName":"FB","lastName":"LB","gender":"","email":""}}]
+18:51 (1.0.0) [Information] (8) Http Request Information:
+Request Id: a17ba1b6-20b2-4beb-9141-73437d368b2b Executing At: 16-01-2021 13:21:46 Schema:https Host: localhost:44382 Path: /api/v1/Slot QueryString:  Request Body: {"id":"00000000-0000-0000-0000-000000000000","title":"string","createdBy":"string","bookedBy":"string","timeZone":"India Standard Time","slotDate":"2021-01-16T13:21:44.427Z","slotStartTime":"10:00:00","slotEndTime":"11:00:00","slotDuration":"string"}
+18:51 (1.0.0) [Information] (8) Http Response Information:
+Request Id: a17ba1b6-20b2-4beb-9141-73437d368b2b Executed At: 16-01-2021 13:21:51 Schema:https Host: localhost:44382 Path: /api/v1/Slot QueryString:  Response Body: ["slot start date cannot be less than todays date"]
+18:51 (1.0.0) [Information] (8) Http Request Information:
+Request Id: be82d174-afff-4292-859a-0470a96d4da1 Executing At: 16-01-2021 13:21:59 Schema:https Host: localhost:44382 Path: /api/v1/Slot QueryString:  Request Body: {"id":"00000000-0000-0000-0000-000000000000","title":"string","createdBy":"string","bookedBy":"string","timeZone":"India Standard Time","slotDate":"2021-01-23T13:21:44.427Z","slotStartTime":"10:00:00","slotEndTime":"11:00:00","slotDuration":"string"}
+18:52 (1.0.0) [Information] (16) Http Response Information:
+Request Id: be82d174-afff-4292-859a-0470a96d4da1 Executed At: 16-01-2021 13:22:00 Schema:https Host: localhost:44382 Path: /api/v1/Slot QueryString:  Response Body: "0e2673ee-3f2f-4e94-b85f-2958388c02b5"
