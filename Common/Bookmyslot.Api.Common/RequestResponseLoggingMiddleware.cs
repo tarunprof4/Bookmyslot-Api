@@ -1,4 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Compression;
+using Bookmyslot.Api.Common.Compression.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using Serilog;
@@ -6,17 +8,21 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
+
 namespace Bookmyslot.Api.Common
 {
     public class RequestResponseLoggingMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
+        private readonly ICompression _compression;
 
-        public RequestResponseLoggingMiddleware(RequestDelegate next)
+
+        public RequestResponseLoggingMiddleware(RequestDelegate next, ICompression compression)
         {
             _next = next;
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
+            _compression = compression;
         }
 
         public async Task Invoke(HttpContext context)
@@ -34,6 +40,14 @@ namespace Bookmyslot.Api.Common
             context.Request.EnableBuffering();
             await using var requestStream = _recyclableMemoryStreamManager.GetStream();
             await context.Request.Body.CopyToAsync(requestStream);
+
+            var requestBody = ReadStreamInChunks(requestStream);
+            var compresedBody = string.Empty;
+            if (!string.IsNullOrWhiteSpace(requestBody))
+            {
+                compresedBody = _compression.Compress(requestBody);
+            }
+
             Log.Information($"Http Request Information:{Environment.NewLine}" +
                                    $"Request Id: {requestId} " +
                                    $"Executing At: {DateTime.UtcNow} " +
@@ -42,7 +56,9 @@ namespace Bookmyslot.Api.Common
                                    $"Path: {context.Request.Path} " +
                                    $"Method Type: {context.Request.Method} " +
                                    $"QueryString: {context.Request.QueryString} " +
-                                   $"Request Body: {ReadStreamInChunks(requestStream)}");
+                                   $"Request Body: {requestBody} " +
+                                   $"Compressed Body: {compresedBody} "
+                                   );
             context.Request.Body.Position = 0;
         }
 
@@ -53,7 +69,12 @@ namespace Bookmyslot.Api.Common
             context.Response.Body = responseBody;
             await _next(context);
             context.Response.Body.Seek(0, SeekOrigin.Begin);
-            var text = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            var responseBodyText = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            var compresedBody = string.Empty;
+            if (!string.IsNullOrWhiteSpace(responseBodyText))
+            {
+                compresedBody = _compression.Compress(responseBodyText);
+            }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             Log.Information($"Http Response Information:{Environment.NewLine}" +
                                    $"Request Id: {requestId} " +
@@ -63,7 +84,10 @@ namespace Bookmyslot.Api.Common
                                    $"Path: {context.Request.Path} " +
                                    $"Method Type: {context.Request.Method} " +
                                    $"QueryString: {context.Request.QueryString} " +
-                                   $"Response Body: {text}");
+                                   $"Response Status Code: {context.Response.StatusCode} " +
+                                   $"Response Body: {responseBodyText} " +
+                                   $"Compressed Body: {compresedBody} "
+                                   );
             await responseBody.CopyToAsync(originalBodyStream);
         }
 

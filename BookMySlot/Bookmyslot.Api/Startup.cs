@@ -1,6 +1,7 @@
 using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.ExceptionHandlers;
+using Bookmyslot.Api.Common.Injections;
 using Bookmyslot.Api.Customers.Injections;
 using Bookmyslot.Api.SlotScheduler.Injections;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +27,8 @@ namespace Bookmyslot.Api
         public void ConfigureServices(IServiceCollection services)
         {
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
+
+            CommonInjection.CommonInjections(services);
 
             CustomerInjection.CustomerBusinessInjections(services);
             CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
