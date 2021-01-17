@@ -4,9 +4,10 @@ namespace Bookmyslot.Api.Common
 {
     public static class DateTimeExtensions
     {
-        public static DateTime GetDateTimeByTimeZone(this DateTime dateTime, string timeZome)
+        public static DateTime GetDateTimeUtcByTimeZone(this DateTime dateTime, string timeZome, TimeSpan timeSpan)
         {
-            return TimeZoneInfo.ConvertTime(dateTime, TimeZoneInfo.FindSystemTimeZoneById(timeZome));
+            var newDate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+            return TimeZoneInfo.ConvertTime(newDate, TimeZoneInfo.FindSystemTimeZoneById(timeZome), TimeZoneInfo.Utc);
         }
     }
 }

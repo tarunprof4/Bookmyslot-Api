@@ -1,7 +1,10 @@
 ﻿using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business
@@ -16,6 +19,14 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel)
         {
             slotModel.BookedBy = UserService.GetUser();
+
+            var currentDate = DateTime.UtcNow;
+            slotModel.SlotDate = slotModel.SlotDate.GetDateTimeUtcByTimeZone(slotModel.TimeZone, slotModel.SlotStartTime);
+
+            if(slotModel.SlotDate < currentDate)
+            {
+                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotScheduleDateInvalid });
+            }
             return await this.slotRepository.UpdateSlot(slotModel);
         }
     }

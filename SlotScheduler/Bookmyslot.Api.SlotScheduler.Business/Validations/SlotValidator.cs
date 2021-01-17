@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
             RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.SlotTitleMissing);
             RuleFor(x => x.CreatedBy).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.UserIdMissing);
             RuleFor(x => x.TimeZone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessages.TimeZoneMissing);
-            RuleFor(x => x.SlotDate.Date).Cascade(CascadeMode.Stop).GreaterThan(x => currentDate.Date).WithMessage(AppBusinessMessages.SlotStartDateInvalid);
+            RuleFor(x => x.SlotDate).Cascade(CascadeMode.Stop).GreaterThan(x => currentDate).WithMessage(AppBusinessMessages.SlotStartDateInvalid);
             RuleFor(x => x.SlotEndTime.TotalMinutes).Cascade(CascadeMode.Stop).GreaterThanOrEqualTo(x => x.SlotStartTime.TotalMinutes + SlotConstants.MinimumSlotDuration).WithMessage(AppBusinessMessages.SlotEndTimeInvalid);
         }
 
