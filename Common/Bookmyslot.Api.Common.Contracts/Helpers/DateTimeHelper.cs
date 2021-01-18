@@ -1,8 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.ExtensionMethods;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Contracts.Helpers
 {

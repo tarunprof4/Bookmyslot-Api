@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.ExtensionMethods;
-using Bookmyslot.Api.SlotScheduler.Contracts;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using System;
 

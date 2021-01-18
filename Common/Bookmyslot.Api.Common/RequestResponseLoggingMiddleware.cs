@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Compression;
-using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
