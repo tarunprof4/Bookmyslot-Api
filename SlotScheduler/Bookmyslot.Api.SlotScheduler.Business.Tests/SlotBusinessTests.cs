@@ -16,6 +16,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private Guid SlotId = Guid.NewGuid();
         private const string Title = "Title";
         private const string CreatedBy = "CreatedBy";
+        private const string BookedBy = "BookedBy";
         private const string deletedBy = "deletedBy";
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationInputDatePattern);
         private readonly string InValidSlotDate = DateTime.UtcNow.AddDays(-2).ToString(DateTimeConstants.ApplicationInputDatePattern);
@@ -149,9 +150,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         //}
 
         [Test]
-        public async Task DeleteSlot_DeletedByCreatedBy_ReturnsSlotDeletedSuccessfully()
+        public async Task CancelSlot_CancelledByCreatedBy_ReturnsSlotDeletedSuccessfully()
         {
-            var slotModel = CreateValidSlotModel();
+            var slotModel = CreateValidBookedSlotModel();
             slotModel.CreatedBy = deletedBy;
             Response<bool> slotModelDeleteResponseMock = new Response<bool>() { Result = true };
             slotRepositoryMock.Setup(a => a.DeleteSlot(slotModel)).Returns(Task.FromResult(slotModelDeleteResponseMock));
@@ -164,6 +165,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(slotModelDeleteResponseMock.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelDeleteResponseMock.Result, true);
+            Assert.IsTrue(slotModel.BookedBy.Contains(slotModel.BookedBy));
 
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<Guid>())), Times.Once());
             slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Never());
@@ -173,10 +175,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
         [Test]
-        public async Task DeleteSlot_DeletedByBookedBy_ReturnsSlotDeletedSuccessfully()
+        public async Task CancelSlot_CancelledByBookedBy_ReturnsSlotDeletedSuccessfully()
         {
-            var slotModel = CreateValidSlotModel();
-            slotModel.BookedBy = deletedBy;
+            var slotModel = CreateValidBookedSlotModel();
             Response<bool> slotModelDeleteResponseMock = new Response<bool>() { Result = true };
             slotRepositoryMock.Setup(a => a.DeleteSlot(slotModel)).Returns(Task.FromResult(slotModelDeleteResponseMock));
             Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { Result = slotModel };
@@ -188,7 +189,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(slotModelDeleteResponseMock.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelDeleteResponseMock.Result, true);
-
+            Assert.AreEqual(slotModel.BookedBy, string.Empty);
 
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<Guid>())), Times.Once());
             slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Once());
@@ -197,7 +198,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         }
 
         [Test]
-        public async Task DeleteSlot_SlotIdInvalid_ReturnsSlotValidationResponse()
+        public async Task CancelSlot_SlotIdInvalid_ReturnsSlotValidationResponse()
         {
             var slotModelResponse = await this.slotBusiness.CancelSlot(Guid.Empty, deletedBy);
 
@@ -213,7 +214,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         }
 
         [Test]
-        public async Task DeleteSlot_SlotDoesntExists_ReturnsSlotNotFoundResponse()
+        public async Task CancelSlot_SlotDoesntExists_ReturnsSlotNotFoundResponse()
         {
             var slotModel = new SlotModel();
             Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { ResultType = ResultType.Empty };
@@ -240,6 +241,14 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             slotModel.CreatedBy = CreatedBy;
             slotModel.SlotStartTime = ValidSlotStartTime;
             slotModel.SlotEndTime = ValidSlotEndTime;
+
+            return slotModel;
+        }
+
+        private SlotModel CreateValidBookedSlotModel()
+        {
+            var slotModel = CreateValidSlotModel();
+            slotModel.BookedBy = BookedBy;
 
             return slotModel;
         }

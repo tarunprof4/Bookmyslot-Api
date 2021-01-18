@@ -1115,3 +1115,2557 @@ Request Id: d441c99d-3c9a-4195-bfe1-71caf10a4e6d Executing At: 18-01-2021 06:17:
 10:17 (1.0.0) [Information] (21) Get Customer Email a@gmail.com
 10:17 (1.0.0) [Information] (21) Http Response Information:
 Request Id: d441c99d-3c9a-4195-bfe1-71caf10a4e6d Executed At: 18-01-2021 06:17:49 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:50 (1.0.0) [Information] (1) Starting web host
+10:51 (1.0.0) [Information] (4) Http Request Information:
+Request Id: 9498ffa5-4e26-44c2-904f-3651a701fe6c Executing At: 18-01-2021 06:51:00 Schema:https Host: localhost:44382 Path: /swagger/index.html Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:51 (1.0.0) [Information] (4) Http Response Information:
+Request Id: 9498ffa5-4e26-44c2-904f-3651a701fe6c Executed At: 18-01-2021 06:51:01 Schema:https Host: localhost:44382 Path: /swagger/index.html Method Type: GET QueryString:  Response Status Code: 200 Response Body: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+    
+    
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script>
+window.onload = function() {
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = undefined;
+  }
+  var urls = [{"url":"/swagger/v1/swagger.json","name":"v1"}];
+
+  const disableTryItOutPlugin = function() {
+    return {
+      statePlugins: {
+      spec: {
+        wrapSelectors: {
+          allowTryItOutFor: function() {
+            return function() {
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Build a system
+  var ui = SwaggerUIBundle({
+    url: url,
+    urls: urls,  
+    validatorUrl: null,
+    oauth2RedirectUrl: window.location.origin + "/swagger/oauth2-redirect.html",
+
+    docExpansion: "none", 
+    operationsSorter: "none", 
+    defaultModelsExpandDepth: 1, 
+    defaultModelExpandDepth: 1, 
+    tagsSorter: "none", 
+    
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+        SwaggerUIBundle.plugins.DownloadUrl,
+        disableTryItOutPlugin
+    ],
+    layout: "StandaloneLayout"
+  });
+
+  if ("client_id") {
+    ui.initOAuth({
+      clientId: "client_id",
+      clientSecret: "client_secret",
+      realm: "realm",
+      appName: "app_name",
+      scopeSeparator: " ",
+      additionalQueryStringParams: {},
+      usePkceWithAuthorizationCodeGrant: false
+    });
+  }
+
+  window.ui = ui;
+}
+    </script>
+    
+  </body>
+</html>
+ Compressed Body: KQoAAB+LCAAAAAAAAAqlVoFu2zYQ/RVWBdKkjaQ5BYpBcwKsSbsFSBe3jjEMUVbQ0lniQpECSdlxivz7jhQlK4mKYpgNWMe7x0fq+O7oYPoiDMnvV58uyEoqog01LCM500axZWOYFGTZiJwDPhjPSRiepGL64uzy9Oqv2QdSmopbh30STkVxnAYg0gB9hExLoLmz0K7AUJKVVGkwCFpcfQx/9jiMGmY4nMw3tChAkcX5NG49PsyZuCUKOE7UZstBlwAmDYjZ1oA+A3cmzrRGT6lghZ4o1i1X2LCojYxwsUyKHQuraAFxLYohzYquLSp8e3T39ihqg5rdg8ao8+E4/n/Uk3d3k3dPqJ1vSO1e2w+IS3tnf+sMQpbyLkQGJooEbZXj66Prlx1ArkGtuNwkJKzkfagzJTlf4pmEGMCDp3wEHG4T0iL74EMqOvP1YW8lS0ANwcBBVwbUDzbKRAmKmTHupcy3I7Mrqgomkp8Ge13S7LZQEpWakJcrar9DQpfCeJjD3e809jJ1A7tkl/OcrQnLreZ6LaFipzH6PdweTKZYbYhW2RPZhW3dRP9Y8T0Xvt2Pm3ryQyIsSpFTLgWEtQKk+Y+cONowkctNJAWXNCfHZNWIzBb3/kGb2DVVpFEcIx7JZYadQIpIA1VZGVXUZOV+jJjj/eu/927eHMQHLsNsRfbtzL09SxBxEIUpyQmZeGbieXPIZA6LL+ensqrxVYSx064nNy3NAwGu4fEUzB+smIC8RQz2qTF6/S0N0EyDJA26bMXrSWdijmwFHqaBoBU41HqSBg83SGaZsPK0sY2OLjlcqe25uWzMjDeorJH8ECxr0yixk6HtlNDidTJw15ANhoRsFK3nwCEzUg2B9kM5lle39kepkpF1u49f//uAAcioBgbF8agMRoeDQW96wz18TcYxee9uAUr0Vhuo+iNhmDPfvRfn753w93dnmdgf3xbs6bmxPuyqcE05yynmZ2GhouEdVtLGlEdfIGcK8+eiT+UpFbMn9oYMRNBOC5WfF7luiUrwJZvL7MNdTYXG+QnOE6hGDPvNyBqUo9ZzqbB7PUegKGnDzSeUM9eOKT+D2pQJmYxBxhGGFt9doNtm9ZVhO3v1ctcKXvnE5AD1BV42roHa0/b+tj1gfq+7U3xyKJFHRLRm+vAZaN53mpnDtYCbjr1Te88+wt9iojO5cb0GD61fhoyX2+NFON3Kxtik7DZz4Xxp4KRo+0XXeNIg4wxbCSYqDXYNh0VMMHP5K8qgUyEWvEOeY0Yfzep31/rmkGERDTDaOdIdTgHllQU4YxCgdf0HthobQvNr23b6qM5QWXOoKarLVjo28OHcPGdWdJR/bkBt5/jvSxQzxFa2Zzz0uEbD7DaDP5kp7duh+u+dWE9Rab8pKnDnK4qN1Neu761twnzpuFptGEZ2F+Pw0mjvRH8P4uXY/sML/gWWz4gVKQoAAA== 
+10:51 (1.0.0) [Information] (8) Http Request Information:
+Request Id: 95f995cf-34e1-472e-93e4-034b294b680a Executing At: 18-01-2021 06:51:01 Schema:https Host: localhost:44382 Path: /swagger/v1/swagger.json Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:51 (1.0.0) [Information] (8) Http Response Information:
+Request Id: 95f995cf-34e1-472e-93e4-034b294b680a Executed At: 18-01-2021 06:51:02 Schema:https Host: localhost:44382 Path: /swagger/v1/swagger.json Method Type: GET QueryString:  Response Status Code: 200 Response Body: {
+  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v12.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bookmyslot Customer API",
+    "description": "Bookmyslot Customer API to manage customer data",
+    "termsOfService": "None",
+    "contact": {
+      "name": "TA",
+      "email": ""
+    },
+    "license": {
+      "name": ""
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:44382"
+    }
+  ],
+  "paths": {
+    "/api/v1/CustomerBookedSlot/GetCustomerBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer booked slots",
+        "operationId": "CustomerBookedSlot_GetCustomerBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer booked slots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerBookedSlot/GetCustomerCompletedSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer completed slots",
+        "operationId": "CustomerBookedSlot_GetCustomerCompletedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer completed slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerBookedSlot/GetCustomerCancelledSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer cancelled slots",
+        "operationId": "CustomerBookedSlot_GetCustomerCancelledSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer cancelled slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Customer/{email}": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Gets customer by email",
+        "operationId": "Customer_Get",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "customer email id",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer details"
+          },
+          "404": {
+            "description": "no customer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Customer": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Create new customer",
+        "operationId": "Customer_Post",
+        "requestBody": {
+          "x-name": "customerModel",
+          "description": "customer model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns email id of created customer"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Update existing customer",
+        "operationId": "Customer_Put",
+        "requestBody": {
+          "x-name": "customerModel",
+          "description": "customer model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no customer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer YetToBeBookedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerYetToBeBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer  YetToBeBookedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer BookedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer BookedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerCompletedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer CompletedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerCompletedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer CompletedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerCancelledSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer CancelledSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerCancelledSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer CancelledSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday": {
+      "get": {
+        "tags": [
+          "CustomerSlot"
+        ],
+        "summary": "Gets customer slots",
+        "operationId": "CustomerSlot_GetDistinctCustomersNearestSlotFromToday",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "0"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "10",
+              "maximum": 10.0,
+              "minimum": 1.0
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSlot/GetCustomerAvailableSlots": {
+      "get": {
+        "tags": [
+          "CustomerSlot"
+        ],
+        "summary": "Gets customer slots",
+        "operationId": "CustomerSlot_GetCustomerAvailableSlots",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "0"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "10",
+              "maximum": 10.0,
+              "minimum": 1.0
+            },
+            "x-position": 2
+          },
+          {
+            "name": "customerInfo",
+            "in": "query",
+            "description": "customer info",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/email/ResendSlotMeetingInformation": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "summary": "Resend slot information email to the customers",
+        "operationId": "Email_ResendSlotMeetingInformation",
+        "requestBody": {
+          "x-name": "resendSlotInformation",
+          "description": "slot information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendSlotInformation"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Slot": {
+      "post": {
+        "tags": [
+          "Slot"
+        ],
+        "summary": "Create new slot for the user",
+        "operationId": "Slot_Post",
+        "requestBody": {
+          "x-name": "slotModel",
+          "description": "slot model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SlotModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns slot id of created slot"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Slot/CancelSlot": {
+      "post": {
+        "tags": [
+          "Slot"
+        ],
+        "summary": "Cancel User slot",
+        "operationId": "Slot_CancelSlot",
+        "requestBody": {
+          "x-name": "cancelSlot",
+          "description": "user slot information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelSlot"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/SlotScheduler": {
+      "post": {
+        "tags": [
+          "SlotScheduler"
+        ],
+        "operationId": "SlotScheduler_Post",
+        "requestBody": {
+          "x-name": "slotSchedulerModel",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SlotSchedulerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensions": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      },
+      "CustomerModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "firstName",
+          "lastName",
+          "gender"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "gender": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ResendSlotInformation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resendSlotModel": {
+            "type": "string",
+            "nullable": true
+          },
+          "resendTo": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SlotModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "timeZone",
+          "slotDate",
+          "slotStartTime",
+          "slotEndTime"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid",
+            "default": "00000000-0000-0000-0000-000000000000"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeZone": {
+            "type": "string",
+            "default": "India Standard Time",
+            "minLength": 1
+          },
+          "slotDate": {
+            "type": "string",
+            "default": "13-3-2021",
+            "minLength": 1
+          },
+          "slotStartTime": {
+            "type": "string",
+            "format": "time-span",
+            "default": "10:00:00",
+            "minLength": 1
+          },
+          "slotEndTime": {
+            "type": "string",
+            "format": "time-span",
+            "default": "11:00:00",
+            "minLength": 1
+          },
+          "slotDuration": {
+            "type": "string",
+            "format": "time-span"
+          }
+        }
+      },
+      "CancelSlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slotKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelledBy": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SlotSchedulerModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slotModelKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookedBy": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+} Compressed Body: 4nQAAB+LCAAAAAAAAArtXVlz2zYQ/isctQ/NjHW7M63fYjvtuG0cT+Q8tFUnA5OQzJQEGABUrGb03wuAh3iAIilRNOXA6aQxcSz2wLfLxcHe1zmZI8OY9576S4ggAQyTee+CP7idfQFLYzWeDn4enA9Gxg+3v1GMZuYjdAF/PBpMB2P5GH5hGFG8YANRgRdNBiPx59Wree8s6h57EAHPDrqeiuJEoY0WWJSEgxGPmM0cGNS+xPhfd00dzIwrnzLsQmK8vruJ24vqFqQmsT1mY7SzkcGw4QIEltAwo8cWYCDVGYPEpe8WM0hWthkO4hYjmKpkYsSAyVLDFs8RcMMm968TDUQRF5ztBGX8T1iwSfTpcHKIwh19qtutIKEx56txVCmqMu9RzgqvIyr8HTVLUfBJOLBHxjx6MRw62ATOI6bs4vx8+tMkQTf4xz9x3x5gjzSjvSFX9XA1HkaiF9qA1oxrY/grZPmn6faihyXMilZqBizTTEQF+S63IxY/0XCj+tR3XUDWAc98SHRrDg+yC0OYDqeVacfNmE8RLusbK2ibJ/yxiMNMVx4gXK3c1lQcpfjOGkE0VDGGs3xFOzSEzz4UHCpqUDmJc/KNpbz2QkqUERstFX3IAfmOAx6CWcqID7N1tha6bfPU9zC1o2k6TlfY7NIYgdTjMAOzphKUTkYjJTsKZHgPmU9QgcINAUXElSpOW1Cen3nvfHRelSrCIYEF9pFabwJRIMqbfVQOPI8DhBza8BNH2oKKpQoOqnxP4CIY2ndDE7tctpw2HQYt6fCOYK5a9xoyjllc5qpuUvoqeLQpl2Flza2AY3Ow5r8bkBDhp7QUQ1n9WF2KNrcygoBjBE4hEuWOqZj4ZaNyP9XQ/oobmcPxrnOAb0YDawbzs3xq2O8m7KfVroFfA/8pus9TAH6ATOg4HQT+aGANAX+GTw38HQX+lNo18Gvg34KFBv69gH/4Vea2Nk2B+/7Jm7URZtmqYrlA8AaxWkU9nZYR+TJlBQI/+zaBVpRPOasAbjHjkq5hqzMLOt+TxH9LHZQdmt6J+9cZnsYyPMYDsAwxLyDNTtJvOWfWqaA/h/k84js26F8RCBg0EPwST7saiH8nB5iLN6WVXWJrrYw4n/r5BPxbbME82O+CabegxS47rmzFpTZcasFXacaasNUSr7bzFWFT851gXPedIPKaBl4YprQpK2FQR0xda2B7XmBLrct6/rHx6oPHlQ8N+GRTxhfU9gItMUiNWS8Os87rYhb1TRNSanAQWXD08gkUK5g5zjVctbF2qV8QXlo4O3sEJJ/D/hOye3wJj7BjZUtv76SHanBV/cqWfDKVXaFHvX2lI+lshfp1TlvntLfAofMaDTqCbnqABqFfY/4JLGFqrNc7FnUO+9hB/3F2LDYA9yVbDGsivt6weBqgn9aTjvF1jL/FCh3jN4n7R9mw2ATu795hWBf39X7F08D9lJ407mvc17h/aLwfIv61XI81Y0ikt5AjJWWi/BeC3XtsgXVjDuAQ6K+5Qz3C+ooMNpbbvwNLeOu7D7ml7caPpoqVoKWSjKgXHOKMa04nBfUsuAC+E1bkEH34u8FZTWnN7P/gCcpqPCqo5YIn2/VdKZrRYKSuY6O4zmBUX+aTTvhlfXpAnxeuPh+DKnoH6Q5vHP3+esX3bYibBZp9/3oG91vEkfa32t+esL892+eyEnnHz15xTvF26uDioA6feJnqSOWbPaWhbzZ5MZsD5TmB4XtIIZJZuLcQin3cN8nLgg48BfMmODhYOT4JBpN7CQmPNDBssMftHWcVQhdJ/+NuFg/Yfk7ijot7VCo1/5bV1cMz79UsvvhDNHpDeodcTt0LyfRp1S76m+Bd9UCPUvOFN3GmMjQMIn2Iz7krdx/yjffgg5WCcOVDlXKUHT9QKT3paR5Mqu8HpKdOnaUUj/TBpG/0gLhM6wWL18+CZ5Ky8YHzFdphJQxLDviQ45ZF3SiVIDBWsZ7QVVRLyujlw5o+b6nD2xeTlOqMZxAXyVu+08D9IZnedjkIJeTHbZuJX+PuigLZjoB4ivUTjVEr2/LBlwdhk0HW56sFELiHIUGltYf8zowHG8nQpilkKJ232W8IbE0oxV7Ec36dNotp+RkdSwI/fILiWwoZ9QPLknYCHN4Xn7rMLrCEXQs1WZvydncVDUphVRU0V7ZmlJ8u8Ycu2iJIGWA+LaVYvGeo2o6h+gML7mVrUxQ24sLgoWybNOETxxzxtY5yFShnhZqqokrh5Nnsc0dO5paV5ubyAjg0Pfy0C8m5+4VNKLuVLjcnXAcUFi15br4sPCiBBnG7YnuGkuBzf6J85f8PiJbixsnSrYpJ8bVFMdJKW/TiT/AcSYuV5lLBQtFx51SJbW/X59QzvDkRnalJ3+PnVksx823CWxgPKOIEF/6V/ghVVCTeOq55vrWgaMYAYfe8eUH5Gy58Wfps0JiMJ5Z+wSW26a3a4U9f8Vf0U554Pjj2qgc+YVb8ct3m7Aq+btQuza2t7k8zpe4bZNnA4IaMLEAsQ2nM9fWxnTcNDXM87U/7k9Fk3NDgEjO3mcklFNOnHkAVeBldjMR/DbESg0z7jIwbZeTaDzJIR+Bkr7i8aH2l7QBCyOZ32CrMxB9yOCq6VY4dssm0Z1fHWzGOlnXSgrspUkj0zyhzJf636f0PKCJjEOJ0AAA= 
+10:51 (1.0.0) [Information] (5) Http Request Information:
+Request Id: 03b1a4a9-72c6-413e-8413-eb1088e0ac01 Executing At: 18-01-2021 06:51:07 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:51 (1.0.0) [Information] (8) Http Response Information:
+Request Id: 03b1a4a9-72c6-413e-8413-eb1088e0ac01 Executed At: 18-01-2021 06:51:08 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:51 (1.0.0) [Information] (5) Http Request Information:
+Request Id: 6657969f-fc39-448b-83be-c1da5a3bbe82 Executing At: 18-01-2021 06:51:23 Schema:https Host: localhost:4200 Path: /api/v1/slot Method Type: POST QueryString:  Request Body: {"title":"title1","timeZone":"India Standard Time","slotDate":"25-01-2021","slotStartTime":"5:0:0","slotEndTime":"5:20:0"} Compressed Body: kAAAAB+LCAAAAAAAAApTqo5RKsksyUmNUbKCsgxjlHRAzNzUqPw8iLhnXkpmokJwSWJeSmJRikIIUA6sqDgnv8QlsQSiyMhU18BQ18jACGIASA6oo6gEohqowNTKwMoALueal4IkYwSWqlUCAOC2N6GQAAAA 
+10:51 (1.0.0) [Information] (8) Http Response Information:
+Request Id: 6657969f-fc39-448b-83be-c1da5a3bbe82 Executed At: 18-01-2021 06:51:24 Schema:https Host: localhost:4200 Path: /api/v1/slot Method Type: POST QueryString:  Response Status Code: 201 Response Body: "7f6db7a8-a55f-497a-86be-429d5f5af064" Compressed Body: KgAAAB+LCAAAAAAAAApTilEyTzNLSTJPtNBNNDVN0zWxNE/UtTBLStU1MbJMMU0zTUwzMDOJUVICAEGwd88qAAAA 
+10:52 (1.0.0) [Information] (17) Http Request Information:
+Request Id: 29d33d5b-66f6-41ef-955f-0c0ac948c3fa Executing At: 18-01-2021 06:52:02 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+10:52 (1.0.0) [Information] (18) Http Response Information:
+Request Id: 29d33d5b-66f6-41ef-955f-0c0ac948c3fa Executed At: 18-01-2021 06:52:02 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 200 Response Body: [{"slotModels":[],"customerModel":{"id":"26eca53c21344dea874c99cc1df9ceef","firstName":"MF","lastName":"ML","gender":"","email":""}}] Compressed Body: nwAAAB+LCAAAAAAAAApNzT0OwyAMBeC7eO6ShP7QA3RqcoE4g2VMhQRFAjpVuXuJp07W+/SeDOsXocbc5uwkVoT7up0Q+FNbTlJUO/ZScP0ijBdhOk88DpMxTuh2NWwt8+C8ZRGP0Oc+lNoWSqKT+aEY6d+eai95OykqmiVROP4dcd83+AFmaBw4nwAAAA== 
+10:52 (1.0.0) [Information] (17) Http Request Information:
+Request Id: bfc0874f-cc7f-4361-ac75-4d7a56777b03 Executing At: 18-01-2021 06:52:07 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:52 (1.0.0) [Information] (20) Http Response Information:
+Request Id: bfc0874f-cc7f-4361-ac75-4d7a56777b03 Executed At: 18-01-2021 06:52:07 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:52 (1.0.0) [Information] (20) Http Request Information:
+Request Id: 52940524-6a24-4754-a673-14a6c6162f9c Executing At: 18-01-2021 06:52:07 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+10:52 (1.0.0) [Information] (21) Http Response Information:
+Request Id: 52940524-6a24-4754-a673-14a6c6162f9c Executed At: 18-01-2021 06:52:07 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 200 Response Body: [{"slotModels":[],"customerModel":{"id":"26eca53c21344dea874c99cc1df9ceef","firstName":"MF","lastName":"ML","gender":"","email":""}}] Compressed Body: nwAAAB+LCAAAAAAAAApNzT0OwyAMBeC7eO6ShP7QA3RqcoE4g2VMhQRFAjpVuXuJp07W+/SeDOsXocbc5uwkVoT7up0Q+FNbTlJUO/ZScP0ijBdhOk88DpMxTuh2NWwt8+C8ZRGP0Oc+lNoWSqKT+aEY6d+eai95OykqmiVROP4dcd83+AFmaBw4nwAAAA== 
+10:52 (1.0.0) [Information] (17) Http Request Information:
+Request Id: e9ce57b9-3f81-4aee-ad72-aeee3a4b8d97 Executing At: 18-01-2021 06:52:18 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:52 (1.0.0) [Information] (17) Http Response Information:
+Request Id: e9ce57b9-3f81-4aee-ad72-aeee3a4b8d97 Executed At: 18-01-2021 06:52:18 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: {"customerModel":{"id":"26eca53c21344dea874c99cc1df9ceef","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModelsInforamtion":[{"key":{"id":"7f6db7a8-a55f-497a-86be-429d5f5af064","title":"title1","createdBy":"","bookedBy":null,"timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"value":"T1R%2bERrUiqL9YwZ7ZhEn3bIfxXEl4iBQUQCnDD3HoQMjpBR36vjTZ%2bCcJvplPvXmALi42UP5NYtG9pN0V6xsNI%2fWvg0UVQBb%2b8YbCT7xHmXiik32mR0W9R6%2fnY1A09T7KupjTNvN9qPypXr8W98S7oV5zUQwexEw9WrsraqBhuuDL5YGAmV756ZYfqJIKrLd9%2fd5EjPKM3jE%2fJLwCOMO3lHFxCNHCoG%2bHUSfq624E873lsMhUwQ74TKr22Qi0jPRxLPveiBUJLDJJpUUFLoy%2f%2bLrBgffVDU8hQaNGWRDNYIzj958q9RTomqr9fmqOEJnjVPUsGv%2flw6CvDMoU5523a1OAvLiZAyEIMIPpKRn0nBrEoWJ7BEOP0o17n9fBoTIxzhzctguYjxXh1JLNm6r1hvgWFudlG%2fDwz0uwo4LYbk%3d"}]} Compressed Body: jgMAAB+LCAAAAAAAAApVkmtvokAYhf9KY9JvNeEO028iqCAiUlBx3Q8jzCgIjA4XL5v+951it9smJPCec56Xw4Ten20vbqqaFIjOSILybe+VSWnC7tueoKAYymIs8KIkJQhqqhQDEMd8gkGMEN72XrY9nNKqdmGBOmQ26sQcftecTtujMkG0U7oZFTDNP8d3Nlc5qbsOlVViQmFRp6Rk/i9W6IhuP5qpWEl2KtT6UJZxXwIq7GvKDvUlASQyliHmFKl7SZ3W+aNF98R3YkwRrFGi3/6X2RFy/FTKJs87skAbUj5gq0xS+PRWwzKBNHkKmNdhH50NtqsL2bB8EuQXgRP4L5MhtH7EWYKTXzmOXV+2WSbfTeGHaTQUfp4Bc7l/7sdZtTBvHlTA+8/CzvRpmJ4dEF026uZgluLOwte1mUupvggXw9IwxAlZzLKT7otKmwUbxgxjuz3lXrsuBk4qCaEnu1E9BieXWyrXyrWeBbxq91y4XOg7Ftei3TBQr5NinaZHUSh8bgV8hYXKiB9wIFCnzSkL3NYFZ+92WlNtBbQ3lSzle7i4oKt5AStaUXjWD01jOHI0HhRLVVY2ET7b1pQ6CWC7EtnMvOlMzEw22M5lOJ/NxXwyug7dyZCMWY1J+IbPiiCZmirm1ewQXhaqFEypICxSLvP8q+O1KNVD2zFs+xSGI4fc2C5GOlTfY7w0Qu2wgO545RtuZN0zIGtn4AekOFOAi/PctMts6YXVuGVYflGGrTEjoSwLIuTng9ZJN4Obac0s7zT1S67UqUlWtqqbc48jvFoCrJPAut4P97jeN1F2XR9423ELhfKHdr8aNUnOPgMblzvXXIjkRLvjs8h+6vff772//vbZVo4DAAA= 
+10:52 (1.0.0) [Information] (18) Http Request Information:
+Request Id: 5d31ba60-1b97-4c51-9476-2da6f657aceb Executing At: 18-01-2021 06:52:26 Schema:https Host: localhost:4200 Path: /api/v1/SlotScheduler Method Type: POST QueryString:  Request Body: {"slotModelKey":"T1R%2bERrUiqL9YwZ7ZhEn3bIfxXEl4iBQUQCnDD3HoQMjpBR36vjTZ%2bCcJvplPvXmALi42UP5NYtG9pN0V6xsNI%2fWvg0UVQBb%2b8YbCT7xHmXiik32mR0W9R6%2fnY1A09T7KupjTNvN9qPypXr8W98S7oV5zUQwexEw9WrsraqBhuuDL5YGAmV756ZYfqJIKrLd9%2fd5EjPKM3jE%2fJLwCOMO3lHFxCNHCoG%2bHUSfq624E873lsMhUwQ74TKr22Qi0jPRxLPveiBUJLDJJpUUFLoy%2f%2bLrBgffVDU8hQaNGWRDNYIzj958q9RTomqr9fmqOEJnjVPUsGv%2flw6CvDMoU5523a1OAvLiZAyEIMIPpKRn0nBrEoWJ7BEOP0o17n9fBoTIxzhzctguYjxXh1JLNm6r1hvgWFudlG%2fDwz0uwo4LYbk%3d"} Compressed Body: 3wEAAB+LCAAAAAAAAAoNj9uSa0AARf9FVd5d4tLz5tIRNMFoQuUlmUQwaFo0yanz7+NxV+21am/u34WbWvLyyf3Reo/3hfu6cIkQ78QbjCmuRwTypVCLCvbSzSnXM2z3tRHhyOwtSzqSyG8GI5YU1iTFxpg/LhvakJ07HdV7EYdykL9sMAR8qqxT4OzEMmNPHqeRcdvqWn4zE3U9due6/pXELuYzECtbqc8FnQeJ6s1DkwQsAGP4Hs5Uy4D2rZJU/uBoeaxwARmd6HU0qnm2kJzbepeqslLk5eg6HkV3sLnuMmxCz5cauAUXLebJP0nt8bCawdEk9jbjiL/LURH3UFOldvIrvETqPvGoKEY134TxikL2qA3sIst1B4wPiLw310YiajzLMrWwVkXXwM5iK8idTwNkbQRxQrqRgrIbT9DtmzTEk802rF0Uk1k+wbIsSlfhpDNUF/obOr4TDl7c871BIclc1YCnkCeC2oPSIImzfqrPz+s55816rgQXBZ1ChYo9s8N8b7cbpbV8+Hkhe5TffnfS/cL95/4AKBFez98BAAA= 
+10:52 (1.0.0) [Information] (19) Http Response Information:
+Request Id: 5d31ba60-1b97-4c51-9476-2da6f657aceb Executed At: 18-01-2021 06:52:26 Schema:https Host: localhost:4200 Path: /api/v1/SlotScheduler Method Type: POST QueryString:  Response Status Code: 201 Response Body: true Compressed Body: BgAAAB+LCAAAAAAAAApTKikqTVUCADtfEqkGAAAA 
+10:55 (1.0.0) [Information] (24) Http Request Information:
+Request Id: b684691e-2292-4715-bb27-33386815d75b Executing At: 18-01-2021 06:55:17 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:55 (1.0.0) [Information] (24) Http Response Information:
+Request Id: b684691e-2292-4715-bb27-33386815d75b Executed At: 18-01-2021 06:55:17 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:55 (1.0.0) [Information] (25) Http Request Information:
+Request Id: 9e74a3e9-f832-405a-8e43-eee31e3af845 Executing At: 18-01-2021 06:55:17 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:55 (1.0.0) [Information] (26) Http Response Information:
+Request Id: 9e74a3e9-f832-405a-8e43-eee31e3af845 Executed At: 18-01-2021 06:55:17 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: {"customerModel":{"id":"26eca53c21344dea874c99cc1df9ceef","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModelsInforamtion":[{"key":{"id":"7f6db7a8-a55f-497a-86be-429d5f5af064","title":"title1","createdBy":"","bookedBy":" ","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"value":"T1R%2bERrUiqL9YwZ7ZhEn3bIfxXEl4iBQUQCnDD3HoQMjpBR36vjTZ%2bCcJvplPvXmALi42UP5NYtG9pN0V6xsNI%2fWvg0UVQBb%2b8YbCT7xHmXiik32mR0W9R6%2fnY1A09T7KupjTNvN9qPypXr8W98S7oV5zUQwexEwB7Bxi11Nmydkb2%2f%2fLJY37oB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGnBGVSJR9MhGw%2byyL3KeAi4LYzqBSNJPc%3d"}]} Compressed Body: lQMAAB+LCAAAAAAAAApVkl1vokAYhf+KMeldTWD47p0oxS+IICC47sXAzCgKDCICdtP/vlPsdttkEnjPOc9w8obhn/0wuV1rmuPKoghn++ELk1LEnvshkHECJSEBvCCKCENVERNNSxIeES3BmOyHz/shSatrbcMc94j12osZ/K6teu2AC4SrXulnnMM0+xzf2XzNaN13uM4LQiuY1yktmP+LFTrj+49mCpFRrEB1BCWJjERNgSNVjvFIBBqSiAQJJ4v9R+q0zh4t+je+F5MKwxoj/f6/TEzp+UsZfKI53tHiQc8LlMLBpoYFghUaeMzrQx+lp+yyPrSAxQBIz4AD/JfJkKp+xFmCk144jp0v2yjQdxP8MKe3Cn4ugbncP/djWQ3Mbg/K490nEBtu5aeXlRa1O2V3NAohnpMuNDIx1R3fmRTTqTCjjnUqdVeQm5O3Y8wkWTRltm7CfLxKReCvJTuqTa20uUDurvb8CZBtc+D8wNFjFlejeOIp3SwP0/QsgNzltpors1AR8WNO85TlrTx5dmNrl/W9DCt1q6kbhQbSm++0uDNaXdG7lOft/I7OMWAgO6tFJChUfwwJkc2tNq6PZaYG1rkUYZgEFk99sDh5ZdgEpiFxVXnIVWlZ2IGr3DLDoseL2ArAISLryHVmyx2IfCrk82GGMsWeA2paJ3Vp+SEIpbljXXzxSIVJax7lLGrh2sekM8+pbbUzT46U6/iQhQ4rcwubZH3Z6PYtVePW2I6FfPOxBTFBpjIrln5ZkDY6MSkI0kkztagvSUDAHWNddOe4jKybrKu3+evSW5iFbgabhatZR7NlzP2+EpZ4nIqr6O2ib+zFOnkS2L/9/vt9+BfK9dNulQMAAA== 
+10:55 (1.0.0) [Information] (27) Http Request Information:
+Request Id: f8c340cf-4d43-4034-a727-a9b939b57425 Executing At: 18-01-2021 06:55:23 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+10:55 (1.0.0) [Information] (27) Http Response Information:
+Request Id: f8c340cf-4d43-4034-a727-a9b939b57425 Executed At: 18-01-2021 06:55:23 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 200 Response Body: [{"slotModels":[],"customerModel":{"id":"26eca53c21344dea874c99cc1df9ceef","firstName":"MF","lastName":"ML","gender":"","email":""}}] Compressed Body: nwAAAB+LCAAAAAAAAApNzT0OwyAMBeC7eO6ShP7QA3RqcoE4g2VMhQRFAjpVuXuJp07W+/SeDOsXocbc5uwkVoT7up0Q+FNbTlJUO/ZScP0ijBdhOk88DpMxTuh2NWwt8+C8ZRGP0Oc+lNoWSqKT+aEY6d+eai95OykqmiVROP4dcd83+AFmaBw4nwAAAA== 
+10:55 (1.0.0) [Information] (24) Http Request Information:
+Request Id: 2fa80233-18d1-4966-b6cd-5f71f0bbeb3b Executing At: 18-01-2021 06:55:56 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:55 (1.0.0) [Information] (28) Http Response Information:
+Request Id: 2fa80233-18d1-4966-b6cd-5f71f0bbeb3b Executed At: 18-01-2021 06:55:56 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:55 (1.0.0) [Information] (24) Http Request Information:
+Request Id: 4a48f0e4-9dbf-4a87-b27d-659993555a3e Executing At: 18-01-2021 06:55:56 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+10:55 (1.0.0) [Information] (28) Http Response Information:
+Request Id: 4a48f0e4-9dbf-4a87-b27d-659993555a3e Executed At: 18-01-2021 06:55:56 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+10:56 (1.0.0) [Information] (24) Http Request Information:
+Request Id: c5bd4d6b-22d8-41e6-aed6-b2ab5021b03e Executing At: 18-01-2021 06:56:04 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:56 (1.0.0) [Information] (24) Http Response Information:
+Request Id: c5bd4d6b-22d8-41e6-aed6-b2ab5021b03e Executed At: 18-01-2021 06:56:04 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:56 (1.0.0) [Information] (28) Http Request Information:
+Request Id: 9ddbd03b-84e0-450f-9d44-4362061bf0f7 Executing At: 18-01-2021 06:56:04 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:56 (1.0.0) [Information] (31) Http Response Information:
+Request Id: 9ddbd03b-84e0-450f-9d44-4362061bf0f7 Executed At: 18-01-2021 06:56:04 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+10:56 (1.0.0) [Information] (32) Http Request Information:
+Request Id: 01ee6b14-dc23-4c1c-a014-cf0b0eeb5b52 Executing At: 18-01-2021 06:56:30 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:56 (1.0.0) [Information] (32) Http Response Information:
+Request Id: 01ee6b14-dc23-4c1c-a014-cf0b0eeb5b52 Executed At: 18-01-2021 06:56:30 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:56 (1.0.0) [Information] (34) Http Request Information:
+Request Id: eaa3a7fe-03fe-4be7-9acb-3207f82b7063 Executing At: 18-01-2021 06:56:30 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:56 (1.0.0) [Information] (34) Http Response Information:
+Request Id: eaa3a7fe-03fe-4be7-9acb-3207f82b7063 Executed At: 18-01-2021 06:56:30 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+10:58 (1.0.0) [Information] (36) Http Request Information:
+Request Id: af3aa4c8-3c2e-4e5c-97da-9659ce809d68 Executing At: 18-01-2021 06:58:57 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:58 (1.0.0) [Information] (36) Http Request Information:
+Request Id: 99c939f0-33e0-4205-8109-dec8affad6f6 Executing At: 18-01-2021 06:58:58 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:58 (1.0.0) [Information] (37) Http Response Information:
+Request Id: af3aa4c8-3c2e-4e5c-97da-9659ce809d68 Executed At: 18-01-2021 06:58:58 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:58 (1.0.0) [Information] (37) Http Response Information:
+Request Id: 99c939f0-33e0-4205-8109-dec8affad6f6 Executed At: 18-01-2021 06:58:58 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetCustomerAvailableSlots Method Type: GET QueryString: ?pageNumber=0&pageSize=10&customerInfo=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: 8cbec3c4-2929-4d61-ae0b-b94f37e3a369 Executing At: 18-01-2021 06:59:04 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (37) Http Response Information:
+Request Id: 8cbec3c4-2929-4d61-ae0b-b94f37e3a369 Executed At: 18-01-2021 06:59:04 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: 2000526e-fc4d-413d-96ee-fd4f220317ca Executing At: 18-01-2021 06:59:16 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (38) Http Response Information:
+Request Id: 2000526e-fc4d-413d-96ee-fd4f220317ca Executed At: 18-01-2021 06:59:16 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:59 (1.0.0) [Information] (42) Http Request Information:
+Request Id: 97f29189-d5a7-4fe5-817a-13d42721bfe4 Executing At: 18-01-2021 06:59:16 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (42) Http Response Information:
+Request Id: 97f29189-d5a7-4fe5-817a-13d42721bfe4 Executed At: 18-01-2021 06:59:16 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: cefb5f2d-7a7a-44f7-9331-bfbef8e2a54a Executing At: 18-01-2021 06:59:21 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (36) Http Response Information:
+Request Id: cefb5f2d-7a7a-44f7-9331-bfbef8e2a54a Executed At: 18-01-2021 06:59:21 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:59 (1.0.0) [Information] (41) Http Request Information:
+Request Id: e52d25f3-53c5-46cb-a944-a7e22211a688 Executing At: 18-01-2021 06:59:21 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (39) Http Response Information:
+Request Id: e52d25f3-53c5-46cb-a944-a7e22211a688 Executed At: 18-01-2021 06:59:21 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: ba14ccae-ed7f-4aa0-b519-a572478248f4 Executing At: 18-01-2021 06:59:24 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (39) Http Response Information:
+Request Id: ba14ccae-ed7f-4aa0-b519-a572478248f4 Executed At: 18-01-2021 06:59:24 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+10:59 (1.0.0) [Information] (39) Http Request Information:
+Request Id: 748958de-79ef-45f9-8676-d06a354985a8 Executing At: 18-01-2021 06:59:25 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (38) Http Response Information:
+Request Id: 748958de-79ef-45f9-8676-d06a354985a8 Executed At: 18-01-2021 06:59:25 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: d935b7e8-9fb6-42a8-b335-016f514e6d52 Executing At: 18-01-2021 06:59:25 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (41) Http Response Information:
+Request Id: d935b7e8-9fb6-42a8-b335-016f514e6d52 Executed At: 18-01-2021 06:59:25 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: ddd569d6-0588-4878-ac19-1a49babb6c75 Executing At: 18-01-2021 06:59:27 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (36) Http Response Information:
+Request Id: ddd569d6-0588-4878-ac19-1a49babb6c75 Executed At: 18-01-2021 06:59:27 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+10:59 (1.0.0) [Information] (37) Http Request Information:
+Request Id: 969f62c9-f4ff-44fa-91e8-825061f10b83 Executing At: 18-01-2021 06:59:33 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (39) Http Response Information:
+Request Id: 969f62c9-f4ff-44fa-91e8-825061f10b83 Executed At: 18-01-2021 06:59:33 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+10:59 (1.0.0) [Information] (37) Http Request Information:
+Request Id: da3b3699-c123-4976-8736-8e7afd818ae0 Executing At: 18-01-2021 06:59:33 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (37) Http Response Information:
+Request Id: da3b3699-c123-4976-8736-8e7afd818ae0 Executed At: 18-01-2021 06:59:33 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: 1e73392c-886b-4289-8726-e06a89b97212 Executing At: 18-01-2021 06:59:35 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (43) Http Response Information:
+Request Id: 1e73392c-886b-4289-8726-e06a89b97212 Executed At: 18-01-2021 06:59:35 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+10:59 (1.0.0) [Information] (37) Http Request Information:
+Request Id: e4466f58-b41d-43a8-8d13-75e1141d7834 Executing At: 18-01-2021 06:59:35 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (44) Http Response Information:
+Request Id: e4466f58-b41d-43a8-8d13-75e1141d7834 Executed At: 18-01-2021 06:59:35 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+10:59 (1.0.0) [Information] (44) Http Request Information:
+Request Id: 25aeb230-5593-4b1b-8385-8e3e4c629e27 Executing At: 18-01-2021 06:59:36 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+10:59 (1.0.0) [Information] (38) Http Response Information:
+Request Id: 25aeb230-5593-4b1b-8385-8e3e4c629e27 Executed At: 18-01-2021 06:59:36 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+10:59 (1.0.0) [Information] (36) Http Request Information:
+Request Id: 4c4d5295-581f-49f4-a0b9-d19b978a852c Executing At: 18-01-2021 06:59:41 Schema:https Host: localhost:4200 Path: /api/v1/Slot/CancelSlot Method Type: POST QueryString:  Request Body: {"slotKey":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d","cancelledBy":"26eca53c21344dea874c99cc1df9ceef"} Compressed Body: IQIAAB+LCAAAAAAAAAolUcmuozAQ/Bek3OYAxmxzI5tDCJCENREXMFvALC8sJhnNv4+lkUrqVqmqq6Tm/sTcSPrJzD8x9zvmaB0pYy0sxrqvnrt7+34JG1CkH/lhnPdXz73MqawRF5qZQb3jXQ/my2IqTEJRMrhVBdh6eHfHgk0toQbCrdNqa74KtpFrY1dLln5xyvBz0aLzJNYNvx0mgUrlFTnQDZdhCyRINiCtlvR5WcAOvdmpVH7VUwBaHwhgkJ+qnKbfLGj05gxHFrQomj1P4wcJ94OndUE2PRKwgGNV376KVz5v2Qn2nnPU9Oz9DfstszDgQkahpk/VQNTAagaYRDiwhN4H59oboiVAB4l/D2WrSmZnB3dlJgerr34gFcGtgKwVvyLKl4Vcd3JTnjKi2AbokVWrpuVHIJKMm/Xjw6oXdxRVMnnQ5OrnxYqal23Rkyc/lFEvSXRjZeZowdcfd2vPLzWlh1AXW5clqBBnSDl1pj90BX3UjAqC127ZW70vSUDMV+a9Zx+eJ8V1IesUtkfTO6NoXBziCFTf6xsxY4i5XzGHkw7nhOTZ9v+zgZzjRBIxEEQIszxRFYg1DWMhKzSc50XM/eX+ARy1LdkhAgAA 
+10:59 (1.0.0) [Information] (37) Http Response Information:
+Request Id: 4c4d5295-581f-49f4-a0b9-d19b978a852c Executed At: 18-01-2021 06:59:41 Schema:https Host: localhost:4200 Path: /api/v1/Slot/CancelSlot Method Type: POST QueryString:  Response Status Code: 201 Response Body: true Compressed Body: BgAAAB+LCAAAAAAAAApTKikqTVUCADtfEqkGAAAA 
+11:00 (1.0.0) [Information] (45) Http Request Information:
+Request Id: 705e7c2c-8ad8-447c-90ed-b2ec251c2aaf Executing At: 18-01-2021 07:00:13 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (45) Http Response Information:
+Request Id: 705e7c2c-8ad8-447c-90ed-b2ec251c2aaf Executed At: 18-01-2021 07:00:13 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:00 (1.0.0) [Information] (45) Http Request Information:
+Request Id: 49063583-5df5-45ef-9c45-6dbbb1f8c82d Executing At: 18-01-2021 07:00:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (46) Http Response Information:
+Request Id: 49063583-5df5-45ef-9c45-6dbbb1f8c82d Executed At: 18-01-2021 07:00:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:00 (1.0.0) [Information] (48) Http Request Information:
+Request Id: 01c914f3-d90d-4db0-8c27-56f016c018f2 Executing At: 18-01-2021 07:00:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (45) Http Response Information:
+Request Id: 01c914f3-d90d-4db0-8c27-56f016c018f2 Executed At: 18-01-2021 07:00:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:00 (1.0.0) [Information] (45) Http Request Information:
+Request Id: 97b53b57-f765-4253-9f64-a109301bd527 Executing At: 18-01-2021 07:00:24 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (47) Http Response Information:
+Request Id: 97b53b57-f765-4253-9f64-a109301bd527 Executed At: 18-01-2021 07:00:24 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:00 (1.0.0) [Information] (48) Http Request Information:
+Request Id: 474d0bd5-8355-45ae-a19c-1ae1be393365 Executing At: 18-01-2021 07:00:39 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (47) Http Response Information:
+Request Id: 474d0bd5-8355-45ae-a19c-1ae1be393365 Executed At: 18-01-2021 07:00:39 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"cancelledSlotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"cancelledByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""}}] Compressed Body: rAEAAB+LCAAAAAAAAAptkE1vgzAMhv8KyrmTKBIXjiurtGrswk5bevCwV0UNiRTMYZr47wsGNlBrRfl4Xn/EVh8/WjXgGrKWsLaeK49ktSoiNxhPrdLZHu5si2m104oNW5IQue0FNoGACR+/RZjQUm8NP72/bgmblt69mzI+OzSQ1AwOIWDyFjVx6uKXy1hAnE7gkizfZWk21R7FGBJ4ch97yYs0jetPfnK4FrONWPYB2Hg3j2FRh20Ph75j31K4nZwk+jKh41eYa1RHgRbW7EXYhRxS+A+kFsyYb3wOw1n9AhQALfasAQAA 
+11:00 (1.0.0) [Information] (45) Http Request Information:
+Request Id: ed0398de-87d3-49bd-aae8-1cca188ddbef Executing At: 18-01-2021 07:00:43 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (46) Http Response Information:
+Request Id: ed0398de-87d3-49bd-aae8-1cca188ddbef Executed At: 18-01-2021 07:00:43 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:00 (1.0.0) [Information] (47) Http Request Information:
+Request Id: c5519bb7-d28f-4426-8100-f34909c598df Executing At: 18-01-2021 07:00:44 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (45) Http Response Information:
+Request Id: c5519bb7-d28f-4426-8100-f34909c598df Executed At: 18-01-2021 07:00:44 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:00 (1.0.0) [Information] (45) Http Request Information:
+Request Id: 99b267c1-1124-436a-92e8-42cdee2890e8 Executing At: 18-01-2021 07:00:45 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (45) Http Response Information:
+Request Id: 99b267c1-1124-436a-92e8-42cdee2890e8 Executed At: 18-01-2021 07:00:45 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"cancelledSlotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"cancelledByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""}}] Compressed Body: rAEAAB+LCAAAAAAAAAptkE1vgzAMhv8KyrmTKBIXjiurtGrswk5bevCwV0UNiRTMYZr47wsGNlBrRfl4Xn/EVh8/WjXgGrKWsLaeK49ktSoiNxhPrdLZHu5si2m104oNW5IQue0FNoGACR+/RZjQUm8NP72/bgmblt69mzI+OzSQ1AwOIWDyFjVx6uKXy1hAnE7gkizfZWk21R7FGBJ4ch97yYs0jetPfnK4FrONWPYB2Hg3j2FRh20Ph75j31K4nZwk+jKh41eYa1RHgRbW7EXYhRxS+A+kFsyYb3wOw1n9AhQALfasAQAA 
+11:00 (1.0.0) [Information] (45) Http Request Information:
+Request Id: 2bb65e96-74b9-46ba-98f5-34f05585b66b Executing At: 18-01-2021 07:00:50 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:00 (1.0.0) [Information] (46) Http Response Information:
+Request Id: 2bb65e96-74b9-46ba-98f5-34f05585b66b Executed At: 18-01-2021 07:00:50 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"}] Compressed Body: IAEAAB+LCAAAAAAAAAptkDELwjAQhf9KuLlCDHTpKHXQVSeNw9lkCMYLpOcg4n83TVox4BHC8b737kjg/NLgjIZOg5xr9edaSkOjgR17myO5W2dxiBbZms0zgyIhDdb7WryGcKsVdnd7ClQm7sg4FAdGMhiNOCaWTaMP3KcF2bRHEqptlFRl9wRTJHKxT29pOynT+eItmV+oKtg/IrILNH/DQt8X+ACeh2M0IAEAAA== 
+11:01 (1.0.0) [Information] (45) Http Request Information:
+Request Id: 11bd4ede-0da8-4a74-825d-780af735d523 Executing At: 18-01-2021 07:01:26 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+11:01 (1.0.0) [Information] (52) Http Response Information:
+Request Id: 11bd4ede-0da8-4a74-825d-780af735d523 Executed At: 18-01-2021 07:01:26 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+11:02 (1.0.0) [Information] (54) Http Request Information:
+Request Id: f83d6bd4-4ca5-44a4-9f4f-f9ac0873e4d2 Executing At: 18-01-2021 07:02:41 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (54) Http Response Information:
+Request Id: f83d6bd4-4ca5-44a4-9f4f-f9ac0873e4d2 Executed At: 18-01-2021 07:02:41 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:02 (1.0.0) [Information] (54) Http Request Information:
+Request Id: bda2cce0-6314-4dd1-a765-3e9814d24953 Executing At: 18-01-2021 07:02:41 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (54) Http Response Information:
+Request Id: bda2cce0-6314-4dd1-a765-3e9814d24953 Executed At: 18-01-2021 07:02:41 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+11:02 (1.0.0) [Information] (53) Http Request Information:
+Request Id: d36e0c9c-d136-4417-9177-7b98781a73a8 Executing At: 18-01-2021 07:02:43 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (54) Http Response Information:
+Request Id: d36e0c9c-d136-4417-9177-7b98781a73a8 Executed At: 18-01-2021 07:02:43 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:02 (1.0.0) [Information] (54) Http Request Information:
+Request Id: 0d1bac61-6ba9-4165-9211-579b44621adc Executing At: 18-01-2021 07:02:44 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (54) Http Response Information:
+Request Id: 0d1bac61-6ba9-4165-9211-579b44621adc Executed At: 18-01-2021 07:02:44 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday Method Type: GET QueryString: ?pageNumber=0&pageSize=10 Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+11:02 (1.0.0) [Information] (53) Http Request Information:
+Request Id: d0e9549e-01d0-4ba4-a181-056472f886b4 Executing At: 18-01-2021 07:02:47 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (56) Http Response Information:
+Request Id: d0e9549e-01d0-4ba4-a181-056472f886b4 Executed At: 18-01-2021 07:02:47 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:02 (1.0.0) [Information] (56) Http Request Information:
+Request Id: 2f42c650-709c-4573-a68f-caaad83128b0 Executing At: 18-01-2021 07:02:47 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (56) Http Response Information:
+Request Id: 2f42c650-709c-4573-a68f-caaad83128b0 Executed At: 18-01-2021 07:02:47 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:02 (1.0.0) [Information] (53) Http Request Information:
+Request Id: ff184fd1-171f-42b1-8a4d-98d296177043 Executing At: 18-01-2021 07:02:56 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (56) Http Response Information:
+Request Id: ff184fd1-171f-42b1-8a4d-98d296177043 Executed At: 18-01-2021 07:02:56 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:02 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 1a9a3586-b5eb-42ee-bf5f-b5a7fa09e856 Executing At: 18-01-2021 07:02:57 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (55) Http Response Information:
+Request Id: 1a9a3586-b5eb-42ee-bf5f-b5a7fa09e856 Executed At: 18-01-2021 07:02:57 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:02 (1.0.0) [Information] (55) Http Request Information:
+Request Id: 4da83e68-1844-4d32-966e-045316103784 Executing At: 18-01-2021 07:02:58 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (54) Http Response Information:
+Request Id: 4da83e68-1844-4d32-966e-045316103784 Executed At: 18-01-2021 07:02:58 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+11:02 (1.0.0) [Information] (53) Http Request Information:
+Request Id: e38db1ec-436e-442a-b8b5-7eac776fa8a1 Executing At: 18-01-2021 07:02:58 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:02 (1.0.0) [Information] (55) Http Response Information:
+Request Id: e38db1ec-436e-442a-b8b5-7eac776fa8a1 Executed At: 18-01-2021 07:02:58 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 61d524a0-633d-4b82-af1b-69f9a5dfc599 Executing At: 18-01-2021 07:03:00 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (55) Http Response Information:
+Request Id: 61d524a0-633d-4b82-af1b-69f9a5dfc599 Executed At: 18-01-2021 07:03:01 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:03 (1.0.0) [Information] (55) Http Request Information:
+Request Id: 04e16341-396c-4c66-aca3-63bf07c9566d Executing At: 18-01-2021 07:03:01 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (53) Http Response Information:
+Request Id: 04e16341-396c-4c66-aca3-63bf07c9566d Executed At: 18-01-2021 07:03:01 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:03 (1.0.0) [Information] (54) Http Request Information:
+Request Id: d9f89ae1-8bc0-4917-b273-b6369ab2d1a5 Executing At: 18-01-2021 07:03:02 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (57) Http Response Information:
+Request Id: d9f89ae1-8bc0-4917-b273-b6369ab2d1a5 Executed At: 18-01-2021 07:03:03 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: a5a045ad-3da9-481d-8708-7b47b84c485e Executing At: 18-01-2021 07:03:06 Schema:https Host: localhost:4200 Path: /api/v1/Slot/CancelSlot Method Type: POST QueryString:  Request Body: {"slotKey":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d","cancelledBy":"10a5b1d6d1a7497eb4b59bf95e0793a2"} Compressed Body: IQIAAB+LCAAAAAAAAAolUcmuozAQ/Bek3OYAxiyeG9kcQoAkrIm4sBMwywuLSUbz72NppJK6VarqKqm5PxE3kn4y8k/E/Y44WofKWAuLvu6r5+7evl/CBhTJR37o5/3VdS5zIiPiQCPTqXu8a/58WQyFSSiOB6eqAFsP7+5YsIliquO0tVu05qtg6Tkau1oytYtdBp8LCs+TWDf8dpgEKpVXbEMnWIYtkCDZgKRakudlATv8ZqcS+VVPPmg9IIBBfqpyknwzv9GaMxxZ0KIga57GDxbuBxd1fjY9YrCAY1XfvopbPm/ZCfaufURa9v4G/ZZZGNJCxgHSpmogqm82A4zD1DeF3gPn2h3CxccHiX8PZatKRmf5d2UmB7OvfiAVwa2ArBW/YsqXhVx3clOeMqJYOuixWauG6YUglPSb+ePBqhd3FFcyedD46uXFipuXZdKTKz+UUStJeGNl5nBJrz/O1ppfakIPgSa2DktQYZph5dQZ3tAV9FEzyvdfu2Vv9p4kATFfmfeefXieFNeFrFPQHg33jMNxsYktUG2vbcSMIeJ+RVwad2lOSJ5t/z9b4GMpETI5E2IFIiVPYCKhpEBSzitIjEHE/eX+Ab9jnZYhAgAA 
+11:03 (1.0.0) [Information] (53) Http Response Information:
+Request Id: a5a045ad-3da9-481d-8708-7b47b84c485e Executed At: 18-01-2021 07:03:06 Schema:https Host: localhost:4200 Path: /api/v1/Slot/CancelSlot Method Type: POST QueryString:  Response Status Code: 201 Response Body: true Compressed Body: BgAAAB+LCAAAAAAAAApTKikqTVUCADtfEqkGAAAA 
+11:03 (1.0.0) [Information] (59) Http Request Information:
+Request Id: a598ff8e-aad1-45af-b59f-601a3c10d327 Executing At: 18-01-2021 07:03:08 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (58) Http Response Information:
+Request Id: a598ff8e-aad1-45af-b59f-601a3c10d327 Executed At: 18-01-2021 07:03:08 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:03 (1.0.0) [Information] (58) Http Request Information:
+Request Id: 28d961c3-289c-4ae9-99b0-13c1ba5442d4 Executing At: 18-01-2021 07:03:09 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (59) Http Response Information:
+Request Id: 28d961c3-289c-4ae9-99b0-13c1ba5442d4 Executed At: 18-01-2021 07:03:09 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"cancelledSlotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"cancelledByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""}}] Compressed Body: rAEAAB+LCAAAAAAAAAptkMuqwjAQhl+lZO2BWujGpVeUc85GVxoXY2eUYJpAOi5E+u6mSastOoRcvn8umRGHhxQFmIK0Jtxqy38WSUsx8VyhP6VIW/v5snUmxUgKVqwphITbOMDCETDh9B6EiLp6fXiy9jokrEraWxMzrg0qSLYMBsFhsvNacKr8l+e+QHDagEmyfJSlWazdiD7EcXRvesknaerXS14Y7IvZQJzfHLCyph1Dp9bDHma3im1J7nNyIdFZuYr/oa2xXAWoocd+I7uQQXLvQCpBNfmaZ10fxRPG07xPrAEAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 046d0b61-ac23-44f6-b661-b8825e29fc1b Executing At: 18-01-2021 07:03:15 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (57) Http Response Information:
+Request Id: 046d0b61-ac23-44f6-b661-b8825e29fc1b Executed At: 18-01-2021 07:03:15 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:03 (1.0.0) [Information] (57) Http Request Information:
+Request Id: 378b20f1-b246-4862-acc4-fa639824c264 Executing At: 18-01-2021 07:03:15 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (53) Http Response Information:
+Request Id: 378b20f1-b246-4862-acc4-fa639824c264 Executed At: 18-01-2021 07:03:15 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: bb6d27bd-9ed9-4434-bbcd-76f73d628476 Executing At: 18-01-2021 07:03:16 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (54) Http Response Information:
+Request Id: bb6d27bd-9ed9-4434-bbcd-76f73d628476 Executed At: 18-01-2021 07:03:16 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"cancelledSlotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"cancelledByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""}}] Compressed Body: rAEAAB+LCAAAAAAAAAptkMuqwjAQhl+lZO2BWujGpVeUc85GVxoXY2eUYJpAOi5E+u6mSastOoRcvn8umRGHhxQFmIK0Jtxqy38WSUsx8VyhP6VIW/v5snUmxUgKVqwphITbOMDCETDh9B6EiLp6fXiy9jokrEraWxMzrg0qSLYMBsFhsvNacKr8l+e+QHDagEmyfJSlWazdiD7EcXRvesknaerXS14Y7IvZQJzfHLCyph1Dp9bDHma3im1J7nNyIdFZuYr/oa2xXAWoocd+I7uQQXLvQCpBNfmaZ10fxRPG07xPrAEAAA== 
+11:03 (1.0.0) [Information] (55) Http Request Information:
+Request Id: fd7f646d-e4e9-45bc-bb06-4d6d4360e407 Executing At: 18-01-2021 07:03:17 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (56) Http Response Information:
+Request Id: fd7f646d-e4e9-45bc-bb06-4d6d4360e407 Executed At: 18-01-2021 07:03:17 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 716b6a4c-cc1e-4186-ac8a-d89d0c41e756 Executing At: 18-01-2021 07:03:19 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (56) Http Response Information:
+Request Id: 716b6a4c-cc1e-4186-ac8a-d89d0c41e756 Executed At: 18-01-2021 07:03:19 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 4a0c83cc-a075-4cd6-92e2-74357eb8e511 Executing At: 18-01-2021 07:03:22 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (58) Http Response Information:
+Request Id: 4a0c83cc-a075-4cd6-92e2-74357eb8e511 Executed At: 18-01-2021 07:03:22 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 9fa2bd09-7e47-4d7d-a5f0-d108dd598d32 Executing At: 18-01-2021 07:03:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (53) Http Response Information:
+Request Id: 9fa2bd09-7e47-4d7d-a5f0-d108dd598d32 Executed At: 18-01-2021 07:03:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: f042009a-ba4c-4530-be4c-eeb582106179 Executing At: 18-01-2021 07:03:28 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (55) Http Response Information:
+Request Id: f042009a-ba4c-4530-be4c-eeb582106179 Executed At: 18-01-2021 07:03:28 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"cancelledSlotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"cancelledByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""}}] Compressed Body: rAEAAB+LCAAAAAAAAAptkMuqwjAQhl+lZO2BWujGpVeUc85GVxoXY2eUYJpAOi5E+u6mSastOoRcvn8umRGHhxQFmIK0Jtxqy38WSUsx8VyhP6VIW/v5snUmxUgKVqwphITbOMDCETDh9B6EiLp6fXiy9jokrEraWxMzrg0qSLYMBsFhsvNacKr8l+e+QHDagEmyfJSlWazdiD7EcXRvesknaerXS14Y7IvZQJzfHLCyph1Dp9bDHma3im1J7nNyIdFZuYr/oa2xXAWoocd+I7uQQXLvQCpBNfmaZ10fxRPG07xPrAEAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: a4cfbd8c-5cfc-4f91-a64f-2bc365348c3e Executing At: 18-01-2021 07:03:31 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (56) Http Response Information:
+Request Id: a4cfbd8c-5cfc-4f91-a64f-2bc365348c3e Executed At: 18-01-2021 07:03:31 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 5334dd10-b90d-4c74-82e5-95e5b25e7e6a Executing At: 18-01-2021 07:03:37 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (56) Http Response Information:
+Request Id: 5334dd10-b90d-4c74-82e5-95e5b25e7e6a Executed At: 18-01-2021 07:03:37 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:03 (1.0.0) [Information] (56) Http Request Information:
+Request Id: a8212072-cfb4-41c3-b65a-7a7db59dfec7 Executing At: 18-01-2021 07:03:37 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (56) Http Response Information:
+Request Id: a8212072-cfb4-41c3-b65a-7a7db59dfec7 Executed At: 18-01-2021 07:03:37 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 23682d57-c10e-4320-9407-ef881d85ab71 Executing At: 18-01-2021 07:03:41 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (58) Http Response Information:
+Request Id: 23682d57-c10e-4320-9407-ef881d85ab71 Executed At: 18-01-2021 07:03:41 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:03 (1.0.0) [Information] (58) Http Request Information:
+Request Id: 3285ce75-843a-4937-8bcd-8cf27f80f38b Executing At: 18-01-2021 07:03:41 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (53) Http Response Information:
+Request Id: 3285ce75-843a-4937-8bcd-8cf27f80f38b Executed At: 18-01-2021 07:03:41 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:03 (1.0.0) [Information] (53) Http Request Information:
+Request Id: 6c7cbca6-d04f-4842-bdb3-3c8ab5b1a37c Executing At: 18-01-2021 07:03:42 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (59) Http Response Information:
+Request Id: 6c7cbca6-d04f-4842-bdb3-3c8ab5b1a37c Executed At: 18-01-2021 07:03:42 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+11:03 (1.0.0) [Information] (59) Http Request Information:
+Request Id: 16f80d52-840b-4fa6-a709-12d378927ac3 Executing At: 18-01-2021 07:03:43 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:03 (1.0.0) [Information] (59) Http Response Information:
+Request Id: 16f80d52-840b-4fa6-a709-12d378927ac3 Executed At: 18-01-2021 07:03:43 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+11:19 (1.0.0) [Information] (1) Starting web host
+11:19 (1.0.0) [Information] (9) Http Request Information:
+Request Id: 219a11ce-9031-48d1-9c11-492ee87762cd Executing At: 18-01-2021 07:19:19 Schema:https Host: localhost:44382 Path: /swagger/index.html Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:19 (1.0.0) [Information] (9) Http Response Information:
+Request Id: 219a11ce-9031-48d1-9c11-492ee87762cd Executed At: 18-01-2021 07:19:20 Schema:https Host: localhost:44382 Path: /swagger/index.html Method Type: GET QueryString:  Response Status Code: 200 Response Body: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+    
+    
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script>
+window.onload = function() {
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = undefined;
+  }
+  var urls = [{"url":"/swagger/v1/swagger.json","name":"v1"}];
+
+  const disableTryItOutPlugin = function() {
+    return {
+      statePlugins: {
+      spec: {
+        wrapSelectors: {
+          allowTryItOutFor: function() {
+            return function() {
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Build a system
+  var ui = SwaggerUIBundle({
+    url: url,
+    urls: urls,  
+    validatorUrl: null,
+    oauth2RedirectUrl: window.location.origin + "/swagger/oauth2-redirect.html",
+
+    docExpansion: "none", 
+    operationsSorter: "none", 
+    defaultModelsExpandDepth: 1, 
+    defaultModelExpandDepth: 1, 
+    tagsSorter: "none", 
+    
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+        SwaggerUIBundle.plugins.DownloadUrl,
+        disableTryItOutPlugin
+    ],
+    layout: "StandaloneLayout"
+  });
+
+  if ("client_id") {
+    ui.initOAuth({
+      clientId: "client_id",
+      clientSecret: "client_secret",
+      realm: "realm",
+      appName: "app_name",
+      scopeSeparator: " ",
+      additionalQueryStringParams: {},
+      usePkceWithAuthorizationCodeGrant: false
+    });
+  }
+
+  window.ui = ui;
+}
+    </script>
+    
+  </body>
+</html>
+ Compressed Body: KQoAAB+LCAAAAAAAAAqlVoFu2zYQ/RVWBdKkjaQ5BYpBcwKsSbsFSBe3jjEMUVbQ0lniQpECSdlxivz7jhQlK4mKYpgNWMe7x0fq+O7oYPoiDMnvV58uyEoqog01LCM500axZWOYFGTZiJwDPhjPSRiepGL64uzy9Oqv2QdSmopbh30STkVxnAYg0gB9hExLoLmz0K7AUJKVVGkwCFpcfQx/9jiMGmY4nMw3tChAkcX5NG49PsyZuCUKOE7UZstBlwAmDYjZ1oA+A3cmzrRGT6lghZ4o1i1X2LCojYxwsUyKHQuraAFxLYohzYquLSp8e3T39ihqg5rdg8ao8+E4/n/Uk3d3k3dPqJ1vSO1e2w+IS3tnf+sMQpbyLkQGJooEbZXj66Prlx1ArkGtuNwkJKzkfagzJTlf4pmEGMCDp3wEHG4T0iL74EMqOvP1YW8lS0ANwcBBVwbUDzbKRAmKmTHupcy3I7Mrqgomkp8Ge13S7LZQEpWakJcrar9DQpfCeJjD3e809jJ1A7tkl/OcrQnLreZ6LaFipzH6PdweTKZYbYhW2RPZhW3dRP9Y8T0Xvt2Pm3ryQyIsSpFTLgWEtQKk+Y+cONowkctNJAWXNCfHZNWIzBb3/kGb2DVVpFEcIx7JZYadQIpIA1VZGVXUZOV+jJjj/eu/927eHMQHLsNsRfbtzL09SxBxEIUpyQmZeGbieXPIZA6LL+ensqrxVYSx064nNy3NAwGu4fEUzB+smIC8RQz2qTF6/S0N0EyDJA26bMXrSWdijmwFHqaBoBU41HqSBg83SGaZsPK0sY2OLjlcqe25uWzMjDeorJH8ECxr0yixk6HtlNDidTJw15ANhoRsFK3nwCEzUg2B9kM5lle39kepkpF1u49f//uAAcioBgbF8agMRoeDQW96wz18TcYxee9uAUr0Vhuo+iNhmDPfvRfn753w93dnmdgf3xbs6bmxPuyqcE05yynmZ2GhouEdVtLGlEdfIGcK8+eiT+UpFbMn9oYMRNBOC5WfF7luiUrwJZvL7MNdTYXG+QnOE6hGDPvNyBqUo9ZzqbB7PUegKGnDzSeUM9eOKT+D2pQJmYxBxhGGFt9doNtm9ZVhO3v1ctcKXvnE5AD1BV42roHa0/b+tj1gfq+7U3xyKJFHRLRm+vAZaN53mpnDtYCbjr1Te88+wt9iojO5cb0GD61fhoyX2+NFON3Kxtik7DZz4Xxp4KRo+0XXeNIg4wxbCSYqDXYNh0VMMHP5K8qgUyEWvEOeY0Yfzep31/rmkGERDTDaOdIdTgHllQU4YxCgdf0HthobQvNr23b6qM5QWXOoKarLVjo28OHcPGdWdJR/bkBt5/jvSxQzxFa2Zzz0uEbD7DaDP5kp7duh+u+dWE9Rab8pKnDnK4qN1Neu761twnzpuFptGEZ2F+Pw0mjvRH8P4uXY/sML/gWWz4gVKQoAAA== 
+11:19 (1.0.0) [Information] (5) Http Request Information:
+Request Id: 199fc42d-93c6-46bb-a1a4-65ddc1ca5f00 Executing At: 18-01-2021 07:19:20 Schema:https Host: localhost:44382 Path: /swagger/v1/swagger.json Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:19 (1.0.0) [Information] (5) Http Response Information:
+Request Id: 199fc42d-93c6-46bb-a1a4-65ddc1ca5f00 Executed At: 18-01-2021 07:19:22 Schema:https Host: localhost:44382 Path: /swagger/v1/swagger.json Method Type: GET QueryString:  Response Status Code: 200 Response Body: {
+  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v12.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bookmyslot Customer API",
+    "description": "Bookmyslot Customer API to manage customer data",
+    "termsOfService": "None",
+    "contact": {
+      "name": "TA",
+      "email": ""
+    },
+    "license": {
+      "name": ""
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:44382"
+    }
+  ],
+  "paths": {
+    "/api/v1/CustomerBookedSlot/GetCustomerBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer booked slots",
+        "operationId": "CustomerBookedSlot_GetCustomerBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer booked slots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerBookedSlot/GetCustomerCompletedSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer completed slots",
+        "operationId": "CustomerBookedSlot_GetCustomerCompletedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer completed slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerBookedSlot/GetCustomerCancelledSlots": {
+      "get": {
+        "tags": [
+          "CustomerBookedSlot"
+        ],
+        "summary": "Gets customer cancelled slots",
+        "operationId": "CustomerBookedSlot_GetCustomerCancelledSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer cancelled slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Customer/{email}": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Gets customer by email",
+        "operationId": "Customer_Get",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "customer email id",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer details"
+          },
+          "404": {
+            "description": "no customer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Customer": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Create new customer",
+        "operationId": "Customer_Post",
+        "requestBody": {
+          "x-name": "customerModel",
+          "description": "customer model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns email id of created customer"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Update existing customer",
+        "operationId": "Customer_Put",
+        "requestBody": {
+          "x-name": "customerModel",
+          "description": "customer model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no customer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer YetToBeBookedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerYetToBeBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer  YetToBeBookedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerBookedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer BookedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerBookedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer BookedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerCompletedSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer CompletedSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerCompletedSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer CompletedSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSharedSlot/GetCustomerCancelledSlots": {
+      "get": {
+        "tags": [
+          "CustomerSharedSlot"
+        ],
+        "summary": "Gets customer CancelledSlots",
+        "operationId": "CustomerSharedSlot_GetCustomerCancelledSlots",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer CancelledSlots information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday": {
+      "get": {
+        "tags": [
+          "CustomerSlot"
+        ],
+        "summary": "Gets customer slots",
+        "operationId": "CustomerSlot_GetDistinctCustomersNearestSlotFromToday",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "0"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "10",
+              "maximum": 10.0,
+              "minimum": 1.0
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/CustomerSlot/GetCustomerAvailableSlots": {
+      "get": {
+        "tags": [
+          "CustomerSlot"
+        ],
+        "summary": "Gets customer slots",
+        "operationId": "CustomerSlot_GetCustomerAvailableSlots",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "0"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": "10",
+              "maximum": 10.0,
+              "minimum": 1.0
+            },
+            "x-position": 2
+          },
+          {
+            "name": "customerInfo",
+            "in": "query",
+            "description": "customer info",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns customer slot information"
+          },
+          "404": {
+            "description": "no slots found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/email/ResendSlotMeetingInformation": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "summary": "Resend slot information email to the customers",
+        "operationId": "Email_ResendSlotMeetingInformation",
+        "requestBody": {
+          "x-name": "resendSlotInformation",
+          "description": "slot information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendSlotInformation"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Slot": {
+      "post": {
+        "tags": [
+          "Slot"
+        ],
+        "summary": "Create new slot for the user",
+        "operationId": "Slot_Post",
+        "requestBody": {
+          "x-name": "slotModel",
+          "description": "slot model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SlotModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns slot id of created slot"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/Slot/CancelSlot": {
+      "post": {
+        "tags": [
+          "Slot"
+        ],
+        "summary": "Cancel User slot",
+        "operationId": "Slot_CancelSlot",
+        "requestBody": {
+          "x-name": "cancelSlot",
+          "description": "user slot information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelSlot"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Returns success or failure bool"
+          },
+          "400": {
+            "description": "validation error bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/SlotScheduler": {
+      "post": {
+        "tags": [
+          "SlotScheduler"
+        ],
+        "operationId": "SlotScheduler_Post",
+        "requestBody": {
+          "x-name": "slotSchedulerModel",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SlotSchedulerModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensions": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      },
+      "CustomerModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "firstName",
+          "lastName",
+          "gender"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "gender": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ResendSlotInformation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resendSlotModel": {
+            "type": "string",
+            "nullable": true
+          },
+          "resendTo": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SlotModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "timeZone",
+          "slotDate",
+          "slotStartTime",
+          "slotEndTime"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid",
+            "default": "00000000-0000-0000-0000-000000000000"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeZone": {
+            "type": "string",
+            "default": "India Standard Time",
+            "minLength": 1
+          },
+          "slotDate": {
+            "type": "string",
+            "default": "13-3-2021",
+            "minLength": 1
+          },
+          "slotStartTime": {
+            "type": "string",
+            "format": "time-span",
+            "default": "10:00:00",
+            "minLength": 1
+          },
+          "slotEndTime": {
+            "type": "string",
+            "format": "time-span",
+            "default": "11:00:00",
+            "minLength": 1
+          },
+          "slotDuration": {
+            "type": "string",
+            "format": "time-span"
+          }
+        }
+      },
+      "CancelSlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slotKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelledBy": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SlotSchedulerModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slotModelKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookedBy": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+} Compressed Body: 4nQAAB+LCAAAAAAAAArtXVlz2zYQ/isctQ/NjHW7M63fYjvtuG0cT+Q8tFUnA5OQzJQEGABUrGb03wuAh3iAIilRNOXA6aQxcSz2wLfLxcHe1zmZI8OY9576S4ggAQyTee+CP7idfQFLYzWeDn4enA9Gxg+3v1GMZuYjdAF/PBpMB2P5GH5hGFG8YANRgRdNBiPx59Wree8s6h57EAHPDrqeiuJEoY0WWJSEgxGPmM0cGNS+xPhfd00dzIwrnzLsQmK8vruJ24vqFqQmsT1mY7SzkcGw4QIEltAwo8cWYCDVGYPEpe8WM0hWthkO4hYjmKpkYsSAyVLDFs8RcMMm968TDUQRF5ztBGX8T1iwSfTpcHKIwh19qtutIKEx56txVCmqMu9RzgqvIyr8HTVLUfBJOLBHxjx6MRw62ATOI6bs4vx8+tMkQTf4xz9x3x5gjzSjvSFX9XA1HkaiF9qA1oxrY/grZPmn6faihyXMilZqBizTTEQF+S63IxY/0XCj+tR3XUDWAc98SHRrDg+yC0OYDqeVacfNmE8RLusbK2ibJ/yxiMNMVx4gXK3c1lQcpfjOGkE0VDGGs3xFOzSEzz4UHCpqUDmJc/KNpbz2QkqUERstFX3IAfmOAx6CWcqID7N1tha6bfPU9zC1o2k6TlfY7NIYgdTjMAOzphKUTkYjJTsKZHgPmU9QgcINAUXElSpOW1Cen3nvfHRelSrCIYEF9pFabwJRIMqbfVQOPI8DhBza8BNH2oKKpQoOqnxP4CIY2ndDE7tctpw2HQYt6fCOYK5a9xoyjllc5qpuUvoqeLQpl2Flza2AY3Ow5r8bkBDhp7QUQ1n9WF2KNrcygoBjBE4hEuWOqZj4ZaNyP9XQ/oobmcPxrnOAb0YDawbzs3xq2O8m7KfVroFfA/8pus9TAH6ATOg4HQT+aGANAX+GTw38HQX+lNo18Gvg34KFBv69gH/4Vea2Nk2B+/7Jm7URZtmqYrlA8AaxWkU9nZYR+TJlBQI/+zaBVpRPOasAbjHjkq5hqzMLOt+TxH9LHZQdmt6J+9cZnsYyPMYDsAwxLyDNTtJvOWfWqaA/h/k84js26F8RCBg0EPwST7saiH8nB5iLN6WVXWJrrYw4n/r5BPxbbME82O+CabegxS47rmzFpTZcasFXacaasNUSr7bzFWFT851gXPedIPKaBl4YprQpK2FQR0xda2B7XmBLrct6/rHx6oPHlQ8N+GRTxhfU9gItMUiNWS8Os87rYhb1TRNSanAQWXD08gkUK5g5zjVctbF2qV8QXlo4O3sEJJ/D/hOye3wJj7BjZUtv76SHanBV/cqWfDKVXaFHvX2lI+lshfp1TlvntLfAofMaDTqCbnqABqFfY/4JLGFqrNc7FnUO+9hB/3F2LDYA9yVbDGsivt6weBqgn9aTjvF1jL/FCh3jN4n7R9mw2ATu795hWBf39X7F08D9lJ407mvc17h/aLwfIv61XI81Y0ikt5AjJWWi/BeC3XtsgXVjDuAQ6K+5Qz3C+ooMNpbbvwNLeOu7D7ml7caPpoqVoKWSjKgXHOKMa04nBfUsuAC+E1bkEH34u8FZTWnN7P/gCcpqPCqo5YIn2/VdKZrRYKSuY6O4zmBUX+aTTvhlfXpAnxeuPh+DKnoH6Q5vHP3+esX3bYibBZp9/3oG91vEkfa32t+esL892+eyEnnHz15xTvF26uDioA6feJnqSOWbPaWhbzZ5MZsD5TmB4XtIIZJZuLcQin3cN8nLgg48BfMmODhYOT4JBpN7CQmPNDBssMftHWcVQhdJ/+NuFg/Yfk7ijot7VCo1/5bV1cMz79UsvvhDNHpDeodcTt0LyfRp1S76m+Bd9UCPUvOFN3GmMjQMIn2Iz7krdx/yjffgg5WCcOVDlXKUHT9QKT3paR5Mqu8HpKdOnaUUj/TBpG/0gLhM6wWL18+CZ5Ky8YHzFdphJQxLDviQ45ZF3SiVIDBWsZ7QVVRLyujlw5o+b6nD2xeTlOqMZxAXyVu+08D9IZnedjkIJeTHbZuJX+PuigLZjoB4ivUTjVEr2/LBlwdhk0HW56sFELiHIUGltYf8zowHG8nQpilkKJ232W8IbE0oxV7Ec36dNotp+RkdSwI/fILiWwoZ9QPLknYCHN4Xn7rMLrCEXQs1WZvydncVDUphVRU0V7ZmlJ8u8Ycu2iJIGWA+LaVYvGeo2o6h+gML7mVrUxQ24sLgoWybNOETxxzxtY5yFShnhZqqokrh5Nnsc0dO5paV5ubyAjg0Pfy0C8m5+4VNKLuVLjcnXAcUFi15br4sPCiBBnG7YnuGkuBzf6J85f8PiJbixsnSrYpJ8bVFMdJKW/TiT/AcSYuV5lLBQtFx51SJbW/X59QzvDkRnalJ3+PnVksx823CWxgPKOIEF/6V/ghVVCTeOq55vrWgaMYAYfe8eUH5Gy58Wfps0JiMJ5Z+wSW26a3a4U9f8Vf0U554Pjj2qgc+YVb8ct3m7Aq+btQuza2t7k8zpe4bZNnA4IaMLEAsQ2nM9fWxnTcNDXM87U/7k9Fk3NDgEjO3mcklFNOnHkAVeBldjMR/DbESg0z7jIwbZeTaDzJIR+Bkr7i8aH2l7QBCyOZ32CrMxB9yOCq6VY4dssm0Z1fHWzGOlnXSgrspUkj0zyhzJf636f0PKCJjEOJ0AAA= 
+11:22 (1.0.0) [Information] (13) Http Request Information:
+Request Id: 31afc5ff-b944-4028-ab1a-e6ae3cb88aa2 Executing At: 18-01-2021 07:22:56 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:22 (1.0.0) [Information] (16) Http Request Information:
+Request Id: d8fdbe6d-3cdd-406c-90f8-be7e572eedbd Executing At: 18-01-2021 07:22:57 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:22 (1.0.0) [Information] (15) Http Response Information:
+Request Id: 31afc5ff-b944-4028-ab1a-e6ae3cb88aa2 Executed At: 18-01-2021 07:22:57 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:22 (1.0.0) [Information] (16) Http Request Information:
+Request Id: b98da5b3-2065-453f-b005-f47e6f80d364 Executing At: 18-01-2021 07:22:57 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:22 (1.0.0) [Information] (16) Http Response Information:
+Request Id: b98da5b3-2065-453f-b005-f47e6f80d364 Executed At: 18-01-2021 07:22:57 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:22 (1.0.0) [Information] (14) Http Request Information:
+Request Id: 17a89b6b-af0d-4e44-9511-0bcbef3f282c Executing At: 18-01-2021 07:22:57 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:22 (1.0.0) [Information] (16) Http Response Information:
+Request Id: d8fdbe6d-3cdd-406c-90f8-be7e572eedbd Executed At: 18-01-2021 07:22:57 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"createdByCustomerModel":{"id":"","firstName":"MF","lastName":"ML","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"bookedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: iAMAAB+LCAAAAAAAAAptUdluozAU/ZUqUt86EjgsoW9kIySBLBBCMpkHiNmNTcFA0qr/Pi5t01Yz1pWXc86959ru/X459c5l4NEADq+juqIkD0qDwACdeo+MSyBbT71T7+HUC5OyoqaXBx1kTDsQed+xZYdFAYZB+ZUY5F6CPo6v7FwhQv/14D7Gr/9Mn6MrRxOK3v26Hd+Bt0t82fqEZD8RmuTBkeD3ZB3DxLuzqIehV8I7m3Gd6K27MavVieYevgPiA+AAfyNZSknf5W9ti48cx+JGTzD8ToIf5LguPZoQ/HHjT/b11q71+TY6DkmZf4nb1JWrlG/0yzg+jrZ5mfD3IPSv0kGfj9e2tax9SUGWsIB6a0+3qlMvm4XMJK3mFVYcA7adlHgaslXxWl0756tcuQQX3tQDpcKpaKjLVbS/LhV3Tvtpxg0LyrditNZWgrVviiEQBXQP/Ljxj8sGjLSSlfKlJKUOyHeAB4V0HEi+/wydTM3mQsWMGlkxa1pdNX47sRXsQHrwQAOmcbp5lu3ouIEzgdirqaLC8nlPhiyFxTmUtL2i0rhAA8fICsFzz47Bkx2Yp3bhNo42EbmyiPKBuMCms5VrNDFI/CS0fbAJBdYVd9FaLgqlFEtZNININnVANCMdLIydC1xR3xhPOyEm/VGrxRI6tN56F4QXLUtMo53Z0kGu1Ai5G9ZM7Tbn9ZM1NOtk4LeTvdrPLeYwEM5Qk2d4sStw2B5SBjlOMmrGBtmJIugHF5a7hVeOQ+G6QRe6z6cLe665VbNCK75Vx+p9H7Jgn/+n9xfmC/+IiAMAAA== 
+11:22 (1.0.0) [Information] (16) Http Response Information:
+Request Id: 17a89b6b-af0d-4e44-9511-0bcbef3f282c Executed At: 18-01-2021 07:22:58 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""},"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d"}] Compressed Body: hwMAAB+LCAAAAAAAAAptUduSojAQ/ZUpq+ZttgoiF5k3vCEq3kBE130IhqshYSCAztb++2ZwHHdrN9VFknNO9+kOne8/jx2f0nOA+tdBVTKaBYVFUYCPnVdOJYjvx86x83LshElRsgXMghYaGy2I4R/Y/IZFAUFB8UgMMpjgz+svfi8xZf96CJ/r238+99WWYwnDN7/2JLbgqQgg+xjiYXsf64GwJAsOlNySTYIS+GQzSBAs0JPDuVb00d2Q12pFU0iegPwCBCB+kTylYDf5R9vyqyDw+KJHBP1Jgr/IYVVAllDyOfGdbV8lhkWA7PvbmCSkRfYQN6mnlqlYm5dhfBhssiIRn0HoX5W9OR2uHHte+YqGbWmGzMYZb3S3mtczlUsaA+Z2HAN+HBVkHPJdg41pnLJlpl2Ci7gwA60kqWzp82W0u841b8q66Vno50xs5GhlLCV7V+d9IEv4Gfhx7R/mNRgYBS/lK0nKXJBtgQhy5dBTfP8duWf9PJVKblSr2qJi5dUQNyNHIy5iewhqMI7T9bvqRIc1mkjUWY41HRXvO9rnKTxOoWLsNJ3FOe651jmXoHdyLZFuwTR1cq92jZEsFHmU9eQZWbgbtcIji8ZvUtMF61DiXQkXoxGiUEmJco4mCKsLE1DDSnsza+sBTzbX1ttWiml30BixgvcNXG2D8GKck4XVTBxlr5Z6hL01b6by6tPqze4vqqTnN6Od3s1s7tCTTshQJ2S2zUnY7FMOuW4yqIcW3coy6AYXnrtBV0HA4arGF7bLxjNnanhlvcRLsdGH+nMX8eA//0fnN6N7+kCHAwAA 
+11:23 (1.0.0) [Information] (13) Http Request Information:
+Request Id: 12efb71f-a1e5-4287-833d-b1f8671498e3 Executing At: 18-01-2021 07:23:07 Schema:https Host: localhost:4200 Path: /api/v1/Slot/CancelSlot Method Type: POST QueryString:  Request Body: {"slotKey":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVkAkJ4s%2fv79NutsyG1RET9nVdtYa2v2FhjQz7TgZQdH4oTOF9AdrzWoB%2f%2fcf6GW9Athpl8VMkp4aXcVM1oU2JjTpXvVGE50rpgm85KnNVR7ulEMohq4w32Qf4%2b0xGw0gf6jn6kgHdl7NI2oGMj8KMUX2X5IQMqU4ho3CwGh6lYwaPUefxGkiNMwHT6Y7sAglXQ%2fuXvcPqSBNui8bwEWA3mS%2b84cdG7HnKUpnfwYj%2bVViCvDMoU5523ex%2fRdy00lfPvlxtWmFKTJGXsvOlO1wADA%3d%3d","cancelledBy":"10a5b1d6d1a7497eb4b59bf95e0793a2"} Compressed Body: IQIAAB+LCAAAAAAAAAolUcmuozAQ/Bek3OYAxiyeG9kcQoAkrIm4sBMwywuLSUbz72NppJK6VarqKqm5PxE3kn4y8k/E/Y44WofKWAuLvu6r5+7evl/CBhTJR37o5/3VdS5zIiPiQCPTqXu8a/58WQyFSSiOB6eqAFsP7+5YsIliquO0tVu05qtg6Tkau1oytYtdBp8LCs+TWDf8dpgEKpVXbEMnWIYtkCDZgKRakudlATv8ZqcS+VVPPmg9IIBBfqpyknwzv9GaMxxZ0KIga57GDxbuBxd1fjY9YrCAY1XfvopbPm/ZCfaufURa9v4G/ZZZGNJCxgHSpmogqm82A4zD1DeF3gPn2h3CxccHiX8PZatKRmf5d2UmB7OvfiAVwa2ArBW/YsqXhVx3clOeMqJYOuixWauG6YUglPSb+ePBqhd3FFcyedD46uXFipuXZdKTKz+UUStJeGNl5nBJrz/O1ppfakIPgSa2DktQYZph5dQZ3tAV9FEzyvdfu2Vv9p4kATFfmfeefXieFNeFrFPQHg33jMNxsYktUG2vbcSMIeJ+RVwad2lOSJ5t/z9b4GMpETI5E2IFIiVPYCKhpEBSzitIjEHE/eX+Ab9jnZYhAgAA 
+11:23 (1.0.0) [Information] (14) Http Response Information:
+Request Id: 12efb71f-a1e5-4287-833d-b1f8671498e3 Executed At: 18-01-2021 07:23:07 Schema:https Host: localhost:4200 Path: /api/v1/Slot/CancelSlot Method Type: POST QueryString:  Response Status Code: 201 Response Body: true Compressed Body: BgAAAB+LCAAAAAAAAApTKikqTVUCADtfEqkGAAAA 
+11:23 (1.0.0) [Information] (13) Http Request Information:
+Request Id: 8fcf9b23-1ae1-405f-b387-32766ae76d39 Executing At: 18-01-2021 07:23:11 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (16) Http Response Information:
+Request Id: 8fcf9b23-1ae1-405f-b387-32766ae76d39 Executed At: 18-01-2021 07:23:11 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:23 (1.0.0) [Information] (15) Http Request Information:
+Request Id: b88058d3-1320-48ab-9a43-41ba60d27f4c Executing At: 18-01-2021 07:23:11 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (16) Http Response Information:
+Request Id: b88058d3-1320-48ab-9a43-41ba60d27f4c Executed At: 18-01-2021 07:23:11 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:23 (1.0.0) [Information] (13) Http Request Information:
+Request Id: 36ca74e7-060b-4b5d-ab2e-5a2e0f748031 Executing At: 18-01-2021 07:23:13 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (15) Http Response Information:
+Request Id: 36ca74e7-060b-4b5d-ab2e-5a2e0f748031 Executed At: 18-01-2021 07:23:13 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:23 (1.0.0) [Information] (16) Http Request Information:
+Request Id: 2c05457f-e260-46a9-9a4b-5b815d02f5bd Executing At: 18-01-2021 07:23:13 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (14) Http Response Information:
+Request Id: 2c05457f-e260-46a9-9a4b-5b815d02f5bd Executed At: 18-01-2021 07:23:13 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"cancelledSlotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"cancelledByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""}}] Compressed Body: rAEAAB+LCAAAAAAAAAptkMuqwjAQhl+lZO2BWujGpVeUc85GVxoXY2eUYJpAOi5E+u6mSastOoRcvn8umRGHhxQFmIK0Jtxqy38WSUsx8VyhP6VIW/v5snUmxUgKVqwphITbOMDCETDh9B6EiLp6fXiy9jokrEraWxMzrg0qSLYMBsFhsvNacKr8l+e+QHDagEmyfJSlWazdiD7EcXRvesknaerXS14Y7IvZQJzfHLCyph1Dp9bDHma3im1J7nNyIdFZuYr/oa2xXAWoocd+I7uQQXLvQCpBNfmaZ10fxRPG07xPrAEAAA== 
+11:23 (1.0.0) [Information] (14) Http Request Information:
+Request Id: f59abd7e-0e56-4f04-8ad9-078a17d43a89 Executing At: 18-01-2021 07:23:17 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (15) Http Response Information:
+Request Id: f59abd7e-0e56-4f04-8ad9-078a17d43a89 Executed At: 18-01-2021 07:23:17 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:23 (1.0.0) [Information] (15) Http Request Information:
+Request Id: 8bd3a40c-808a-47b9-86ac-c3497e3e736a Executing At: 18-01-2021 07:23:17 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (14) Http Response Information:
+Request Id: 8bd3a40c-808a-47b9-86ac-c3497e3e736a Executed At: 18-01-2021 07:23:17 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:23 (1.0.0) [Information] (14) Http Request Information:
+Request Id: eca3676f-0739-4daa-8e6e-c8d2ca1e3c43 Executing At: 18-01-2021 07:23:19 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (15) Http Response Information:
+Request Id: eca3676f-0739-4daa-8e6e-c8d2ca1e3c43 Executed At: 18-01-2021 07:23:19 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":null,"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVylT9HZy4bgyAf%2f3H%2bhlvQLYaZfFTJKeGl3FTNaFNiY06V71RhOdK6YJvOSpzVUe7pRDKIauMN9kH%2bPtMRsNIH%2bo5%2bpIB3ZezSNqBjI%2fCjFF9l%2bSEDKlOIaNwsBoepWMGj1Hn8RpIjTMB0%2bmO7AIJV0P7l73D6kgTbovG8BFgN5kvvOHHRux5ylKZ38GI%2flVYgrwzKFOedt3sf0XctNJXz75cbVphSkyRl7LzpTtcAAw%3d"}] Compressed Body: CgMAAB+LCAAAAAAAAAptUttum0AQ/ZUIKW+pxMWAyZsxAS9gcIFgm7oPYNYGvFwKCxhX+fcuJE5aqaPVzGjOOTOzq6V+/D5QUVleYCwPy7bBZQ7rdRlDdKCeixahpwPVoBLfS4SdxiQeKPrDvv3H3e1AETlOMYKTZMqYqXisYYjHmRMwle5bfFVwmsOgLN7FoIjT8MHFYRGHdfzgEWwijdsppNdE0sPigeWfWJplPkEiqfE7fVybf6Zpcj7hlyL+G2T/AZW2DnFaFh83vqNvI5yENYzd+9uA4lTW+Re5z3ZikzEduCpJsHTyOmUe2VM0CHugKxvPNdtIkJA7M2LQe6qz8FuzM0RC6bWwcpOEJelLXagnEqWwB9oxt3PpCq+MBaDUFBm/Xpj2eTuY0k7HXHah5QozPX/eaPbM3XaVzPIz9MhGSRcFZscutZq0ioQ0wz6bv7IMWwnBXIiiW+wPyJNWwTCLzsNinMetRh3qvpv7MDipnm5ADXGqZ4Wqle5pwRcZJ7FjQ9jrne1WN/8VipWjGCBs15Z0GdUbvHYaC4xpyRNXAZkL4M21fskZICOWmapK43rui2IgG4RW38glrLZrLWNWxdypQOatZZowcltcAN2nNyISOUW4nL2o7LS5rJ4t/tJ19mrltFd+QEbAzbWxN/L357q/GaoNY8w1J3p3xJa+u4n8MfKrxL0MDhLNW+Xh42LRP3LkP7/9pP4AWEJNHQoDAAA= 
+11:23 (1.0.0) [Information] (14) Http Request Information:
+Request Id: 266c0b6c-1dd9-4e6e-830f-7a7852696b53 Executing At: 18-01-2021 07:23:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (15) Http Response Information:
+Request Id: 266c0b6c-1dd9-4e6e-830f-7a7852696b53 Executed At: 18-01-2021 07:23:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCompletedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:23 (1.0.0) [Information] (20) Http Request Information:
+Request Id: e5405b71-05b7-4cc3-b431-5267dc24d92b Executing At: 18-01-2021 07:23:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (16) Http Response Information:
+Request Id: e5405b71-05b7-4cc3-b431-5267dc24d92b Executed At: 18-01-2021 07:23:22 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+11:23 (1.0.0) [Information] (20) Http Request Information:
+Request Id: 8612634f-4e10-4255-a878-254c54fae25b Executing At: 18-01-2021 07:23:24 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:23 (1.0.0) [Information] (14) Http Response Information:
+Request Id: 8612634f-4e10-4255-a878-254c54fae25b Executed At: 18-01-2021 07:23:24 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 200 Response Body: [{"bookedByCustomerModel":null,"slotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"sharedSlotModelInformation":"wjX7sj1vIxDhZCRmri1%2fby6YIJDPTSLub69lS4KdIwTFRAVuLvK7%2fwGapShh2%2fErnFf%2f9awIGcmOm9xex1NIe9snj5MALOgWyL9XJt3jk0Bpt1w5gPGO4SWvpB254l%2bhvbZLv2CGrf%2b6ijtV2mU212p6Z86bbzdVylT9HZy4bgyAf%2f3H%2bhlvQLYaZfFTJKeGl3FTNaFNiY06V71RhOdK6YJvOSpzVUe7pRDKIauMN9kH%2bPtMRsNIH%2bo5%2bpIB3ZezSNqBjI%2fCjFF9l%2bSEDKlOIaNwsBoepWMGj1Hn8RpIjTMB0%2bmO7AIJV0P7l73D6kgTbovG8BFgN5kvvOHHRux5ylKZ38GI%2flVYgrwzKFOedt3sf0XctNJXz75cbVphSkyRl7LzpTtcAAw%3d"}] Compressed Body: CgMAAB+LCAAAAAAAAAptUttum0AQ/ZUIKW+pxMWAyZsxAS9gcIFgm7oPYNYGvFwKCxhX+fcuJE5aqaPVzGjOOTOzq6V+/D5QUVleYCwPy7bBZQ7rdRlDdKCeixahpwPVoBLfS4SdxiQeKPrDvv3H3e1AETlOMYKTZMqYqXisYYjHmRMwle5bfFVwmsOgLN7FoIjT8MHFYRGHdfzgEWwijdsppNdE0sPigeWfWJplPkEiqfE7fVybf6Zpcj7hlyL+G2T/AZW2DnFaFh83vqNvI5yENYzd+9uA4lTW+Re5z3ZikzEduCpJsHTyOmUe2VM0CHugKxvPNdtIkJA7M2LQe6qz8FuzM0RC6bWwcpOEJelLXagnEqWwB9oxt3PpCq+MBaDUFBm/Xpj2eTuY0k7HXHah5QozPX/eaPbM3XaVzPIz9MhGSRcFZscutZq0ioQ0wz6bv7IMWwnBXIiiW+wPyJNWwTCLzsNinMetRh3qvpv7MDipnm5ADXGqZ4Wqle5pwRcZJ7FjQ9jrne1WN/8VipWjGCBs15Z0GdUbvHYaC4xpyRNXAZkL4M21fskZICOWmapK43rui2IgG4RW38glrLZrLWNWxdypQOatZZowcltcAN2nNyISOUW4nL2o7LS5rJ4t/tJ19mrltFd+QEbAzbWxN/L357q/GaoNY8w1J3p3xJa+u4n8MfKrxL0MDhLNW+Xh42LRP3LkP7/9pP4AWEJNHQoDAAA= 
+11:24 (1.0.0) [Information] (21) Http Request Information:
+Request Id: 2a0b67ba-43fe-42a9-af82-dd2a68de8ef1 Executing At: 18-01-2021 07:24:22 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:24 (1.0.0) [Information] (21) Http Request Information:
+Request Id: 9262d9fa-fc3b-4992-ad8e-e020a27c2a9f Executing At: 18-01-2021 07:24:23 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:24 (1.0.0) [Information] (24) Http Response Information:
+Request Id: 2a0b67ba-43fe-42a9-af82-dd2a68de8ef1 Executed At: 18-01-2021 07:24:23 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:24 (1.0.0) [Information] (21) Http Response Information:
+Request Id: 9262d9fa-fc3b-4992-ad8e-e020a27c2a9f Executed At: 18-01-2021 07:24:23 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:24 (1.0.0) [Information] (21) Http Request Information:
+Request Id: 30a6e84d-a78e-41fe-92c4-213d67c1a382 Executing At: 18-01-2021 07:24:25 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Request Body:  Compressed Body:  
+11:24 (1.0.0) [Information] (21) Http Response Information:
+Request Id: 30a6e84d-a78e-41fe-92c4-213d67c1a382 Executed At: 18-01-2021 07:24:25 Schema:https Host: localhost:4200 Path: /api/v1/CustomerSharedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=26eca53c21344dea874c99cc1df9ceef Response Status Code: 404 Response Body: ["no records found"] Compressed Body: GAAAAB+LCAAAAAAAAApTio5RystXKEpNzi9KKVZIyy/NS4lRilUCACgTBEUYAAAA 
+11:24 (1.0.0) [Information] (21) Http Request Information:
+Request Id: c5237ab3-a430-4b6b-a0fe-c0223baba8cd Executing At: 18-01-2021 07:24:25 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Request Body:  Compressed Body:  
+11:24 (1.0.0) [Information] (23) Http Response Information:
+Request Id: c5237ab3-a430-4b6b-a0fe-c0223baba8cd Executed At: 18-01-2021 07:24:25 Schema:https Host: localhost:4200 Path: /api/v1/customer/a@gmail.com Method Type: GET QueryString:  Response Status Code: 200 Response Body: {"id":"142b8af166f349c79f861a707021b415","firstName":"FA","lastName":"LA","gender":"Male","email":"a@gmail.com"} Compressed Body: hgAAAB+LCAAAAAAAAApTqo5RykyJUbKKUTI0MUqySEwzNDNLMzaxTDa3TLMwM0w0NzA3MDJMMjE0jVHSiVFKyywqLvFLzE0Fa3FzBAvmJCKJ+UDE0lPzUlKLwCK+iTlAKaBYam5iZg5YKNEhHcTWS87PjVGqVQIASGbitoYAAAA= 
+11:24 (1.0.0) [Information] (22) Http Request Information:
+Request Id: e25d3492-203f-406f-a4ae-fff28f95e049 Executing At: 18-01-2021 07:24:25 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:24 (1.0.0) [Information] (24) Http Response Information:
+Request Id: e25d3492-203f-406f-a4ae-fff28f95e049 Executed At: 18-01-2021 07:24:26 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerBookedSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 404 Response Body: ["no slots found"] Compressed Body: FgAAAB+LCAAAAAAAAApTio5RystXKM7JLylWSMsvzUuJUYpVAgAB2xvWFgAAAA== 
+11:24 (1.0.0) [Information] (21) Http Request Information:
+Request Id: bb90b98b-e9a6-4f73-bcfa-f7c375b0703b Executing At: 18-01-2021 07:24:27 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Request Body:  Compressed Body:  
+11:24 (1.0.0) [Information] (22) Http Response Information:
+Request Id: bb90b98b-e9a6-4f73-bcfa-f7c375b0703b Executed At: 18-01-2021 07:24:27 Schema:https Host: localhost:4200 Path: /api/v1/CustomerBookedSlot/GetCustomerCancelledSlots Method Type: GET QueryString: ?customerId=10a5b1d6d1a7497eb4b59bf95e0793a2 Response Status Code: 200 Response Body: [{"cancelledSlotModel":{"id":"00000000-0000-0000-0000-000000000000","title":"title1","createdBy":"","cancelledBy":"","bookedBy":"","timeZone":"India Standard Time","slotDate":"Jan 25,2021","slotStartTime":"05:00:00","slotEndTime":"05:20:00","slotDuration":"00:20:00"},"cancelledByCustomerModel":{"id":"","firstName":"FG","lastName":"LG","gender":"","email":""}}] Compressed Body: rAEAAB+LCAAAAAAAAAptkMuqwjAQhl+lZO2BWujGpVeUc85GVxoXY2eUYJpAOi5E+u6mSastOoRcvn8umRGHhxQFmIK0Jtxqy38WSUsx8VyhP6VIW/v5snUmxUgKVqwphITbOMDCETDh9B6EiLp6fXiy9jokrEraWxMzrg0qSLYMBsFhsvNacKr8l+e+QHDagEmyfJSlWazdiD7EcXRvesknaerXS14Y7IvZQJzfHLCyph1Dp9bDHma3im1J7nNyIdFZuYr/oa2xXAWoocd+I7uQQXLvQCpBNfmaZ10fxRPG07xPrAEAAA== 
