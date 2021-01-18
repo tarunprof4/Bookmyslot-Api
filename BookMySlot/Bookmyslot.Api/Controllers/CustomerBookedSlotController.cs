@@ -6,7 +6,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -44,7 +43,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetCustomerBookedSlots(string customerId)
         {
-            Log.Information("Get customer GetCustomerBookedSlots");
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(customerId);
             if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
@@ -70,7 +68,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetCustomerCompletedSlots(string customerId)
         {
-            Log.Information("Get customer GetCustomerCompletedSlots");
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(customerId);
             if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
@@ -97,7 +94,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetCustomerCancelledSlots(string customerId)
         {
-            Log.Information("Get customer GetCustomerCancelledSlots");
             var customercancelledSlotInformationModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (customercancelledSlotInformationModels.ResultType == ResultType.Success)
             {

@@ -8,7 +8,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -58,7 +57,6 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> ResendSlotMeetingInformation([FromBody] ResendSlotInformation resendSlotInformation)
         {
-            Log.Information("Resend Email Slot key  " + resendSlotInformation.ResendSlotModel);
             var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformation.ResendSlotModel));
 
             if (slotModel != null)

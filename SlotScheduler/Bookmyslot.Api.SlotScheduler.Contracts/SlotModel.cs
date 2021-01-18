@@ -21,7 +21,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         [Required]
         public string TimeZone { get; set; }
 
-        [DefaultValue("1-3-2021")]
+        [DefaultValue("13-3-2021")]
         [Required]
         public string SlotDate { get; set; }
        

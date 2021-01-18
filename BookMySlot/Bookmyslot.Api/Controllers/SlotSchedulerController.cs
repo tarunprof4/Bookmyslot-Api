@@ -6,7 +6,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,7 +31,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SlotSchedulerModel slotSchedulerModel)
         {
-            Log.Information("Schedule Slot for customer");
             var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerModel.SlotModelKey));
 
             if (customerSlotModel != null)

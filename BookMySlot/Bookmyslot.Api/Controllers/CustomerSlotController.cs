@@ -6,7 +6,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -45,7 +44,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetDistinctCustomersNearestSlotFromToday([FromQuery] PageParameterModel pageParameterModel)
         {
-            Log.Information("Get all distinct customers nearest single slot");
             var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
             if (customerSlotModels.ResultType == ResultType.Success)
             {
@@ -74,8 +72,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerInfo)
         {
-            Log.Information("Get all available slots for the customer");
-
             var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);
             if (bookSlotModelResponse.ResultType == ResultType.Success)
             {

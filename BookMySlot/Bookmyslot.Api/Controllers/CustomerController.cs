@@ -3,7 +3,6 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using System.Threading.Tasks;
 
 
@@ -47,7 +46,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
-            Log.Information("Get Customer Email " + email);
             var customerResponse = await customerBusiness.GetCustomerByEmail(email);
             return this.CreateGetHttpResponse(customerResponse);
         }
@@ -67,7 +65,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomerModel customerModel)
         {
-            Log.Information("Create Customer " + customerModel);
             var customerResponse = await customerBusiness.CreateCustomer(customerModel);
             return this.CreatePostHttpResponse(customerResponse);
         }
@@ -89,7 +86,6 @@ namespace Bookmyslot.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] CustomerModel customerModel)
         {
-            Log.Information("Update Customer " + customerModel);
             var customerResponse = await customerBusiness.UpdateCustomer(customerModel);
             return this.CreatePutHttpResponse(customerResponse);
         }
