@@ -36,7 +36,20 @@ namespace Bookmyslot.Api.Customers.Emails
             return CreateEmailModel(bookedBy, TemplateConstants.SlotScheduledEmailSubject, messageBody);
         }
 
-        public static EmailModel GetResendSlotInformationEmailTemplate(SlotModel slotModel, CustomerModel resendTo)
+        public static EmailModel SlotCancelledEmailTemplate(SlotModel slotModel, CustomerModel cancelledByCustomerModel)
+        {
+            var slotSchedulerViewModel = new SlotSchedulerViewModel() { SlotModel = slotModel, CustomerModel = cancelledByCustomerModel };
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(SlotSchedulerViewModel)))
+            {
+                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.SlotCancelledTemplateBody, TemplateConstants.SlotCancelledEmailTemplateKey, typeof(SlotSchedulerViewModel), slotSchedulerViewModel);
+                return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, compiledMessageBody);
+            }
+
+            var messageBody = Engine.Razor.Run(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(SlotSchedulerViewModel), slotSchedulerViewModel);
+            return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
+        }
+
+        public static EmailModel ResendSlotMeetingInformationTemplate(SlotModel slotModel, CustomerModel resendTo)
         {
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel)))
             {
@@ -48,17 +61,7 @@ namespace Bookmyslot.Api.Customers.Emails
             return CreateEmailModel(resendTo, TemplateConstants.ResendSlotInformationEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotCancelledEmailTemplate(CustomerModel cancelledByCustomerModel)
-        {
-            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(CustomerModel)))
-            {
-                var compiledMessageBody = Engine.Razor.RunCompile(TemplateBodyConstants.SlotCancelledTemplateBody, TemplateConstants.SlotCancelledEmailTemplateKey, typeof(CustomerModel), cancelledByCustomerModel);
-                return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, compiledMessageBody);
-            }
-
-            var messageBody = Engine.Razor.Run(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(CustomerModel), cancelledByCustomerModel);
-            return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
-        }
+      
 
         private static EmailModel CreateEmailModel(CustomerModel customerModel, string subject, string messageBody)
         {

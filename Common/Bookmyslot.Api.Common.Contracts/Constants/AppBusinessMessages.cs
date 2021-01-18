@@ -2,6 +2,7 @@
 {
     public class AppBusinessMessages
     {
+        public const string ApplicationName = "BookMySlot";
         public const string CustomerDetailsMissing = "Customer details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
 
