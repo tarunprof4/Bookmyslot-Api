@@ -1,9 +1,12 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Emails;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business
@@ -20,12 +23,18 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
         public async Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo)
         {
-            var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);
-            var resendToCustomerModel = customerModelsResponse.Result;
+            var pendingTimeForSlotMeeting = DateTime.UtcNow - slotModel.SlotDateUtc;
+            if (pendingTimeForSlotMeeting.TotalDays <= SlotConstants.MinimumDaysForSlotMeetingLink)
+            {
+                var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);
+                var resendToCustomerModel = customerModelsResponse.Result;
 
-            var emailModel = CustomerEmailTemplateFactory.ResendSlotMeetingInformationTemplate(slotModel, resendToCustomerModel);
-            return await this.emailInteraction.SendEmail(emailModel);
+                var emailModel = CustomerEmailTemplateFactory.ResendSlotMeetingInformationTemplate(slotModel, resendToCustomerModel);
+                return await this.emailInteraction.SendEmail(emailModel);
+            }
+
+            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.MinimumDaysForSlotMeetingLink });
         }
-     
+
     }
 }

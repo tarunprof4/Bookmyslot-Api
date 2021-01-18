@@ -32,5 +32,7 @@
         public const string CorruptData = "Data is corrupt";
 
         public const string NoSlotsFound = "no slots found";
+
+        public const string MinimumDaysForSlotMeetingLink = "slot meeting link will be sent 1 day before the meeting";
     }
 }
