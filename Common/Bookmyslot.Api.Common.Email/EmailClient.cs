@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Common.Email
             }
             catch (Exception exp)
             {
-                Log.Information(EmailConstants.SendEmailFailure + exp);
+                Log.Error(EmailConstants.SendEmailFailure + exp);
                 return Response<bool>.Failed(new List<string>() { EmailConstants.SendEmailFailure });
             }
         }
