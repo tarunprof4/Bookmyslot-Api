@@ -26,17 +26,21 @@ namespace Bookmyslot.Api.Common
 
         public async Task Invoke(HttpContext context)
         {
+            var uiRequestId = context.Request.Headers[ThirdPartyConstants.UIRequestId];
             var requestId = Guid.NewGuid().ToString();
             context.Request.Headers.Add(LogConstants.RequestId, requestId);
 
-            await LogRequest(context, requestId);
-            await LogResponse(context, requestId);
+            await LogRequest(context, uiRequestId,  requestId);
+            await LogResponse(context, uiRequestId, requestId);
         }
 
 
-        private async Task LogRequest(HttpContext context, string requestId)
+        private async Task LogRequest(HttpContext context, string uiRequestId, string requestId)
         {
             context.Request.EnableBuffering();
+
+            
+
             await using var requestStream = _recyclableMemoryStreamManager.GetStream();
             await context.Request.Body.CopyToAsync(requestStream);
 
@@ -48,6 +52,7 @@ namespace Bookmyslot.Api.Common
             }
 
             Log.Information($"Http Request Information:{Environment.NewLine}" +
+                                   $"UI Request Id: {uiRequestId} " +
                                    $"Request Id: {requestId} " +
                                    $"Executing At: {DateTime.UtcNow} " +
                                    $"Schema:{context.Request.Scheme} " +
@@ -61,7 +66,7 @@ namespace Bookmyslot.Api.Common
             context.Request.Body.Position = 0;
         }
 
-        private async Task LogResponse(HttpContext context, string requestId)
+        private async Task LogResponse(HttpContext context, string uiRequestId, string requestId)
         {
             var originalBodyStream = context.Response.Body;
             await using var responseBody = _recyclableMemoryStreamManager.GetStream();
@@ -76,6 +81,7 @@ namespace Bookmyslot.Api.Common
             }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             Log.Information($"Http Response Information:{Environment.NewLine}" +
+                                   $"UI Request Id: {uiRequestId} " +
                                    $"Request Id: {requestId} " +
                                    $"Executed At: {DateTime.UtcNow} " +
                                    $"Schema:{context.Request.Scheme} " +
