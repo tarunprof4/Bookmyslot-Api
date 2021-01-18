@@ -1,6 +1,8 @@
 ﻿using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.ExtensionMethods;
+using Bookmyslot.Api.Common.Contracts.Helpers;
 using Bookmyslot.Api.SlotScheduler.Business.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -32,7 +34,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             slotModel.CreatedBy = UserService.GetUser();
 
             var currentDate = DateTime.UtcNow;
-            slotModel.SlotDate = slotModel.SlotDate.GetDateTimeUtcByTimeZone(slotModel.TimeZone, slotModel.SlotStartTime);
+            var slotDate = DateTimeHelper.ConvertDateStringToDate(slotModel.SlotDate);
+            var slotDateWithTimeZone = slotDate.GetDateTimeByTimeZone(slotModel.TimeZone, slotModel.SlotStartTime);
+            slotModel.SlotDateUtc = slotDateWithTimeZone.GetDateTimeToUtcByTimeZone(slotModel.TimeZone);
 
             var validator = new SlotValidator(currentDate);
             ValidationResult results = validator.Validate(slotModel);
@@ -47,7 +51,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<Guid>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
         }
 
-        public async Task<Response<bool>> DeleteSlot(Guid slotId, string deletedBy)
+        public async Task<Response<bool>> CancelSlot(Guid slotId, string deletedBy)
         {
             if (slotId == Guid.Empty)
             {
@@ -90,6 +94,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 BookedBy = slotModel.BookedBy,
                 TimeZone = slotModel.TimeZone,
                 SlotDate = slotModel.SlotDate,
+                SlotDateUtc = slotModel.SlotDateUtc,
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime
             };

@@ -21,13 +21,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             slotModel.BookedBy = UserService.GetUser();
 
             var currentDate = DateTime.UtcNow;
-            slotModel.SlotDate = slotModel.SlotDate.GetDateTimeUtcByTimeZone(slotModel.TimeZone, slotModel.SlotStartTime);
 
-            if(slotModel.SlotDate < currentDate)
+            if (slotModel.SlotDateUtc > currentDate)
             {
-                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotScheduleDateInvalid });
+                return await this.slotRepository.UpdateSlot(slotModel);
+
             }
-            return await this.slotRepository.UpdateSlot(slotModel);
+            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotScheduleDateInvalid });
         }
     }
 }

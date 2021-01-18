@@ -19,6 +19,6 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
         public string Email { get; set; }
        
 
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? ModifiedDateUtc { get; set; }
     }
 }

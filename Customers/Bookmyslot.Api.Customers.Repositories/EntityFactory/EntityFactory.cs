@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
         {
             var customerEntity = CreateCustomerEntity(customerModel);
             customerEntity.UniqueId = customerModel.Id;
-            customerEntity.ModifiedDate = DateTime.UtcNow;
+            customerEntity.ModifiedDateUtc = DateTime.UtcNow;
             return customerEntity;
         }
     }

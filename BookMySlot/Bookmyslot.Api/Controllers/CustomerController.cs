@@ -29,26 +29,6 @@ namespace Bookmyslot.Api.Controllers
             this.customerBusiness = customerBusiness;
         }
 
-        /// <summary>
-        /// Gets customers
-        /// </summary>
-        /// <returns>returns customers</returns>
-        /// <response code="200">Returns all customers</response>
-        /// <response code="404">no customer found</response>
-        /// <response code="400">validation error bad request</response>
-        /// <response code="500">internal server error</response>
-        // GET: api/<CustomerController>
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            Log.Information("Get all Customers");
-            var customerResponse = await customerBusiness.GetAllCustomers();
-            return this.CreateGetHttpResponse(customerResponse);
-        }
 
         /// <summary>
         /// Gets customer by email
@@ -112,29 +92,6 @@ namespace Bookmyslot.Api.Controllers
             Log.Information("Update Customer " + customerModel);
             var customerResponse = await customerBusiness.UpdateCustomer(customerModel);
             return this.CreatePutHttpResponse(customerResponse);
-
         }
-
-        /// <summary>
-        /// Delete existing customer
-        /// </summary>
-        /// <param name="email">customer email</param>
-        /// <returns >success or failure bool</returns>
-        /// <response code="204">Returns success or failure bool</response>
-        /// <response code="400">validation error bad request</response>
-        /// <response code="404">no customer found</response>
-        /// <response code="500">internal server error</response>
-        // DELETE api/<CustomerController>/email
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[HttpDelete("{email}")]
-        //public async Task<IActionResult> Delete(string email)
-        //{
-        //    Log.Information("Delete Customer " + email);
-        //    var customerResponse = await customerBusiness.DeleteCustomer(email);
-        //    return this.CreateDeleteHttpResponse(customerResponse);
-        //}
     }
 }

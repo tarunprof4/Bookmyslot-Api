@@ -1,4 +1,6 @@
-﻿using Bookmyslot.Api.SlotScheduler.Contracts;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.ExtensionMethods;
+using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using System.Collections.Generic;
 
@@ -15,7 +17,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CreatedBy = slotEntity.CreatedBy,
                 BookedBy = slotEntity.BookedBy,
                 TimeZone = slotEntity.TimeZone,
-                SlotDate = slotEntity.SlotDate,
+                SlotDateUtc = slotEntity.SlotDateUtc,
+                SlotDate = (slotEntity.SlotDateUtc.GetDateTimeFromUtcToTimeZone(slotEntity.TimeZone)).ToString(DateTimeConstants.ApplicationOutputDatePattern),
                 SlotStartTime = slotEntity.SlotStartTime,
                 SlotEndTime = slotEntity.SlotEndTime,
             };
@@ -44,7 +47,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CancelledBy = cancelledSlotEntity.CancelledBy,
                 BookedBy = cancelledSlotEntity.BookedBy,
                 TimeZone = cancelledSlotEntity.TimeZone,
-                SlotDate = cancelledSlotEntity.SlotDate,
+                SlotDateUtc = cancelledSlotEntity.SlotDateUtc,
+                SlotDate = (cancelledSlotEntity.SlotDateUtc.GetDateTimeFromUtcToTimeZone(cancelledSlotEntity.TimeZone)).ToString(DateTimeConstants.ApplicationOutputDatePattern),
                 SlotStartTime = cancelledSlotEntity.SlotStartTime,
                 SlotEndTime = cancelledSlotEntity.SlotEndTime,
             };

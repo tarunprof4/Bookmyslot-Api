@@ -24,7 +24,11 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         public string TimeZone { get; set; }
 
         [Required]
-        public DateTime SlotDate { get; set; }
+        public string SlotDate { get; set; }
+
+
+        [JsonIgnore]
+        public DateTime SlotDateUtc { get; set; }
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]
         [DefaultValue("10:00:00")]

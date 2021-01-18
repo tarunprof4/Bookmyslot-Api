@@ -29,38 +29,6 @@ namespace Bookmyslot.Api.Controllers
             this.keyEncryptor = keyEncryptor;
         }
 
-        //[Route("api/v1/Slot")]
-        //[HttpGet()]
-        //public async Task<IActionResult> Get([FromQuery] PageParameterModel pageParameterModel)
-        //{
-        //    Log.Information("Get all slots");
-        //    var customerResponse = await slotBusiness.GetAllSlots(pageParameterModel);
-        //    return this.CreateGetHttpResponse(customerResponse);
-        //}
-
-
-        /// <summary>
-        /// Gets slot
-        /// </summary>
-        /// <param name="slotId">slot id</param>
-        /// <returns>returns slot model</returns>
-        /// <response code="200">Returns customer slot</response>
-        /// <response code="404">no slot found</response>
-        /// <response code="400">slot id inappropriate</response>
-        /// <response code="500">internal server error</response>
-        // GET: api/<SlotController>
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet()]
-        [Route("api/v1/Slot")]
-        public async Task<IActionResult> Get(Guid slotId)
-        {
-            var slotResponse = await slotBusiness.GetSlot(slotId);
-            return this.CreateGetHttpResponse(slotResponse);
-        }
-
 
         /// <summary>
         /// Create new slot for the user
@@ -107,7 +75,7 @@ namespace Bookmyslot.Api.Controllers
 
             if (slotModel != null)
             {
-                var slotResponse = await slotBusiness.DeleteSlot(slotModel.Id, cancelSlot.CancelledBy);
+                var slotResponse = await slotBusiness.CancelSlot(slotModel.Id, cancelSlot.CancelledBy);
                 return this.CreatePostHttpResponse(slotResponse);
             }
 

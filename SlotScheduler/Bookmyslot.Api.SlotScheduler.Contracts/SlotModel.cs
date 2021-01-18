@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookmyslot.Api.Common.Contracts.ExtensionMethods;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -21,8 +22,14 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         [Required]
         public string TimeZone { get; set; }
 
+        [DefaultValue("1-3-2021")]
         [Required]
-        public DateTime SlotDate { get; set; }
+        public string SlotDate { get; set; }
+       
+
+        [JsonIgnore]
+        public DateTime SlotDateUtc { get; set; }
+       
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]
         [DefaultValue("10:00:00")]

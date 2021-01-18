@@ -18,12 +18,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 
         public string TimeZone { get; set; }
 
-        public DateTime SlotDate { get; set; }
+        public DateTime SlotDateUtc { get; set; }
         public TimeSpan SlotStartTime { get; set; }
 
         public TimeSpan SlotEndTime { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDateUtc { get; set; }
 
     }
 }
