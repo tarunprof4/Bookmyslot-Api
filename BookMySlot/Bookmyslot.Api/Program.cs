@@ -23,7 +23,7 @@ namespace Bookmyslot.Api
 
             try
             {
-                Log.Information("Starting web host");
+                Log.Debug("Starting Book My Slot web host");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

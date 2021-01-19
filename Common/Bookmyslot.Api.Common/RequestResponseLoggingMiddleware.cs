@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Common
                 compresedBody = _compression.Compress(requestBody);
             }
 
-            Log.Information($"Http Request Information:{Environment.NewLine}" +
+            Log.Debug($"Http Request Information:{Environment.NewLine}" +
                                    $"UI Request Id: {uiRequestId} " +
                                    $"Request Id: {requestId} " +
                                    $"Executing At: {DateTime.UtcNow} " +
@@ -80,7 +80,7 @@ namespace Bookmyslot.Api.Common
                 compresedBody = _compression.Compress(responseBodyText);
             }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
-            Log.Information($"Http Response Information:{Environment.NewLine}" +
+            Log.Debug($"Http Response Information:{Environment.NewLine}" +
                                    $"UI Request Id: {uiRequestId} " +
                                    $"Request Id: {requestId} " +
                                    $"Executed At: {DateTime.UtcNow} " +
