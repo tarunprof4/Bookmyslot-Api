@@ -20,7 +20,7 @@ namespace Bookmyslot.Api
             }
             catch (Exception ex)
             {
-                loggerService.LogError("Host terminated unexpectedly", ex);
+                loggerService.LogFatal("Host terminated unexpectedly", ex);
             }
         }
 

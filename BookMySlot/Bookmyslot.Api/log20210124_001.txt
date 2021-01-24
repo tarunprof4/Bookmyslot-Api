@@ -1,0 +1,2 @@
+(1.0.0) [Debug] (4) Slot Model Logged 
+ { CallerDetails: { FilePath: "TestController.cs", Method: "Testing", LineNumber: 45 }, slot: SlotModel { Id: 42065357-2d33-4ab8-92bc-29148e8052cd, Title: "Title", CreatedBy: "CreatedBy", BookedBy: "BookedBy", TimeZone: "TimeZone", SlotDate: "2012-2-2", SlotDateUtc: 01/24/2021 08:17:22, SlotStartTime: 10:10:10, SlotEndTime: 11:11:11, SlotDuration: 01:01:01 }, UtcTimestamp: 01/24/2021 08:17:26 } 

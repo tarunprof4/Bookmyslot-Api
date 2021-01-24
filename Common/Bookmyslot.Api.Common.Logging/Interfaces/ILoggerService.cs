@@ -19,7 +19,7 @@ namespace Bookmyslot.Api.Common.Logging.Interfaces
         void LogVerbose(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "",
              [CallerLineNumber] int sourceLineNumber = 0);
 
-        void LogCritical(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "",
+        void LogFatal(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "",
              [CallerLineNumber] int sourceLineNumber = 0);
 
         void LogWarning(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "",

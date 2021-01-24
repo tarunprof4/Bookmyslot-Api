@@ -24,13 +24,16 @@ namespace Bookmyslot.Api.Common.Logging
          //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
 
           .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-         outputTemplate: "{Timestamp:HH:mm:ss} ({Version}) [{Level}] ({ThreadId}) {Message} {NewLine} {Properties} {Exception}")
+         outputTemplate: "(Version : {Version}) [{Level}] ({ThreadId}) {Message} {Properties} {NewLine}  {Exception}")
          .CreateLogger();
         }
 
-        public void LogCritical(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public void LogFatal(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            using (AddCallerDetailsToLogContext(sourceFilePath, memberName, sourceLineNumber))
+            {
+                this.serilogFileLogger.Fatal(ex, message);
+            }
         }
 
         public void LogDebug(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
@@ -43,22 +46,34 @@ namespace Bookmyslot.Api.Common.Logging
 
         public void LogError(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            using (AddCallerDetailsToLogContext(sourceFilePath, memberName, sourceLineNumber))
+            {
+                this.serilogFileLogger.Error(ex, message);
+            }
         }
 
         public void LogInfo(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            using (AddCallerDetailsToLogContext(sourceFilePath, memberName, sourceLineNumber))
+            {
+                this.serilogFileLogger.Information(ex, message);
+            }
         }
 
         public void LogVerbose(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            using (AddCallerDetailsToLogContext(sourceFilePath, memberName, sourceLineNumber))
+            {
+                this.serilogFileLogger.Verbose(ex, message);
+            }
         }
 
         public void LogWarning(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            using (AddCallerDetailsToLogContext(sourceFilePath, memberName, sourceLineNumber))
+            {
+                this.serilogFileLogger.Warning(ex, message);
+            }
         }
 
 

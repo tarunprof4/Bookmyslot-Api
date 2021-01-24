@@ -1,5 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Logging.Interfaces;
+using Bookmyslot.Api.Common.Logging.LogContexts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Serilog.Context;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -21,7 +23,8 @@ namespace Bookmyslot.Api.Common.Logging
 
         public IDisposable SetSlotModelInfoToContext(SlotModel slotModel)
         {
-            throw new NotImplementedException();
+            SlotLogContext slotLogContext = new SlotLogContext(slotModel);
+            return LogContext.Push(slotLogContext);
         }
     }
 }
