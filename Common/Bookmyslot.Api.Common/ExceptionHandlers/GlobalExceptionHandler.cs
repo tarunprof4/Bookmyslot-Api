@@ -1,4 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -23,19 +25,14 @@ namespace Bookmyslot.Api.Common.ExceptionHandlers
                     if (contextFeature != null)
                     {
                         var requestId = context.Request.Headers[LogConstants.RequestId];
-                        Log.Error("{requestId} {message}",  requestId, contextFeature.Error.Message);
-                        Log.Error(contextFeature.Error, "{requestId}", requestId);
-                        //Log.Error(requestId + " " + contextFeature.Error.StackTrace);
+                        var errorLog = new ErrorLog()
+                        {
+                            RequestId = requestId,
+                            Message = contextFeature.Error.Message,
+                            Exception = contextFeature.Error
+                        };
 
-                        //await context.Response.WriteAsync(new ErrorDetails()
-                        //{
-                        //    StatusCode = context.Response.StatusCode,
-                        //    Message = "Internal Server Error."
-                        //}.ToString());
-
-
-                        
-
+                        Log.Error("{@errorLog}", errorLog);
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(new List<string>() { "Internal Server Error" }));
                     }
                 });

@@ -1,7 +1,11 @@
 using Bookmyslot.Api.Common;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Logging;
+using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -13,13 +17,21 @@ namespace Bookmyslot.Api
     {
         public static void Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
+            var configuration = new ConfigurationBuilder()
+                                .AddJsonFile("appsettings.json")
+                                .Build();
+
+
+            string appVersion = configuration.GetSection(AppConfigurationConstants.AppVersion).Value;
+            string staticLogOutputTemplate = configuration.GetSection(AppConfigurationConstants.LogSettings).GetSection(AppConfigurationConstants.StaticLogOutPutTemplate).Value;
 
             Log.Logger = new LoggerConfiguration()
-          .MinimumLevel.Verbose()
-          .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-           outputTemplate: "{Timestamp:HH:mm} ({Version}) [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")
-          .CreateLogger();
+            .MinimumLevel.Verbose()
+            .Enrich.WithProperty("Version", appVersion)
+            .Enrich.With(new StaticDefaultLogEnricher())
+            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+             outputTemplate: staticLogOutputTemplate)
+            .CreateLogger();
 
             try
             {

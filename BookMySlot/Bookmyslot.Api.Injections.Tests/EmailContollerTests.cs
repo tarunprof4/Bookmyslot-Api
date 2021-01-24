@@ -21,6 +21,7 @@ namespace Bookmyslot.Api.Injections.Tests
             serviceProvider = webHost.Services;
             var configuration = serviceProvider.GetService<IConfiguration>();
             var Startup = new Startup(configuration);
+            
         }
 
         [Test]

@@ -1,5 +1,6 @@
 using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.ExceptionHandlers;
 using Bookmyslot.Api.Common.Injections;
 using Bookmyslot.Api.Customers.Injections;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api
@@ -82,27 +84,29 @@ namespace Bookmyslot.Api
         private Dictionary<string, string> GetAppConfigurations()
         {
             Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
-            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurations.BookMySlotDatabase);
-            appConfigurations.Add(AppConfigurations.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
+            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotDatabase);
+            appConfigurations.Add(AppConfigurationConstants.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
 
             return appConfigurations;
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            
 
+            var appConfiguration = serviceProvider.GetService<IAppConfiguration>();
 
             app.UseRequestResponseLogging();
 
             app.UseHttpsRedirection();
+
+            
 
             app.ConfigureGlobalExceptionHandler();
 

@@ -20,7 +20,7 @@ namespace Bookmyslot.Api.Customers.Injections
         public static void CustomerRepositoryInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddTransient<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<IDbConnection>((sp) => new SqlConnection(appConfigurations[AppConfigurations.BookMySlotDatabaseConnectionString]));
+            services.AddTransient<IDbConnection>((sp) => new SqlConnection(appConfigurations[AppConfigurationConstants.BookMySlotDatabaseConnectionString]));
         }
     }
 }

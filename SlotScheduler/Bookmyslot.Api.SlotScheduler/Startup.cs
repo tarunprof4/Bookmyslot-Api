@@ -68,8 +68,8 @@ namespace Bookmyslot.Api.SlotScheduler
         private Dictionary<string, string> GetAppConfigurations()
         {
             Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
-            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurations.BookMySlotDatabase);
-            appConfigurations.Add(AppConfigurations.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
+            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotDatabase);
+            appConfigurations.Add(AppConfigurationConstants.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
 
             return appConfigurations;
         }
