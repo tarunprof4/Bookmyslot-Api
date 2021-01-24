@@ -3,5 +3,6 @@
     public class LogConstants
     {
         public const string SlotLogContext = "slot";
+        public const string RequestId = "RequestId";
     }
 }

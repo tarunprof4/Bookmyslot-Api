@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using Serilog;

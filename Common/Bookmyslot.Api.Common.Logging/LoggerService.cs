@@ -1,8 +1,12 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Logging.Interfaces;
+using Elastic.Apm.SerilogEnricher;
+using Elastic.CommonSchema.Serilog;
+using Microsoft.AspNetCore.Http;
 using Serilog;
 using Serilog.Context;
+using Serilog.Sinks.Elasticsearch;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -12,19 +16,41 @@ namespace Bookmyslot.Api.Common.Logging
     public class LoggerService : ILoggerService
     {
         private readonly ILogger serilogFileLogger;
-        private readonly IAppConfiguration appConfiguration;
-        public LoggerService(IAppConfiguration appConfiguration)
-        {
-            this.appConfiguration = appConfiguration;
-            this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
-         .MinimumLevel.Verbose()
-         .Enrich.With(new DefaultLogEnricher(this.appConfiguration))
-         //.WriteTo.Http("http://localhost:9600/")
-         //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
+        private readonly ILogger serilogElasticSearchLogger;
 
-          .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-         outputTemplate: this.appConfiguration.LogOutputTemplate)
-         .CreateLogger();
+        private readonly IAppConfiguration appConfiguration;
+        private readonly HttpContext httpContext;
+        public LoggerService(IAppConfiguration appConfiguration, IHttpContextAccessor httpContextAccessor)
+        {
+            
+            this.appConfiguration = appConfiguration;
+            this.httpContext = httpContextAccessor.HttpContext;
+
+         //   this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
+         //.MinimumLevel.Verbose()
+         //.Enrich.With(new DefaultLogEnricher(this.appConfiguration))
+         // //.WriteTo.Http("http://localhost:9600/")
+         // //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
+
+         // .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+         //outputTemplate: this.appConfiguration.LogOutputTemplate)
+         //.CreateLogger();
+
+
+            this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
+       .MinimumLevel.Verbose()
+       .Enrich.With(new DefaultLogEnricher(this.appConfiguration, this.httpContext))
+
+      .Enrich.WithElasticApmCorrelationInfo()
+       // //.WriteTo.Http("http://localhost:9600/")
+         // //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
+        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+            {
+                CustomFormatter = new EcsTextFormatter()
+             })
+            .CreateLogger();
+
+
         }
 
         public void LogFatal(string message, Exception ex = null, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)

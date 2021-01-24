@@ -29,6 +29,8 @@ namespace Bookmyslot.Api
         public void ConfigureServices(IServiceCollection services)
         {
             
+            services.AddHttpContextAccessor();
+
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
             CommonInjection.CommonInjections(services);
