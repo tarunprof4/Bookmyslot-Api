@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Logging.Enrichers;
+﻿using Bookmyslot.Api.Common.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Logging.Interfaces;
 using Serilog;
 using Serilog.Context;
@@ -13,18 +14,18 @@ namespace Bookmyslot.Api.Common.Logging
     public class LoggerService : ILoggerService
     {
         private readonly ILogger serilogFileLogger;
-        public LoggerService()
+        private readonly IAppConfiguration appConfiguration;
+        public LoggerService(IAppConfiguration appConfiguration)
         {
+            this.appConfiguration = appConfiguration;
             this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
          .MinimumLevel.Verbose()
-         .Enrich.WithProperty("Version", "1.0.0")
-         .Enrich.With(new ThreadLogEnricher())
-         .Enrich.With(new UtcTimestampEnricher())
+         .Enrich.With(new DefaultLogEnricher(this.appConfiguration))
          //.WriteTo.Http("http://localhost:9600/")
          //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
 
           .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-         outputTemplate: "(Version : {Version}) [{Level}] ({ThreadId}) {Message} {Properties} {NewLine}  {Exception}")
+         outputTemplate: "{Message} {Properties} {NewLine}  {Exception}")
          .CreateLogger();
         }
 

@@ -9,5 +9,7 @@
         string EmailUserName { get;  }
 
         string EmailPassword { get;  }
+
+        string AppVersion { get; }
     }
 }
