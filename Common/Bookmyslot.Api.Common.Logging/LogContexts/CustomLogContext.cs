@@ -1,13 +1,12 @@
-﻿using Bookmyslot.Api.SlotScheduler.Contracts;
-using Serilog.Core;
+﻿using Serilog.Core;
 using Serilog.Events;
 
 namespace Bookmyslot.Api.Common.Logging.LogContexts
 {
-   
+
     public class CustomLogContext : ILogEventEnricher
     {
-        private object customObject;
+        private readonly object customObject;
         public CustomLogContext(object customObject)
         {
             this.customObject = customObject;

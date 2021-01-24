@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Common.Logging
+﻿namespace Bookmyslot.Api.Common.Logging
 {
     public class LogConstants
     {

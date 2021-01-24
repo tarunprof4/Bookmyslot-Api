@@ -1,14 +1,9 @@
-using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
-using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Events;
 using System;
 
 namespace Bookmyslot.Api
@@ -35,7 +30,7 @@ namespace Bookmyslot.Api
 
             try
             {
-                Log.Debug("Starting web host");
+                Log.Debug("Starting Bookmyslot web host");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

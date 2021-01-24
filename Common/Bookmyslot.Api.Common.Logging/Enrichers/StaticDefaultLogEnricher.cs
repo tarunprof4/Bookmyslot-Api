@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Interfaces;
-using Serilog.Core;
+﻿using Serilog.Core;
 using Serilog.Events;
 using System.Threading;
 

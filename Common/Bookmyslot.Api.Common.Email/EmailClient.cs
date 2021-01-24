@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,10 @@ namespace Bookmyslot.Api.Common.Email
     public class EmailClient : IEmailClient
     {
         private readonly SmtpClient smtpClient;
+        private readonly ILoggerService loggerService;
         private readonly string fromEmailAddress;
 
-        public EmailClient(IAppConfiguration appConfiguration)
+        public EmailClient(IAppConfiguration appConfiguration, ILoggerService loggerService)
         {
             this.smtpClient = new SmtpClient();
             this.smtpClient.UseDefaultCredentials = false;
@@ -27,6 +29,7 @@ namespace Bookmyslot.Api.Common.Email
             this.smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
             this.fromEmailAddress = appConfiguration.EmailUserName;
+            this.loggerService = loggerService;
         }
 
 
@@ -40,8 +43,8 @@ namespace Bookmyslot.Api.Common.Email
             }
             catch (Exception exp)
             {
-                Log.Error(EmailConstants.SendEmailFailure + exp);
-                return Response<bool>.Failed(new List<string>() { EmailConstants.SendEmailFailure });
+                this.loggerService.LogError(EmailConstants.SendEmailFailure, exp);
+                return Response<bool>.Error(new List<string>() { EmailConstants.SendEmailFailure });
             }
         }
 

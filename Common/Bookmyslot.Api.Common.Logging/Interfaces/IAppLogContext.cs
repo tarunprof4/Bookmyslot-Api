@@ -1,8 +1,6 @@
 ﻿using Bookmyslot.Api.SlotScheduler.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Logging.Interfaces
 {

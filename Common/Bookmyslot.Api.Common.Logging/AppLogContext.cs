@@ -3,9 +3,7 @@ using Bookmyslot.Api.Common.Logging.LogContexts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Serilog.Context;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Logging
 {
@@ -18,7 +16,9 @@ namespace Bookmyslot.Api.Common.Logging
 
         public IDisposable SetCustomObjectToContext(dynamic customObject)
         {
-            throw new NotImplementedException();
+            throw new Exception();
+            //CustomLogContext customLogContext = new CustomLogContext(customObject);
+            //return LogContext.Push(customLogContext);
         }
 
         public IDisposable SetSlotModelInfoToContext(SlotModel slotModel)

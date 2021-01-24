@@ -1,7 +1,5 @@
-﻿    using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Logging.Interfaces
 {

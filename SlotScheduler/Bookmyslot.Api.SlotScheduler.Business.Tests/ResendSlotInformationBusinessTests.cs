@@ -3,7 +3,6 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;

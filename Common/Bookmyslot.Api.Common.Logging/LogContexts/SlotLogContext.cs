@@ -4,10 +4,10 @@ using Serilog.Events;
 
 namespace Bookmyslot.Api.Common.Logging.LogContexts
 {
-   
+
     public class SlotLogContext : ILogEventEnricher
     {
-        private SlotModel slotModel;
+        private readonly SlotModel slotModel;
         public SlotLogContext(SlotModel slotModel)
         {
             this.slotModel = slotModel;

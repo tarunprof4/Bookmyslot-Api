@@ -29,7 +29,7 @@ namespace Bookmyslot.Api.Common.Contracts
         }
 
 
-        public static  Response<T> Failed(List<string> errorMessages)
+        public static  Response<T> Error(List<string> errorMessages)
         {
             var response = new Response<T> { ResultType = ResultType.Error, Messages = errorMessages };
 
