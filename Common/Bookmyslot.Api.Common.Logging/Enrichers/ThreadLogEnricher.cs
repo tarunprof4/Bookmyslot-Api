@@ -2,9 +2,9 @@
 using Serilog.Events;
 using System.Threading;
 
-namespace Bookmyslot.Api.Common.Logging
+namespace Bookmyslot.Api.Common.Logging.Enrichers
 {
-    public class LogEnricher : ILogEventEnricher
+    public class ThreadLogEnricher : ILogEventEnricher
     {
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {

@@ -96,6 +96,8 @@ namespace Bookmyslot.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            
+
 
             app.UseRequestResponseLogging();
 

@@ -1,4 +1,5 @@
 using Bookmyslot.Api.Common.Logging;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -11,28 +12,15 @@ namespace Bookmyslot.Api
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-         .MinimumLevel.Debug()
-         .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-         .Enrich.WithProperty("Version", "1.0.0")
-         .Enrich.With(new LogEnricher())
-         .Enrich.FromLogContext()
-         .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-          outputTemplate: "{Timestamp:HH:mm} ({Version}) [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")
-         .CreateLogger();
-
+            ILoggerService loggerService = new LoggerService();
             try
             {
-                Log.Debug("Starting Book My Slot web host");
+                loggerService.LogDebug("Starting Book My Slot web host");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Host terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
+                loggerService.LogError("Host terminated unexpectedly", ex);
             }
         }
 

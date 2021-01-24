@@ -17,7 +17,7 @@ namespace Bookmyslot.Api.Customers
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .Enrich.WithProperty("Version", "1.0.0")
-            .Enrich.With(new LogEnricher())
+            .Enrich.With(new ThreadLogEnricher())
             .Enrich.FromLogContext()
             .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
              outputTemplate: "{Timestamp:HH:mm} ({Version}) [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")

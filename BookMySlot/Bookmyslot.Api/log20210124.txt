@@ -1,0 +1,2 @@
+11:33:07 (1.0.0) [Debug] (1) Starting Book My Slot web host 
+ { CallerDetails: { FilePath: "Program.cs", Method: "Main", LineNumber: 18 }, UtcTimestamp: 01/24/2021 07:33:07 } 
