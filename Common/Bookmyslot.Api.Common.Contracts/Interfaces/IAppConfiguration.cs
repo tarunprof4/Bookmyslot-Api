@@ -11,5 +11,7 @@
         string EmailPassword { get;  }
 
         string AppVersion { get; }
+
+        string LogOutputTemplate { get; }
     }
 }

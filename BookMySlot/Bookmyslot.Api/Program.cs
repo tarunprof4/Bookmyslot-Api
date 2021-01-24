@@ -13,27 +13,27 @@ namespace Bookmyslot.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //CreateHostBuilder(args).Build().Run();
 
-          //  Log.Logger = new LoggerConfiguration()
-          //.MinimumLevel.Verbose()
-          //.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-          // outputTemplate: "{Timestamp:HH:mm} ({Version}) [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")
-          //.CreateLogger();
+            Log.Logger = new LoggerConfiguration()
+          .MinimumLevel.Verbose()
+          .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+           outputTemplate: "{Timestamp:HH:mm} ({Version}) [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")
+          .CreateLogger();
 
-          //  try
-          //  {
-          //      Log.Information("Starting web host");
-          //      CreateHostBuilder(args).Build().Run();
-          //  }
-          //  catch (Exception ex)
-          //  {
-          //      Log.Fatal(ex, "Host terminated unexpectedly");
-          //  }
-          //  finally
-          //  {
-          //      Log.CloseAndFlush();
-          //  }
+            try
+            {
+                Log.Debug("Starting web host");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

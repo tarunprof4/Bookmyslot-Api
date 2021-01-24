@@ -5,13 +5,16 @@ namespace Bookmyslot.Api.Common
 {
     public class AppConfiguration : IAppConfiguration
     {
+        private readonly string appVersion;
+
         private readonly string emailStmpHost;
         private readonly string emailPort;
         private readonly string emailUserName;
         private readonly string emailPassword;
 
-        private readonly string appVersion;
-       
+        private readonly string logOutputTemplate;
+
+
 
         public AppConfiguration(IConfiguration configuration)
         {
@@ -21,13 +24,18 @@ namespace Bookmyslot.Api.Common
             this.emailPort = configuration.GetSection("EmailSettings").GetSection("EmailPort").Value;
             this.emailUserName = configuration.GetSection("EmailSettings").GetSection("EmailUserName").Value;
             this.emailPassword = configuration.GetSection("EmailSettings").GetSection("EmailPassword").Value;
+
+            this.logOutputTemplate = configuration.GetSection("LogSettings").GetSection("outputTemplate").Value;
         }
+
+        public string AppVersion => this.appVersion;
 
         public string EmailStmpHost => this.emailStmpHost;
         public string EmailPort => this.emailPort;
         public string EmailUserName => this.emailUserName;
         public string EmailPassword => this.emailPassword;
 
-        public string AppVersion => this.appVersion;
+        public string LogOutputTemplate => this.logOutputTemplate;
+
     }
 }

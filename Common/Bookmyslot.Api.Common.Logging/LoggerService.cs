@@ -25,7 +25,7 @@ namespace Bookmyslot.Api.Common.Logging
          //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
 
           .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-         outputTemplate: "{Message} {Properties} {NewLine}  {Exception}")
+         outputTemplate: this.appConfiguration.LogOutputTemplate)
          .CreateLogger();
         }
 

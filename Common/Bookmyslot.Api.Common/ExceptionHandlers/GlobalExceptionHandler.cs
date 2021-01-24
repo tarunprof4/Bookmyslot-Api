@@ -23,8 +23,9 @@ namespace Bookmyslot.Api.Common.ExceptionHandlers
                     if (contextFeature != null)
                     {
                         var requestId = context.Request.Headers[LogConstants.RequestId];
-                        Log.Error(requestId + " " + contextFeature.Error.Message + "\n");
-                        Log.Error(requestId + " " + contextFeature.Error.StackTrace);
+                        Log.Error("{requestId} {message}",  requestId, contextFeature.Error.Message);
+                        Log.Error(contextFeature.Error, "{requestId}", requestId);
+                        //Log.Error(requestId + " " + contextFeature.Error.StackTrace);
 
                         //await context.Response.WriteAsync(new ErrorDetails()
                         //{

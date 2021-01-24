@@ -26,6 +26,7 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
             CommonInjection.CommonInjections(services);
