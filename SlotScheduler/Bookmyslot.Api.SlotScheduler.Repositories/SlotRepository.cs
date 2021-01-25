@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
@@ -15,10 +16,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     public class SlotRepository : ISlotRepository
     {
         private readonly IDbConnection connection;
+        private readonly ISqlInterceptor sqlInterceptor;
 
-        public SlotRepository(IDbConnection connection)
+        public SlotRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
         {
             this.connection = connection;
+            this.sqlInterceptor = sqlInterceptor;
         }
 
         public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
@@ -26,16 +29,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetAllSlotsQuery;
 
-            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
+            var slotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
-            var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
-            if (slotModels.Count == 0)
-            {
-                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-            }
-
-            return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            return CreateSlotModelsResponse(slotEntities);
         }
+
+        
 
         public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
         {
@@ -68,6 +67,17 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var slotEntity = EntityFactory.EntityFactory.UpdateSlotEntity(slotModel);
             await this.connection.UpdateAsync<SlotEntity>(slotEntity);
             return new Response<bool>() { Result = true };
+        }
+
+        private static Response<IEnumerable<SlotModel>> CreateSlotModelsResponse(IEnumerable<SlotEntity> slotEntities)
+        {
+            var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
+            if (slotModels.Count == 0)
+            {
+                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
+            }
+
+            return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
@@ -14,10 +15,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     public class CustomerSharedSlotRepository : ICustomerSharedSlotRepository
     {
         private readonly IDbConnection connection;
+        private readonly ISqlInterceptor sqlInterceptor;
 
-        public CustomerSharedSlotRepository(IDbConnection connection)
+        public CustomerSharedSlotRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
         {
             this.connection = connection;
+            this.sqlInterceptor = sqlInterceptor;
         }
 
 
@@ -51,7 +54,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         private async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(string sql, object parameters)
         {
-            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
+            var slotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)

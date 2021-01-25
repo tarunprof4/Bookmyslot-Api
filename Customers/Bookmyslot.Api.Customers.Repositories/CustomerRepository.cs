@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
@@ -14,10 +15,12 @@ namespace Bookmyslot.Api.Customers.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private readonly IDbConnection connection;
+        private readonly ISqlInterceptor sqlInterceptor;
 
-        public CustomerRepository(IDbConnection connection)
+        public CustomerRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
         {
             this.connection = connection;
+            this.sqlInterceptor = sqlInterceptor;
         }
         public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
@@ -48,8 +51,14 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             var parameters = new { Email = email };
             var sql = CustomerTableQueries.GetCustomerByEmailsQuery;
-            var customerEntity = await this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters);
 
+            var customerEntity = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters));
+
+            return CreateCustomerModelResponse(customerEntity);
+        }
+
+        private static Response<CustomerModel> CreateCustomerModelResponse(CustomerEntity customerEntity)
+        {
             if (customerEntity == null)
             {
                 return Response<CustomerModel>.Empty(new List<string>() { AppBusinessMessages.CustomerNotFound });
@@ -59,7 +68,6 @@ namespace Bookmyslot.Api.Customers.Repositories
             return Response<CustomerModel>.Success(customerModel);
         }
 
-      
 
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
@@ -79,7 +87,8 @@ namespace Bookmyslot.Api.Customers.Repositories
             var parameters = new { CustomerIds = customerIds };
             var sql = CustomerTableQueries.GetCustomersByCustomerIdsQuery;
 
-            var customerEntities = await this.connection.QueryAsync<CustomerEntity>(sql, parameters);
+            var customerEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<CustomerEntity>(sql, parameters));
+
             var customerModels = ModelFactory.ModelFactory.CreateCustomerModels(customerEntities);
             if (customerModels.Count == 0)
             {

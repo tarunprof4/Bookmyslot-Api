@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
             this.Parameters = parameters;
         }
 
-
+        
 
         public string RequestId { get; set; }
         public DateTime LogTime { get; set; }
