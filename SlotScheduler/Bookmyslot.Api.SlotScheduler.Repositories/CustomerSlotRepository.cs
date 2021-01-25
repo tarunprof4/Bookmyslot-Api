@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
 
-            var databaseResponsetLog = new SqlDatabaseResponseLog(this.httpContextAccessor, sql, slotEntities);
+            var databaseResponsetLog = new SqlDatabaseResponseLog(this.httpContextAccessor, slotEntities);
             Log.Debug("{@databaseResponseLog}", databaseResponsetLog);
 
             
@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
 
-            var databaseResponsetLog = new SqlDatabaseResponseLog(this.httpContextAccessor, sql, slotEntities);
+            var databaseResponsetLog = new SqlDatabaseResponseLog(this.httpContextAccessor, slotEntities);
             Log.Debug("{@databaseResponseLog}", databaseResponsetLog);
 
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
