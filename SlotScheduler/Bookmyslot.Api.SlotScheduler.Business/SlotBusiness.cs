@@ -28,6 +28,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         private void SanitizeSlotModel(SlotModel slotModel)
         {
             slotModel.Title = slotModel.Title.Trim();
+            slotModel.BookedBy = string.Empty;
         }
         public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
         {

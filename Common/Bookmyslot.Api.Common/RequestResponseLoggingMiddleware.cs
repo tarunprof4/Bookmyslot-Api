@@ -94,7 +94,7 @@ namespace Bookmyslot.Api.Common
         private RequestLog CreateRequestLog(HttpContext context, string correlationId, string requestId, string requestBody)
         {
             var requestLog = new RequestLog();
-            requestLog.Id = requestId;
+            requestLog.RequestId = requestId;
             requestLog.CorrelationId = correlationId;
             requestLog.LogTime = DateTime.UtcNow;
             requestLog.Schema = context.Request.Scheme;

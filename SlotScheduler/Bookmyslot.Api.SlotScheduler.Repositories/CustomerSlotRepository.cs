@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Common.Logging.Contracts;
 using Bookmyslot.Api.Common.Logging.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -19,12 +20,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     public class CustomerSlotRepository : ICustomerSlotRepository
     {
         private readonly IDbConnection connection;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ISqlInterceptor sqlInterceptor;
 
-        public CustomerSlotRepository(IDbConnection connection, IHttpContextAccessor httpContextAccessor)
+        public CustomerSlotRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
         {
             this.connection = connection;
-            this.httpContextAccessor = httpContextAccessor;
+            this.sqlInterceptor = sqlInterceptor;
         }
 
 
@@ -33,15 +34,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetDistinctCustomersNearestSlotFromTodayQuery;
 
-            var databaseRequestLog = new SqlDatabaseRequestLog(this.httpContextAccessor, sql, parameters);
-            Log.Debug("{@databaseRequestLog}", databaseRequestLog);
-
-            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
-
-            var databaseResponsetLog = new SqlDatabaseResponseLog(this.httpContextAccessor, slotEntities);
-            Log.Debug("{@databaseResponseLog}", databaseResponsetLog);
-
-            
+            var slotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
@@ -57,13 +50,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, CreatedBy= email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetCustomerAvailableSlotsFromTodayQuery;
 
-            var databaseRequestLog = new SqlDatabaseRequestLog(this.httpContextAccessor, sql, parameters);
-            Log.Debug("{@databaseRequestLog}", databaseRequestLog);
-
-            var slotEntities = await this.connection.QueryAsync<SlotEntity>(sql, parameters);
-
-            var databaseResponsetLog = new SqlDatabaseResponseLog(this.httpContextAccessor, slotEntities);
-            Log.Debug("{@databaseResponseLog}", databaseResponsetLog);
+            var slotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
             var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
@@ -73,9 +60,5 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
         }
-
-
-        
-
     }
 }

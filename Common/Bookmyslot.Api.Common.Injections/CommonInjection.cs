@@ -1,5 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Compression;
 using Bookmyslot.Api.Common.Compression.Interfaces;
+using Bookmyslot.Api.Common.Database;
+using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,12 +16,18 @@ namespace Bookmyslot.Api.Common.Injections
             services.AddSingleton<ICompression, GZipCompression>();
 
             LoggingInjections(services);
+            DatabaseInjections(services);
         }
 
         private static void LoggingInjections(IServiceCollection services)
         {
             services.AddTransient<ILoggerService, LoggerService>();
             services.AddTransient<IAppLogContext, AppLogContext>();
+        }
+
+        private static void DatabaseInjections(IServiceCollection services)
+        {
+            services.AddTransient<ISqlInterceptor, SqlInterceptor>();
         }
 
     }

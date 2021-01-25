@@ -3,7 +3,7 @@ using System;
 
 namespace Bookmyslot.Api.Common.Logging.Contracts
 {
-    public class SqlDatabaseResponseLog
+    public class SqlDatabaseResponseLog 
     {
         public SqlDatabaseResponseLog(IHttpContextAccessor httpContextAccessor,  object response)
         {

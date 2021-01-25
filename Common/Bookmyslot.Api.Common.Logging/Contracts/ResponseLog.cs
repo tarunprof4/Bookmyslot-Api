@@ -6,6 +6,7 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
     public class ResponseLog
     {
         public string CorrelationId { get; set; }
+
         public string RequestId { get; set; }
         public DateTime LogTime { get; set; }
 
