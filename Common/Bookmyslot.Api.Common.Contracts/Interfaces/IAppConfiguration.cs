@@ -13,5 +13,7 @@
         string AppVersion { get; }
 
         string LogOutputTemplate { get; }
+
+        string ElasticSearchUrl { get; }
     }
 }

@@ -18,7 +18,7 @@
         public const string StaticLogOutPutTemplate = "staticLogOutputTemplate";
 
 
-        
-        
+        public const string ElasticSearchUrl = "ElasticSearchUrl";
+
     }
 }
