@@ -10,7 +10,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
         {
             return new CustomerModel()
             {
-                Email = customerEntity.Email.ToLowerInvariant(),
+                Email = customerEntity.Email,
                 Id= customerEntity.UniqueId,
                 FirstName = customerEntity.FirstName,
                 LastName = customerEntity.LastName,

@@ -177,33 +177,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerNotFound));
         }
 
-        [Test]
-        public async Task DeleteCustomer_ValidCustomerEmail_ReturnsSuccess()
-        {
-            var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { Result = customerModel };
-            customerRepositoryMock.Setup(a => a.GetCustomerByEmail(customerModel.Email)).Returns(Task.FromResult(customerModelResponse));
-
-            var customer = await customerBusiness.DeleteCustomer(customerModel.Email);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerByEmail(customerModel.Email)), Times.Once());
-            customerRepositoryMock.Verify((m => m.DeleteCustomer(customerModel.Email)), Times.Once());
-        }
-
-        [Test]
-        public async Task DeleteCustomer_DeletNotExistingCustomer_ReturnsCustomerNotFoundError()
-        {
-            var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { AppBusinessMessages.CustomerNotFound } };
-            customerRepositoryMock.Setup(a => a.GetCustomerByEmail(customerModel.Email)).Returns(Task.FromResult(customerModelErrorResponse));
-
-            var customer = await customerBusiness.DeleteCustomer(customerModel.Email);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerByEmail(customerModel.Email)), Times.Once());
-            customerRepositoryMock.Verify((m => m.DeleteCustomer(customerModel.Email)), Times.Never());
-            Assert.AreEqual(customer.ResultType, ResultType.Empty);
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerNotFound));
-        }
+     
 
         private CustomerModel CreateCustomer()
         {

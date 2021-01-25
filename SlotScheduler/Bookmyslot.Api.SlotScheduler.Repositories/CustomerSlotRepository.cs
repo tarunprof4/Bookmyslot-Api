@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System.Collections.Generic;
@@ -29,9 +30,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetDistinctCustomersNearestSlotFromTodayQuery;
 
-            var slotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            var slotEntities = await this.sqlInterceptor.GetQueryResults("GetDistinctCustomersNearestSlotFromToday", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
-            return CreateSlotModelsResponse(slotEntities);
+            return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
         }
 
         
@@ -41,20 +42,10 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, CreatedBy= email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetCustomerAvailableSlotsFromTodayQuery;
 
-            var slotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            var slotEntities = await this.sqlInterceptor.GetQueryResults("GetCustomerAvailableSlots", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
-            return CreateSlotModelsResponse(slotEntities);
+            return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
         }
 
-        private static Response<IEnumerable<SlotModel>> CreateSlotModelsResponse(IEnumerable<SlotEntity> slotEntities)
-        {
-            var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
-            if (slotModels.Count == 0)
-            {
-                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-            }
-
-            return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
-        }
     }
 }

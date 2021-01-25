@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System;
@@ -27,7 +28,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         {
             var customerEntity = EntityFactory.EntityFactory.CreateCancelledSlotEntity(cancelledSlotModel);
 
-            await this.connection.InsertAsync<Guid, CancelledSlotEntity>(customerEntity);
+            var parameters = new { cancelledSlotModel = cancelledSlotModel };
+            await this.sqlInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.InsertAsync<Guid, CancelledSlotEntity>(customerEntity));
 
             return new Response<bool>() { Result = true };
         }
@@ -38,9 +40,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = true, CancelledBy = customerId };
             var sql = SlotTableQueries.GetCustomerSharedByCancelledSlotsQuery;
 
-            var cancelledSlotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
+            var cancelledSlotEntities = await this.sqlInterceptor.GetQueryResults("GetCustomerSharedCancelledSlots", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
 
-            return GetCancelledSlotModels(cancelledSlotEntities);
+            return ResponseModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
         }
 
         
@@ -50,20 +52,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = true, CancelledBy = customerId, BookedBy = customerId };
             var sql = SlotTableQueries.GetCustomerBookedByCancelledSlotsQuery;
 
-            var cancelledSlotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
+            var cancelledSlotEntities = await this.sqlInterceptor.GetQueryResults("GetCustomerBookedCancelledSlots", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
 
-            return GetCancelledSlotModels(cancelledSlotEntities);
-        }
-
-        private static Response<IEnumerable<CancelledSlotModel>> GetCancelledSlotModels(IEnumerable<CancelledSlotEntity> cancelledSlotEntities)
-        {
-            var slotModels = ModelFactory.ModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
-            if (slotModels.Count == 0)
-            {
-                return Response<IEnumerable<CancelledSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-            }
-
-            return new Response<IEnumerable<CancelledSlotModel>>() { Result = slotModels };
+            return ResponseModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
         }
 
 

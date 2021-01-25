@@ -25,24 +25,24 @@ namespace Bookmyslot.Api
             string elasticSearchUrl = configuration.GetSection(AppConfigurationConstants.ElasticSearchUrl).Value;
 
 
-            //Log.Logger = new LoggerConfiguration()
-            //.MinimumLevel.Verbose()
-            //.Enrich.WithProperty("Version", appVersion)
-            //.Enrich.With(new StaticDefaultLogEnricher())
-            //.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-            // outputTemplate: staticLogOutputTemplate)
-            //.CreateLogger();
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .Enrich.WithProperty("Version", appVersion)
+            .Enrich.With(new StaticDefaultLogEnricher())
+            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+             outputTemplate: staticLogOutputTemplate)
+            .CreateLogger();
 
 
-            Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
-                                   .MinimumLevel.Verbose()
-                                   .Enrich.With(new StaticDefaultLogEnricher())
-                                   .Enrich.WithElasticApmCorrelationInfo()
-                                   .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticSearchUrl))
-                                   {
-                                       CustomFormatter = new EcsTextFormatter()
-                                   }))
-                                   .CreateLogger();
+            //Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
+            //                       .MinimumLevel.Verbose()
+            //                       .Enrich.With(new StaticDefaultLogEnricher())
+            //                       .Enrich.WithElasticApmCorrelationInfo()
+            //                       .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticSearchUrl))
+            //                       {
+            //                           CustomFormatter = new EcsTextFormatter()
+            //                       }))
+            //                       .CreateLogger();
 
 
             try

@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, CreatedBy = customerId };
             var sql = SlotTableQueries.GetCustomerSharedByYetToBeBookedSlotsQuery;
 
-            return await GetCustomerSlots(sql, parameters);
+            return await GetCustomerSlots("GetCustomerYetToBeBookedSlots", sql, parameters);
         }
 
 
@@ -38,7 +39,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, CreatedBy = customerId };
             var sql = SlotTableQueries.GetCustomerSharedByBookedSlotsQuery;
 
-            return await GetCustomerSlots(sql, parameters);
+            return await GetCustomerSlots("GetCustomerBookedSlots", sql, parameters);
         }
 
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerCompletedSlots(string customerId)
@@ -46,23 +47,18 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, CreatedBy = customerId };
             var sql = SlotTableQueries.GetCustomerSharedByCompletedSlotsQuery;
 
-            return await GetCustomerSlots(sql, parameters);
+            return await GetCustomerSlots("GetCustomerCompletedSlots", sql, parameters);
         }
 
         
 
 
-        private async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(string sql, object parameters)
+        private async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(string operationName, string sql, object parameters)
         {
-            var slotEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            var slotEntities = await this.sqlInterceptor.GetQueryResults(operationName, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
-            var slotModels = ModelFactory.ModelFactory.CreateSlotModels(slotEntities);
-            if (slotModels.Count == 0)
-            {
-                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-            }
-
-            return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
         }
+
     }
 }

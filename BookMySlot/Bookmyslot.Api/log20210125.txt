@@ -1,0 +1,2176 @@
+Starting Bookmyslot web host { Version: "1.0.0", ThreadId: 1, Level: Debug, UtcTimestamp: 01/25/2021 13:31:23 } 
+  Http Request RequestLog { CorrelationId: null, RequestId: "f751f8cc-f8aa-4de6-b6a2-e4e093244eea", LogTime: 01/25/2021 13:31:28, Schema: "https", Host: HostString { Value: "localhost:44382", HasValue: True, Host: "localhost", Port: 44382 }, Path: PathString { Value: "/swagger/index.html", HasValue: True }, Method: "GET", QueryString: QueryString { Value: "", HasValue: False }, Body: "" } { Version: "1.0.0", ThreadId: 5, Level: Debug, UtcTimestamp: 01/25/2021 13:31:28 } 
+  Http Response ResponseLog { CorrelationId: null, RequestId: "f751f8cc-f8aa-4de6-b6a2-e4e093244eea", LogTime: 01/25/2021 13:31:28, StatusCode: 200, Body: "<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"UTF-8\">
+    <title>Swagger UI</title>
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"./swagger-ui.css\" >
+    <link rel=\"icon\" type=\"image/png\" href=\"./favicon-32x32.png\" sizes=\"32x32\" />
+    <link rel=\"icon\" type=\"image/png\" href=\"./favicon-16x16.png\" sizes=\"16x16\" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+    
+    
+  </head>
+
+  <body>
+    <div id=\"swagger-ui\"></div>
+
+    <script src=\"./swagger-ui-bundle.js\" charset=\"UTF-8\"> </script>
+    <script src=\"./swagger-ui-standalone-preset.js\" charset=\"UTF-8\"> </script>
+    <script>
+window.onload = function() {
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = undefined;
+  }
+  var urls = [{\"url\":\"/swagger/v1/swagger.json\",\"name\":\"v1\"}];
+
+  const disableTryItOutPlugin = function() {
+    return {
+      statePlugins: {
+      spec: {
+        wrapSelectors: {
+          allowTryItOutFor: function() {
+            return function() {
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Build a system
+  var ui = SwaggerUIBundle({
+    url: url,
+    urls: urls,  
+    validatorUrl: null,
+    oauth2RedirectUrl: window.location.origin + \"/swagger/oauth2-redirect.html\",
+
+    docExpansion: \"none\", 
+    operationsSorter: \"none\", 
+    defaultModelsExpandDepth: 1, 
+    defaultModelExpandDepth: 1, 
+    tagsSorter: \"none\", 
+    
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+        SwaggerUIBundle.plugins.DownloadUrl,
+        disableTryItOutPlugin
+    ],
+    layout: \"StandaloneLayout\"
+  });
+
+  if (\"client_id\") {
+    ui.initOAuth({
+      clientId: \"client_id\",
+      clientSecret: \"client_secret\",
+      realm: \"realm\",
+      appName: \"app_name\",
+      scopeSeparator: \" \",
+      additionalQueryStringParams: {},
+      usePkceWithAuthorizationCodeGrant: false
+    });
+  }
+
+  window.ui = ui;
+}
+    </script>
+    
+  </body>
+</html>
+", CompressedBody: "KQoAAB+LCAAAAAAAAAqlVoFu2zYQ/RVWBdKkjaQ5BYpBcwKsSbsFSBe3jjEMUVbQ0lniQpECSdlxivz7jhQlK4mKYpgNWMe7x0fq+O7oYPoiDMnvV58uyEoqog01LCM500axZWOYFGTZiJwDPhjPSRiepGL64uzy9Oqv2QdSmopbh30STkVxnAYg0gB9hExLoLmz0K7AUJKVVGkwCFpcfQx/9jiMGmY4nMw3tChAkcX5NG49PsyZuCUKOE7UZstBlwAmDYjZ1oA+A3cmzrRGT6lghZ4o1i1X2LCojYxwsUyKHQuraAFxLYohzYquLSp8e3T39ihqg5rdg8ao8+E4/n/Uk3d3k3dPqJ1vSO1e2w+IS3tnf+sMQpbyLkQGJooEbZXj66Prlx1ArkGtuNwkJKzkfagzJTlf4pmEGMCDp3wEHG4T0iL74EMqOvP1YW8lS0ANwcBBVwbUDzbKRAmKmTHupcy3I7Mrqgomkp8Ge13S7LZQEpWakJcrar9DQpfCeJjD3e809jJ1A7tkl/OcrQnLreZ6LaFipzH6PdweTKZYbYhW2RPZhW3dRP9Y8T0Xvt2Pm3ryQyIsSpFTLgWEtQKk+Y+cONowkctNJAWXNCfHZNWIzBb3/kGb2DVVpFEcIx7JZYadQIpIA1VZGVXUZOV+jJjj/eu/927eHMQHLsNsRfbtzL09SxBxEIUpyQmZeGbieXPIZA6LL+ensqrxVYSx064nNy3NAwGu4fEUzB+smIC8RQz2qTF6/S0N0EyDJA26bMXrSWdijmwFHqaBoBU41HqSBg83SGaZsPK0sY2OLjlcqe25uWzMjDeorJH8ECxr0yixk6HtlNDidTJw15ANhoRsFK3nwCEzUg2B9kM5lle39kepkpF1u49f//uAAcioBgbF8agMRoeDQW96wz18TcYxee9uAUr0Vhuo+iNhmDPfvRfn753w93dnmdgf3xbs6bmxPuyqcE05yynmZ2GhouEdVtLGlEdfIGcK8+eiT+UpFbMn9oYMRNBOC5WfF7luiUrwJZvL7MNdTYXG+QnOE6hGDPvNyBqUo9ZzqbB7PUegKGnDzSeUM9eOKT+D2pQJmYxBxhGGFt9doNtm9ZVhO3v1ctcKXvnE5AD1BV42roHa0/b+tj1gfq+7U3xyKJFHRLRm+vAZaN53mpnDtYCbjr1Te88+wt9iojO5cb0GD61fhoyX2+NFON3Kxtik7DZz4Xxp4KRo+0XXeNIg4wxbCSYqDXYNh0VMMHP5K8qgUyEWvEOeY0Yfzep31/rmkGERDTDaOdIdTgHllQU4YxCgdf0HthobQvNr23b6qM5QWXOoKarLVjo28OHcPGdWdJR/bkBt5/jvSxQzxFa2Zzz0uEbD7DaDP5kp7duh+u+dWE9Rab8pKnDnK4qN1Neu761twnzpuFptGEZ2F+Pw0mjvRH8P4uXY/sML/gWWz4gVKQoAAA==" } { Version: "1.0.0", ThreadId: 5, Level: Debug, UtcTimestamp: 01/25/2021 13:31:28 } 
+  Http Request RequestLog { CorrelationId: null, RequestId: "cfc80157-1da6-47d0-9f53-a5f24d13359c", LogTime: 01/25/2021 13:31:28, Schema: "https", Host: HostString { Value: "localhost:44382", HasValue: True, Host: "localhost", Port: 44382 }, Path: PathString { Value: "/swagger/v1/swagger.json", HasValue: True }, Method: "GET", QueryString: QueryString { Value: "", HasValue: False }, Body: "" } { Version: "1.0.0", ThreadId: 6, Level: Debug, UtcTimestamp: 01/25/2021 13:31:28 } 
+  Http Response ResponseLog { CorrelationId: null, RequestId: "cfc80157-1da6-47d0-9f53-a5f24d13359c", LogTime: 01/25/2021 13:31:30, StatusCode: 200, Body: "{
+  \"x-generator\": \"NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v12.0.0.0))\",
+  \"openapi\": \"3.0.0\",
+  \"info\": {
+    \"title\": \"Bookmyslot Customer API\",
+    \"description\": \"Bookmyslot Customer API to manage customer data\",
+    \"termsOfService\": \"None\",
+    \"contact\": {
+      \"name\": \"TA\",
+      \"email\": \"\"
+    },
+    \"license\": {
+      \"name\": \"\"
+    },
+    \"version\": \"v1\"
+  },
+  \"servers\": [
+    {
+      \"url\": \"https://localhost:44382\"
+    }
+  ],
+  \"paths\": {
+    \"/api/v1/CustomerBookedSlot/GetCustomerBookedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerBookedSlot\"
+        ],
+        \"summary\": \"Gets customer booked slots\",
+        \"operationId\": \"CustomerBookedSlot_GetCustomerBookedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer booked slots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerBookedSlot/GetCustomerCompletedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerBookedSlot\"
+        ],
+        \"summary\": \"Gets customer completed slots\",
+        \"operationId\": \"CustomerBookedSlot_GetCustomerCompletedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer completed slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerBookedSlot/GetCustomerCancelledSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerBookedSlot\"
+        ],
+        \"summary\": \"Gets customer cancelled slots\",
+        \"operationId\": \"CustomerBookedSlot_GetCustomerCancelledSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer cancelled slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Customer/{email}\": {
+      \"get\": {
+        \"tags\": [
+          \"Customer\"
+        ],
+        \"summary\": \"Gets customer by email\",
+        \"operationId\": \"Customer_Get\",
+        \"parameters\": [
+          {
+            \"name\": \"email\",
+            \"in\": \"path\",
+            \"required\": true,
+            \"description\": \"customer email id\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer details\"
+          },
+          \"404\": {
+            \"description\": \"no customer found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Customer\": {
+      \"post\": {
+        \"tags\": [
+          \"Customer\"
+        ],
+        \"summary\": \"Create new customer\",
+        \"operationId\": \"Customer_Post\",
+        \"requestBody\": {
+          \"x-name\": \"customerModel\",
+          \"description\": \"customer model\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/CustomerModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns email id of created customer\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      },
+      \"put\": {
+        \"tags\": [
+          \"Customer\"
+        ],
+        \"summary\": \"Update existing customer\",
+        \"operationId\": \"Customer_Put\",
+        \"requestBody\": {
+          \"x-name\": \"customerModel\",
+          \"description\": \"customer model\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/CustomerModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"204\": {
+            \"description\": \"Returns success or failure bool\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"404\": {
+            \"description\": \"no customer found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer YetToBeBookedSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerYetToBeBookedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer  YetToBeBookedSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerBookedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer BookedSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerBookedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer BookedSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerCompletedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer CompletedSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerCompletedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer CompletedSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerCancelledSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer CancelledSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerCancelledSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer CancelledSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSlot\"
+        ],
+        \"summary\": \"Gets customer slots\",
+        \"operationId\": \"CustomerSlot_GetDistinctCustomersNearestSlotFromToday\",
+        \"parameters\": [
+          {
+            \"name\": \"PageNumber\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"0\"
+            },
+            \"x-position\": 1
+          },
+          {
+            \"name\": \"PageSize\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"10\",
+              \"maximum\": 10.0,
+              \"minimum\": 1.0
+            },
+            \"x-position\": 2
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSlot/GetCustomerAvailableSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSlot\"
+        ],
+        \"summary\": \"Gets customer slots\",
+        \"operationId\": \"CustomerSlot_GetCustomerAvailableSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"PageNumber\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"0\"
+            },
+            \"x-position\": 1
+          },
+          {
+            \"name\": \"PageSize\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"10\",
+              \"maximum\": 10.0,
+              \"minimum\": 1.0
+            },
+            \"x-position\": 2
+          },
+          {
+            \"name\": \"customerInfo\",
+            \"in\": \"query\",
+            \"description\": \"customer info\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 3
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/email/ResendSlotMeetingInformation\": {
+      \"post\": {
+        \"tags\": [
+          \"Email\"
+        ],
+        \"summary\": \"Resend slot information email to the customers\",
+        \"operationId\": \"Email_ResendSlotMeetingInformation\",
+        \"requestBody\": {
+          \"x-name\": \"resendSlotInformation\",
+          \"description\": \"slot information\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/ResendSlotInformation\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns success or failure bool\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"404\": {
+            \"description\": \"no slot found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Slot\": {
+      \"post\": {
+        \"tags\": [
+          \"Slot\"
+        ],
+        \"summary\": \"Create new slot for the user\",
+        \"operationId\": \"Slot_Post\",
+        \"requestBody\": {
+          \"x-name\": \"slotModel\",
+          \"description\": \"slot model\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/SlotModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns slot id of created slot\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Slot/CancelSlot\": {
+      \"post\": {
+        \"tags\": [
+          \"Slot\"
+        ],
+        \"summary\": \"Cancel User slot\",
+        \"operationId\": \"Slot_CancelSlot\",
+        \"requestBody\": {
+          \"x-name\": \"cancelSlot\",
+          \"description\": \"user slot information\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/CancelSlot\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns success or failure bool\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"404\": {
+            \"description\": \"no slot found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/SlotScheduler\": {
+      \"post\": {
+        \"tags\": [
+          \"SlotScheduler\"
+        ],
+        \"operationId\": \"SlotScheduler_Post\",
+        \"requestBody\": {
+          \"x-name\": \"slotSchedulerModel\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/SlotSchedulerModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"200\": {
+            \"description\": \"\",
+            \"content\": {
+              \"application/octet-stream\": {
+                \"schema\": {
+                  \"type\": \"string\",
+                  \"format\": \"binary\"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  \"components\": {
+    \"schemas\": {
+      \"ProblemDetails\": {
+        \"type\": \"object\",
+        \"additionalProperties\": {
+          \"nullable\": true
+        },
+        \"properties\": {
+          \"type\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"title\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"status\": {
+            \"type\": \"integer\",
+            \"format\": \"int32\",
+            \"nullable\": true
+          },
+          \"detail\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"instance\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"extensions\": {
+            \"type\": \"object\",
+            \"nullable\": true,
+            \"additionalProperties\": {}
+          }
+        }
+      },
+      \"CustomerModel\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"required\": [
+          \"firstName\",
+          \"lastName\",
+          \"gender\"
+        ],
+        \"properties\": {
+          \"id\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"firstName\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"lastName\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"gender\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"email\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      },
+      \"ResendSlotInformation\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"properties\": {
+          \"resendSlotModel\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"resendTo\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      },
+      \"SlotModel\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"required\": [
+          \"title\",
+          \"timeZone\",
+          \"slotDate\",
+          \"slotStartTime\",
+          \"slotEndTime\"
+        ],
+        \"properties\": {
+          \"id\": {
+            \"type\": \"string\",
+            \"format\": \"guid\",
+            \"default\": \"00000000-0000-0000-0000-000000000000\"
+          },
+          \"title\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"createdBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"bookedBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"timeZone\": {
+            \"type\": \"string\",
+            \"default\": \"India Standard Time\",
+            \"minLength\": 1
+          },
+          \"slotDate\": {
+            \"type\": \"string\",
+            \"default\": \"13-3-2021\",
+            \"minLength\": 1
+          },
+          \"slotStartTime\": {
+            \"type\": \"string\",
+            \"format\": \"time-span\",
+            \"default\": \"10:00:00\",
+            \"minLength\": 1
+          },
+          \"slotEndTime\": {
+            \"type\": \"string\",
+            \"format\": \"time-span\",
+            \"default\": \"11:00:00\",
+            \"minLength\": 1
+          },
+          \"slotDuration\": {
+            \"type\": \"string\",
+            \"format\": \"time-span\"
+          }
+        }
+      },
+      \"CancelSlot\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"properties\": {
+          \"slotKey\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"cancelledBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      },
+      \"SlotSchedulerModel\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"properties\": {
+          \"slotModelKey\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"bookedBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      }
+    }
+  }
+}", CompressedBody: "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" } { Version: "1.0.0", ThreadId: 6, Level: Debug, UtcTimestamp: 01/25/2021 13:31:30 } 
+  Http Request RequestLog { CorrelationId: null, RequestId: "fd1c04dc-b3a4-4526-9fa7-a4f7d2483880", LogTime: 01/25/2021 13:31:52, Schema: "https", Host: HostString { Value: "localhost:44382", HasValue: True, Host: "localhost", Port: 44382 }, Path: PathString { Value: "/api/v1/Customer", HasValue: True }, Method: "POST", QueryString: QueryString { Value: "", HasValue: False }, Body: "{\"id\":\"string\",\"firstName\":\"string\",\"lastName\":\"string\",\"gender\":\"string\",\"email\":\"TEST@GMAIL.COM\"}" } { Version: "1.0.0", ThreadId: 8, Level: Debug, UtcTimestamp: 01/25/2021 13:31:52 } 
+  SqlDatabaseRequestLog { RequestId: "fd1c04dc-b3a4-4526-9fa7-a4f7d2483880", LogTime: 01/25/2021 13:31:53, Sql: "select * from Customer where Email = @Email", Parameters: { Email: "TEST@GMAIL.COM" } } { Version: "1.0.0", ThreadId: 8, Level: Debug, UtcTimestamp: 01/25/2021 13:31:53 } 
+  SqlDatabaseResponseLog { RequestId: "fd1c04dc-b3a4-4526-9fa7-a4f7d2483880", LogTime: 01/25/2021 13:31:53, Response: null } { Version: "1.0.0", ThreadId: 7, Level: Debug, UtcTimestamp: 01/25/2021 13:31:53 } 
+  SqlDatabaseRequestLog { RequestId: "fd1c04dc-b3a4-4526-9fa7-a4f7d2483880", LogTime: 01/25/2021 13:31:56, Sql: "Create Customer", Parameters: { customerEntity: CustomerEntity { UniqueId: "295572352b9d490d9da2847d30f5e4b2", FirstName: "string", LastName: "string", Gender: "string", Email: "test@gmail.com", ModifiedDateUtc: null } } } { Version: "1.0.0", ThreadId: 7, Level: Debug, UtcTimestamp: 01/25/2021 13:31:56 } 
+  SqlDatabaseResponseLog { RequestId: "fd1c04dc-b3a4-4526-9fa7-a4f7d2483880", LogTime: 01/25/2021 13:31:56, Response: "295572352b9d490d9da2847d30f5e4b2" } { Version: "1.0.0", ThreadId: 7, Level: Debug, UtcTimestamp: 01/25/2021 13:31:56 } 
+  Http Response ResponseLog { CorrelationId: null, RequestId: "fd1c04dc-b3a4-4526-9fa7-a4f7d2483880", LogTime: 01/25/2021 13:31:57, StatusCode: 201, Body: "\"test@gmail.com\"", CompressedBody: "FAAAAB+LCAAAAAAAAApTilEqSS0ucUjPTczM0UvOz41RUgIAa56ubhQAAAA=" } { Version: "1.0.0", ThreadId: 7, Level: Debug, UtcTimestamp: 01/25/2021 13:31:57 } 
+  Starting Bookmyslot web host { Version: "1.0.0", ThreadId: 1, Level: Debug, UtcTimestamp: 01/25/2021 13:38:39 } 
+  Http Request RequestLog { CorrelationId: null, RequestId: "19ee1111-b59d-44cc-a807-07831db92557", LogTime: 01/25/2021 13:38:42, Schema: "https", Host: HostString { Value: "localhost:44382", HasValue: True, Host: "localhost", Port: 44382 }, Path: PathString { Value: "/swagger/index.html", HasValue: True }, Method: "GET", QueryString: QueryString { Value: "", HasValue: False }, Body: "" } { Version: "1.0.0", ThreadId: 4, Level: Debug, UtcTimestamp: 01/25/2021 13:38:43 } 
+  Http Response ResponseLog { CorrelationId: null, RequestId: "19ee1111-b59d-44cc-a807-07831db92557", LogTime: 01/25/2021 13:38:43, StatusCode: 200, Body: "<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"UTF-8\">
+    <title>Swagger UI</title>
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"./swagger-ui.css\" >
+    <link rel=\"icon\" type=\"image/png\" href=\"./favicon-32x32.png\" sizes=\"32x32\" />
+    <link rel=\"icon\" type=\"image/png\" href=\"./favicon-16x16.png\" sizes=\"16x16\" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+    
+    
+  </head>
+
+  <body>
+    <div id=\"swagger-ui\"></div>
+
+    <script src=\"./swagger-ui-bundle.js\" charset=\"UTF-8\"> </script>
+    <script src=\"./swagger-ui-standalone-preset.js\" charset=\"UTF-8\"> </script>
+    <script>
+window.onload = function() {
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = undefined;
+  }
+  var urls = [{\"url\":\"/swagger/v1/swagger.json\",\"name\":\"v1\"}];
+
+  const disableTryItOutPlugin = function() {
+    return {
+      statePlugins: {
+      spec: {
+        wrapSelectors: {
+          allowTryItOutFor: function() {
+            return function() {
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Build a system
+  var ui = SwaggerUIBundle({
+    url: url,
+    urls: urls,  
+    validatorUrl: null,
+    oauth2RedirectUrl: window.location.origin + \"/swagger/oauth2-redirect.html\",
+
+    docExpansion: \"none\", 
+    operationsSorter: \"none\", 
+    defaultModelsExpandDepth: 1, 
+    defaultModelExpandDepth: 1, 
+    tagsSorter: \"none\", 
+    
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+        SwaggerUIBundle.plugins.DownloadUrl,
+        disableTryItOutPlugin
+    ],
+    layout: \"StandaloneLayout\"
+  });
+
+  if (\"client_id\") {
+    ui.initOAuth({
+      clientId: \"client_id\",
+      clientSecret: \"client_secret\",
+      realm: \"realm\",
+      appName: \"app_name\",
+      scopeSeparator: \" \",
+      additionalQueryStringParams: {},
+      usePkceWithAuthorizationCodeGrant: false
+    });
+  }
+
+  window.ui = ui;
+}
+    </script>
+    
+  </body>
+</html>
+", CompressedBody: "KQoAAB+LCAAAAAAAAAqlVoFu2zYQ/RVWBdKkjaQ5BYpBcwKsSbsFSBe3jjEMUVbQ0lniQpECSdlxivz7jhQlK4mKYpgNWMe7x0fq+O7oYPoiDMnvV58uyEoqog01LCM500axZWOYFGTZiJwDPhjPSRiepGL64uzy9Oqv2QdSmopbh30STkVxnAYg0gB9hExLoLmz0K7AUJKVVGkwCFpcfQx/9jiMGmY4nMw3tChAkcX5NG49PsyZuCUKOE7UZstBlwAmDYjZ1oA+A3cmzrRGT6lghZ4o1i1X2LCojYxwsUyKHQuraAFxLYohzYquLSp8e3T39ihqg5rdg8ao8+E4/n/Uk3d3k3dPqJ1vSO1e2w+IS3tnf+sMQpbyLkQGJooEbZXj66Prlx1ArkGtuNwkJKzkfagzJTlf4pmEGMCDp3wEHG4T0iL74EMqOvP1YW8lS0ANwcBBVwbUDzbKRAmKmTHupcy3I7Mrqgomkp8Ge13S7LZQEpWakJcrar9DQpfCeJjD3e809jJ1A7tkl/OcrQnLreZ6LaFipzH6PdweTKZYbYhW2RPZhW3dRP9Y8T0Xvt2Pm3ryQyIsSpFTLgWEtQKk+Y+cONowkctNJAWXNCfHZNWIzBb3/kGb2DVVpFEcIx7JZYadQIpIA1VZGVXUZOV+jJjj/eu/927eHMQHLsNsRfbtzL09SxBxEIUpyQmZeGbieXPIZA6LL+ensqrxVYSx064nNy3NAwGu4fEUzB+smIC8RQz2qTF6/S0N0EyDJA26bMXrSWdijmwFHqaBoBU41HqSBg83SGaZsPK0sY2OLjlcqe25uWzMjDeorJH8ECxr0yixk6HtlNDidTJw15ANhoRsFK3nwCEzUg2B9kM5lle39kepkpF1u49f//uAAcioBgbF8agMRoeDQW96wz18TcYxee9uAUr0Vhuo+iNhmDPfvRfn753w93dnmdgf3xbs6bmxPuyqcE05yynmZ2GhouEdVtLGlEdfIGcK8+eiT+UpFbMn9oYMRNBOC5WfF7luiUrwJZvL7MNdTYXG+QnOE6hGDPvNyBqUo9ZzqbB7PUegKGnDzSeUM9eOKT+D2pQJmYxBxhGGFt9doNtm9ZVhO3v1ctcKXvnE5AD1BV42roHa0/b+tj1gfq+7U3xyKJFHRLRm+vAZaN53mpnDtYCbjr1Te88+wt9iojO5cb0GD61fhoyX2+NFON3Kxtik7DZz4Xxp4KRo+0XXeNIg4wxbCSYqDXYNh0VMMHP5K8qgUyEWvEOeY0Yfzep31/rmkGERDTDaOdIdTgHllQU4YxCgdf0HthobQvNr23b6qM5QWXOoKarLVjo28OHcPGdWdJR/bkBt5/jvSxQzxFa2Zzz0uEbD7DaDP5kp7duh+u+dWE9Rab8pKnDnK4qN1Neu761twnzpuFptGEZ2F+Pw0mjvRH8P4uXY/sML/gWWz4gVKQoAAA==" } { Version: "1.0.0", ThreadId: 4, Level: Debug, UtcTimestamp: 01/25/2021 13:38:43 } 
+  Http Request RequestLog { CorrelationId: null, RequestId: "8759012d-a499-498c-93c0-88f03743e600", LogTime: 01/25/2021 13:38:43, Schema: "https", Host: HostString { Value: "localhost:44382", HasValue: True, Host: "localhost", Port: 44382 }, Path: PathString { Value: "/swagger/v1/swagger.json", HasValue: True }, Method: "GET", QueryString: QueryString { Value: "", HasValue: False }, Body: "" } { Version: "1.0.0", ThreadId: 4, Level: Debug, UtcTimestamp: 01/25/2021 13:38:43 } 
+  Http Response ResponseLog { CorrelationId: null, RequestId: "8759012d-a499-498c-93c0-88f03743e600", LogTime: 01/25/2021 13:38:44, StatusCode: 200, Body: "{
+  \"x-generator\": \"NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v12.0.0.0))\",
+  \"openapi\": \"3.0.0\",
+  \"info\": {
+    \"title\": \"Bookmyslot Customer API\",
+    \"description\": \"Bookmyslot Customer API to manage customer data\",
+    \"termsOfService\": \"None\",
+    \"contact\": {
+      \"name\": \"TA\",
+      \"email\": \"\"
+    },
+    \"license\": {
+      \"name\": \"\"
+    },
+    \"version\": \"v1\"
+  },
+  \"servers\": [
+    {
+      \"url\": \"https://localhost:44382\"
+    }
+  ],
+  \"paths\": {
+    \"/api/v1/CustomerBookedSlot/GetCustomerBookedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerBookedSlot\"
+        ],
+        \"summary\": \"Gets customer booked slots\",
+        \"operationId\": \"CustomerBookedSlot_GetCustomerBookedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer booked slots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerBookedSlot/GetCustomerCompletedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerBookedSlot\"
+        ],
+        \"summary\": \"Gets customer completed slots\",
+        \"operationId\": \"CustomerBookedSlot_GetCustomerCompletedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer completed slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerBookedSlot/GetCustomerCancelledSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerBookedSlot\"
+        ],
+        \"summary\": \"Gets customer cancelled slots\",
+        \"operationId\": \"CustomerBookedSlot_GetCustomerCancelledSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer cancelled slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Customer/{email}\": {
+      \"get\": {
+        \"tags\": [
+          \"Customer\"
+        ],
+        \"summary\": \"Gets customer by email\",
+        \"operationId\": \"Customer_Get\",
+        \"parameters\": [
+          {
+            \"name\": \"email\",
+            \"in\": \"path\",
+            \"required\": true,
+            \"description\": \"customer email id\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer details\"
+          },
+          \"404\": {
+            \"description\": \"no customer found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Customer\": {
+      \"post\": {
+        \"tags\": [
+          \"Customer\"
+        ],
+        \"summary\": \"Create new customer\",
+        \"operationId\": \"Customer_Post\",
+        \"requestBody\": {
+          \"x-name\": \"customerModel\",
+          \"description\": \"customer model\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/CustomerModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns email id of created customer\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      },
+      \"put\": {
+        \"tags\": [
+          \"Customer\"
+        ],
+        \"summary\": \"Update existing customer\",
+        \"operationId\": \"Customer_Put\",
+        \"requestBody\": {
+          \"x-name\": \"customerModel\",
+          \"description\": \"customer model\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/CustomerModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"204\": {
+            \"description\": \"Returns success or failure bool\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"404\": {
+            \"description\": \"no customer found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer YetToBeBookedSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerYetToBeBookedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer  YetToBeBookedSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerBookedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer BookedSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerBookedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer BookedSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerCompletedSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer CompletedSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerCompletedSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer CompletedSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSharedSlot/GetCustomerCancelledSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSharedSlot\"
+        ],
+        \"summary\": \"Gets customer CancelledSlots\",
+        \"operationId\": \"CustomerSharedSlot_GetCustomerCancelledSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"customerId\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 1
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer CancelledSlots information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSlot\"
+        ],
+        \"summary\": \"Gets customer slots\",
+        \"operationId\": \"CustomerSlot_GetDistinctCustomersNearestSlotFromToday\",
+        \"parameters\": [
+          {
+            \"name\": \"PageNumber\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"0\"
+            },
+            \"x-position\": 1
+          },
+          {
+            \"name\": \"PageSize\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"10\",
+              \"maximum\": 10.0,
+              \"minimum\": 1.0
+            },
+            \"x-position\": 2
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/CustomerSlot/GetCustomerAvailableSlots\": {
+      \"get\": {
+        \"tags\": [
+          \"CustomerSlot\"
+        ],
+        \"summary\": \"Gets customer slots\",
+        \"operationId\": \"CustomerSlot_GetCustomerAvailableSlots\",
+        \"parameters\": [
+          {
+            \"name\": \"PageNumber\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"0\"
+            },
+            \"x-position\": 1
+          },
+          {
+            \"name\": \"PageSize\",
+            \"in\": \"query\",
+            \"schema\": {
+              \"type\": \"integer\",
+              \"format\": \"int32\",
+              \"default\": \"10\",
+              \"maximum\": 10.0,
+              \"minimum\": 1.0
+            },
+            \"x-position\": 2
+          },
+          {
+            \"name\": \"customerInfo\",
+            \"in\": \"query\",
+            \"description\": \"customer info\",
+            \"schema\": {
+              \"type\": \"string\",
+              \"nullable\": true
+            },
+            \"x-position\": 3
+          }
+        ],
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Returns customer slot information\"
+          },
+          \"404\": {
+            \"description\": \"no slots found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"validation error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/email/ResendSlotMeetingInformation\": {
+      \"post\": {
+        \"tags\": [
+          \"Email\"
+        ],
+        \"summary\": \"Resend slot information email to the customers\",
+        \"operationId\": \"Email_ResendSlotMeetingInformation\",
+        \"requestBody\": {
+          \"x-name\": \"resendSlotInformation\",
+          \"description\": \"slot information\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/ResendSlotInformation\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns success or failure bool\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"404\": {
+            \"description\": \"no slot found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Slot\": {
+      \"post\": {
+        \"tags\": [
+          \"Slot\"
+        ],
+        \"summary\": \"Create new slot for the user\",
+        \"operationId\": \"Slot_Post\",
+        \"requestBody\": {
+          \"x-name\": \"slotModel\",
+          \"description\": \"slot model\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/SlotModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns slot id of created slot\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/Slot/CancelSlot\": {
+      \"post\": {
+        \"tags\": [
+          \"Slot\"
+        ],
+        \"summary\": \"Cancel User slot\",
+        \"operationId\": \"Slot_CancelSlot\",
+        \"requestBody\": {
+          \"x-name\": \"cancelSlot\",
+          \"description\": \"user slot information\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/CancelSlot\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"201\": {
+            \"description\": \"Returns success or failure bool\"
+          },
+          \"400\": {
+            \"description\": \"validation error bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"404\": {
+            \"description\": \"no slot found\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ProblemDetails\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"internal server error\"
+          }
+        }
+      }
+    },
+    \"/api/v1/SlotScheduler\": {
+      \"post\": {
+        \"tags\": [
+          \"SlotScheduler\"
+        ],
+        \"operationId\": \"SlotScheduler_Post\",
+        \"requestBody\": {
+          \"x-name\": \"slotSchedulerModel\",
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/SlotSchedulerModel\"
+              }
+            }
+          },
+          \"required\": true,
+          \"x-position\": 1
+        },
+        \"responses\": {
+          \"200\": {
+            \"description\": \"\",
+            \"content\": {
+              \"application/octet-stream\": {
+                \"schema\": {
+                  \"type\": \"string\",
+                  \"format\": \"binary\"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  \"components\": {
+    \"schemas\": {
+      \"ProblemDetails\": {
+        \"type\": \"object\",
+        \"additionalProperties\": {
+          \"nullable\": true
+        },
+        \"properties\": {
+          \"type\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"title\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"status\": {
+            \"type\": \"integer\",
+            \"format\": \"int32\",
+            \"nullable\": true
+          },
+          \"detail\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"instance\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"extensions\": {
+            \"type\": \"object\",
+            \"nullable\": true,
+            \"additionalProperties\": {}
+          }
+        }
+      },
+      \"CustomerModel\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"required\": [
+          \"firstName\",
+          \"lastName\",
+          \"gender\"
+        ],
+        \"properties\": {
+          \"id\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"firstName\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"lastName\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"gender\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"email\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      },
+      \"ResendSlotInformation\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"properties\": {
+          \"resendSlotModel\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"resendTo\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      },
+      \"SlotModel\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"required\": [
+          \"title\",
+          \"timeZone\",
+          \"slotDate\",
+          \"slotStartTime\",
+          \"slotEndTime\"
+        ],
+        \"properties\": {
+          \"id\": {
+            \"type\": \"string\",
+            \"format\": \"guid\",
+            \"default\": \"00000000-0000-0000-0000-000000000000\"
+          },
+          \"title\": {
+            \"type\": \"string\",
+            \"minLength\": 1
+          },
+          \"createdBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"bookedBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"timeZone\": {
+            \"type\": \"string\",
+            \"default\": \"India Standard Time\",
+            \"minLength\": 1
+          },
+          \"slotDate\": {
+            \"type\": \"string\",
+            \"default\": \"13-3-2021\",
+            \"minLength\": 1
+          },
+          \"slotStartTime\": {
+            \"type\": \"string\",
+            \"format\": \"time-span\",
+            \"default\": \"10:00:00\",
+            \"minLength\": 1
+          },
+          \"slotEndTime\": {
+            \"type\": \"string\",
+            \"format\": \"time-span\",
+            \"default\": \"11:00:00\",
+            \"minLength\": 1
+          },
+          \"slotDuration\": {
+            \"type\": \"string\",
+            \"format\": \"time-span\"
+          }
+        }
+      },
+      \"CancelSlot\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"properties\": {
+          \"slotKey\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"cancelledBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      },
+      \"SlotSchedulerModel\": {
+        \"type\": \"object\",
+        \"additionalProperties\": false,
+        \"properties\": {
+          \"slotModelKey\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          },
+          \"bookedBy\": {
+            \"type\": \"string\",
+            \"nullable\": true
+          }
+        }
+      }
+    }
+  }
+}", CompressedBody: "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" } { Version: "1.0.0", ThreadId: 4, Level: Debug, UtcTimestamp: 01/25/2021 13:38:44 } 
+  Http Request RequestLog { CorrelationId: null, RequestId: "30de315d-947a-4535-b4bd-682af2a719cf", LogTime: 01/25/2021 13:39:01, Schema: "https", Host: HostString { Value: "localhost:44382", HasValue: True, Host: "localhost", Port: 44382 }, Path: PathString { Value: "/api/v1/Customer/s", HasValue: True }, Method: "GET", QueryString: QueryString { Value: "", HasValue: False }, Body: "" } { Version: "1.0.0", ThreadId: 4, Level: Debug, UtcTimestamp: 01/25/2021 13:39:01 } 
+  SqlDatabaseRequestLog { RequestId: "30de315d-947a-4535-b4bd-682af2a719cf", LogTime: 01/25/2021 13:39:04, Sql: "Get Customer By Id", Parameters: { customerId: "26eca53c21344dea874c99cc1df9ceef" } } { Version: "1.0.0", ThreadId: 4, Level: Debug, UtcTimestamp: 01/25/2021 13:39:04 } 
+  SqlDatabaseResponseLog { RequestId: "30de315d-947a-4535-b4bd-682af2a719cf", LogTime: 01/25/2021 13:39:05, Response: CustomerEntity { UniqueId: "26eca53c21344dea874c99cc1df9ceef", FirstName: "MF", LastName: "ML", Gender: "Female", Email: "m@gmail.com", ModifiedDateUtc: null } } { Version: "1.0.0", ThreadId: 9, Level: Debug, UtcTimestamp: 01/25/2021 13:39:05 } 
+  

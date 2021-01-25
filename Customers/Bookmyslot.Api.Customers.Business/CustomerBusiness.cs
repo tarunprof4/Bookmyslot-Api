@@ -40,20 +40,7 @@ namespace Bookmyslot.Api.Customers.Business
                 return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
 
-        public async Task<Response<bool>> DeleteCustomer(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                return new Response<bool>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.EmailIdNotValid } };
-            }
-
-            var customerExists = await CheckIfCustomerExists(email);
-            if (customerExists.Item1)
-            {
-                return await this.customerRepository.DeleteCustomer(email);
-            }
-            return Response<bool>.Empty(new List<string>() { AppBusinessMessages.CustomerNotFound });
-        }
+        
 
         public async Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers()
         {
@@ -69,6 +56,7 @@ namespace Bookmyslot.Api.Customers.Business
                 return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.EmailIdNotValid } };
             }
 
+            email = email.ToLowerInvariant();
             return await customerRepository.GetCustomerByEmail(email);
         }
 
@@ -125,6 +113,7 @@ namespace Bookmyslot.Api.Customers.Business
             customerModel.LastName = customerModel.LastName.Trim();
             customerModel.Gender = customerModel.Gender.Trim();
             customerModel.Email = customerModel.Email.Trim();
+            customerModel.Email = customerModel.Email.ToLowerInvariant();
         }
     }
 }

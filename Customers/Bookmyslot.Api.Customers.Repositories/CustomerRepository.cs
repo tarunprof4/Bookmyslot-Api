@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System.Collections.Generic;
@@ -25,16 +26,14 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
             var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
-            await this.connection.InsertAsync<string, CustomerEntity>(customerEntity);
+            
+            var parameters = new { customerEntity = customerEntity };
+            await this.sqlInterceptor.GetQueryResults("CreateCustomer", parameters, () => this.connection.InsertAsync<string, CustomerEntity>(customerEntity));
+
             return new Response<string>() { Result = customerModel.Email };
         }
 
-        public async Task<Response<bool>> DeleteCustomer(string email)
-        {
-            await this.connection.DeleteAsync<CustomerEntity>(email.ToLowerInvariant());
-            return new Response<bool>() { Result = true };
-        }
-
+      
         public async Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers()
         {
             var customerEntities = await this.connection.GetListAsync<CustomerEntity>();
@@ -51,35 +50,21 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             var parameters = new { Email = email };
             var sql = CustomerTableQueries.GetCustomerByEmailsQuery;
+            var customerEntity = await this.sqlInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters));
 
-            var customerEntity = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters));
-
-            return CreateCustomerModelResponse(customerEntity);
+            return ResponseModelFactory.CreateCustomerModelResponse(customerEntity);
         }
 
-        private static Response<CustomerModel> CreateCustomerModelResponse(CustomerEntity customerEntity)
-        {
-            if (customerEntity == null)
-            {
-                return Response<CustomerModel>.Empty(new List<string>() { AppBusinessMessages.CustomerNotFound });
-            }
-
-            var customerModel = ModelFactory.ModelFactory.CreateCustomerModel(customerEntity);
-            return Response<CustomerModel>.Success(customerModel);
-        }
+        
 
 
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
-            var customerEntity = await this.connection.GetAsync<CustomerEntity>(customerId);
+            var parameters = new { customerId = customerId };
 
-            if (customerEntity == null)
-            {
-                return Response<CustomerModel>.Empty(new List<string>() { AppBusinessMessages.CustomerNotFound });
-            }
+            var customerEntity = await this.sqlInterceptor.GetQueryResults("GetCustomerById", parameters, () => this.connection.GetAsync<CustomerEntity>(customerId));
 
-            var customerModel = ModelFactory.ModelFactory.CreateCustomerModel(customerEntity);
-            return Response<CustomerModel>.Success(customerModel);
+            return ResponseModelFactory.CreateCustomerModelResponse(customerEntity);
         }
 
         public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
@@ -87,22 +72,23 @@ namespace Bookmyslot.Api.Customers.Repositories
             var parameters = new { CustomerIds = customerIds };
             var sql = CustomerTableQueries.GetCustomersByCustomerIdsQuery;
 
-            var customerEntities = await this.sqlInterceptor.GetQueryResults(sql, parameters, () => this.connection.QueryAsync<CustomerEntity>(sql, parameters));
+            var customerEntities = await this.sqlInterceptor.GetQueryResults("GetCustomersByCustomerIds", parameters, () => this.connection.QueryAsync<CustomerEntity>(sql, parameters));
 
-            var customerModels = ModelFactory.ModelFactory.CreateCustomerModels(customerEntities);
-            if (customerModels.Count == 0)
-            {
-                return Response<List<CustomerModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-            }
-
-            return new Response<List<CustomerModel>>() { Result = customerModels };
+            return ResponseModelFactory.CreateCustomerModelsResponse(customerEntities);
         }
+
+    
 
         public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
         {
             var customerEntity = EntityFactory.EntityFactory.UpdateCustomerEntity(customerModel);
-            await this.connection.UpdateAsync<CustomerEntity>(customerEntity);
+            
+            var parameters = new { customerEntity = customerEntity };
+            await this.sqlInterceptor.GetQueryResults("UpdateCustomer", parameters, () => this.connection.UpdateAsync<CustomerEntity>(customerEntity));
+
             return new Response<bool>() { Result = true };
         }
+
+       
     }
 }

@@ -11,7 +11,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
             return new CustomerEntity()
             {
                 UniqueId = Guid.NewGuid().ToString().Replace("-", string.Empty),
-                Email = customerModel.Email.ToLowerInvariant(),
+                Email = customerModel.Email,
                 FirstName = customerModel.FirstName,
                 LastName = customerModel.LastName,
                 Gender = customerModel.Gender,
