@@ -1,16 +1,11 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Database.Interfaces;
-using Bookmyslot.Api.Common.Logging.Contracts;
-using Bookmyslot.Api.Common.Logging.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
-using Microsoft.AspNetCore.Http;
-using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;

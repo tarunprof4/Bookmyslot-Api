@@ -1,6 +1,5 @@
 using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.ExceptionHandlers;
 using Bookmyslot.Api.Common.Injections;
 using Bookmyslot.Api.Customers.Injections;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api

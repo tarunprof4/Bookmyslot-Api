@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Logging.Interfaces;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Net;

@@ -83,7 +83,7 @@
 //            {
 //                app.UseDeveloperExceptionPage();
 //            }
-           
+
 //            app.UseHttpsRedirection();
 
 //            app.ConfigureGlobalExceptionHandler();
@@ -91,7 +91,7 @@
 //            app.UseOpenApi();
 //            app.UseSwaggerUi3();
 
-            
+
 //            app.UseRouting();
 
 //            app.UseAuthorization();
