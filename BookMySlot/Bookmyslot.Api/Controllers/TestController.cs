@@ -37,7 +37,12 @@ namespace Bookmyslot.Api.Controllers
             var slotModel = GetDefaultSlotModel();
 
             this.appLogContext.SetSlotModelInfoToContext(slotModel);
+            this.loggerService.LogError("Slot Model Logged");
+            this.loggerService.LogInfo("Slot Model Logged");
             this.loggerService.LogDebug("Slot Model Logged");
+            this.loggerService.LogVerbose("Slot Model Logged");
+            this.loggerService.LogFatal("Slot Model Logged");
+            this.loggerService.LogWarning("Slot Model Logged");
 
             ResendSlotInformation resendSlotInformation = new ResendSlotInformation();
             var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(null, resendSlotInformation.ResendTo);

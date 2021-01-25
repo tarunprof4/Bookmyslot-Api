@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Logging;
+using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using Serilog;
@@ -27,47 +28,31 @@ namespace Bookmyslot.Api.Common
 
         public async Task Invoke(HttpContext context)
         {
-            var uiRequestId = context.Request.Headers[ThirdPartyConstants.UIRequestId];
+            var correlationId = context.Request.Headers[ThirdPartyConstants.CoorelationId];
             var requestId = Guid.NewGuid().ToString();
             context.Request.Headers.Add(LogConstants.RequestId, requestId);
 
-            await LogRequest(context, uiRequestId,  requestId);
-            await LogResponse(context, uiRequestId, requestId);
+            await LogRequest(context, correlationId,  requestId);
+            await LogResponse(context, correlationId, requestId);
         }
 
 
-        private async Task LogRequest(HttpContext context, string uiRequestId, string requestId)
+        private async Task LogRequest(HttpContext context, string correlationId, string requestId)
         {
             context.Request.EnableBuffering();
-
-            
 
             await using var requestStream = _recyclableMemoryStreamManager.GetStream();
             await context.Request.Body.CopyToAsync(requestStream);
 
             var requestBody = ReadStreamInChunks(requestStream);
-            var compresedBody = string.Empty;
-            if (!string.IsNullOrWhiteSpace(requestBody))
-            {
-                compresedBody = _compression.Compress(requestBody);
-            }
-
-            Log.Debug($"Http Request Information:{Environment.NewLine}" +
-                                   $"UI Request Id: {uiRequestId} " +
-                                   $"Request Id: {requestId} " +
-                                   $"Executing At: {DateTime.UtcNow} " +
-                                   $"Schema:{context.Request.Scheme} " +
-                                   $"Host: {context.Request.Host} " +
-                                   $"Path: {context.Request.Path} " +
-                                   $"Method Type: {context.Request.Method} " +
-                                   $"QueryString: {context.Request.QueryString} " +
-                                   $"Request Body: {requestBody} " +
-                                   $"Compressed Body: {compresedBody} "
-                                   );
+           
+            var requestLog = CreateRequestLog(context, correlationId, requestId, requestBody);
+            Log.Debug("Http Request {@httpRequest}", requestLog);
+        
             context.Request.Body.Position = 0;
         }
 
-        private async Task LogResponse(HttpContext context, string uiRequestId, string requestId)
+        private async Task LogResponse(HttpContext context, string correlationId, string requestId)
         {
             var originalBodyStream = context.Response.Body;
             await using var responseBody = _recyclableMemoryStreamManager.GetStream();
@@ -81,19 +66,10 @@ namespace Bookmyslot.Api.Common
                 compresedBody = _compression.Compress(responseBodyText);
             }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
-            Log.Debug($"Http Response Information:{Environment.NewLine}" +
-                                   $"UI Request Id: {uiRequestId} " +
-                                   $"Request Id: {requestId} " +
-                                   $"Executed At: {DateTime.UtcNow} " +
-                                   $"Schema:{context.Request.Scheme} " +
-                                   $"Host: {context.Request.Host} " +
-                                   $"Path: {context.Request.Path} " +
-                                   $"Method Type: {context.Request.Method} " +
-                                   $"QueryString: {context.Request.QueryString} " +
-                                   $"Response Status Code: {context.Response.StatusCode} " +
-                                   $"Response Body: {responseBodyText} " +
-                                   $"Compressed Body: {compresedBody} "
-                                   );
+
+            var responseLog = CreateResponseLog(context, correlationId, requestId, responseBodyText, compresedBody);
+            Log.Debug("Http Response {@httpResponse}", responseLog);
+           
             await responseBody.CopyToAsync(originalBodyStream);
         }
 
@@ -114,5 +90,35 @@ namespace Bookmyslot.Api.Common
             } while (readChunkLength > 0);
             return textWriter.ToString();
         }
+
+        private RequestLog CreateRequestLog(HttpContext context, string correlationId, string requestId, string requestBody)
+        {
+            var requestLog = new RequestLog();
+            requestLog.Id = requestId;
+            requestLog.CorrelationId = correlationId;
+            requestLog.LogTime = DateTime.UtcNow;
+            requestLog.Schema = context.Request.Scheme;
+            requestLog.Host = context.Request.Host;
+            requestLog.Path = context.Request.Path;
+            requestLog.Method = context.Request.Method;
+            requestLog.QueryString = context.Request.QueryString;
+            requestLog.Body = requestBody;
+
+            return requestLog;
+        }
+
+        private ResponseLog CreateResponseLog(HttpContext context, string correlationId, string requestId, string responseBody, string responseCompressedBody)
+        {
+            var responseLog = new ResponseLog();
+            responseLog.RequestId = requestId;
+            responseLog.CorrelationId = correlationId;
+            responseLog.LogTime = DateTime.UtcNow;
+
+            responseLog.StatusCode = context.Response.StatusCode;
+            responseLog.Body = responseBody;
+            responseLog.CompressedBody = responseCompressedBody;
+            return responseLog;
+        }
     }
+
 }

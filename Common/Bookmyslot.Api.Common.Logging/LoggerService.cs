@@ -26,30 +26,26 @@ namespace Bookmyslot.Api.Common.Logging
             this.appConfiguration = appConfiguration;
             this.httpContext = httpContextAccessor.HttpContext;
 
-         //   this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
-         //.MinimumLevel.Verbose()
-         //.Enrich.With(new DefaultLogEnricher(this.appConfiguration))
-         // //.WriteTo.Http("http://localhost:9600/")
-         // //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
-
-         // .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-         //outputTemplate: this.appConfiguration.LogOutputTemplate)
-         //.CreateLogger();
-
-
             this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
-       .MinimumLevel.Verbose()
-       .Enrich.With(new DefaultLogEnricher(this.appConfiguration, this.httpContext))
+         .MinimumLevel.Verbose()
+         .Enrich.With(new DefaultLogEnricher(this.appConfiguration, this.httpContext))
+          //.WriteTo.Http("http://localhost:9600/")
+          //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
 
-      .Enrich.WithElasticApmCorrelationInfo()
-       // //.WriteTo.Http("http://localhost:9600/")
-         // //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
-        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
-            {
-                CustomFormatter = new EcsTextFormatter()
-             })
-            .CreateLogger();
+          .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+         outputTemplate: this.appConfiguration.LogOutputTemplate)
+         .CreateLogger();
 
+
+            //this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
+            //                         .MinimumLevel.Verbose()
+            //                         .Enrich.With(new DefaultLogEnricher(this.appConfiguration, this.httpContext))
+            //                         .Enrich.WithElasticApmCorrelationInfo()
+            //                         .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+            //                          {
+            //                          CustomFormatter = new EcsTextFormatter()
+            //                          }))
+            //                         .CreateLogger();
 
         }
 

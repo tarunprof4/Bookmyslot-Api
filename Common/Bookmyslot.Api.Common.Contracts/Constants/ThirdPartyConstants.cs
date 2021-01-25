@@ -2,6 +2,6 @@
 {
     public class ThirdPartyConstants
     {
-        public const string UIRequestId = "ui-request-id";
+        public const string CoorelationId = "cor-relation-id";
     }
 }
