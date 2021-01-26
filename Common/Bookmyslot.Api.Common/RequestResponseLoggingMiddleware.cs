@@ -67,7 +67,7 @@ namespace Bookmyslot.Api.Common
             }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
 
-            var responseLog = CreateResponseLog(context, correlationId, requestId, responseBodyText, compresedBody);
+            var responseLog = CreateResponseLog(context, correlationId, requestId, compresedBody);
             Log.Debug("Http Response {@httpResponse}", responseLog);
            
             await responseBody.CopyToAsync(originalBodyStream);
@@ -107,7 +107,7 @@ namespace Bookmyslot.Api.Common
             return requestLog;
         }
 
-        private ResponseLog CreateResponseLog(HttpContext context, string correlationId, string requestId, string responseBody, string responseCompressedBody)
+        private ResponseLog CreateResponseLog(HttpContext context, string correlationId, string requestId, string responseCompressedBody)
         {
             var responseLog = new ResponseLog();
             responseLog.RequestId = requestId;
@@ -115,7 +115,6 @@ namespace Bookmyslot.Api.Common
             responseLog.LogTime = DateTime.UtcNow;
 
             responseLog.StatusCode = context.Response.StatusCode;
-            responseLog.Body = responseBody;
             responseLog.CompressedBody = responseCompressedBody;
             return responseLog;
         }

@@ -16,12 +16,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     public class CustomerBookedSlotRepository : ICustomerBookedSlotRepository
     {
         private readonly IDbConnection connection;
-        private readonly ISqlInterceptor sqlInterceptor;
+        private readonly IDbInterceptor dbInterceptor;
 
-        public CustomerBookedSlotRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
+        public CustomerBookedSlotRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
         {
             this.connection = connection;
-            this.sqlInterceptor = sqlInterceptor;
+            this.dbInterceptor = dbInterceptor;
         }
       
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerBookedSlots(string customerId)
@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         private async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(string operationName, string sql, object parameters)
         {
-            var slotEntities = await this.sqlInterceptor.GetQueryResults(operationName, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            var slotEntities = await this.dbInterceptor.GetQueryResults(operationName, parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
         }

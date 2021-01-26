@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
   </ItemGroup>
 

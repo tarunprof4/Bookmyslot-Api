@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Common.Database.Interfaces
 {
-    public interface ISqlInterceptor
+    public interface IDbInterceptor
     {
         Task<T> GetQueryResults<T>(string sql, object parameters, Func<Task<T>> retrieveValues);
     }

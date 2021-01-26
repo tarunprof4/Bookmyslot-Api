@@ -16,12 +16,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     public class CustomerSlotRepository : ICustomerSlotRepository
     {
         private readonly IDbConnection connection;
-        private readonly ISqlInterceptor sqlInterceptor;
+        private readonly IDbInterceptor dbInterceptor;
 
-        public CustomerSlotRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
+        public CustomerSlotRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
         {
             this.connection = connection;
-            this.sqlInterceptor = sqlInterceptor;
+            this.dbInterceptor = dbInterceptor;
         }
 
 
@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetDistinctCustomersNearestSlotFromTodayQuery;
 
-            var slotEntities = await this.sqlInterceptor.GetQueryResults("GetDistinctCustomersNearestSlotFromToday", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            var slotEntities = await this.dbInterceptor.GetQueryResults("GetDistinctCustomersNearestSlotFromToday", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
         }
@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = false, CreatedBy= email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetCustomerAvailableSlotsFromTodayQuery;
 
-            var slotEntities = await this.sqlInterceptor.GetQueryResults("GetCustomerAvailableSlots", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            var slotEntities = await this.dbInterceptor.GetQueryResults("GetCustomerAvailableSlots", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
         }

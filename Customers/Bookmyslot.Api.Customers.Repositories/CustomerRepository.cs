@@ -16,19 +16,19 @@ namespace Bookmyslot.Api.Customers.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private readonly IDbConnection connection;
-        private readonly ISqlInterceptor sqlInterceptor;
+        private readonly IDbInterceptor dbInterceptor;
 
-        public CustomerRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
+        public CustomerRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
         {
             this.connection = connection;
-            this.sqlInterceptor = sqlInterceptor;
+            this.dbInterceptor = dbInterceptor;
         }
         public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
         {
             var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
             
             var parameters = new { customerEntity = customerEntity };
-            await this.sqlInterceptor.GetQueryResults("CreateCustomer", parameters, () => this.connection.InsertAsync<string, CustomerEntity>(customerEntity));
+            await this.dbInterceptor.GetQueryResults("CreateCustomer", parameters, () => this.connection.InsertAsync<string, CustomerEntity>(customerEntity));
 
             return new Response<string>() { Result = customerModel.Email };
         }
@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             var parameters = new { Email = email };
             var sql = CustomerTableQueries.GetCustomerByEmailsQuery;
-            var customerEntity = await this.sqlInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters));
+            var customerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateCustomerModelResponse(customerEntity);
         }
@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             var parameters = new { customerId = customerId };
 
-            var customerEntity = await this.sqlInterceptor.GetQueryResults("GetCustomerById", parameters, () => this.connection.GetAsync<CustomerEntity>(customerId));
+            var customerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerById", parameters, () => this.connection.GetAsync<CustomerEntity>(customerId));
 
             return ResponseModelFactory.CreateCustomerModelResponse(customerEntity);
         }
@@ -72,7 +72,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             var parameters = new { CustomerIds = customerIds };
             var sql = CustomerTableQueries.GetCustomersByCustomerIdsQuery;
 
-            var customerEntities = await this.sqlInterceptor.GetQueryResults("GetCustomersByCustomerIds", parameters, () => this.connection.QueryAsync<CustomerEntity>(sql, parameters));
+            var customerEntities = await this.dbInterceptor.GetQueryResults("GetCustomersByCustomerIds", parameters, () => this.connection.QueryAsync<CustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateCustomerModelsResponse(customerEntities);
         }
@@ -84,7 +84,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             var customerEntity = EntityFactory.EntityFactory.UpdateCustomerEntity(customerModel);
             
             var parameters = new { customerEntity = customerEntity };
-            await this.sqlInterceptor.GetQueryResults("UpdateCustomer", parameters, () => this.connection.UpdateAsync<CustomerEntity>(customerEntity));
+            await this.dbInterceptor.GetQueryResults("UpdateCustomer", parameters, () => this.connection.UpdateAsync<CustomerEntity>(customerEntity));
 
             return new Response<bool>() { Result = true };
         }

@@ -17,11 +17,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     public class CustomerCancelledSlotRepository : ICustomerCancelledSlotRepository
     {
         private readonly IDbConnection connection;
-        private readonly ISqlInterceptor sqlInterceptor;
-        public CustomerCancelledSlotRepository(IDbConnection connection, ISqlInterceptor sqlInterceptor)
+        private readonly IDbInterceptor dbInterceptor;
+        public CustomerCancelledSlotRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
         {
             this.connection = connection;
-            this.sqlInterceptor = sqlInterceptor;
+            this.dbInterceptor = dbInterceptor;
         }
 
         public async Task<Response<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel)
@@ -29,7 +29,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var customerEntity = EntityFactory.EntityFactory.CreateCancelledSlotEntity(cancelledSlotModel);
 
             var parameters = new { cancelledSlotModel = cancelledSlotModel };
-            await this.sqlInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.InsertAsync<Guid, CancelledSlotEntity>(customerEntity));
+            await this.dbInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.InsertAsync<Guid, CancelledSlotEntity>(customerEntity));
 
             return new Response<bool>() { Result = true };
         }
@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = true, CancelledBy = customerId };
             var sql = SlotTableQueries.GetCustomerSharedByCancelledSlotsQuery;
 
-            var cancelledSlotEntities = await this.sqlInterceptor.GetQueryResults("GetCustomerSharedCancelledSlots", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
+            var cancelledSlotEntities = await this.dbInterceptor.GetQueryResults("GetCustomerSharedCancelledSlots", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
         }
@@ -52,7 +52,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             var parameters = new { IsDeleted = true, CancelledBy = customerId, BookedBy = customerId };
             var sql = SlotTableQueries.GetCustomerBookedByCancelledSlotsQuery;
 
-            var cancelledSlotEntities = await this.sqlInterceptor.GetQueryResults("GetCustomerBookedCancelledSlots", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
+            var cancelledSlotEntities = await this.dbInterceptor.GetQueryResults("GetCustomerBookedCancelledSlots", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
         }
