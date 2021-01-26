@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
-using Bookmyslot.Api.SlotScheduler.Contracts;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
