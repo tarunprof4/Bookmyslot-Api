@@ -6,12 +6,14 @@ namespace Bookmyslot.Api.Common.Logging.Enrichers
 {
     public class StaticDefaultLogEnricher : ILogEventEnricher
     {
-        public StaticDefaultLogEnricher()
+        private readonly string appVersion;
+        public StaticDefaultLogEnricher(string appVersion)
         {
+            this.appVersion = appVersion;
         }
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("ThreadId", Thread.CurrentThread.ManagedThreadId));
+            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("Version", this.appVersion));
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("Level", logEvent.Level));
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UtcTimestamp", logEvent.Timestamp.UtcDateTime));
         }

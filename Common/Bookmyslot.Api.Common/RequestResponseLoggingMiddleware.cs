@@ -96,7 +96,6 @@ namespace Bookmyslot.Api.Common
             var requestLog = new RequestLog();
             requestLog.RequestId = requestId;
             requestLog.CorrelationId = correlationId;
-            requestLog.LogTime = DateTime.UtcNow;
             requestLog.Schema = context.Request.Scheme;
             requestLog.Host = context.Request.Host;
             requestLog.Path = context.Request.Path;
@@ -114,7 +113,6 @@ namespace Bookmyslot.Api.Common
             var responseLog = new ResponseLog();
             responseLog.RequestId = requestId;
             responseLog.CorrelationId = correlationId;
-            responseLog.LogTime = DateTime.UtcNow;
 
             responseLog.StatusCode = context.Response.StatusCode;
             responseLog.CompressedBody = responseCompressedBody;

@@ -9,7 +9,6 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
 
         public string RequestId { get; set; }
 
-        public DateTime LogTime { get; set; }
 
         public string Schema { get; set; }
 
