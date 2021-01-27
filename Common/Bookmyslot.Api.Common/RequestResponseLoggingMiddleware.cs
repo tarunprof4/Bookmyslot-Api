@@ -45,7 +45,7 @@ namespace Bookmyslot.Api.Common
             await context.Request.Body.CopyToAsync(requestStream);
 
             var requestBody = ReadStreamInChunks(requestStream);
-           
+
             var requestLog = CreateRequestLog(context, correlationId, requestId, requestBody);
             Log.Debug("Http Request {@httpRequest}", requestLog);
         
@@ -103,6 +103,8 @@ namespace Bookmyslot.Api.Common
             requestLog.Method = context.Request.Method;
             requestLog.QueryString = context.Request.QueryString;
             requestLog.Body = requestBody;
+            requestLog.IpAddress = context.Connection.RemoteIpAddress.ToString();
+            requestLog.UserAgent = context.Request.Headers[LogConstants.UserAgent].ToString();
 
             return requestLog;
         }

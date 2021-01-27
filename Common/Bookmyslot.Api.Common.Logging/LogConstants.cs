@@ -4,5 +4,7 @@
     {
         public const string SlotLogContext = "slot";
         public const string RequestId = "Bookmyslot-RequestId";
+
+        public const string UserAgent = "User-Agent";
     }
 }
