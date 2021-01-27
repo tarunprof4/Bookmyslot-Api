@@ -3,9 +3,9 @@ using System;
 
 namespace Bookmyslot.Api.Common.Logging.Contracts
 {
-    public class SqlDatabaseRequestLog
+    public class DatabaseRequestLog
     { 
-        public SqlDatabaseRequestLog(string requestId, string operationName, object parameters)
+        public DatabaseRequestLog(string requestId, string operationName, object parameters)
         {
             this.RequestId = requestId;
             this.LogTime = DateTime.UtcNow;

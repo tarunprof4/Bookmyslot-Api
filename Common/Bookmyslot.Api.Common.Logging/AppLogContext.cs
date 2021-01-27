@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Logging.Interfaces;
+﻿using Bookmyslot.Api.Common.Logging.Contracts;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Bookmyslot.Api.Common.Logging.LogContexts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Serilog.Context;
@@ -19,6 +20,18 @@ namespace Bookmyslot.Api.Common.Logging
             throw new Exception();
             //CustomLogContext customLogContext = new CustomLogContext(customObject);
             //return LogContext.Push(customLogContext);
+        }
+
+        public IDisposable SetDatabaseRequestLogInfoContext(DatabaseRequestLog databaseRequestLog)
+        {
+            var databaseRequestLogContext = new DatabaseRequestLogContext(databaseRequestLog);
+            return LogContext.Push(databaseRequestLogContext);
+        }
+
+        public IDisposable SetDatabaseResponseLogInfoContext(DatabaseResponseLog databaseResponseLog)
+        {
+            var databaseResponseLogContext = new DatabaseResponseLogContext(databaseResponseLog);
+            return LogContext.Push(databaseResponseLogContext);
         }
 
         public IDisposable SetSlotModelInfoToContext(SlotModel slotModel)

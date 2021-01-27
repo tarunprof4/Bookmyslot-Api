@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Common.Injections
 
         private static void DatabaseInjections(IServiceCollection services)
         {
-            services.AddSingleton<IDbInterceptor, SqlInterceptor>();
+            services.AddSingleton<IDbInterceptor, DbInterceptor>();
         }
 
     }
