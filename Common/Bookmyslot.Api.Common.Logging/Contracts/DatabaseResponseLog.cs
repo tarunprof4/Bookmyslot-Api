@@ -8,13 +8,10 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
         public DatabaseResponseLog(string requestId,  string compressedResponse)
         {
             this.RequestId = requestId;
-            this.LogTime = DateTime.UtcNow;
             this.CompressedResponse = compressedResponse;
         }
 
         public string RequestId { get; set; }
-        public DateTime LogTime { get; set; }
-        
         public string CompressedResponse { get; set; }
     
     }

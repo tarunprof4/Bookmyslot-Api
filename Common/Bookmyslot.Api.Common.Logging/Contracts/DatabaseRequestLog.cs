@@ -8,7 +8,6 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
         public DatabaseRequestLog(string requestId, string operationName, object parameters)
         {
             this.RequestId = requestId;
-            this.LogTime = DateTime.UtcNow;
             this.OperationName = operationName;
             this.Parameters = parameters;
         }
@@ -16,7 +15,6 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
         
 
         public string RequestId { get; set; }
-        public DateTime LogTime { get; set; }
         public string OperationName { get; set; }
         
         public object Parameters { get; set; }
