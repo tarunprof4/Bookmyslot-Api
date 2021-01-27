@@ -5,9 +5,9 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
 {
     public class SqlDatabaseResponseLog 
     {
-        public SqlDatabaseResponseLog(IHttpContextAccessor httpContextAccessor,  string compressedResponse)
+        public SqlDatabaseResponseLog(string requestId,  string compressedResponse)
         {
-            this.RequestId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.RequestId];
+            this.RequestId = requestId;
             this.LogTime = DateTime.UtcNow;
             this.CompressedResponse = compressedResponse;
         }

@@ -5,9 +5,9 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
 {
     public class SqlDatabaseRequestLog
     { 
-        public SqlDatabaseRequestLog(IHttpContextAccessor httpContextAccessor, string operationName, object parameters)
+        public SqlDatabaseRequestLog(string requestId, string operationName, object parameters)
         {
-            this.RequestId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.RequestId];
+            this.RequestId = requestId;
             this.LogTime = DateTime.UtcNow;
             this.OperationName = operationName;
             this.Parameters = parameters;
