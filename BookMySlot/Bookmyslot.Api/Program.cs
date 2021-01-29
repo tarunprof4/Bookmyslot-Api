@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
+using Serilog.Sinks.MSSqlServer;
 using System;
 
 namespace Bookmyslot.Api
@@ -25,24 +26,33 @@ namespace Bookmyslot.Api
             string elasticSearchUrl = configuration.GetSection(AppConfigurationConstants.ElasticSearchUrl).Value;
 
 
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .Enrich.With(new StaticDefaultLogEnricher(appVersion))
+            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+             outputTemplate: staticLogOutputTemplate)
+            .CreateLogger();
+
+
             //Log.Logger = new LoggerConfiguration()
-            //.MinimumLevel.Verbose()
-            //.Enrich.WithProperty("Version", appVersion)
-            //.Enrich.With(new StaticDefaultLogEnricher())
-            //.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-            // outputTemplate: staticLogOutputTemplate)
+            //                       .MinimumLevel.Verbose()
+            //                       .Enrich.With(new StaticDefaultLogEnricher(appVersion))
+            //                       .Enrich.WithElasticApmCorrelationInfo()
+            //                       .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticSearchUrl))
+            //                       {
+            //                           CustomFormatter = new EcsTextFormatter()
+            //                       }))
+            //                       .CreateLogger();
+
+
+
+            //        Log.Logger = new LoggerConfiguration().MinimumLevel.Verbose()
+            //                               .Enrich.With(new StaticDefaultLogEnricher(appVersion))
+            //.WriteTo
+            //.MSSqlServer(
+            //    connectionString: "Data Source=.;Initial Catalog=LogDb;Integrated Security=True",
+            //    sinkOptions: new MSSqlServerSinkOptions { TableName = "LogEvents" })
             //.CreateLogger();
-
-
-            Log.Logger = new LoggerConfiguration().Enrich.FromLogContext()
-                                   .MinimumLevel.Verbose()
-                                   .Enrich.With(new StaticDefaultLogEnricher(appVersion))
-                                   .Enrich.WithElasticApmCorrelationInfo()
-                                   .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticSearchUrl))
-                                   {
-                                       CustomFormatter = new EcsTextFormatter()
-                                   }))
-                                   .CreateLogger();
 
 
             try
