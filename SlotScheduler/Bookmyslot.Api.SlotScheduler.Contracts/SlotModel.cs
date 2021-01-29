@@ -48,5 +48,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
                 return SlotEndTime - SlotStartTime;
             }
         }
+
+        public DateTime CreatedDateUtc { get; set; }
     }
 }

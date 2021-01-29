@@ -17,8 +17,10 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
         public string Gender { get; set; }
 
         public string Email { get; set; }
-       
 
+        public string BioHeadLine { get; set; }
+
+        public DateTime CreatedDateUtc { get; set; }
         public DateTime? ModifiedDateUtc { get; set; }
     }
 }

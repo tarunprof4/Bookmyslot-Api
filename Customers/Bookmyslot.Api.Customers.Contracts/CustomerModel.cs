@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bookmyslot.Api.Customers.Contracts
@@ -16,5 +17,9 @@ namespace Bookmyslot.Api.Customers.Contracts
         public string Gender { get; set; }
 
         public string Email { get; set; }
+
+        public string BioHeadLine { get; set; }
+
+        public DateTime CreatedDateUtc { get; set; }
     }
 }

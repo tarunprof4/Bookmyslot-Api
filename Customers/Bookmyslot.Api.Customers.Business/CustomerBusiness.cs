@@ -87,6 +87,7 @@ namespace Bookmyslot.Api.Customers.Business
                 {
                     SanitizeCustomerModel(customerModel);
                     customerModel.Id = customerExists.Item2.Id;
+                    customerModel.CreatedDateUtc = customerExists.Item2.CreatedDateUtc;
 
                     return await this.customerRepository.UpdateCustomer(customerModel);
                 }

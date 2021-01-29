@@ -24,6 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 
         public DateTime? ModifiedDateUtc { get; set; }
 
+        public DateTime CreatedDateUtc { get; set; }
         public bool IsDeleted { get; set; }
 
     }

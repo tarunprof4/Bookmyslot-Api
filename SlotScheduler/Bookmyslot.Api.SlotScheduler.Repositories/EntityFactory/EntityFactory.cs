@@ -18,6 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
                 SlotDateUtc = slotModel.SlotDateUtc,
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime,
+                CreatedDateUtc = DateTime.UtcNow
             };
         }
 
@@ -25,6 +26,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
         {
             var slotEntity = CreateSlotEntity(slotModel);
             slotEntity.Id = slotModel.Id;
+            slotEntity.CreatedDateUtc = slotModel.CreatedDateUtc;
             slotEntity.ModifiedDateUtc = DateTime.UtcNow;
             return slotEntity;
         }

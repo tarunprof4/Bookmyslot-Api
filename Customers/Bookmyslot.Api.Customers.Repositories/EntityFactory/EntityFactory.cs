@@ -15,13 +15,16 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
                 FirstName = customerModel.FirstName,
                 LastName = customerModel.LastName,
                 Gender = customerModel.Gender,
-            };
+                BioHeadLine = customerModel.BioHeadLine,
+                CreatedDateUtc = DateTime.UtcNow
+        };
         }
 
         internal static CustomerEntity UpdateCustomerEntity(CustomerModel customerModel)
         {
             var customerEntity = CreateCustomerEntity(customerModel);
             customerEntity.UniqueId = customerModel.Id;
+            customerEntity.CreatedDateUtc = customerModel.CreatedDateUtc;
             customerEntity.ModifiedDateUtc = DateTime.UtcNow;
             return customerEntity;
         }
