@@ -36,18 +36,18 @@ namespace Bookmyslot.Api.Common
             var requestId = Guid.NewGuid().ToString();
             context.Request.Headers.Add(LogConstants.RequestId, requestId);
 
-            var requestBody = await LogRequest(context, correlationId,  requestId);
+            var requestBody = await LogRequest(context);
             var requestLog = CreateRequestLog(context, correlationId, requestId, requestBody);
             Log.Debug("Http Request {@httpRequest}", requestLog);
 
-            var compresedBody = await LogResponse(context, correlationId, requestId, stopWatch);
+            var compresedBody = await LogResponse(context);
             stopWatch.Stop();
             var responseLog = CreateResponseLog(context, correlationId, requestId, compresedBody, stopWatch.Elapsed);
             Log.Debug("Http Response {@httpResponse}", responseLog);
         }
 
 
-        private async Task<string> LogRequest(HttpContext context, string correlationId, string requestId)
+        private async Task<string> LogRequest(HttpContext context)
         {
             context.Request.EnableBuffering();
 
@@ -60,7 +60,7 @@ namespace Bookmyslot.Api.Common
             return requestBody;
         }
 
-        private async Task<string> LogResponse(HttpContext context, string correlationId, string requestId, Stopwatch stopWatch)
+        private async Task<string> LogResponse(HttpContext context)
         {
             var originalBodyStream = context.Response.Body;
             await using var responseBody = _recyclableMemoryStreamManager.GetStream();
