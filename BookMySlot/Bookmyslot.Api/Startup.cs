@@ -1,15 +1,22 @@
 using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.ExceptionHandlers;
 using Bookmyslot.Api.Common.Injections;
+using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Customers.Injections;
 using Bookmyslot.Api.SlotScheduler.Injections;
+using Elastic.Apm.SerilogEnricher;
+using Elastic.CommonSchema.Serilog;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api
@@ -40,6 +47,7 @@ namespace Bookmyslot.Api
             SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
             SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
 
+            
 
             services.AddControllers();
 
@@ -92,8 +100,10 @@ namespace Bookmyslot.Api
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            InitializeSerilog(serviceProvider);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -104,7 +114,7 @@ namespace Bookmyslot.Api
 
             app.UseHttpsRedirection();
 
-            
+
 
             app.ConfigureGlobalExceptionHandler();
 
@@ -122,10 +132,27 @@ namespace Bookmyslot.Api
                 endpoints.MapControllers();
             });
 
-         
 
 
 
+
+        }
+
+        private static void InitializeSerilog(IServiceProvider serviceProvider)
+        {
+            var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
+            var appConfiguration = serviceProvider.GetService<IAppConfiguration>();
+            Log.Logger = new LoggerConfiguration()
+                                   .MinimumLevel.Verbose()
+                                   .Enrich.With(defaultLogEnricher)
+                                   .Enrich.WithElasticApmCorrelationInfo()
+                                   .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri(appConfiguration.ElasticSearchUrl))
+                                   {
+                                       CustomFormatter = new EcsTextFormatter()
+                                   }))
+                                   .CreateLogger();
+
+            Log.Debug("Starting Bookmyslot web host");
         }
     }
 }

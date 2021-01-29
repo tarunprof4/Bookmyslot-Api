@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Database;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Common.Logging;
+using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +24,7 @@ namespace Bookmyslot.Api.Common.Injections
         {
             services.AddTransient<ILoggerService, LoggerService>();
             services.AddTransient<IAppLogContext, AppLogContext>();
+            services.AddTransient<DefaultLogEnricher>();
         }
 
         private static void DatabaseInjections(IServiceCollection services)

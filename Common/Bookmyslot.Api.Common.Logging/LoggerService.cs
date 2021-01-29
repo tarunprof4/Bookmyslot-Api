@@ -26,15 +26,15 @@ namespace Bookmyslot.Api.Common.Logging
             this.appConfiguration = appConfiguration;
             this.httpContext = httpContextAccessor.HttpContext;
 
-            this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
-         .MinimumLevel.Verbose()
-         .Enrich.With(new DefaultLogEnricher(this.appConfiguration, this.httpContext))
-          //.WriteTo.Http("http://localhost:9600/")
-          //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
+         //   this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()
+         //.MinimumLevel.Verbose()
+         //.Enrich.With(new DefaultLogEnricher(this.appConfiguration, this.httpContext))
+         // //.WriteTo.Http("http://localhost:9600/")
+         // //.WriteTo.Async(a => a.Http("http://localhost:9600/", 1))
 
-          .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-         outputTemplate: this.appConfiguration.LogOutputTemplate)
-         .CreateLogger();
+         // .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+         //outputTemplate: this.appConfiguration.LogOutputTemplate)
+         //.CreateLogger();
 
 
             //this.serilogFileLogger = new LoggerConfiguration().Enrich.FromLogContext()

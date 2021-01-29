@@ -16,22 +16,22 @@ namespace Bookmyslot.Api
     {
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                                .AddJsonFile("appsettings.json")
-                                .Build();
+            //var configuration = new ConfigurationBuilder()
+            //                    .AddJsonFile("appsettings.json")
+            //                    .Build();
 
 
-            string appVersion = configuration.GetSection(AppConfigurationConstants.AppVersion).Value;
-            string staticLogOutputTemplate = configuration.GetSection(AppConfigurationConstants.LogSettings).GetSection(AppConfigurationConstants.StaticLogOutPutTemplate).Value;
-            string elasticSearchUrl = configuration.GetSection(AppConfigurationConstants.ElasticSearchUrl).Value;
+            //string appVersion = configuration.GetSection(AppConfigurationConstants.AppVersion).Value;
+            //string staticLogOutputTemplate = configuration.GetSection(AppConfigurationConstants.LogSettings).GetSection(AppConfigurationConstants.StaticLogOutPutTemplate).Value;
+            //string elasticSearchUrl = configuration.GetSection(AppConfigurationConstants.ElasticSearchUrl).Value;
 
 
-            Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Verbose()
-            .Enrich.With(new StaticDefaultLogEnricher(appVersion))
-            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-             outputTemplate: staticLogOutputTemplate)
-            .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //.MinimumLevel.Verbose()
+            //.Enrich.With(new StaticDefaultLogEnricher(appVersion))
+            //.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+            // outputTemplate: staticLogOutputTemplate)
+            //.CreateLogger();
 
 
             //Log.Logger = new LoggerConfiguration()
@@ -57,7 +57,6 @@ namespace Bookmyslot.Api
 
             try
             {
-                Log.Debug("Starting Bookmyslot web host");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
