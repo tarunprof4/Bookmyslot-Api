@@ -140,8 +140,19 @@ namespace Bookmyslot.Api
 
         private static void InitializeSerilog(IServiceProvider serviceProvider)
         {
+
             var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
             var appConfiguration = serviceProvider.GetService<IAppConfiguration>();
+
+
+            //Log.Logger = new LoggerConfiguration()
+            //.MinimumLevel.Verbose()
+            //.Enrich.With(defaultLogEnricher)
+            //.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+            // outputTemplate: appConfiguration.LogOutputTemplate)
+            //.CreateLogger();
+
+
             Log.Logger = new LoggerConfiguration()
                                    .MinimumLevel.Verbose()
                                    .Enrich.With(defaultLogEnricher)
@@ -151,6 +162,8 @@ namespace Bookmyslot.Api
                                        CustomFormatter = new EcsTextFormatter()
                                    }))
                                    .CreateLogger();
+
+
 
             Log.Debug("Starting Bookmyslot web host");
         }

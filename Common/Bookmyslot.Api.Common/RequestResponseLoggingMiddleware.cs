@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using Serilog;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -28,16 +29,25 @@ namespace Bookmyslot.Api.Common
 
         public async Task Invoke(HttpContext context)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             var correlationId = context.Request.Headers[ThirdPartyConstants.CoorelationId];
             var requestId = Guid.NewGuid().ToString();
             context.Request.Headers.Add(LogConstants.RequestId, requestId);
 
-            await LogRequest(context, correlationId,  requestId);
-            await LogResponse(context, correlationId, requestId);
+            var requestBody = await LogRequest(context, correlationId,  requestId);
+            var requestLog = CreateRequestLog(context, correlationId, requestId, requestBody);
+            Log.Debug("Http Request {@httpRequest}", requestLog);
+
+            var compresedBody = await LogResponse(context, correlationId, requestId, stopWatch);
+            stopWatch.Stop();
+            var responseLog = CreateResponseLog(context, correlationId, requestId, compresedBody, stopWatch.Elapsed);
+            Log.Debug("Http Response {@httpResponse}", responseLog);
         }
 
 
-        private async Task LogRequest(HttpContext context, string correlationId, string requestId)
+        private async Task<string> LogRequest(HttpContext context, string correlationId, string requestId)
         {
             context.Request.EnableBuffering();
 
@@ -46,13 +56,11 @@ namespace Bookmyslot.Api.Common
 
             var requestBody = ReadStreamInChunks(requestStream);
 
-            var requestLog = CreateRequestLog(context, correlationId, requestId, requestBody);
-            Log.Debug("Http Request {@httpRequest}", requestLog);
-        
             context.Request.Body.Position = 0;
+            return requestBody;
         }
 
-        private async Task LogResponse(HttpContext context, string correlationId, string requestId)
+        private async Task<string> LogResponse(HttpContext context, string correlationId, string requestId, Stopwatch stopWatch)
         {
             var originalBodyStream = context.Response.Body;
             await using var responseBody = _recyclableMemoryStreamManager.GetStream();
@@ -67,10 +75,10 @@ namespace Bookmyslot.Api.Common
             }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
 
-            var responseLog = CreateResponseLog(context, correlationId, requestId, compresedBody);
-            Log.Debug("Http Response {@httpResponse}", responseLog);
+         
            
             await responseBody.CopyToAsync(originalBodyStream);
+            return compresedBody;
         }
 
         private static string ReadStreamInChunks(Stream stream)
@@ -108,7 +116,7 @@ namespace Bookmyslot.Api.Common
             return requestLog;
         }
 
-        private ResponseLog CreateResponseLog(HttpContext context, string correlationId, string requestId, string responseCompressedBody)
+        private ResponseLog CreateResponseLog(HttpContext context, string correlationId, string requestId, string responseCompressedBody, TimeSpan responseTime)
         {
             var responseLog = new ResponseLog();
             responseLog.RequestId = requestId;
@@ -116,6 +124,7 @@ namespace Bookmyslot.Api.Common
 
             responseLog.StatusCode = context.Response.StatusCode;
             responseLog.CompressedBody = responseCompressedBody;
+            responseLog.ResponseTime = responseTime;
             return responseLog;
         }
     }

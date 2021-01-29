@@ -20,7 +20,7 @@ namespace Bookmyslot.Api.Common.Logging.Enrichers
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("Version", this.appConfiguration.AppVersion));
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("Level", logEvent.Level));
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UtcTimestamp", logEvent.Timestamp.UtcDateTime));
-            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("RequestId", this.httpContextAccessor.HttpContext?.Request.Headers[LogConstants.RequestId]);
+            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("RequestId", this.httpContextAccessor.HttpContext?.Request.Headers[LogConstants.RequestId]));
         }
     }
 }

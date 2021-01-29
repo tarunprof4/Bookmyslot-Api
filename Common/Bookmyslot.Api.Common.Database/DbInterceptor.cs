@@ -6,6 +6,7 @@ using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Common.Database
@@ -23,14 +24,19 @@ namespace Bookmyslot.Api.Common.Database
 
         public async Task<T> GetQueryResults<T>(string sql, object parameters, Func<Task<T>> retrieveValues)
         {
+          
+
             var requestId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.RequestId];
             var databaseRequestLog = new DatabaseRequestLog(requestId, sql, parameters);
             Log.Debug("{@databaseRequestLog}", databaseRequestLog);
 
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
             var result = await retrieveValues.Invoke();
-            var compresedResponseBody = compression.Compress(result);
+            stopWatch.Stop();
 
-            var databaseResponseLog = new DatabaseResponseLog(requestId, compresedResponseBody);
+            var compresedResponseBody = compression.Compress(result);
+            var databaseResponseLog = new DatabaseResponseLog(requestId, compresedResponseBody, stopWatch.Elapsed);
             Log.Debug("{@databaseResponseLog}", databaseResponseLog);
 
             return result;

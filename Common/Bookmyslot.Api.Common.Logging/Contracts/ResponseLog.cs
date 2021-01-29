@@ -10,6 +10,8 @@ namespace Bookmyslot.Api.Common.Logging.Contracts
 
         public int StatusCode { get; set; }
         public string CompressedBody { get; set; }
+
+        public TimeSpan ResponseTime { get; set; }
     }
 
 }
