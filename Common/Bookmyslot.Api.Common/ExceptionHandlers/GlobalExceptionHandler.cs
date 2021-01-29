@@ -31,7 +31,7 @@ namespace Bookmyslot.Api.Common.ExceptionHandlers
                             Exception = contextFeature.Error
                         };
 
-                        Log.Error("{@errorLog}", errorLog);
+                        Log.Error(contextFeature.Error, string.Empty);
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(new List<string>() { "Internal Server Error" }));
                     }
                 });
