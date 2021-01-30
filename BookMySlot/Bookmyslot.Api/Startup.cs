@@ -145,23 +145,23 @@ namespace Bookmyslot.Api
             var appConfiguration = serviceProvider.GetService<IAppConfiguration>();
 
 
-            //Log.Logger = new LoggerConfiguration()
-            //.MinimumLevel.Verbose()
-            //.Enrich.With(defaultLogEnricher)
-            //.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
-            // outputTemplate: appConfiguration.LogOutputTemplate)
-            //.CreateLogger();
-
-
             Log.Logger = new LoggerConfiguration()
-                                   .MinimumLevel.Verbose()
-                                   .Enrich.With(defaultLogEnricher)
-                                   .Enrich.WithElasticApmCorrelationInfo()
-                                   .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri(appConfiguration.ElasticSearchUrl))
-                                   {
-                                       CustomFormatter = new EcsTextFormatter()
-                                   }))
-                                   .CreateLogger();
+            .MinimumLevel.Verbose()
+            .Enrich.With(defaultLogEnricher)
+            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day,
+             outputTemplate: appConfiguration.LogOutputTemplate)
+            .CreateLogger();
+
+
+            //Log.Logger = new LoggerConfiguration()
+            //                       .MinimumLevel.Verbose()
+            //                       .Enrich.With(defaultLogEnricher)
+            //                       .Enrich.WithElasticApmCorrelationInfo()
+            //                       .WriteTo.Async(a => a.Elasticsearch(new ElasticsearchSinkOptions(new Uri(appConfiguration.ElasticSearchUrl))
+            //                       {
+            //                           CustomFormatter = new EcsTextFormatter()
+            //                       }))
+            //                       .CreateLogger();
 
 
 

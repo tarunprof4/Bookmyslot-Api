@@ -29,7 +29,7 @@ namespace Bookmyslot.Api.Common.ExceptionHandlers
                     {
                         var errorMessage = GetErrorMessage(errors[0]);
                         Errors.Add(key, new[] { errorMessage });
-                        ErrorMessages.Add(key + " " + errorMessage);
+                        ErrorMessages.Add(errorMessage);
                     }
                     else
                     {
@@ -37,7 +37,7 @@ namespace Bookmyslot.Api.Common.ExceptionHandlers
                         for (var i = 0; i < errors.Count; i++)
                         {
                             errorMessages[i] = GetErrorMessage(errors[i]);
-                            ErrorMessages.Add(key + errorMessages[i]);
+                            ErrorMessages.Add(errorMessages[i]);
                         }
                         Errors.Add(key, errorMessages);
 
@@ -49,7 +49,7 @@ namespace Bookmyslot.Api.Common.ExceptionHandlers
         }
         string GetErrorMessage(ModelError error)
         {
-            return "The input was not valid";
+            return error.ErrorMessage;
         }
 
     }

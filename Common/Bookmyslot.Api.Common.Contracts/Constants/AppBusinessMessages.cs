@@ -12,8 +12,9 @@
         public const string CustomerIdNotValid = "Customer id is not valid";
         public const string EmailIdExists = "Email id exists";
         public const string EmailIdDoesNotExists = "Email id does not exists";
-        public const string FirstNameInValid = "Fist name is not Valid";
-        public const string MiddleNameInValid = "Middle name is not Valid";
+        public const string FirstNameRequired = "First name is required";
+        public const string FirstNameInValid = "First name is not Valid";
+        public const string LastNameRequired = "Last name is required";
         public const string LastNameInValid = "Last name is not valid";
         public const string GenderNotValid = "Gender is not valid";
         public const string NoRecordsFound = "no records found";
