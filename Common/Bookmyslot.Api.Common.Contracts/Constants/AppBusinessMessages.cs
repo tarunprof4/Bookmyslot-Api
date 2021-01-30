@@ -35,5 +35,9 @@
         public const string NoSlotsFound = "no slots found";
 
         public const string MinimumDaysForSlotMeetingLink = "slot meeting link will be sent 1 day before the meeting";
+
+        public const int NameMaxLength = 50;
+        public const string FirstNameMaxLength = "Please keep first name less than 50 characters";
+        public const string LastNameMaxLength = "Please keep last name less than 50 characters";
     }
 }
