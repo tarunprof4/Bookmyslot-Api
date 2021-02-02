@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
+    [Authorize]
     public class CustomerController : BaseApiController
     {
         private readonly ICustomerBusiness customerBusiness;

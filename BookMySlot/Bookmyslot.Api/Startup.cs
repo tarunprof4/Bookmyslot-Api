@@ -14,10 +14,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace Bookmyslot.Api
 {
@@ -33,7 +37,7 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddHttpContextAccessor();
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
@@ -47,33 +51,11 @@ namespace Bookmyslot.Api
             SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
             SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
 
-            
+
 
             services.AddControllers();
 
-
-            services.AddOpenApiDocument(config =>
-            {
-                config.PostProcess = document =>
-                {
-                    document.Info.Version = "v1";
-                    document.Info.Title = "Bookmyslot Customer API";
-                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
-                    document.Info.TermsOfService = "None";
-                    document.Info.Contact = new NSwag.OpenApiContact
-                    {
-                        Name = "TA",
-                        Email = string.Empty,
-                        //Url = "https://twitter.com/spboyer"
-                    };
-                    document.Info.License = new NSwag.OpenApiLicense
-                    {
-                        Name = "",
-                        //Url = "https://example.com/license"
-                    };
-                };
-            });
-
+            InitializeSwagger(services);
 
             services.AddMvc()
        .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
@@ -87,14 +69,49 @@ namespace Bookmyslot.Api
        });
 
 
-            //services.AddAuthentication().AddFacebook(facebookOptions =>
-            //{
-            //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-            //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            //});
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["2817970748513714"];
+                facebookOptions.AppSecret = Configuration["12a2014e0c481e0b0d0b428a506a6fb1"];
+
+            });
 
         }
 
+        private static void InitializeSwagger(IServiceCollection services)
+        {
+            services.AddOpenApiDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Bookmyslot Customer API";
+                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new OpenApiContact
+                    {
+                        Name = "TA",
+                        Email = string.Empty,
+                        //Url = "https://twitter.com/spboyer"
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = "",
+                        //Url = "https://example.com/license"
+                    };
+                    //document.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+                    //document.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme()
+                    //{
+                    //    Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
+                    //    Name = "Authorization",
+                    //    In = NSwag.SwaggerSecurityApiKeyLocation.Header,
+                    //    Description = "Bearer token"
+                    //}));
+
+                };
+                
+            });
+        }
 
         private Dictionary<string, string> GetAppConfigurations()
         {
@@ -131,7 +148,7 @@ namespace Bookmyslot.Api
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
