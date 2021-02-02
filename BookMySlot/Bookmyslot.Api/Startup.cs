@@ -37,37 +37,13 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddHttpContextAccessor();
-
-            Dictionary<string, string> appConfigurations = GetAppConfigurations();
-
-            CommonInjection.CommonInjections(services);
-
-            CustomerInjection.CustomerBusinessInjections(services);
-            CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
-
-            SlotSchedulerInjection.SlotSchedulerCommonInjections(services);
-            SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
-            SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
-
-
+            DependencyInjections(services);
 
             services.AddControllers();
 
             InitializeSwagger(services);
 
-            services.AddMvc()
-       .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-       .ConfigureApiBehaviorOptions(options =>
-       {
-           options.InvalidModelStateResponseFactory = context =>
-           {
-               var problems = new BadRequestExceptionHandler(context);
-               return new BadRequestObjectResult(problems.ErrorMessages);
-           };
-       });
-
+            InitializeModelInValidState(services);
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
@@ -78,61 +54,7 @@ namespace Bookmyslot.Api
 
         }
 
-        private static void InitializeSwagger(IServiceCollection services)
-        {
-            services.AddOpenApiDocument(config =>
-            {
-                config.PostProcess = document =>
-                {
-                    document.Info.Version = "v1";
-                    document.Info.Title = "Bookmyslot Customer API";
-                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
-                    document.Info.TermsOfService = "None";
-                    document.Info.Contact = new OpenApiContact
-                    {
-                        Name = "TA",
-                        Email = string.Empty,
-                        //Url = "https://twitter.com/spboyer"
-                    };
-                    document.Info.License = new NSwag.OpenApiLicense
-                    {
-                        Name = "",
-                        //Url = "https://example.com/license"
-                    };
-                    //document.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
-                    //document.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme()
-                    //{
-                    //    Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
-                    //    Name = "Authorization",
-                    //    In = NSwag.SwaggerSecurityApiKeyLocation.Header,
-                    //    Description = "Bearer token"
-                    //}));
-
-                };
-
-                config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
-                config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Bearer token"
-                }));
-
-            });
-        }
-
-        private Dictionary<string, string> GetAppConfigurations()
-        {
-            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
-            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotDatabase);
-            appConfigurations.Add(AppConfigurationConstants.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
-
-            return appConfigurations;
-        }
-
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+     
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             InitializeSerilog(serviceProvider);
@@ -200,5 +122,92 @@ namespace Bookmyslot.Api
 
             Log.Debug("Starting Bookmyslot web host");
         }
+
+        private static void InitializeModelInValidState(IServiceCollection services)
+        {
+            services.AddMvc()
+       .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+       .ConfigureApiBehaviorOptions(options =>
+       {
+           options.InvalidModelStateResponseFactory = context =>
+           {
+               var problems = new BadRequestExceptionHandler(context);
+               return new BadRequestObjectResult(problems.ErrorMessages);
+           };
+       });
+        }
+
+        private void DependencyInjections(IServiceCollection services)
+        {
+            services.AddHttpContextAccessor();
+
+            Dictionary<string, string> appConfigurations = GetAppConfigurations();
+
+            CommonInjection.CommonInjections(services);
+
+            CustomerInjection.CustomerBusinessInjections(services);
+            CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
+
+            SlotSchedulerInjection.SlotSchedulerCommonInjections(services);
+            SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
+            SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
+        }
+
+        private static void InitializeSwagger(IServiceCollection services)
+        {
+            services.AddOpenApiDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Bookmyslot Customer API";
+                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new OpenApiContact
+                    {
+                        Name = "TA",
+                        Email = string.Empty,
+                        //Url = "https://twitter.com/spboyer"
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = "",
+                        //Url = "https://example.com/license"
+                    };
+                    //document.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+                    //document.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme()
+                    //{
+                    //    Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
+                    //    Name = "Authorization",
+                    //    In = NSwag.SwaggerSecurityApiKeyLocation.Header,
+                    //    Description = "Bearer token"
+                    //}));
+
+                };
+
+                config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+                config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Bearer token"
+                }));
+
+            });
+        }
+
+        private Dictionary<string, string> GetAppConfigurations()
+        {
+            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
+            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotDatabase);
+            appConfigurations.Add(AppConfigurationConstants.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
+
+            return appConfigurations;
+        }
+
+
+
+
     }
 }
