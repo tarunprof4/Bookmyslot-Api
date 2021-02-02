@@ -109,7 +109,16 @@ namespace Bookmyslot.Api
                     //}));
 
                 };
-                
+
+                config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+                config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Bearer token"
+                }));
+
             });
         }
 
