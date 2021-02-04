@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using System;
@@ -16,6 +17,10 @@ namespace Bookmyslot.Api.Search.Business
         }
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey)
         {
+            if (string.IsNullOrWhiteSpace(searchKey))
+            {
+                return Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessages.InValidSearchKey });
+            }
             return await this.searchCustomerRepository.SearchCustomers(searchKey);
         }
     }
