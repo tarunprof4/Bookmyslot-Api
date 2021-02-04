@@ -8,12 +8,17 @@ using Bookmyslot.Api.Customers.Injections;
 using Bookmyslot.Api.SlotScheduler.Injections;
 using Elastic.Apm.SerilogEnricher;
 using Elastic.CommonSchema.Serilog;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using Serilog;
@@ -22,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 
 namespace Bookmyslot.Api
 {
@@ -45,16 +51,102 @@ namespace Bookmyslot.Api
 
             InitializeModelInValidState(services);
 
-            services.AddAuthentication().AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = Configuration["2817970748513714"];
-                facebookOptions.AppSecret = Configuration["12a2014e0c481e0b0d0b428a506a6fb1"];
 
+            //        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options))
+
+
+            //             .AddGoogle(googleOptions =>
+            //                         {
+            //                             googleOptions.ClientId = "952200248622-4dhfmtdcf4u1b3ektt6giacpotc60vkl.apps.googleusercontent.com";
+            //                             googleOptions.ClientSecret = "b0jpd7fNb6D5MgLi21x3atTn";
+
+            //                         })
+            //.AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = "2817970748513714";
+            //    facebookOptions.AppSecret = "12a2014e0c481e0b0d0b428a506a6fb1";
+
+            //})
+            //;
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            //    {
+            //        options.Authority = "";
+            //        options.Audience = "";
+
+            //    });
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+            //    AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options)).
+            //    AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options));
+
+
+
+
+            //services.AddMvc(options => {
+            //    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+            //});
+
+
+
+
+
+
+
+
+            var key = Encoding.ASCII.GetBytes("b0jpd7fNb6D5MgLi21x3atTn");
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidIssuer = "accounts.google.com",
+
+                ValidateAudience = false,
+                ValidAudience = "952200248622-8cn9oq0n1fnp0rjga6vsb9oh67kkkt8s.apps.googleusercontent.com",
+
+                ValidateIssuerSigningKey = false,
+                //IssuerSigningKey = new SymmetricSecurityKey(key),
+
+                RequireExpirationTime = false,
+                ValidateLifetime = false,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+                //options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            }).AddJwtBearer(configureOptions =>
+            {
+                configureOptions.ClaimsIssuer = "accounts.google.com";
+                configureOptions.TokenValidationParameters = tokenValidationParameters;
+                configureOptions.SaveToken = true;
             });
+
+            //services.AddAuthentication(options =>
+            //{
+            //    //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultScheme = GoogleDefaults.AuthenticationScheme;
+            //    options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            //}) .AddGoogle(googleOptions =>
+            //{
+
+
+            //    googleOptions.ClientId = "952200248622-4dhfmtdcf4u1b3ektt6giacpotc60vkl.apps.googleusercontent.com";
+            //                                 googleOptions.ClientSecret = "b0jpd7fNb6D5MgLi21x3atTn";
+            //});
+
 
         }
 
-     
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             InitializeSerilog(serviceProvider);
@@ -79,7 +171,7 @@ namespace Bookmyslot.Api
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
