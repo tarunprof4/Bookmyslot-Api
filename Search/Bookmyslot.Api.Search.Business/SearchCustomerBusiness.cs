@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.Search.Business
         {
             this.searchCustomerRepository = searchCustomerRepository;
         }
-        public async Task<Response<IEnumerable<SearchCustomer>>> SearchCustomers(string searchKey)
+        public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey)
         {
             return await this.searchCustomerRepository.SearchCustomers(searchKey);
         }
