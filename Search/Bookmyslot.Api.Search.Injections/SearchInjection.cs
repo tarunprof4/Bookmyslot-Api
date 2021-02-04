@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.Search.Injections
         }
 
 
-        public static void CustomerRepositoryInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
+        public static void SearchRepositoryInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddTransient<ISearchCustomerRepository, SearchCustomerRepository>();
             services.AddTransient<IDbConnection>((sp) => new SqlConnection(appConfigurations[AppConfigurationConstants.BookMySlotDatabaseConnectionString]));

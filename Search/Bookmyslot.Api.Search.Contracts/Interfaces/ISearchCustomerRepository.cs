@@ -8,6 +8,6 @@ namespace Bookmyslot.Api.Search.Contracts.Interfaces
 {
     public interface ISearchCustomerRepository
     {
-        Task<Response<IEnumerable<SearchCustomer>>> GetAllCustomers();
+        Task<Response<IEnumerable<SearchCustomer>>> SearchCustomers(string searchKey);
     }
 }

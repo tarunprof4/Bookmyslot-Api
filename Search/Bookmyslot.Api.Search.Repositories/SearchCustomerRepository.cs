@@ -10,7 +10,7 @@ namespace Bookmyslot.Api.Search.Repositories
 {
     public class SearchCustomerRepository : ISearchCustomerRepository
     {
-        public Task<Response<IEnumerable<SearchCustomer>>> GetAllCustomers()
+        public Task<Response<IEnumerable<SearchCustomer>>> SearchCustomers(string searchKey)
         {
             throw new NotImplementedException();
         }

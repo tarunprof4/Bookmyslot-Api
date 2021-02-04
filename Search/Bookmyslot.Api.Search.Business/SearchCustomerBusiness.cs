@@ -9,9 +9,14 @@ namespace Bookmyslot.Api.Search.Business
 {
     public class SearchCustomerBusiness : ISearchCustomerBusiness
     {
-        public Task<Response<IEnumerable<SearchCustomer>>> GetAllCustomers()
+        private readonly ISearchCustomerRepository searchCustomerRepository;
+        public SearchCustomerBusiness(ISearchCustomerRepository searchCustomerRepository)
         {
-            throw new NotImplementedException();
+            this.searchCustomerRepository = searchCustomerRepository;
+        }
+        public async Task<Response<IEnumerable<SearchCustomer>>> SearchCustomers(string searchKey)
+        {
+            return await this.searchCustomerRepository.SearchCustomers(searchKey);
         }
     }
 }

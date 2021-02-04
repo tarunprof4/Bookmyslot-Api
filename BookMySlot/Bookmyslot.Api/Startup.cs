@@ -5,6 +5,7 @@ using Bookmyslot.Api.Common.ExceptionHandlers;
 using Bookmyslot.Api.Common.Injections;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Customers.Injections;
+using Bookmyslot.Api.Search.Injections;
 using Bookmyslot.Api.SlotScheduler.Injections;
 using Elastic.Apm.SerilogEnricher;
 using Elastic.CommonSchema.Serilog;
@@ -47,7 +48,11 @@ namespace Bookmyslot.Api
             SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
             SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
 
-            
+
+            SearchInjection.SearchBusinessInjections(services);
+            SearchInjection.SearchRepositoryInjections(services, appConfigurations);
+
+
 
             services.AddControllers();
 

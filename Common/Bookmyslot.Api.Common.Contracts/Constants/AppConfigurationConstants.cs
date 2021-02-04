@@ -5,6 +5,7 @@
         public const string AppVersion = "AppVersion";
 
         public const string BookMySlotDatabase = "BookmyslotDatabase";
+        public const string BookMySlotSearchDatabase = "BookmyslotSearchDatabase";
         public const string BookMySlotDatabaseConnectionString = "BookMySlotDatabaseConnectionString";
 
         public const string EmailSettings = "EmailSettings";
