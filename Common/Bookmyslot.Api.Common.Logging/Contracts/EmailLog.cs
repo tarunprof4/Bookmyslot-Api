@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-
-namespace Bookmyslot.Api.Common.Logging.Contracts
+﻿namespace Bookmyslot.Api.Common.Logging.Contracts
 {
     public class EmailLog
     {

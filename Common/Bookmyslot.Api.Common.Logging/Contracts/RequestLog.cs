@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 
 namespace Bookmyslot.Api.Common.Logging.Contracts
 {

@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Contracts;
-using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using System;

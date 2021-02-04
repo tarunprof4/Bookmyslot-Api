@@ -3,7 +3,6 @@ using Bookmyslot.Api.Search.Business;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;

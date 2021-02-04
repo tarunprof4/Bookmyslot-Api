@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Bookmyslot.Api.Search.Contracts
+﻿namespace Bookmyslot.Api.Search.Contracts
 {
     public class SearchCustomerModel
     {

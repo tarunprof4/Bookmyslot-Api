@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Serilog.Core;
 using Serilog.Events;
-using System.Threading;
 
 namespace Bookmyslot.Api.Common.Logging.Enrichers
 {

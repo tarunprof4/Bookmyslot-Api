@@ -7,7 +7,6 @@ using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;

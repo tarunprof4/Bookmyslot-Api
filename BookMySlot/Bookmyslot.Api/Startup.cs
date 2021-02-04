@@ -7,8 +7,6 @@ using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Customers.Injections;
 using Bookmyslot.Api.Search.Injections;
 using Bookmyslot.Api.SlotScheduler.Injections;
-using Elastic.Apm.SerilogEnricher;
-using Elastic.CommonSchema.Serilog;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Sinks.Elasticsearch;
 using System;
 using System.Collections.Generic;
 

@@ -1,6 +1,4 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
-using Bookmyslot.Api.Customers.Repositories.Enitites;
-using Bookmyslot.Api.Search.Contracts;
+﻿using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using System.Collections.Generic;
 

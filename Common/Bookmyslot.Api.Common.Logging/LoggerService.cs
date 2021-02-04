@@ -1,12 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Logging.Interfaces;
-using Elastic.Apm.SerilogEnricher;
-using Elastic.CommonSchema.Serilog;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using Serilog.Context;
-using Serilog.Sinks.Elasticsearch;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;

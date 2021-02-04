@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

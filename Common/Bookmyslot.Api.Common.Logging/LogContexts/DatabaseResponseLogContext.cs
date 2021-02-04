@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Logging.Contracts;
 using Serilog.Core;
 using Serilog.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Logging.LogContexts
 {

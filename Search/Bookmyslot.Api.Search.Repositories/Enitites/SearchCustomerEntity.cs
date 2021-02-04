@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using System;
 
 namespace Bookmyslot.Api.Search.Repositories.Enitites
 {
