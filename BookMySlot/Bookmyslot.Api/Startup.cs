@@ -2,11 +2,8 @@ using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.ExceptionHandlers;
-using Bookmyslot.Api.Common.Injections;
 using Bookmyslot.Api.Common.Logging.Enrichers;
-using Bookmyslot.Api.Customers.Injections;
-using Bookmyslot.Api.Search.Injections;
-using Bookmyslot.Api.SlotScheduler.Injections;
+using Bookmyslot.Api.Injections;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,18 +33,13 @@ namespace Bookmyslot.Api
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
-            CommonInjection.CommonInjections(services);
-
-            CustomerInjection.CustomerBusinessInjections(services);
-            CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
-
-            SlotSchedulerInjection.SlotSchedulerCommonInjections(services);
-            SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
-            SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
-
-
-            SearchInjection.SearchBusinessInjections(services);
-            SearchInjection.SearchRepositoryInjections(services, appConfigurations);
+            AppInjection.LoadInjections(services, appConfigurations);
+            DataBaseInjection.LoadInjections(services, appConfigurations);
+            CommonInjection.LoadInjections(services);
+            CustomerInjection.LoadInjections(services);
+            
+            SearchInjection.LoadInjections(services);
+            SlotSchedulerInjection.LoadInjections(services);
 
 
 
@@ -106,6 +98,7 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            
             InitializeSerilog(serviceProvider);
 
             if (env.IsDevelopment())
