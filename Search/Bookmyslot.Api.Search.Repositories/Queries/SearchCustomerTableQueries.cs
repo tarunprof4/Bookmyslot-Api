@@ -3,6 +3,6 @@
 
     public class SearchCustomerTableQueries
     {
-        public const string SearchCustomerQuery = @"select UniqueId, FirstName, LastName from Customer";
+        public const string SearchCustomerQuery = @"select UserName, FirstName, LastName from Customer";
     }
 }

@@ -17,6 +17,8 @@ namespace Bookmyslot.Api.Common
 
         private readonly string elasticSearchUrl;
 
+        private readonly string readDatabaseConnectionString;
+
         public AppConfiguration(IConfiguration configuration)
         {
             this.appVersion = configuration.GetSection(AppConfigurationConstants.AppVersion).Value;
@@ -29,6 +31,8 @@ namespace Bookmyslot.Api.Common
             this.logOutputTemplate = configuration.GetSection(AppConfigurationConstants.LogSettings).GetSection(AppConfigurationConstants.LogOutPutTemplate).Value;
 
             this.elasticSearchUrl = configuration.GetSection(AppConfigurationConstants.ElasticSearchUrl).Value;
+
+            this.readDatabaseConnectionString = configuration.GetSection(AppConfigurationConstants.ConnectionStrings).GetSection(AppConfigurationConstants.BookMySlotReadDatabase).Value;
         }
 
         public string AppVersion => this.appVersion;
@@ -41,5 +45,7 @@ namespace Bookmyslot.Api.Common
         public string LogOutputTemplate => this.logOutputTemplate;
 
         public string ElasticSearchUrl => this.elasticSearchUrl;
+
+        public string ReadDatabaseConnectionString => this.readDatabaseConnectionString;
     }
 }

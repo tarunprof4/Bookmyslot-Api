@@ -15,5 +15,7 @@
         string LogOutputTemplate { get; }
 
         string ElasticSearchUrl { get; }
+
+        string ReadDatabaseConnectionString { get; }
     }
 }

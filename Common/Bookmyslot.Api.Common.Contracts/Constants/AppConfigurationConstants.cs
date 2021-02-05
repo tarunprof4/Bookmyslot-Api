@@ -4,11 +4,9 @@
     {
         public const string AppVersion = "AppVersion";
 
+        public const string ConnectionStrings = "ConnectionStrings";
         public const string BookMySlotDatabase = "BookmyslotDatabase";
-        public const string BookMySlotSearchDatabase = "BookmyslotSearchDatabase";
-
-        public const string BookMySlotDatabaseConnectionString = "BookMySlotDatabaseConnectionString";
-        public const string BookMySlotSearchDatabaseConnectionString = "BookMySlotSearchDatabaseConnectionString";
+        public const string BookMySlotReadDatabase = "BookmyslotReadDatabase";
 
         public const string EmailSettings = "EmailSettings";
         public const string EmailSmtpHost = "SmtpHost";
@@ -20,8 +18,9 @@
         public const string LogOutPutTemplate = "logoutputTemplate";
         public const string StaticLogOutPutTemplate = "staticLogOutputTemplate";
 
-
         public const string ElasticSearchUrl = "ElasticSearchUrl";
 
+        public const string BookMySlotDatabaseConnectionString = "BookMySlotDatabaseConnectionString";
+        public const string BookMySlotReadDatabaseConnectionString = "BookMySlotReadDatabaseConnectionString";
     }
 }

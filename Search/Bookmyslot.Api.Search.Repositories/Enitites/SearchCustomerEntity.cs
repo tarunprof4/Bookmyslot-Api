@@ -6,8 +6,7 @@ namespace Bookmyslot.Api.Search.Repositories.Enitites
     public class SearchCustomerEntity
     {
         [Key]
-        public string UniqueId { get; set; }
-
+        public string UserName { get; set; }
 
         public string FirstName { get; set; }
 

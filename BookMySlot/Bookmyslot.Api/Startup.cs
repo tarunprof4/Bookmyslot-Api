@@ -87,9 +87,9 @@ namespace Bookmyslot.Api
         {
             Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
             var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotDatabase);
-            var bookMySlotSearchDatabaseConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotSearchDatabase);
+            var bookMySlotSearchDatabaseConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotReadDatabase);
             appConfigurations.Add(AppConfigurationConstants.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
-            appConfigurations.Add(AppConfigurationConstants.BookMySlotSearchDatabaseConnectionString, bookMySlotSearchDatabaseConnectionString);
+            appConfigurations.Add(AppConfigurationConstants.BookMySlotReadDatabaseConnectionString, bookMySlotSearchDatabaseConnectionString);
 
             return appConfigurations;
         }
