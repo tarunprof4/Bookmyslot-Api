@@ -28,77 +28,32 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddHttpContextAccessor();
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
+            Injections(services, appConfigurations);
+
+            services.AddControllers();
+
+            SwaggerDocumentation(services);
+
+            BadRequestConfiguration(services);
+        }
+
+        private static void Injections(IServiceCollection services, Dictionary<string, string> appConfigurations)
+        {
+            services.AddHttpContextAccessor();
             AppInjection.LoadInjections(services, appConfigurations);
             DataBaseInjection.LoadInjections(services, appConfigurations);
             CommonInjection.LoadInjections(services);
             CustomerInjection.LoadInjections(services);
-            
             SearchInjection.LoadInjections(services);
             SlotSchedulerInjection.LoadInjections(services);
-
-
-
-            services.AddControllers();
-
-
-            services.AddOpenApiDocument(config =>
-            {
-                config.PostProcess = document =>
-                {
-                    document.Info.Version = "v1";
-                    document.Info.Title = "Bookmyslot Customer API";
-                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
-                    document.Info.TermsOfService = "None";
-                    document.Info.Contact = new NSwag.OpenApiContact
-                    {
-                        Name = "TA",
-                        Email = string.Empty,
-                        //Url = "https://twitter.com/spboyer"
-                    };
-                    document.Info.License = new NSwag.OpenApiLicense
-                    {
-                        Name = "",
-                        //Url = "https://example.com/license"
-                    };
-                };
-            });
-
-
-            services.AddMvc()
-       .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-       .ConfigureApiBehaviorOptions(options =>
-       {
-           options.InvalidModelStateResponseFactory = context =>
-           {
-               var problems = new BadRequestExceptionHandler(context);
-               return new BadRequestObjectResult(problems.ErrorMessages);
-           };
-       });
-
         }
 
-
-        private Dictionary<string, string> GetAppConfigurations()
-        {
-            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
-            var bookMySlotConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.BookMySlotDatabase);
-            var bookMySlotReadDatabaseConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.BookMySlotReadDatabase);
-            appConfigurations.Add(AppSettingKeysConstants.BookMySlotDatabase, bookMySlotConnectionString);
-            appConfigurations.Add(AppSettingKeysConstants.BookMySlotReadDatabase, bookMySlotReadDatabaseConnectionString);
-
-            return appConfigurations;
-        }
-
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
-            
+
             InitializeSerilog(serviceProvider);
 
             if (env.IsDevelopment())
@@ -128,11 +83,15 @@ namespace Bookmyslot.Api
             {
                 endpoints.MapControllers();
             });
+        }
 
+        private Dictionary<string, string> GetAppConfigurations()
+        {
+            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
+            var bookMySlotConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.BookMySlotDatabase);
+            appConfigurations.Add(AppSettingKeysConstants.BookMySlotDatabase, bookMySlotConnectionString);
 
-
-
-
+            return appConfigurations;
         }
 
         private static void InitializeSerilog(IServiceProvider serviceProvider)
@@ -164,5 +123,45 @@ namespace Bookmyslot.Api
 
             Log.Debug("Starting Bookmyslot web host");
         }
+
+        private static void BadRequestConfiguration(IServiceCollection services)
+        {
+            services.AddMvc()
+       .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+       .ConfigureApiBehaviorOptions(options =>
+       {
+           options.InvalidModelStateResponseFactory = context =>
+           {
+               var problems = new BadRequestExceptionHandler(context);
+               return new BadRequestObjectResult(problems.ErrorMessages);
+           };
+       });
+        }
+
+        private static void SwaggerDocumentation(IServiceCollection services)
+        {
+            services.AddOpenApiDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Bookmyslot Customer API";
+                    document.Info.Description = "Bookmyslot Customer API to manage customer data";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "TA",
+                        Email = string.Empty,
+                        //Url = "https://twitter.com/spboyer"
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = "",
+                        //Url = "https://example.com/license"
+                    };
+                };
+            });
+        }
+
     }
 }
