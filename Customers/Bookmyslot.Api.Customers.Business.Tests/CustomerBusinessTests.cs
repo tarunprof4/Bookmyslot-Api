@@ -104,7 +104,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             var customer = await customerBusiness.CreateCustomer(customerModel);
 
-            Assert.IsFalse(customer.Messages.Contains(AppBusinessMessages.MiddleNameInValid));
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.FirstNameInValid));
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.LastNameInValid));
             Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.GenderNotValid));

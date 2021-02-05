@@ -17,7 +17,7 @@ namespace Bookmyslot.Api.Injections
         private static void DatabaseInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddSingleton<IDbInterceptor, DbInterceptor>();
-            services.AddTransient<IDbConnection>((sp) => new SqlConnection(appConfigurations[AppConfigurationConstants.BookMySlotDatabaseConnectionString]));
+            services.AddTransient<IDbConnection>((sp) => new SqlConnection(appConfigurations[AppSettingKeysConstants.BookMySlotDatabase]));
         }
     }
 }

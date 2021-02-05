@@ -1,6 +1,6 @@
 ﻿namespace Bookmyslot.Api.Common.Contracts.Constants
 {
-    public class AppConfigurationConstants
+    public class AppSettingKeysConstants
     {
         public const string AppVersion = "AppVersion";
 
@@ -19,8 +19,5 @@
         public const string StaticLogOutPutTemplate = "staticLogOutputTemplate";
 
         public const string ElasticSearchUrl = "ElasticSearchUrl";
-
-        public const string BookMySlotDatabaseConnectionString = "BookMySlotDatabaseConnectionString";
-        public const string BookMySlotReadDatabaseConnectionString = "BookMySlotReadDatabaseConnectionString";
     }
 }

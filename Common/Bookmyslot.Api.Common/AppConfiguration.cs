@@ -21,18 +21,18 @@ namespace Bookmyslot.Api.Common
 
         public AppConfiguration(IConfiguration configuration)
         {
-            this.appVersion = configuration.GetSection(AppConfigurationConstants.AppVersion).Value;
+            this.appVersion = configuration.GetSection(AppSettingKeysConstants.AppVersion).Value;
 
-            this.emailStmpHost = configuration.GetSection(AppConfigurationConstants.EmailSettings).GetSection(AppConfigurationConstants.EmailSmtpHost).Value;
-            this.emailPort = configuration.GetSection(AppConfigurationConstants.EmailSettings).GetSection(AppConfigurationConstants.EmailPort).Value;
-            this.emailUserName = configuration.GetSection(AppConfigurationConstants.EmailSettings).GetSection(AppConfigurationConstants.EmailUserName).Value;
-            this.emailPassword = configuration.GetSection(AppConfigurationConstants.EmailSettings).GetSection(AppConfigurationConstants.EmailPassword).Value;
+            this.emailStmpHost = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailSmtpHost).Value;
+            this.emailPort = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailPort).Value;
+            this.emailUserName = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailUserName).Value;
+            this.emailPassword = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailPassword).Value;
 
-            this.logOutputTemplate = configuration.GetSection(AppConfigurationConstants.LogSettings).GetSection(AppConfigurationConstants.LogOutPutTemplate).Value;
+            this.logOutputTemplate = configuration.GetSection(AppSettingKeysConstants.LogSettings).GetSection(AppSettingKeysConstants.LogOutPutTemplate).Value;
 
-            this.elasticSearchUrl = configuration.GetSection(AppConfigurationConstants.ElasticSearchUrl).Value;
+            this.elasticSearchUrl = configuration.GetSection(AppSettingKeysConstants.ElasticSearchUrl).Value;
 
-            this.readDatabaseConnectionString = configuration.GetSection(AppConfigurationConstants.ConnectionStrings).GetSection(AppConfigurationConstants.BookMySlotReadDatabase).Value;
+            this.readDatabaseConnectionString = configuration.GetSection(AppSettingKeysConstants.ConnectionStrings).GetSection(AppSettingKeysConstants.BookMySlotReadDatabase).Value;
         }
 
         public string AppVersion => this.appVersion;
