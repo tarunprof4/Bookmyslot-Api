@@ -1,8 +1,6 @@
 ﻿using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -38,16 +36,16 @@ namespace Bookmyslot.Api.Controllers
         /// <response code="400">validation error bad request</response>
         /// <response code="500">internal server error</response>
         // GET api/<CustomerController>/email
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("{email}")]
-        public async Task<IActionResult> Get(string email)
-        {
-            var customerResponse = await customerBusiness.GetCustomerByEmail(email);
-            return this.CreateGetHttpResponse(customerResponse);
-        }
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[HttpGet("{email}")]
+        //public async Task<IActionResult> Get(string email)
+        //{
+        //    var customerResponse = await customerBusiness.GetCustomerByEmail(email);
+        //    return this.CreateGetHttpResponse(customerResponse);
+        //}
 
 
        
