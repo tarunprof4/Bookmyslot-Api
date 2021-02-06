@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.Customers.Repositories
 
         public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
         {
-            var parameters = new {Id= customerId, FirstName = profileSettingsModel.FirstName, LastName = profileSettingsModel.LastName, 
+            var parameters = new {customerId = customerId, FirstName = profileSettingsModel.FirstName, LastName = profileSettingsModel.LastName, 
                 Gender = profileSettingsModel.Gender,  BioHeadLine = profileSettingsModel.BioHeadLine, ModifiedDateUtc = DateTime.UtcNow };
             var sql = CustomerTableQueries.UpdateProfileSettingQuery;
 
