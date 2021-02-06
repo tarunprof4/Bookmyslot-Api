@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.Search.Business
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {
-                return Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessages.InValidSearchKey });
+                return Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidSearchKey });
             }
             return await this.searchCustomerRepository.SearchCustomers(searchKey);
         }

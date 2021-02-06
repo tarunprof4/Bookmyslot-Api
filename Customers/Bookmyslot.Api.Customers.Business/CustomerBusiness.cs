@@ -19,33 +19,10 @@ namespace Bookmyslot.Api.Customers.Business
             this.customerRepository = customerRepository;
         }
 
-        public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
-        {
-            var validator = new CustomerValidator();
-            ValidationResult results = validator.Validate(customerModel);
-
-            if (results.IsValid)
-            {
-                var customerExists = await CheckIfCustomerExists(customerModel.Email);
-                if (!customerExists.Item1)
-                {
-                    SanitizeCustomerModel(customerModel);
-                    return await customerRepository.CreateCustomer(customerModel);
-                }
-
-                return new Response<string>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessages.EmailIdExists } };
-            }
-
-            else
-                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
-        }
-
+      
         
 
-        public async Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers()
-        {
-            return await this.customerRepository.GetAllCustomers();
-        }
+     
 
        
 
@@ -53,7 +30,7 @@ namespace Bookmyslot.Api.Customers.Business
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.EmailIdNotValid } };
+                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdNotValid } };
             }
 
             email = email.ToLowerInvariant();
@@ -64,7 +41,7 @@ namespace Bookmyslot.Api.Customers.Business
         {
             if (string.IsNullOrWhiteSpace(customerId))
             {
-                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessages.CustomerIdNotValid } };
+                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.CustomerIdNotValid } };
             }
 
             return await customerRepository.GetCustomerById(customerId);
@@ -92,7 +69,7 @@ namespace Bookmyslot.Api.Customers.Business
                     return await this.customerRepository.UpdateCustomer(customerModel);
                 }
 
-                return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessages.CustomerNotFound } };
+                return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessagesConstants.CustomerNotFound } };
             }
 
             else

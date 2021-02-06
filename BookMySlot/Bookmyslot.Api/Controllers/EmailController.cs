@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.Controllers
                 return this.CreatePostHttpResponse(resendSlotInformationResponse);
             }
 
-            var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
+            var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
             return this.CreatePostHttpResponse(validationErrorResponse);
         }
     }

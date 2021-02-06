@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             var customer = await searchCustomerBusiness.SearchCustomers(searchKey);
 
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(customer.Messages.First(), AppBusinessMessages.InValidSearchKey);
+            Assert.AreEqual(customer.Messages.First(), AppBusinessMessagesConstants.InValidSearchKey);
         }
 
         [Test]

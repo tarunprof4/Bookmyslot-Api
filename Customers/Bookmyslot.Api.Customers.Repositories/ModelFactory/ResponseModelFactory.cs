@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
         {
             if (customerEntity == null)
             {
-                return Response<CustomerModel>.Empty(new List<string>() { AppBusinessMessages.CustomerNotFound });
+                return Response<CustomerModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
             }
 
             var customerModel = ModelFactory.CreateCustomerModel(customerEntity);
@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
             var customerModels = ModelFactory.CreateCustomerModels(customerEntities);
             if (customerModels.Count == 0)
             {
-                return Response<List<CustomerModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
+                return Response<List<CustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
             }
 
             return new Response<List<CustomerModel>>() { Result = customerModels };

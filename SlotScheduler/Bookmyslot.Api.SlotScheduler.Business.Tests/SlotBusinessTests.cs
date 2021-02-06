@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessages.SlotIdInvalid);
+            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotIdInvalid);
             slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
         }
 
@@ -81,9 +81,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Result, Guid.Empty);
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotTitleMissing));
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotStartDateInvalid));
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotEndTimeInvalid));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotTitleMissing));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotStartDateInvalid));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
 
             slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Never());
         }
@@ -204,7 +204,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Result, false);
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotIdInvalid));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotIdInvalid));
 
             slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<SlotModel>())), Times.Never());
@@ -223,7 +223,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotBusiness.CancelSlot(Guid.NewGuid(), deletedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Empty);
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotIdDoesNotExists));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotIdDoesNotExists));
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<Guid>())), Times.Once());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<SlotModel>())), Times.Never());
             slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Never());

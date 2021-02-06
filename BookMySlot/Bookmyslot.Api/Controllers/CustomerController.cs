@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,44 +49,7 @@ namespace Bookmyslot.Api.Controllers
             return this.CreateGetHttpResponse(customerResponse);
         }
 
-        /// <summary>
-        /// Create new customer
-        /// </summary>
-        /// <param name="customerModel">customer model</param>
-        /// <returns >returns email id of created customer</returns>
-        /// <response code="201">Returns email id of created customer</response>
-        /// <response code="400">validation error bad request</response>
-        /// <response code="500">internal server error</response>
-        // POST api/<CustomerController>
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CustomerModel customerModel)
-        {
-            var customerResponse = await customerBusiness.CreateCustomer(customerModel);
-            return this.CreatePostHttpResponse(customerResponse);
-        }
 
-        /// <summary>
-        /// Update existing customer
-        /// </summary>
-        /// <param name="customerModel">customer model</param>
-        /// <returns>success or failure bool</returns>
-        /// <response code="204">Returns success or failure bool</response>
-        /// <response code="400">validation error bad request</response>
-        /// <response code="404">no customer found</response>
-        /// <response code="500">internal server error</response>
-        // PUT api/<CustomerController>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] CustomerModel customerModel)
-        {
-            var customerResponse = await customerBusiness.UpdateCustomer(customerModel);
-            return this.CreatePutHttpResponse(customerResponse);
-        }
+       
     }
 }

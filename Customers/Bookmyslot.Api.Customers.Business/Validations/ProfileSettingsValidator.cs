@@ -7,21 +7,20 @@ using System.Text.RegularExpressions;
 
 namespace Bookmyslot.Api.Customers.Business.Validations
 {
-    public class CustomerValidator : AbstractValidator<CustomerModel>
+    public class ProfileSettingsValidator :  AbstractValidator<ProfileSettingsModel>
     {
-        public CustomerValidator()
+        public ProfileSettingsValidator()
         {
             RuleFor(x => x.FirstName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.FirstNameInValid).Must(isNameValid).WithMessage(AppBusinessMessagesConstants.FirstNameInValid);
             RuleFor(x => x.LastName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.LastNameInValid).Must(isNameValid).WithMessage(AppBusinessMessagesConstants.LastNameInValid);
-            RuleFor(x => x.Gender).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.GenderNotValid).Must(isNameValid).WithMessage(AppBusinessMessagesConstants.GenderNotValid);
-            RuleFor(x => x.Email).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.EmailIdNotValid).Must(isEmailValid).WithMessage(AppBusinessMessagesConstants.EmailIdNotValid);
+            RuleFor(x => x.Gender).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.GenderNotValid).Must(areAlphabets).WithMessage(AppBusinessMessagesConstants.GenderNotValid);
+            RuleFor(x => x.BioHeadLine).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.BioHeadLineNotValid);
         }
-
-        protected override bool PreValidate(ValidationContext<CustomerModel> context, ValidationResult result)
+        protected override bool PreValidate(ValidationContext<ProfileSettingsModel> context, ValidationResult result)
         {
             if (context.InstanceToValidate == null)
             {
-                result.Errors.Add(new ValidationFailure(string.Empty, AppBusinessMessagesConstants.CustomerDetailsMissing));
+                result.Errors.Add(new ValidationFailure(string.Empty, AppBusinessMessagesConstants.ProfileSettingDetailsMissing));
                 return false;
             }
             return true;
@@ -32,9 +31,10 @@ namespace Bookmyslot.Api.Customers.Business.Validations
             return Regex.IsMatch(name, Regexes.Name);
         }
 
-        private bool isEmailValid(string email)
+        private bool areAlphabets(string name)
         {
-            return Regex.IsMatch(email, Regexes.Email);
+            return Regex.IsMatch(name, Regexes.Alphabets);
         }
+
     }
 }

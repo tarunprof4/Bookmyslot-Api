@@ -56,7 +56,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             if (slotId == Guid.Empty)
             {
-                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotIdInvalid });
+                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
             }
 
             var checkSlotExistsResponse = await CheckIfSlotExists(slotId);
@@ -82,7 +82,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return new Response<bool>() { Result = true };
             }
 
-            return Response<bool>.Empty(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
+            return Response<bool>.Empty(new List<string>() { AppBusinessMessagesConstants.SlotIdDoesNotExists });
         }
 
         private CancelledSlotModel CreateCancelledSlotModel(SlotModel slotModel, string cancelledBy)
@@ -106,7 +106,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             if (slotId == Guid.Empty)
             {
-                return Response<SlotModel>.ValidationError(new List<string>() { AppBusinessMessages.SlotIdInvalid });
+                return Response<SlotModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
             }
 
             return await this.slotRepository.GetSlot(slotId);

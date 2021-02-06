@@ -6,8 +6,6 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 {
     public interface ICustomerRepository
     {
-        Task<Response<string>> CreateCustomer(CustomerModel customerModel);
-        Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers();
         Task<Response<CustomerModel>> GetCustomerByEmail(string email);
 
         Task<Response<CustomerModel>> GetCustomerById(string customerId);

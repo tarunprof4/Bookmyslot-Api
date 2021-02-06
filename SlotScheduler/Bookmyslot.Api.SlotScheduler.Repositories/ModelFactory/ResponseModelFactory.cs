@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
         {
             if (slotEntity == null)
             {
-                return Response<SlotModel>.Empty(new List<string>() { AppBusinessMessages.SlotIdDoesNotExists });
+                return Response<SlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.SlotIdDoesNotExists });
             }
 
             var customerModel = ModelFactory.CreateSlotModel(slotEntity);
@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             var slotModels = ModelFactory.CreateSlotModels(slotEntities);
             if (slotModels.Count == 0)
             {
-                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
+                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
             }
 
             return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
@@ -39,7 +39,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             var slotModels = ModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
             if (slotModels.Count == 0)
             {
-                return Response<IEnumerable<CancelledSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
+                return Response<IEnumerable<CancelledSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
             }
 
             return new Response<IEnumerable<CancelledSlotModel>>() { Result = slotModels };

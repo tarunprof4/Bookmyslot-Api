@@ -6,27 +6,24 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
 {
     internal class EntityFactory
     {
-        internal static CustomerEntity CreateCustomerEntity(CustomerModel customerModel)
+        internal static RegisterCustomerEntity CreateCustomerEntity(RegisterCustomerModel registerCustomerModel)
         {
-            return new CustomerEntity()
+            return new RegisterCustomerEntity()
             {
                 UniqueId = Guid.NewGuid().ToString().Replace("-", string.Empty),
-                Email = customerModel.Email,
-                FirstName = customerModel.FirstName,
-                LastName = customerModel.LastName,
-                Gender = customerModel.Gender,
-                BioHeadLine = customerModel.BioHeadLine,
+                FirstName = registerCustomerModel.FirstName,
+                LastName = registerCustomerModel.LastName,
+                Gender = registerCustomerModel.Gender,
+                UserName = registerCustomerModel.UserName,
+                Email = registerCustomerModel.Email,
+                PhoneNumber = registerCustomerModel.PhoneNumber,
+                BioHeadLine = registerCustomerModel.BioHeadLine,
+                Provider = registerCustomerModel.Provider,
+                PhotoUrl = registerCustomerModel.PhotoUrl,
                 CreatedDateUtc = DateTime.UtcNow
-        };
+            };
         }
 
-        internal static CustomerEntity UpdateCustomerEntity(CustomerModel customerModel)
-        {
-            var customerEntity = CreateCustomerEntity(customerModel);
-            customerEntity.UniqueId = customerModel.Id;
-            customerEntity.CreatedDateUtc = customerModel.CreatedDateUtc;
-            customerEntity.ModifiedDateUtc = DateTime.UtcNow;
-            return customerEntity;
-        }
+       
     }
 }

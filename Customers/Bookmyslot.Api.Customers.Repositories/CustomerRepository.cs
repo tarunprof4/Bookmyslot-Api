@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
@@ -23,29 +22,8 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
         }
-        public async Task<Response<string>> CreateCustomer(CustomerModel customerModel)
-        {
-            var customerEntity = EntityFactory.EntityFactory.CreateCustomerEntity(customerModel);
-            
-            var parameters = new { customerEntity = customerEntity };
-            await this.dbInterceptor.GetQueryResults("CreateCustomer", parameters, () => this.connection.InsertAsync<string, CustomerEntity>(customerEntity));
-
-            return new Response<string>() { Result = customerModel.Email };
-        }
 
       
-        public async Task<Response<IEnumerable<CustomerModel>>> GetAllCustomers()
-        {
-            var customerEntities = await this.connection.GetListAsync<CustomerEntity>();
-            var customerModels = ModelFactory.ModelFactory.CreateCustomerModels(customerEntities);
-            if (customerModels.Count == 0)
-            {
-                return Response<IEnumerable<CustomerModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound });
-            }
-
-            return new Response<IEnumerable<CustomerModel>>() { Result = customerModels };
-        }
-
         public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
         {
             var parameters = new { Email = email };
@@ -56,8 +34,6 @@ namespace Bookmyslot.Api.Customers.Repositories
         }
 
         
-
-
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
             var parameters = new { customerId = customerId };
@@ -81,12 +57,13 @@ namespace Bookmyslot.Api.Customers.Repositories
 
         public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
         {
-            var customerEntity = EntityFactory.EntityFactory.UpdateCustomerEntity(customerModel);
+            throw new System.Exception();
+            //var customerEntity = EntityFactory.EntityFactory.UpdateCustomerEntity(customerModel);
             
-            var parameters = new { customerEntity = customerEntity };
-            await this.dbInterceptor.GetQueryResults("UpdateCustomer", parameters, () => this.connection.UpdateAsync<CustomerEntity>(customerEntity));
+            //var parameters = new { customerEntity = customerEntity };
+            //await this.dbInterceptor.GetQueryResults("UpdateCustomer", parameters, () => this.connection.UpdateAsync<CustomerEntity>(customerEntity));
 
-            return new Response<bool>() { Result = true };
+            //return new Response<bool>() { Result = true };
         }
 
        

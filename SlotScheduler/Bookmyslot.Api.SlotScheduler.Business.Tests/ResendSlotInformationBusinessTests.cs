@@ -57,7 +57,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, string.Empty);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessages.MinimumDaysForSlotMeetingLink);
+            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.MinimumDaysForSlotMeetingLink);
         }
 
 

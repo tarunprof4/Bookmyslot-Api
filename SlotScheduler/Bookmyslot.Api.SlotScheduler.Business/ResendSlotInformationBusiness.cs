@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return await this.emailInteraction.SendEmail(emailModel);
             }
 
-            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.MinimumDaysForSlotMeetingLink });
+            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.MinimumDaysForSlotMeetingLink });
         }
 
     }

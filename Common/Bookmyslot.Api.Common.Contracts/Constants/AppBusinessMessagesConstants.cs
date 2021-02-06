@@ -1,11 +1,24 @@
 ﻿namespace Bookmyslot.Api.Common.Contracts.Constants
 {
-    public class AppBusinessMessages
+    public class AppBusinessMessagesConstants
     {
         public const string ApplicationName = "BookMySlot";
         public const string CustomerDetailsMissing = "Customer details missing";
+        public const string RegisterCustomerDetailsMissing = "Customer Registration details missing";
+        public const string ProfileSettingDetailsMissing = "Profile Settings details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
 
+
+        public const string FirstNameRequired = "First name is required";
+        public const string LastNameRequired = "Last name is required";
+        public const string EmailRequired = "Email is required";
+        public const string GenderRequired = "Gender is required";
+        public const string BioHeadLineRequired = "Bio headline is required";
+
+        public const string FirstNameInValid = "First name is not Valid";
+        public const string LastNameInValid = "Last name is not valid";
+        public const string GenderNotValid = "Gender is not valid";
+        public const string BioHeadLineNotValid = "Bio headline is not valid";
 
 
         public const string EmailIdMissing = "Email id is missing";
@@ -13,11 +26,8 @@
         public const string CustomerIdNotValid = "Customer id is not valid";
         public const string EmailIdExists = "Email id exists";
         public const string EmailIdDoesNotExists = "Email id does not exists";
-        public const string FirstNameRequired = "First name is required";
-        public const string FirstNameInValid = "First name is not Valid";
-        public const string LastNameRequired = "Last name is required";
-        public const string LastNameInValid = "Last name is not valid";
-        public const string GenderNotValid = "Gender is not valid";
+        
+      
         public const string NoRecordsFound = "no records found";
 
         public const string SlotTitleMissing = "slot title is missing";
@@ -39,8 +49,15 @@
 
         public const string InValidSearchKey = "invalid search key";
 
-        public const int NameMaxLength = 50;
-        public const string FirstNameMaxLength = "Please keep first name less than 50 characters";
-        public const string LastNameMaxLength = "Please keep last name less than 50 characters";
+        
+        public const string FirstNameMaxLength = "Please keep first name less than 100 characters";
+        public const string LastNameMaxLength = "Please keep last name less than 100 characters";
+        public const string EmailMaxLength = "Please keep email less than 150 characters";
+        public const string UserNameMaxLength = "Please keep user name less than 150 characters";
+        public const string PhoneMaxLength = "Please keep phone number less than 15 characters";
+        public const string BioHeadLineMaxLength = "Please keep bio headline less than 1024 characters";
+        public const string SocialProviderMaxLength = "Please keep socail provider less than 20 characters";
+
+        public const string GenderMaxLength = "Please keep gender less than 20 characters";
     }
 }
