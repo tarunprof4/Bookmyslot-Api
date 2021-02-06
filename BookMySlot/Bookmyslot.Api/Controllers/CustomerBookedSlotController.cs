@@ -127,8 +127,6 @@ namespace Bookmyslot.Api.Controllers
                 cancelledSlotInformationModel.CancelledSlotModel.BookedBy = string.Empty;
 
                 cancelledSlotInformationModel.CancelledByCustomerModel.Id = string.Empty;
-                cancelledSlotInformationModel.CancelledByCustomerModel.Gender = string.Empty;
-                cancelledSlotInformationModel.CancelledByCustomerModel.Email = string.Empty;
             }
         }
     }

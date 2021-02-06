@@ -14,7 +14,6 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
 
         public string LastName { get; set; }
 
-        public string Gender { get; set; }
 
         public string Email { get; set; }
 

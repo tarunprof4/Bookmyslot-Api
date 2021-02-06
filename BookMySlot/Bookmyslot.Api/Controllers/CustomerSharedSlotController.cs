@@ -140,7 +140,6 @@ namespace Bookmyslot.Api.Controllers
                 {
                     sharedSlotModel.BookedByCustomerModel.Id = string.Empty;
                     sharedSlotModel.BookedByCustomerModel.Email = string.Empty;
-                    sharedSlotModel.BookedByCustomerModel.Gender = string.Empty;
                 }
             }
         }

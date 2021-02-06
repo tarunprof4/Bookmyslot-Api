@@ -85,7 +85,6 @@ namespace Bookmyslot.Api.Controllers
             foreach (var customerSlotModel in customerSlotModels)
             {
                 customerSlotModel.CustomerModel.Email = string.Empty;
-                customerSlotModel.CustomerModel.Gender = string.Empty;
 
                 customerSlotModel.SlotModels = new List<SlotModel>();
             }
@@ -101,7 +100,6 @@ namespace Bookmyslot.Api.Controllers
             }
 
             bookSlotModel.CustomerModel.Email = string.Empty;
-            bookSlotModel.CustomerModel.Gender = string.Empty;
         }
     }
 }

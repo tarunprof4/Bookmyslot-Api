@@ -14,7 +14,6 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
                 Id= customerEntity.UniqueId,
                 FirstName = customerEntity.FirstName,
                 LastName = customerEntity.LastName,
-                Gender = customerEntity.Gender,
                 BioHeadLine = customerEntity.BioHeadLine,
                 CreatedDateUtc = customerEntity.CreatedDateUtc
             };

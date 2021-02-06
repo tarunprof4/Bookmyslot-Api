@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
 {
     internal class EntityFactory
     {
-        internal static RegisterCustomerEntity CreateCustomerEntity(RegisterCustomerModel registerCustomerModel)
+        internal static RegisterCustomerEntity CreateRegisterCustomerEntity(RegisterCustomerModel registerCustomerModel)
         {
             return new RegisterCustomerEntity()
             {

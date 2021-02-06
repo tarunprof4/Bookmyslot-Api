@@ -55,17 +55,6 @@ namespace Bookmyslot.Api.Customers.Repositories
 
     
 
-        public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
-        {
-            throw new System.Exception();
-            //var customerEntity = EntityFactory.EntityFactory.UpdateCustomerEntity(customerModel);
-            
-            //var parameters = new { customerEntity = customerEntity };
-            //await this.dbInterceptor.GetQueryResults("UpdateCustomer", parameters, () => this.connection.UpdateAsync<CustomerEntity>(customerEntity));
-
-            //return new Response<bool>() { Result = true };
-        }
-
        
     }
 }
