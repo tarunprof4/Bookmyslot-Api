@@ -46,7 +46,6 @@ namespace Bookmyslot.Api.Customers.Business
             profileSettingsModel.FirstName = profileSettingsModel.FirstName.Trim();
             profileSettingsModel.LastName = profileSettingsModel.LastName.Trim();
             profileSettingsModel.Gender = profileSettingsModel.Gender.Trim();
-            profileSettingsModel.BioHeadLine = profileSettingsModel.BioHeadLine.Trim();
         }
 
 
@@ -59,6 +58,17 @@ namespace Bookmyslot.Api.Customers.Business
             return false;
         }
 
-     
+        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return new Response<ProfileSettingsModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdNotValid } };
+            }
+
+            email = email.ToLowerInvariant();
+            return await profileSettingsRepository.GetProfileSettingsByEmail(email);
+        }
+
+       
     }
 }

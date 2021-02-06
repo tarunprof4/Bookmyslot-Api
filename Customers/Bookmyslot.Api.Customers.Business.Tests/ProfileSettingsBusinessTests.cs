@@ -4,6 +4,7 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business.Tests
@@ -27,6 +28,25 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             profileSettingRepositoryMock = new Mock<IProfileSettingsRepository>();
             customerRepositoryMock = new Mock<ICustomerRepository>();
             profileSettingsBusiness = new ProfileSettingsBusiness(profileSettingRepositoryMock.Object, customerRepositoryMock.Object);
+        }
+
+        [TestCase("")]
+        [TestCase("   ")]
+        public async Task GetProfileSettingsByEmail_InvalidEmailId_ReturnsValidationErrorResponse(string email)
+        {
+            var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByEmail(email);
+
+            Assert.AreEqual(profileSettingsResponse.ResultType, ResultType.ValidationError);
+            Assert.AreEqual(profileSettingsResponse.Messages.First(), AppBusinessMessagesConstants.EmailIdNotValid);
+            profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByEmail(It.IsAny<string>())), Times.Never());
+        }
+
+        [Test]
+        public async Task GetProfileSettingsByEmail_ValidEmailId_CallsGetProfileSettingsByEmailIdRepository()
+        {
+            var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByEmail(EMAIL);
+
+            profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByEmail(It.IsAny<string>())), Times.Once());
         }
 
 
@@ -77,7 +97,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             profileSettingsModel.LastName = LASTNAME;
             profileSettingsModel.Gender = GENDER;
             profileSettingsModel.Email = EMAIL;
-            profileSettingsModel.BioHeadLine = BIOHEADLINE;
             return profileSettingsModel;
         }
     }

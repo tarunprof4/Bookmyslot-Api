@@ -24,6 +24,30 @@ namespace Bookmyslot.Api.Controllers
             this.profileSettingsBusiness = profileSettingsBusiness;
         }
 
+
+        /// <summary>
+        /// Gets profile settings by email
+        /// </summary>
+        /// <param name="email">customer email id</param>
+        /// <returns >customer details</returns>
+        /// <response code="200">Returns customer details</response>
+        /// <response code="404">no customer found</response>
+        /// <response code="400">validation error bad request</response>
+        /// <response code="500">internal server error</response>
+        // GET api/<CustomerController>/email
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet("{email}")]
+        public async Task<IActionResult> Get(string email)
+        {
+            var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);
+            return this.CreateGetHttpResponse(customerResponse);
+        }
+
+
+
         /// <summary>
         /// Update existing customer
         /// </summary>

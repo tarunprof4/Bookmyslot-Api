@@ -27,20 +27,21 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
         {
             var parameters = new { Email = email };
-            var sql = CustomerTableQueries.GetCustomerByEmailsQuery;
-            var customerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerEntity>(sql, parameters));
+            var sql = CustomerTableQueries.GetCustomerByEmailQuery;
+            var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
-            return ResponseModelFactory.CreateCustomerModelResponse(customerEntity);
+            return ResponseModelFactory.CreateCustomerModelResponse(registerCustomerEntity);
         }
 
         
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
-            var parameters = new { customerId = customerId };
+            var parameters = new { CustomerId = customerId };
+            var sql = CustomerTableQueries.GetCustomerByIdQuery;
 
-            var customerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerById", parameters, () => this.connection.GetAsync<CustomerEntity>(customerId));
+            var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerById", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
-            return ResponseModelFactory.CreateCustomerModelResponse(customerEntity);
+            return ResponseModelFactory.CreateCustomerModelResponse(registerCustomerEntity);
         }
 
         public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
@@ -48,9 +49,9 @@ namespace Bookmyslot.Api.Customers.Repositories
             var parameters = new { CustomerIds = customerIds };
             var sql = CustomerTableQueries.GetCustomersByCustomerIdsQuery;
 
-            var customerEntities = await this.dbInterceptor.GetQueryResults("GetCustomersByCustomerIds", parameters, () => this.connection.QueryAsync<CustomerEntity>(sql, parameters));
+            var registerCustomerEntities = await this.dbInterceptor.GetQueryResults("GetCustomersByCustomerIds", parameters, () => this.connection.QueryAsync<RegisterCustomerEntity>(sql, parameters));
 
-            return ResponseModelFactory.CreateCustomerModelsResponse(customerEntities);
+            return ResponseModelFactory.CreateCustomerModelsResponse(registerCustomerEntities);
         }
 
     

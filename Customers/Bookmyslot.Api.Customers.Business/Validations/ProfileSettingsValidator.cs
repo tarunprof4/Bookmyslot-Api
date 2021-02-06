@@ -14,7 +14,6 @@ namespace Bookmyslot.Api.Customers.Business.Validations
             RuleFor(x => x.FirstName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.FirstNameInValid).Must(isNameValid).WithMessage(AppBusinessMessagesConstants.FirstNameInValid);
             RuleFor(x => x.LastName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.LastNameInValid).Must(isNameValid).WithMessage(AppBusinessMessagesConstants.LastNameInValid);
             RuleFor(x => x.Gender).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.GenderNotValid).Must(areAlphabets).WithMessage(AppBusinessMessagesConstants.GenderNotValid);
-            RuleFor(x => x.BioHeadLine).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.BioHeadLineNotValid);
         }
         protected override bool PreValidate(ValidationContext<ProfileSettingsModel> context, ValidationResult result)
         {

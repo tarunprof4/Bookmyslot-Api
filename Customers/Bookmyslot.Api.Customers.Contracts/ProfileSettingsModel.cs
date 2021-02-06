@@ -23,9 +23,6 @@ namespace Bookmyslot.Api.Customers.Contracts
         [DefaultValue("Gender")]
         public string Gender { get; set; }
 
-        [Required(ErrorMessage = AppBusinessMessagesConstants.BioHeadLineRequired)]
-        [MaxLength(AppBusinessConstants.BioHeadLineMaxLength, ErrorMessage = AppBusinessMessagesConstants.BioHeadLineMaxLength)]
-        [DefaultValue("BioHeadLine")]
-        public string BioHeadLine { get; set; }
+      
     }
 }

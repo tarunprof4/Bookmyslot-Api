@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using System;
@@ -22,10 +23,19 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.dbInterceptor = dbInterceptor;
         }
 
+        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByEmail(string email)
+        {
+            var parameters = new { Email = email };
+            var sql = CustomerTableQueries.GetProfileSettingsByEmailQuery;
+            var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
+
+            return ResponseModelFactory.CreateProfileSettingsModelResponse(registerCustomerEntity);
+        }
+
         public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
         {
             var parameters = new {customerId = customerId, FirstName = profileSettingsModel.FirstName, LastName = profileSettingsModel.LastName, 
-                Gender = profileSettingsModel.Gender,  BioHeadLine = profileSettingsModel.BioHeadLine, ModifiedDateUtc = DateTime.UtcNow };
+                Gender = profileSettingsModel.Gender, ModifiedDateUtc = DateTime.UtcNow };
             var sql = CustomerTableQueries.UpdateProfileSettingQuery;
 
             await this.dbInterceptor.GetQueryResults("UpdateProfileSettings", parameters, () => this.connection.QueryAsync<RegisterCustomerEntity>(sql, parameters));
