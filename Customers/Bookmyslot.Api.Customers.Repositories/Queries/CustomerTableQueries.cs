@@ -3,7 +3,9 @@
 
     public class CustomerTableQueries
     {
-        public const string UpdateProfileSettingQuery = @"select * from Customer where UniqueId IN @CustomerIds";
+        public const string UpdateProfileSettingQuery = @"   UPDATE Customer
+FirstName = @FirstName,  LastName = @LastName, Gender=@Gender, BioHeadLine=@BioHeadLine, ModifiedDateUtc =@ModifiedDateUtc
+WHERE UniqueId=@customerId";
 
         public const string GetCustomersByCustomerIdsQuery = @"select * from Customer where UniqueId IN @CustomerIds";
 

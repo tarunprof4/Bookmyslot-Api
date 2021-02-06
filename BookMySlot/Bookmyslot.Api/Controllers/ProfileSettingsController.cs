@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] ProfileSettingsModel profileSettingsModel)
         {
-            var customerId = string.Empty;
+            var customerId = "29645471f47c4555918da55aed49b23a";
             var customerResponse = await this.profileSettingsBusiness.UpdateProfileSettings(profileSettingsModel, customerId);
             return this.CreatePutHttpResponse(customerResponse);
         }

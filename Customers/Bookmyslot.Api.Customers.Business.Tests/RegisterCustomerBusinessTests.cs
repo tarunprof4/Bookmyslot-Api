@@ -72,7 +72,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             customerRepositoryMock.Verify((m => m.GetCustomerByEmail(registerCustomerModel.Email)), Times.Once());
             registerCustomerRepositoryMock.Verify((m => m.CreateCustomer(registerCustomerModel)), Times.Never());
-            Assert.AreEqual(registerCustomerResponse.ResultType, ResultType.Error);
+            Assert.AreEqual(registerCustomerResponse.ResultType, ResultType.ValidationError);
         }
 
 

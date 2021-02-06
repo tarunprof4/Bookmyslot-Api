@@ -34,7 +34,7 @@ namespace Bookmyslot.Api.Customers.Business
                     return await registerCustomerRepository.CreateCustomer(registerCustomerModel);
                 }
 
-                return new Response<string>() { ResultType = ResultType.Error, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdExists } };
+                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdExists } };
             }
 
             else
