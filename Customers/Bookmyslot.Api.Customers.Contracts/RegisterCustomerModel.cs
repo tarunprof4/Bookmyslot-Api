@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.Customers.Contracts
         [MaxLength(AppBusinessConstants.BioHeadLineMaxLength, ErrorMessage = AppBusinessMessagesConstants.BioHeadLineMaxLength)]
         public string BioHeadLine { get; set; }
 
-        [MaxLength(AppBusinessConstants.SocialProviderMaxLength, ErrorMessage = AppBusinessMessagesConstants.BioHeadLineMaxLength)]
+        [MaxLength(AppBusinessConstants.ProviderMaxLength, ErrorMessage = AppBusinessMessagesConstants.ProviderMaxLength)]
         public string Provider { get; set; }
 
         public string PhotoUrl { get; set; }

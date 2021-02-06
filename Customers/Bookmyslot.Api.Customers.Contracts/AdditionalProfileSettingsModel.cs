@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookmyslot.Api.Customers.Contracts
 {
-    public class ProfileSettings
+    public class AdditionalProfileSettingsModel
     {
         [Required(ErrorMessage = AppBusinessMessagesConstants.BioHeadLineRequired)]
         [MaxLength(AppBusinessConstants.BioHeadLineMaxLength, ErrorMessage = AppBusinessMessagesConstants.BioHeadLineMaxLength)]

@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             var parameters = new { Email = email };
             var sql = CustomerTableQueries.GetProfileSettingsByEmailQuery;
-            var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
+            var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetProfileSettingsByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateProfileSettingsModelResponse(registerCustomerEntity);
         }

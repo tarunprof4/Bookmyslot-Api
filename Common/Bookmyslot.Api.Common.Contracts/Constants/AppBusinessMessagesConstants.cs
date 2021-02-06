@@ -56,7 +56,7 @@
         public const string UserNameMaxLength = "Please keep user name less than 150 characters";
         public const string PhoneMaxLength = "Please keep phone number less than 15 characters";
         public const string BioHeadLineMaxLength = "Please keep bio headline less than 1024 characters";
-        public const string SocialProviderMaxLength = "Please keep socail provider less than 20 characters";
+        public const string ProviderMaxLength = "Please keep socail provider less than 20 characters";
 
         public const string GenderMaxLength = "Please keep gender less than 20 characters";
     }
