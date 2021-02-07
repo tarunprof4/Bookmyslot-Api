@@ -1,9 +1,10 @@
-﻿using Dapper;
+﻿using Bookmyslot.Api.Common.Database.Constants;
+using Dapper;
 using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 {
-    [Table("CancelledSlot")]
+    [Table(TableNameConstants.CancelledSlot)]
     public class CancelledSlotEntity
     {
         [Key]

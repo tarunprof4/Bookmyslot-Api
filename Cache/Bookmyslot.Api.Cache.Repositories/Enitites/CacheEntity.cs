@@ -1,9 +1,10 @@
-﻿using Dapper;
+﻿using Bookmyslot.Api.Common.Database.Constants;
+using Dapper;
 using System;
 
 namespace Bookmyslot.Api.Cache.Repositories.Enitites
 {
-    [Table("Cache")]
+    [Table(TableNameConstants.Cache)]
     public class CacheEntity
     {
         public string CacheType { get; set; }

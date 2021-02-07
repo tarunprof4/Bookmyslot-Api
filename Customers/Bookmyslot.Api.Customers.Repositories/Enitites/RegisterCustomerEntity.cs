@@ -1,9 +1,10 @@
-﻿using Dapper;
+﻿using Bookmyslot.Api.Common.Database.Constants;
+using Dapper;
 using System;
 
 namespace Bookmyslot.Api.Customers.Repositories.Enitites
 {
-    [Table("Customer")]
+    [Table(TableNameConstants.Customer)]
     public class RegisterCustomerEntity
     {
         [Key]
