@@ -22,14 +22,14 @@ namespace Bookmyslot.Api.Cache.Business
            int expiryInSeconds) where T : class
         {
             var cacheType = typeof(T).ToString();
-            var retrievedResponse = await this.cacheRepository.GetCache(cacheType, key);
+            var cachedResponse = await this.cacheRepository.GetCache(cacheType, key);
 
-            if (retrievedResponse.ResultType == ResultType.Empty)
+            if (cachedResponse.ResultType == ResultType.Empty)
             {
-                var result = await retrieveValues.Invoke();
-                if (string.IsNullOrWhiteSpace(retrievedResponse.Result))
+                var invokedResponse = await retrieveValues.Invoke();
+                if (invokedResponse.ResultType == ResultType.Success)
                 {
-                    var serialized = JsonConvert.SerializeObject(result);
+                    var serialized = JsonConvert.SerializeObject(invokedResponse);
                     var cacheModel = new CacheModel()
                     {
                         Key = key,
@@ -40,10 +40,10 @@ namespace Bookmyslot.Api.Cache.Business
                     await this.cacheRepository.CreateCache(cacheModel);
                 }
 
-                return result;
+                return invokedResponse;
             }
 
-            return new Response<T>() { Result = JsonConvert.DeserializeObject<Response<T>>(retrievedResponse.Result).Result };
+            return new Response<T>() { Result = JsonConvert.DeserializeObject<Response<T>>(cachedResponse.Result).Result };
         }
     }
 }

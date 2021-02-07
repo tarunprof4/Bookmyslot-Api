@@ -10,7 +10,7 @@ namespace Bookmyslot.Api.Cache.Repositories.Enitites
         public string CacheType { get; set; }
         public string CacheKey { get; set; }
         public string CacheValue { get; set; }
-        public int ExpiryInSeconds { get; set; }
+        public TimeSpan ExpiryTime { get; set; }
         public DateTime CreatedDateUtc { get; set; }
     }
 }

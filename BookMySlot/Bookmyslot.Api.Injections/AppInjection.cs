@@ -7,7 +7,7 @@ namespace Bookmyslot.Api.Injections
 {
     public class AppInjection
     {
-        public static void LoadInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
+        public static void LoadInjections(IServiceCollection services)
         {
             AppInjections(services);
         }

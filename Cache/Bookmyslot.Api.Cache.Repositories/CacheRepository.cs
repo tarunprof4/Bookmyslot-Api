@@ -26,9 +26,11 @@ namespace Bookmyslot.Api.Cache.Repositories
         public async Task<Response<bool>> CreateCache(CacheModel cacheModel)
         {
             var cacheEntity = EntityFactory.EntityFactory.CreateCacheKeyEntity(cacheModel);
-            var parameters = new { cacheEntity = cacheEntity };
+            var sql = CacheTableQueries.InsertCacheQuery;
+            var parameters = new { CacheKey = cacheEntity.CacheKey, CacheType = cacheEntity.CacheType, CacheValue = cacheEntity.CacheValue, 
+                ExpiryTime = cacheEntity.ExpiryTime, CreatedDateUtc = cacheEntity.CreatedDateUtc };
 
-            await this.dbInterceptor.GetQueryResults("CreateCache", parameters, () => this.connection.InsertAsync<CacheEntity>(cacheEntity));
+            await this.dbInterceptor.GetQueryResults("CreateCache", parameters, () => this.connection.QueryAsync<CacheEntity>(sql, parameters));
 
             return new Response<bool>() { Result = true };
         }

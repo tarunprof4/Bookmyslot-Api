@@ -20,6 +20,7 @@ namespace Bookmyslot.Api.Injections
         {
             services.AddSingleton<ICompression, GZipCompression>();
             services.AddSingleton<IKeyEncryptor, KeyEncryptor>();
+            services.AddSingleton<IHashing, MD5Hash>();
 
             EmailInjections(services);
             LoggingInjections(services);

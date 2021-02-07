@@ -43,7 +43,8 @@ namespace Bookmyslot.Api
         private static void Injections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddHttpContextAccessor();
-            AppInjection.LoadInjections(services, appConfigurations);
+            AppInjection.LoadInjections(services);
+            CacheInjection.LoadInjections(services);
             DataBaseInjection.LoadInjections(services, appConfigurations);
             CommonInjection.LoadInjections(services);
             CustomerInjection.LoadInjections(services);

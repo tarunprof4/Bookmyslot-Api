@@ -11,9 +11,9 @@ namespace Bookmyslot.Api.Cache.Repositories.EntityFactory
             return new CacheEntity()
             {
                 CacheKey = cacheModel.Key,
-                CacheType = cacheModel.Value,
+                CacheType = cacheModel.Type,
                 CacheValue = cacheModel.Value,
-                ExpiryInSeconds = cacheModel.ExpiryInSeconds,
+                ExpiryTime = new TimeSpan(0,0, cacheModel.ExpiryInSeconds),
                 CreatedDateUtc = DateTime.UtcNow
             };
         }

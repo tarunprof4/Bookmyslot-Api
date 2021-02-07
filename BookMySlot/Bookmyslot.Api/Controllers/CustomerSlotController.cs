@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common;
+﻿using Bookmyslot.Api.Cache.Contracts.Interfaces;
+using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -19,11 +20,15 @@ namespace Bookmyslot.Api.Controllers
     {
         private readonly ICustomerSlotBusiness customerSlotBusiness;
         private readonly IKeyEncryptor keyEncryptor;
+        private readonly ITableCacheHandler tableCacheHandler;
+        private readonly IHashing md5Hash;
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, ITableCacheHandler tableCacheHandler, IHashing md5Hash)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.keyEncryptor = keyEncryptor;
+            this.tableCacheHandler = tableCacheHandler;
+            this.md5Hash = md5Hash;
         }
 
         /// <summary>
@@ -44,7 +49,16 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetDistinctCustomersNearestSlotFromToday([FromQuery] PageParameterModel pageParameterModel)
         {
-            var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
+            var key = this.md5Hash.Create(pageParameterModel);
+            var customerSlotModels =
+                  await
+                  this.tableCacheHandler.GetFromCacheAsync(
+                      key,
+                      () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel),
+                      60);
+
+
+            //var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
             if (customerSlotModels.ResultType == ResultType.Success)
             {
                 HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(customerSlotModels.Result);
