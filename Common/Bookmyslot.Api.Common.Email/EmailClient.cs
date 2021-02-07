@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Http;

@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Compression;
 using Bookmyslot.Api.Common.Compression.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Email;
+using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Microsoft.Extensions.DependencyInjection;
 
