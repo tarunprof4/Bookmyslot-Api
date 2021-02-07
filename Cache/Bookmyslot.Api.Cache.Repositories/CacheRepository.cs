@@ -37,7 +37,7 @@ namespace Bookmyslot.Api.Cache.Repositories
         {
             var cacheEntity = EntityFactory.EntityFactory.CreateCacheKeyEntity(cacheModel);
             var sql = CacheTableQueries.InsertCacheQuery;
-            var key = GetCacheKey(cacheModel.Type, cacheModel.Key);
+            var key = GetCacheKey(cacheEntity.CacheType, cacheEntity.CacheKey);
 
             var parameters = new { Id = key, CacheValue = cacheEntity.CacheValue,
                 ExpiryTimeUtc = cacheEntity.ExpiryTimeUtc, CreatedDateUtc = cacheEntity.CreatedDateUtc };
