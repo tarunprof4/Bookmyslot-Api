@@ -1,8 +1,6 @@
 using Bookmyslot.Api.Common.Compression;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Email;
-using Bookmyslot.Api.Common.Email.Constants;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
