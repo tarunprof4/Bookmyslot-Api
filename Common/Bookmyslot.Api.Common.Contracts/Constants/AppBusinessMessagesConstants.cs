@@ -8,6 +8,8 @@
         public const string ProfileSettingDetailsMissing = "Profile Settings details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
 
+        public const string EmptyCache = "Empty Cache";
+
 
         public const string FirstNameRequired = "First name is required";
         public const string LastNameRequired = "Last name is required";

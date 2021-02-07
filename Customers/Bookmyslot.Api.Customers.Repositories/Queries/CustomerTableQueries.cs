@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
+﻿namespace Bookmyslot.Api.Customers.Repositories.Queries
 {
 
     public class CustomerTableQueries

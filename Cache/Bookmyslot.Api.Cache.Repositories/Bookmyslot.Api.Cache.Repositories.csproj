@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Contracts\Bookmyslot.Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Database\Bookmyslot.Api.Common.Database.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.Cache.Contracts\Bookmyslot.Api.Cache.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

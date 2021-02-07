@@ -4,7 +4,7 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
-using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
+using Bookmyslot.Api.Customers.Repositories.Queries;
 using Dapper;
 using System;
 using System.Data;
