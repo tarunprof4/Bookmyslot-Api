@@ -4,7 +4,7 @@ using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 {
-    
+
     [Table(TableNameConstants.Slot)]
     public class SlotEntity
     {

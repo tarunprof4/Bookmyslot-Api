@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 

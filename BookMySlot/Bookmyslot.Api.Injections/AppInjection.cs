@@ -1,7 +1,6 @@
 ﻿using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 
 namespace Bookmyslot.Api.Injections
 {
