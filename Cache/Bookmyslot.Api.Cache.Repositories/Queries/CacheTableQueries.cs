@@ -9,11 +9,11 @@
      //FROM Cache
 
         public const string GetCacheQuery = @"select CacheValue from Cache where ExpiryTimeUtc > SYSUTCDATETIME()
-   and CacheKey=@CacheKey and CacheType=@CacheType";
+   and Id=@Id";
 
 
-        public const string InsertCacheQuery = @"INSERT INTO Cache (CacheKey, CacheType, CacheValue, ExpiryTimeUtc, CreatedDateUtc)
-  VALUES (@CacheKey,@CacheType,@CacheValue,@ExpiryTimeUtc,@CreatedDateUtc)";
+        public const string InsertCacheQuery = @"INSERT INTO Cache (Id, CacheValue, ExpiryTimeUtc, CreatedDateUtc)
+  VALUES (@Id,@CacheValue,@ExpiryTimeUtc,@CreatedDateUtc)";
 
     }
 }

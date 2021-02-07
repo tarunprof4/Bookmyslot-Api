@@ -25,7 +25,8 @@ namespace Bookmyslot.Api.Cache.Repositories
         public async Task<Response<string>> GetCache(string cacheType, string cacheKey)
         {
             var sql = CacheTableQueries.GetCacheQuery;
-            var parameters = new { cacheType = cacheType, cacheKey = cacheKey };
+            var key = GetCacheKey(cacheType, cacheKey);
+            var parameters = new { Id=key };
 
             var cacheEntity = await this.dbInterceptor.GetQueryResults("GetCache", parameters, () => this.connection.QueryFirstOrDefaultAsync<CacheEntity>(sql, parameters));
 
@@ -36,12 +37,20 @@ namespace Bookmyslot.Api.Cache.Repositories
         {
             var cacheEntity = EntityFactory.EntityFactory.CreateCacheKeyEntity(cacheModel);
             var sql = CacheTableQueries.InsertCacheQuery;
-            var parameters = new { CacheKey = cacheEntity.CacheKey, CacheType = cacheEntity.CacheType, CacheValue = cacheEntity.CacheValue,
+            var key = GetCacheKey(cacheModel.Type, cacheModel.Key);
+
+            var parameters = new { Id = key, CacheValue = cacheEntity.CacheValue,
                 ExpiryTimeUtc = cacheEntity.ExpiryTimeUtc, CreatedDateUtc = cacheEntity.CreatedDateUtc };
 
             await this.dbInterceptor.GetQueryResults("CreateCache", parameters, () => this.connection.QueryAsync<CacheEntity>(sql, parameters));
 
             return new Response<bool>() { Result = true };
+        }
+
+        private string GetCacheKey(string cacheType, string cacheKey)
+        {
+            var key = string.Format("{0}-{1}", cacheType, cacheKey);
+            return key;
         }
 
      
