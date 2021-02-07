@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Cache.Business
                         Key = key,
                         Type = cacheType,
                         Value = compressedResponse,
-                        ExpiryInSeconds = expiryInSeconds
+                        ExpiryTimeUtc = new TimeSpan(0, 0, expiryInSeconds)
                     };
                     await this.cacheRepository.CreateCache(cacheModel);
                 }

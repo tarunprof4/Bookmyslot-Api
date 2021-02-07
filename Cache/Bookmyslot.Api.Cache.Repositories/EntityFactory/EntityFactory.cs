@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Cache.Repositories.EntityFactory
                 CacheKey = cacheModel.Key,
                 CacheType = cacheModel.Type,
                 CacheValue = cacheModel.Value,
-                ExpiryTime = new TimeSpan(0,0, cacheModel.ExpiryInSeconds),
+                ExpiryTimeUtc = DateTime.UtcNow.Add(cacheModel.ExpiryTimeUtc),
                 CreatedDateUtc = DateTime.UtcNow
             };
         }
