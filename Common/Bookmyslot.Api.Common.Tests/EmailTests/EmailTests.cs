@@ -4,7 +4,7 @@ using Bookmyslot.Api.Common.Email.Constants;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Bookmyslot.Api.Common.Tests
+namespace Bookmyslot.Api.Common.Tests.EmailTests
 {
     public class EmailTests
     {
