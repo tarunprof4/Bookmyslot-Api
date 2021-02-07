@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Newtonsoft.Json;
 using System;
@@ -10,10 +11,12 @@ namespace Bookmyslot.Api.Cache.Business
     public class SqlTableCacheHandler : ITableCacheHandler
     {
         private readonly ICacheRepository cacheRepository;
+        private readonly ICompression compression;
 
-        public SqlTableCacheHandler(ICacheRepository cacheRepository)
+        public SqlTableCacheHandler(ICacheRepository cacheRepository, ICompression compression)
         {
             this.cacheRepository = cacheRepository;
+            this.compression = compression;
         }
 
         public async Task<Response<T>> GetFromCacheAsync<T>(
@@ -29,12 +32,12 @@ namespace Bookmyslot.Api.Cache.Business
                 var invokedResponse = await retrieveValues.Invoke();
                 if (invokedResponse.ResultType == ResultType.Success)
                 {
-                    var serialized = JsonConvert.SerializeObject(invokedResponse);
+                    var compressedResponse = compression.Compress(invokedResponse.Result);
                     var cacheModel = new CacheModel()
                     {
                         Key = key,
                         Type = cacheType,
-                        Value = serialized,
+                        Value = compressedResponse,
                         ExpiryInSeconds = expiryInSeconds
                     };
                     await this.cacheRepository.CreateCache(cacheModel);
@@ -43,7 +46,8 @@ namespace Bookmyslot.Api.Cache.Business
                 return invokedResponse;
             }
 
-            return new Response<T>() { Result = JsonConvert.DeserializeObject<Response<T>>(cachedResponse.Result).Result };
+            var deCompressedResponse = compression.Decompress<T>(cachedResponse.Result);
+            return new Response<T>() { Result = deCompressedResponse };
         }
     }
 }
