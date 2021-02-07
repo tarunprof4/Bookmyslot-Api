@@ -1,6 +1,6 @@
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Email;
+using Bookmyslot.Api.Common.Email.Constants;
 using NUnit.Framework;
 using System.Collections.Generic;
 

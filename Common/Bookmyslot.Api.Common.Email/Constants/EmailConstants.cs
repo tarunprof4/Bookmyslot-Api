@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common.Contracts.Constants
+﻿namespace Bookmyslot.Api.Common.Email.Constants
 {
     public class EmailConstants
     {

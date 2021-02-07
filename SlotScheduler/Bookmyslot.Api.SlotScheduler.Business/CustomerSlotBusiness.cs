@@ -22,6 +22,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
        
         public async Task<Response<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
         {
+
+
+
             var allCustomerSlotsResponse = await this.customerSlotRepository.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
             {

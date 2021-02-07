@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Emails;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
