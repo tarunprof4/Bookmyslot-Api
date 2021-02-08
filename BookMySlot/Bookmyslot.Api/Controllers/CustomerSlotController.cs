@@ -74,7 +74,7 @@ namespace Bookmyslot.Api.Controllers
             var cacheModel = new CacheModel();
             var md5HashKey = this.md5Hash.Create(pageParameterModel);
             cacheModel.Key = string.Format("GetDistinctCustomersNearestSlotFromToday-{0}", md5HashKey);
-            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, 10);
+            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, CacheConstants.GetDistinctCustomersNearestSlotFromToday);
             return cacheModel;
         }
 

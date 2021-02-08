@@ -1,7 +1,5 @@
 ﻿using Bookmyslot.Api.Cache.Business;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Database.Constants;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 
