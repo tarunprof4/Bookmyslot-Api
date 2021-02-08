@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Cache.Business.Tests
 {
-    public class SqlTableCacheHandlerTests
+    public class DatabaseCacheBusinessTests
     {
         private const string KEY = "key";
-        private ITableCacheHandler sqlTableCacheHandler;
+        private IDatabaseCacheBuisness sqlTableCacheHandler;
         private Mock<ICacheRepository> cacheRepositoryMock;
         private Mock<ICompression> compressionMock;
 
@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.Cache.Business.Tests
         {
             cacheRepositoryMock = new Mock<ICacheRepository>();
             compressionMock = new Mock<ICompression>();
-            sqlTableCacheHandler = new SqlTableCacheHandler(cacheRepositoryMock.Object, compressionMock.Object);
+            sqlTableCacheHandler = new DatabaseCacheBusiness(cacheRepositoryMock.Object, compressionMock.Object);
         }
 
 

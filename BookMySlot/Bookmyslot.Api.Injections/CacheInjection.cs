@@ -16,13 +16,13 @@ namespace Bookmyslot.Api.Injections
 
         private static void CacheBusinessInjections(IServiceCollection services)
         {
-            services.AddTransient<ITableCacheHandler, SqlTableCacheHandler>();
+            services.AddTransient<IDatabaseCacheBuisness, DatabaseCacheBusiness>();
         }
 
 
         private static void CacheRepositoryInjections(IServiceCollection services)
         {
-            services.AddTransient<ICacheRepository, CacheRepository>();
+            services.AddTransient<ICacheRepository, SqlCacheRepository>();
 
         }
     }

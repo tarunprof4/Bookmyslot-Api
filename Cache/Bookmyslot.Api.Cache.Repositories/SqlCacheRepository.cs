@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Cache.Repositories
 {
-    public class CacheRepository : ICacheRepository
+    public class SqlCacheRepository : ICacheRepository
     {
         private readonly IDbConnection connection;
         private readonly IDbInterceptor dbInterceptor;
 
-        public CacheRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
+        public SqlCacheRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
         {
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;

@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.Injections.Tests
         {
             var customerSlotBusiness = serviceProvider.GetService<ICustomerSlotBusiness>();
             var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
-            var tableHandler = serviceProvider.GetService<ITableCacheHandler>();
+            var tableHandler = serviceProvider.GetService<IDatabaseCacheBuisness>();
             var hash = serviceProvider.GetService<IHashing>();
             var controller = new CustomerSlotController(customerSlotBusiness, keyEncryptor, tableHandler, hash);
 

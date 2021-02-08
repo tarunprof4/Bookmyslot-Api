@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Cache.Business
 {
-    public class SqlTableCacheHandler : ITableCacheHandler
+    public class DatabaseCacheBusiness : IDatabaseCacheBuisness
     {
         private readonly ICacheRepository cacheRepository;
         private readonly ICompression compression;
 
-        public SqlTableCacheHandler(ICacheRepository cacheRepository, ICompression compression)
+        public DatabaseCacheBusiness(ICacheRepository cacheRepository, ICompression compression)
         {
             this.cacheRepository = cacheRepository;
             this.compression = compression;

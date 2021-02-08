@@ -21,14 +21,14 @@ namespace Bookmyslot.Api.Controllers
     {
         private readonly ICustomerSlotBusiness customerSlotBusiness;
         private readonly IKeyEncryptor keyEncryptor;
-        private readonly ITableCacheHandler tableCacheHandler;
+        private readonly IDatabaseCacheBuisness databaseCacheBusiness;
         private readonly IHashing md5Hash;
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, ITableCacheHandler tableCacheHandler, IHashing md5Hash)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDatabaseCacheBuisness databaseCacheBusiness, IHashing md5Hash)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.keyEncryptor = keyEncryptor;
-            this.tableCacheHandler = tableCacheHandler;
+            this.databaseCacheBusiness = databaseCacheBusiness;
             this.md5Hash = md5Hash;
         }
 
@@ -53,7 +53,7 @@ namespace Bookmyslot.Api.Controllers
             var key = this.md5Hash.Create(pageParameterModel);
             var customerSlotModels =
                   await
-                  this.tableCacheHandler.GetFromCacheAsync(
+                  this.databaseCacheBusiness.GetFromCacheAsync(
                       key,
                       () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel),
                       CacheConstants.GetDistinctCustomersNearestSlotFromToday);
