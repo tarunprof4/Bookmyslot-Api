@@ -44,7 +44,7 @@ namespace Bookmyslot.Api
         {
             services.AddHttpContextAccessor();
             AppInjection.LoadInjections(services);
-            CacheInjection.LoadInjections(services);
+            CacheInjection.LoadInjections(services, appConfigurations);
             DataBaseInjection.LoadInjections(services, appConfigurations);
             CommonInjection.LoadInjections(services);
             CustomerInjection.LoadInjections(services);
@@ -90,7 +90,9 @@ namespace Bookmyslot.Api
         {
             Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
             var bookMySlotConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.BookMySlotDatabase);
+            var cacheConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.CacheDatabase);
             appConfigurations.Add(AppSettingKeysConstants.BookMySlotDatabase, bookMySlotConnectionString);
+            appConfigurations.Add(AppSettingKeysConstants.CacheDatabase, cacheConnectionString);
 
             return appConfigurations;
         }

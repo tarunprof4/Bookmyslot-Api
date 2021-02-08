@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Cache.Contracts.Constants.cs;
+﻿using Bookmyslot.Api.Cache.Contracts;
+using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Compression.Interfaces;
@@ -8,6 +9,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,14 +23,14 @@ namespace Bookmyslot.Api.Controllers
     {
         private readonly ICustomerSlotBusiness customerSlotBusiness;
         private readonly IKeyEncryptor keyEncryptor;
-        private readonly IDatabaseCacheBuisness databaseCacheBusiness;
+        private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
         private readonly IHashing md5Hash;
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDatabaseCacheBuisness databaseCacheBusiness, IHashing md5Hash)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.keyEncryptor = keyEncryptor;
-            this.databaseCacheBusiness = databaseCacheBusiness;
+            this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
             this.md5Hash = md5Hash;
         }
 
@@ -50,13 +52,13 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetDistinctCustomersNearestSlotFromToday([FromQuery] PageParameterModel pageParameterModel)
         {
-            var key = this.md5Hash.Create(pageParameterModel);
+            var cacheModel = CreateCacheModel(pageParameterModel);
+
             var customerSlotModels =
                   await
-                  this.databaseCacheBusiness.GetFromCacheAsync(
-                      key,
-                      () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel),
-                      CacheConstants.GetDistinctCustomersNearestSlotFromToday);
+                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
+                      cacheModel,
+                      () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel));
 
 
             //var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
@@ -65,6 +67,15 @@ namespace Bookmyslot.Api.Controllers
                 HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(customerSlotModels.Result);
             }
             return this.CreateGetHttpResponse(customerSlotModels);
+        }
+
+        private CacheModel CreateCacheModel(PageParameterModel pageParameterModel)
+        {
+            var cacheModel = new CacheModel();
+            var md5HashKey = this.md5Hash.Create(pageParameterModel);
+            cacheModel.Key = string.Format("GetDistinctCustomersNearestSlotFromToday-{0}", md5HashKey);
+            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, 10);
+            return cacheModel;
         }
 
 
