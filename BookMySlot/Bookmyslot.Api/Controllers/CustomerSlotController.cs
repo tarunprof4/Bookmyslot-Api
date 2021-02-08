@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Cache.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Cache.Contracts.Constants.cs;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
@@ -55,7 +56,7 @@ namespace Bookmyslot.Api.Controllers
                   this.tableCacheHandler.GetFromCacheAsync(
                       key,
                       () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel),
-                      60);
+                      CacheConstants.GetDistinctCustomersNearestSlotFromToday);
 
 
             //var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
