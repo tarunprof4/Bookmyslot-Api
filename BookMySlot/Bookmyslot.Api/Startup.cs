@@ -2,6 +2,7 @@ using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.ExceptionHandlers;
+using Bookmyslot.Api.Common.Filters;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Injections;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +34,8 @@ namespace Bookmyslot.Api
 
             Injections(services, appConfigurations);
 
+            RegisterFilters(services);
+
             services.AddControllers();
 
             SwaggerDocumentation(services);
@@ -40,9 +43,18 @@ namespace Bookmyslot.Api
             BadRequestConfiguration(services);
         }
 
+        private static void RegisterFilters(IServiceCollection services)
+        {
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<LoggingFilter>();
+            });
+        }
+
         private static void Injections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddHttpContextAccessor();
+
             AppInjection.LoadInjections(services);
             CacheInjection.LoadInjections(services, appConfigurations);
             DataBaseInjection.LoadInjections(services, appConfigurations);

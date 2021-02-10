@@ -40,6 +40,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{email}")]
+        [ActionName("GetProfileSettings")]
         public async Task<IActionResult> Get(string email)
         {
             var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);

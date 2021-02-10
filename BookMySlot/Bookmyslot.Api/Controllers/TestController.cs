@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Logging.Interfaces;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -18,21 +19,17 @@ namespace Bookmyslot.Api.Controllers
     [ApiController]
     public class TestController : BaseApiController
     {
-        private readonly ILoggerService loggerService;
-        private readonly IAppLogContext appLogContext;
         private readonly IKeyEncryptor keyEncryptor;
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
-        public TestController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness, ILoggerService loggerService, IAppLogContext appLogContext)
+        public TestController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness)
         {
             this.keyEncryptor = keyEncryptor;
             this.resendSlotInformationBusiness = resendSlotInformationBusiness;
-            this.loggerService = loggerService;
-            this.appLogContext = appLogContext;
         }
 
         [HttpGet()]
-        [Route("api/v1/test/Testing")]
-        public async Task<IActionResult> Testing()
+        [Route("api/v1/test/TestingAsync")]
+        public async Task<IActionResult> TestingAsync()
         {
             var slotModel = GetDefaultSlotModel();
 
@@ -47,6 +44,14 @@ namespace Bookmyslot.Api.Controllers
             ResendSlotInformation resendSlotInformation = new ResendSlotInformation();
             var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(null, resendSlotInformation.ResendTo);
             return this.CreatePostHttpResponse(resendSlotInformationResponse);
+        }
+
+        [HttpGet()]
+        [Route("api/v1/test/Testing")]
+        public async Task<IActionResult> Testing()
+        {
+            CustomerModel customer = new CustomerModel() { FirstName = "Fir", LastName = "Las" };
+            return this.Ok(await Task.FromResult(customer));
         }
 
         private SlotModel GetDefaultSlotModel()
