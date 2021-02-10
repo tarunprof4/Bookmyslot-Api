@@ -38,6 +38,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
+        [ActionName("RegisterCustomer")]
         public async Task<IActionResult> Post([FromBody] RegisterCustomerModel registerCustomerModel)
         {
             var customerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);

@@ -43,6 +43,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{searchKey}")]
+        [ActionName("SearchCustomer")]
         public async Task<IActionResult> Get(string searchKey)
         {
             var customerResponse = await searchCustomerBusiness.SearchCustomers(searchKey);

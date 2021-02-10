@@ -64,6 +64,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
+        [ActionName("UpdateProfileSettings")]
         public async Task<IActionResult> Put([FromBody] ProfileSettingsModel profileSettingsModel)
         {
             var customerId = "29645471f47c4555918da55aed49b23a";

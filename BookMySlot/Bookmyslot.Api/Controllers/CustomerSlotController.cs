@@ -50,6 +50,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday")]
         [HttpGet()]
+        [ActionName("GetHomePageSlots")]
         public async Task<IActionResult> GetDistinctCustomersNearestSlotFromToday([FromQuery] PageParameterModel pageParameterModel)
         {
             var cacheModel = CreateCacheModel(pageParameterModel);
@@ -96,6 +97,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSlot/GetCustomerAvailableSlots")]
         [HttpGet()]
+        [ActionName("GetCustomerAvailableSlots")]
         public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerInfo)
         {
             var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);

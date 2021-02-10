@@ -43,6 +43,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
         [Route("api/v1/Slot")]
+        [ActionName("CreateSlot")]
         public async Task<IActionResult> Post([FromBody] SlotModel slotModel)
         {
             var slotResponse = await slotBusiness.CreateSlot(slotModel);

@@ -29,6 +29,7 @@ namespace Bookmyslot.Api.Controllers
 
         [Route("api/v1/SlotScheduler")]
         [HttpPost]
+        [ActionName("ScheduleSlot")]
         public async Task<IActionResult> Post([FromBody] SlotSchedulerModel slotSchedulerModel)
         {
             var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerModel.SlotModelKey));
