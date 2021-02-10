@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Search.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Search.Contracts.Interfaces;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

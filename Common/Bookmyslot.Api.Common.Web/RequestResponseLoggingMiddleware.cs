@@ -11,7 +11,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 
-namespace Bookmyslot.Api.Common
+namespace Bookmyslot.Api.Web.Common
 {
     public class RequestResponseLoggingMiddleware
     {

@@ -4,6 +4,12 @@ namespace Bookmyslot.Api.Customers.Emails
 {
     public class TemplateConstants
     {
+        public const string Templates = "Templates";
+        public const string TemplateCustomerRegistationWelcomeEmail = "CustomerRegistationWelcomeEmail.html";
+        public const string TemplateResendSlotMeetingInformation = "ResendSlotMeetingInformation.html";
+        public const string TemplateSlotCancelledNotification = "SlotCancelledNotification.html";
+        public const string TemplateSlotScheduledNotification = "SlotScheduledNotification.html";
+
         public const string CustomerRegistrationWelcomeEmailTemplateKey = "CustomerRegistrationWelcomeEmailTemplateKey";
         public const string CustomerRegistrationWelcomeEmailSubject = AppBusinessMessagesConstants.ApplicationName + " - " + "Welcome mail";
 

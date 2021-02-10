@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Customers.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
 
 

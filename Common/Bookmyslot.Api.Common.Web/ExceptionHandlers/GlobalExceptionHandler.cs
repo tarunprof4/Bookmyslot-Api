@@ -8,7 +8,7 @@ using Serilog;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Bookmyslot.Api.Common.ExceptionHandlers
+namespace Bookmyslot.Api.Common.Web.ExceptionHandlers
 {
     public static class GlobalExceptionHandler
     {

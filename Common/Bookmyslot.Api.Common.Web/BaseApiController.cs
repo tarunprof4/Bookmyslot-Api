@@ -4,7 +4,7 @@ using Bookmyslot.Api.Common.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bookmyslot.Api.Common
+namespace Bookmyslot.Api.Web.Common
 {
     public class BaseApiController : ControllerBase
     {

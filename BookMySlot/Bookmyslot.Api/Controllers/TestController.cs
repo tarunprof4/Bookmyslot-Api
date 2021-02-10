@@ -1,10 +1,8 @@
-﻿
-using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Common.Compression.Interfaces;
-using Bookmyslot.Api.Common.Logging.Interfaces;
+﻿using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

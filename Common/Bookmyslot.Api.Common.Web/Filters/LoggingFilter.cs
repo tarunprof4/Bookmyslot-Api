@@ -3,12 +3,9 @@ using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.Common.Filters
+namespace Bookmyslot.Api.Common.Web.Filters
 {
     public class LoggingFilter : IAsyncActionFilter
     {

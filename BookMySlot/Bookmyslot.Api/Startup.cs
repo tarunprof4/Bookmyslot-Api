@@ -1,10 +1,10 @@
-using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
-using Bookmyslot.Api.Common.ExceptionHandlers;
-using Bookmyslot.Api.Common.Filters;
 using Bookmyslot.Api.Common.Logging.Enrichers;
+using Bookmyslot.Api.Common.Web.ExceptionHandlers;
+using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Injections;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

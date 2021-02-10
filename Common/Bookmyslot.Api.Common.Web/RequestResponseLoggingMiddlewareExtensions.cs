@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Bookmyslot.Api.Common
+namespace Bookmyslot.Api.Web.Common
 {
     public static class RequestResponseLoggingMiddlewareExtensions
     {

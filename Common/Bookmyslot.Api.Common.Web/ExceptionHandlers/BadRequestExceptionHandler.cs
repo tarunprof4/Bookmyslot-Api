@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 
-namespace Bookmyslot.Api.Common.ExceptionHandlers
+namespace Bookmyslot.Api.Common.Web.ExceptionHandlers
 {
     public class BadRequestExceptionHandler : ValidationProblemDetails
     {
