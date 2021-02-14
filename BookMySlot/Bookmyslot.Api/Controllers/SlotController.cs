@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -43,6 +43,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
         [Route("api/v1/Slot")]
+        [ActionName("CreateSlot")]
         public async Task<IActionResult> Post([FromBody] SlotModel slotModel)
         {
             var slotResponse = await slotBusiness.CreateSlot(slotModel);
@@ -78,7 +79,7 @@ namespace Bookmyslot.Api.Controllers
                 return this.CreatePostHttpResponse(slotResponse);
             }
 
-            var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
+            var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
             return this.CreatePostHttpResponse(validationErrorResponse);
         }
     }

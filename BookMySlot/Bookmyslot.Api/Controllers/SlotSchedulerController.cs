@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -29,6 +29,7 @@ namespace Bookmyslot.Api.Controllers
 
         [Route("api/v1/SlotScheduler")]
         [HttpPost]
+        [ActionName("ScheduleSlot")]
         public async Task<IActionResult> Post([FromBody] SlotSchedulerModel slotSchedulerModel)
         {
             var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerModel.SlotModelKey));
@@ -39,7 +40,7 @@ namespace Bookmyslot.Api.Controllers
                 return this.CreatePostHttpResponse(slotScheduleResponse);
             }
 
-            var validationErrorResponse = Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessages.CorruptData });
+            var validationErrorResponse = Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
             return this.CreatePostHttpResponse(validationErrorResponse);
         }
     }

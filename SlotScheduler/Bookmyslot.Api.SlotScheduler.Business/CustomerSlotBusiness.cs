@@ -22,6 +22,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
        
         public async Task<Response<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
         {
+
+
+
             var allCustomerSlotsResponse = await this.customerSlotRepository.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
             {
@@ -42,14 +45,14 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<List<CustomerSlotModel>>.Success(customerSlotModels);
             }
 
-            return Response<List<CustomerSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
+            return Response<List<CustomerSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound }); ;
         }
 
         public async Task<Response<BookSlotModel>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string customerId)
         {
             if (string.IsNullOrWhiteSpace(customerId))
             {
-                return Response<BookSlotModel>.ValidationError(new List<string>() { AppBusinessMessages.CustomerIdNotValid });
+                return Response<BookSlotModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CustomerIdNotValid });
             }
 
             var allCustomerSlotsResponse = await this.customerSlotRepository.GetCustomerAvailableSlots(pageParameterModel, customerId);
@@ -72,7 +75,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<BookSlotModel>.Success(bookSlotModel);
             }
 
-            return Response<BookSlotModel>.Empty(new List<string>() { AppBusinessMessages.NoRecordsFound }); ;
+            return Response<BookSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound }); ;
         }
     }
 }

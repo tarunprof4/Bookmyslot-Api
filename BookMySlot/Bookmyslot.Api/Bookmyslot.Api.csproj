@@ -19,11 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Injections\Bookmyslot.Api.Common.Injections.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common\Bookmyslot.Api.Common.csproj" />
-    <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Injections\Bookmyslot.Api.Customers.Injections.csproj" />
-    <ProjectReference Include="..\..\SlotScheduler\Bookmyslot.Api.SlotScheduler.Injections\Bookmyslot.Api.SlotScheduler.Injections.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Web\Bookmyslot.Api.Common.Web.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.Injections\Bookmyslot.Api.Injections.csproj" />
   </ItemGroup>
 
 </Project>

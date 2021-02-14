@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Common;
-using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -113,7 +113,6 @@ namespace Bookmyslot.Api.Controllers
 
                 bookSlotModel.CreatedByCustomerModel.Id = string.Empty;
                 bookSlotModel.CreatedByCustomerModel.Email = string.Empty;
-                bookSlotModel.CreatedByCustomerModel.Gender = string.Empty;
             }
         }
 
@@ -127,8 +126,6 @@ namespace Bookmyslot.Api.Controllers
                 cancelledSlotInformationModel.CancelledSlotModel.BookedBy = string.Empty;
 
                 cancelledSlotInformationModel.CancelledByCustomerModel.Id = string.Empty;
-                cancelledSlotInformationModel.CancelledByCustomerModel.Gender = string.Empty;
-                cancelledSlotInformationModel.CancelledByCustomerModel.Email = string.Empty;
             }
         }
     }

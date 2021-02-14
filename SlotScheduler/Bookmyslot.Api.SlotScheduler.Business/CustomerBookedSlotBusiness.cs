@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return new Response<IEnumerable<CancelledSlotInformationModel>>() { Result = cancelledSlotInformationModels };
             }
 
-            return Response<IEnumerable<CancelledSlotInformationModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
+            return Response<IEnumerable<CancelledSlotInformationModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
         public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerBookedSlots(string customerId)
@@ -53,7 +53,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerSlots(customerSlotModelsResponse);
             }
 
-            return Response<IEnumerable<BookedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
+            return Response<IEnumerable<BookedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
         public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerCompletedSlots(string customerId)
@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerSlots(customerSlotModelsResponse);
             }
 
-            return Response<IEnumerable<BookedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
+            return Response<IEnumerable<BookedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
         private async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerSlots(Response<IEnumerable<SlotModel>> customerSlotModelsResponse)

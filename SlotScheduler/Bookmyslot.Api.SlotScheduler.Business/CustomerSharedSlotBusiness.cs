@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return new Response<IEnumerable<SharedSlotModel>>() { Result = sharedSlotModels };
             }
 
-            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
+            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
 
@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerBookedOrCompletedSlots(customerSlotModelsResponse);
             }
 
-            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
+            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
         
@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerBookedOrCompletedSlots(customerSlotModelsResponse);
             }
 
-            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessages.NoSlotsFound });
+            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
 

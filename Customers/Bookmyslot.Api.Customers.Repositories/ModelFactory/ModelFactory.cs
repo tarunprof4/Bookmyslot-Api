@@ -6,27 +6,36 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
 {
     internal class ModelFactory
     {
-        internal static CustomerModel CreateCustomerModel(CustomerEntity customerEntity)
+        internal static CustomerModel CreateCustomerModel(RegisterCustomerEntity registerCustomerEntity)
         {
             return new CustomerModel()
             {
-                Email = customerEntity.Email,
-                Id= customerEntity.UniqueId,
-                FirstName = customerEntity.FirstName,
-                LastName = customerEntity.LastName,
-                Gender = customerEntity.Gender,
-                BioHeadLine = customerEntity.BioHeadLine,
-                CreatedDateUtc = customerEntity.CreatedDateUtc
+                Email = registerCustomerEntity.Email,
+                Id= registerCustomerEntity.UniqueId,
+                FirstName = registerCustomerEntity.FirstName,
+                LastName = registerCustomerEntity.LastName,
+                BioHeadLine = registerCustomerEntity.BioHeadLine,
+            };
+        }
+
+        internal static ProfileSettingsModel CreateProfileSettingsModel(RegisterCustomerEntity registerCustomerEntity)
+        {
+            return new ProfileSettingsModel()
+            {
+                Email = registerCustomerEntity.Email,
+                FirstName = registerCustomerEntity.FirstName,
+                LastName = registerCustomerEntity.LastName,
+                Gender = registerCustomerEntity.Gender
             };
         }
 
 
-        internal static List<CustomerModel> CreateCustomerModels(IEnumerable<CustomerEntity> customerEntities)
+        internal static List<CustomerModel> CreateCustomerModels(IEnumerable<RegisterCustomerEntity> registerCustomerEntities)
         {
             List<CustomerModel> customerModels = new List<CustomerModel>();
-            foreach (var customerEntity in customerEntities)
+            foreach (var registerCustomerEntity in registerCustomerEntities)
             {
-                customerModels.Add(CreateCustomerModel(customerEntity));
+                customerModels.Add(CreateCustomerModel(registerCustomerEntity));
             }
             return customerModels;
         }

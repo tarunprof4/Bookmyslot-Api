@@ -12,4 +12,19 @@
     <ProjectReference Include="..\..\SlotScheduler\Bookmyslot.Api.SlotScheduler.Contracts\Bookmyslot.Api.SlotScheduler.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Templates\CustomerRegistationWelcomeEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\ResendSlotMeetingInformation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\SlotCancelledNotification.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\SlotScheduledNotification.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

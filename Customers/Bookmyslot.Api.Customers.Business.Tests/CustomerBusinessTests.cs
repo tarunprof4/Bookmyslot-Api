@@ -1,10 +1,8 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,9 +13,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
     {
         private const string CUSTOMERID = "CUSTOMERID";
         private const string EMAIL = "a@gmail.com";
-        private const string FIRSTNAME = "fisrtname";
-        private const string LASTNAME = "lastname";
-        private const string GENDER = "gender";
         private CustomerBusiness customerBusiness;
         private Mock<ICustomerRepository> customerRepositoryMock;
 
@@ -44,7 +39,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             var customer = await customerBusiness.GetCustomerByEmail(email);
 
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(customer.Messages.First(), AppBusinessMessages.EmailIdNotValid);
+            Assert.AreEqual(customer.Messages.First(), AppBusinessMessagesConstants.EmailIdNotValid);
         }
 
         [Test]
@@ -63,130 +58,8 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             var customer = await customerBusiness.GetCustomerById(customerId);
 
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(customer.Messages.First(), AppBusinessMessages.CustomerIdNotValid);
+            Assert.AreEqual(customer.Messages.First(), AppBusinessMessagesConstants.CustomerIdNotValid);
         }
 
-        [Test]
-        public async Task GetAllCustomers_Valid_CallsGetAllCustomersRepository()
-        {
-            var customer = await customerBusiness.GetAllCustomers();
-
-            customerRepositoryMock.Verify((m => m.GetAllCustomers()), Times.Once());
-        }
-
-
-        [Test]
-        public async Task CreateCustomer_ValidCustomerDetails_ReturnsSuccess()
-        {
-            var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Empty };
-            customerRepositoryMock.Setup(a => a.GetCustomerByEmail(customerModel.Email)).Returns(Task.FromResult(customerModelResponse));
-
-            var customer = await customerBusiness.CreateCustomer(customerModel);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerByEmail(customerModel.Email)), Times.Once());
-            customerRepositoryMock.Verify((m => m.CreateCustomer(customerModel)), Times.Once());
-        }
-
-        [Test]
-        public async Task CreateCustomer_CreateMissingCustomerDetails_ReturnsValidationError()
-        {
-            var customer = await customerBusiness.CreateCustomer(null);
-
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerDetailsMissing));
-            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-        }
-
-        [Test]
-        public async Task CreateCustomer_CreateInvalidCustomer_ReturnsValidationError()
-        {
-            var customerModel = new CustomerModel();
-
-            var customer = await customerBusiness.CreateCustomer(customerModel);
-
-            Assert.IsFalse(customer.Messages.Contains(AppBusinessMessages.MiddleNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.FirstNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.LastNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.GenderNotValid));
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.EmailIdNotValid));
-            Assert.AreEqual(customer.ResultType,ResultType.ValidationError);
-        }
-
-        [Test]
-        public async Task CreateCustomer_CustomerWithSameEmailIdAlreadyExists_ReturnsError()
-        {
-            var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Success };
-            customerRepositoryMock.Setup(a => a.GetCustomerByEmail(customerModel.Email)).Returns(Task.FromResult(customerModelResponse));
-
-            var customer = await customerBusiness.CreateCustomer(customerModel);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerByEmail(customerModel.Email)), Times.Once());
-            customerRepositoryMock.Verify((m => m.CreateCustomer(customerModel)), Times.Never());
-            Assert.AreEqual(customer.ResultType, ResultType.Error);
-        }
-
-
-        [Test]
-        public async Task CreateCustomer_WithInvalidCustomerNameAndEmail_ReturnsValidationError()
-        {
-            var customerModel = new CustomerModel() { FirstName=" 12 ",  Email ="asdf.com" };
-
-            var customer = await customerBusiness.CreateCustomer(customerModel);
-
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.FirstNameInValid));
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.EmailIdNotValid));
-            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-        }
-
-
-        [Test]
-        public async Task UpdateCustomer_ValidCustomerDetails_ReturnsSuccess()
-        {
-            var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { Result = customerModel };
-            customerRepositoryMock.Setup(a => a.GetCustomerByEmail(customerModel.Email)).Returns(Task.FromResult(customerModelResponse));
-
-            var customer = await customerBusiness.UpdateCustomer(customerModel);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerByEmail(customerModel.Email)), Times.Once());
-            customerRepositoryMock.Verify((m => m.UpdateCustomer(customerModel)), Times.Once());
-        }
-
-        [Test]
-        public async Task UpdateCustomer_MissingCustomerDetails_ReturnsValidationError()
-        {
-            var customer = await customerBusiness.UpdateCustomer(null);
-
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerDetailsMissing));
-            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-        }
-
-        [Test]
-        public async Task UpdateCustomer_UpdateNotExistingCustomer_ReturnsCustomerNotFoundError()
-        {
-            var customerModel = CreateCustomer();
-            Response<CustomerModel> customerModelErrorResponse = new Response<CustomerModel>() { ResultType = ResultType.Error, Messages = new List<string> { AppBusinessMessages.CustomerNotFound } };
-            customerRepositoryMock.Setup(a => a.GetCustomerByEmail(customerModel.Email)).Returns(Task.FromResult(customerModelErrorResponse));
-            
-            var customer = await customerBusiness.UpdateCustomer(customerModel);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerByEmail(customerModel.Email)), Times.Once());
-            customerRepositoryMock.Verify((m => m.UpdateCustomer(customerModel)), Times.Never());
-            Assert.AreEqual(customer.ResultType, ResultType.Empty);
-            Assert.IsTrue(customer.Messages.Contains(AppBusinessMessages.CustomerNotFound));
-        }
-
-     
-
-        private CustomerModel CreateCustomer()
-        {
-            var customerModel = new CustomerModel();
-            customerModel.FirstName = FIRSTNAME;
-            customerModel.LastName = LASTNAME;
-            customerModel.Gender = GENDER;
-            customerModel.Email = EMAIL;
-            return customerModel;
-        }
     }
 }

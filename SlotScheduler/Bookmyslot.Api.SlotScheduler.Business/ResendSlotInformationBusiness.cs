@@ -1,9 +1,10 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Emails;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return await this.emailInteraction.SendEmail(emailModel);
             }
 
-            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.MinimumDaysForSlotMeetingLink });
+            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.MinimumDaysForSlotMeetingLink });
         }
 
     }

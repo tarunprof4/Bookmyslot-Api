@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Email.Interfaces;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Common.Email

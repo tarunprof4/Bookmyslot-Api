@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return await this.slotRepository.UpdateSlot(slotModel);
 
             }
-            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessages.SlotScheduleDateInvalid });
+            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleDateInvalid });
         }
     }
 }

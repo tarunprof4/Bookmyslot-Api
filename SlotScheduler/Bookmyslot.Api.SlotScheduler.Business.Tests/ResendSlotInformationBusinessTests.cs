@@ -1,8 +1,9 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -57,7 +58,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, string.Empty);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessages.MinimumDaysForSlotMeetingLink);
+            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.MinimumDaysForSlotMeetingLink);
         }
 
 

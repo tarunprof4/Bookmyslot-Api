@@ -1,11 +1,15 @@
-﻿using Bookmyslot.Api.Common;
+﻿using Bookmyslot.Api.Cache.Contracts;
+using Bookmyslot.Api.Cache.Contracts.Constants.cs;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,11 +23,15 @@ namespace Bookmyslot.Api.Controllers
     {
         private readonly ICustomerSlotBusiness customerSlotBusiness;
         private readonly IKeyEncryptor keyEncryptor;
+        private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
+        private readonly IHashing md5Hash;
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.keyEncryptor = keyEncryptor;
+            this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
+            this.md5Hash = md5Hash;
         }
 
         /// <summary>
@@ -42,14 +50,33 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday")]
         [HttpGet()]
+        [ActionName("GetHomePageSlots")]
         public async Task<IActionResult> GetDistinctCustomersNearestSlotFromToday([FromQuery] PageParameterModel pageParameterModel)
         {
-            var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
+            var cacheModel = CreateCacheModel(pageParameterModel);
+
+            var customerSlotModels =
+                  await
+                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
+                      cacheModel,
+                      () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel));
+
+
+            //var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
             if (customerSlotModels.ResultType == ResultType.Success)
             {
                 HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(customerSlotModels.Result);
             }
             return this.CreateGetHttpResponse(customerSlotModels);
+        }
+
+        private CacheModel CreateCacheModel(PageParameterModel pageParameterModel)
+        {
+            var cacheModel = new CacheModel();
+            var md5HashKey = this.md5Hash.Create(pageParameterModel);
+            cacheModel.Key = string.Format("GetDistinctCustomersNearestSlotFromToday-{0}", md5HashKey);
+            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, CacheConstants.GetDistinctCustomersNearestSlotFromToday);
+            return cacheModel;
         }
 
 
@@ -70,6 +97,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSlot/GetCustomerAvailableSlots")]
         [HttpGet()]
+        [ActionName("GetCustomerAvailableSlots")]
         public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerInfo)
         {
             var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);
@@ -85,7 +113,6 @@ namespace Bookmyslot.Api.Controllers
             foreach (var customerSlotModel in customerSlotModels)
             {
                 customerSlotModel.CustomerModel.Email = string.Empty;
-                customerSlotModel.CustomerModel.Gender = string.Empty;
 
                 customerSlotModel.SlotModels = new List<SlotModel>();
             }
@@ -101,7 +128,6 @@ namespace Bookmyslot.Api.Controllers
             }
 
             bookSlotModel.CustomerModel.Email = string.Empty;
-            bookSlotModel.CustomerModel.Gender = string.Empty;
         }
     }
 }

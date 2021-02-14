@@ -1,33 +1,19 @@
-using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
-using Bookmyslot.Api.Common.ExceptionHandlers;
-using Bookmyslot.Api.Common.Injections;
 using Bookmyslot.Api.Common.Logging.Enrichers;
-using Bookmyslot.Api.Customers.Injections;
-using Bookmyslot.Api.SlotScheduler.Injections;
-using Elastic.Apm.SerilogEnricher;
-using Elastic.CommonSchema.Serilog;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using Bookmyslot.Api.Common.Web.ExceptionHandlers;
+using Bookmyslot.Api.Common.Web.Filters;
+using Bookmyslot.Api.Injections;
+using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using NSwag;
-using NSwag.Generation.Processors.Security;
 using Serilog;
-using Serilog.Sinks.Elasticsearch;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 
 namespace Bookmyslot.Api
 {
@@ -43,112 +29,44 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            DependencyInjections(services);
+
+            Dictionary<string, string> appConfigurations = GetAppConfigurations();
+
+            Injections(services, appConfigurations);
+
+            RegisterFilters(services);
 
             services.AddControllers();
 
-            InitializeSwagger(services);
+            SwaggerDocumentation(services);
 
-            InitializeModelInValidState(services);
-
-
-            //        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options))
-
-
-            //             .AddGoogle(googleOptions =>
-            //                         {
-            //                             googleOptions.ClientId = "952200248622-4dhfmtdcf4u1b3ektt6giacpotc60vkl.apps.googleusercontent.com";
-            //                             googleOptions.ClientSecret = "b0jpd7fNb6D5MgLi21x3atTn";
-
-            //                         })
-            //.AddFacebook(facebookOptions =>
-            //{
-            //    facebookOptions.AppId = "2817970748513714";
-            //    facebookOptions.AppSecret = "12a2014e0c481e0b0d0b428a506a6fb1";
-
-            //})
-            //;
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-            //    {
-            //        options.Authority = "";
-            //        options.Audience = "";
-
-            //    });
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
-            //    AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options)).
-            //    AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options));
-
-
-
-
-            //services.AddMvc(options => {
-            //    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-            //    options.Filters.Add(new AuthorizeFilter(policy));
-            //});
-
-
-
-
-
-
-
-
-            var key = Encoding.ASCII.GetBytes("b0jpd7fNb6D5MgLi21x3atTn");
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = false,
-                ValidIssuer = "accounts.google.com",
-
-                ValidateAudience = false,
-                ValidAudience = "952200248622-8cn9oq0n1fnp0rjga6vsb9oh67kkkt8s.apps.googleusercontent.com",
-
-                ValidateIssuerSigningKey = false,
-                //IssuerSigningKey = new SymmetricSecurityKey(key),
-
-                RequireExpirationTime = false,
-                ValidateLifetime = false,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                //options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
-                //options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-            }).AddJwtBearer(configureOptions =>
-            {
-                configureOptions.ClaimsIssuer = "accounts.google.com";
-                configureOptions.TokenValidationParameters = tokenValidationParameters;
-                configureOptions.SaveToken = true;
-            });
-
-            //services.AddAuthentication(options =>
-            //{
-            //    //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = GoogleDefaults.AuthenticationScheme;
-            //    options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-            //}) .AddGoogle(googleOptions =>
-            //{
-
-
-            //    googleOptions.ClientId = "952200248622-4dhfmtdcf4u1b3ektt6giacpotc60vkl.apps.googleusercontent.com";
-            //                                 googleOptions.ClientSecret = "b0jpd7fNb6D5MgLi21x3atTn";
-            //});
-
-
+            BadRequestConfiguration(services);
         }
 
+        private static void RegisterFilters(IServiceCollection services)
+        {
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<LoggingFilter>();
+            });
+        }
+
+        private static void Injections(IServiceCollection services, Dictionary<string, string> appConfigurations)
+        {
+            services.AddHttpContextAccessor();
+
+            AppInjection.LoadInjections(services);
+            CacheInjection.LoadInjections(services, appConfigurations);
+            DataBaseInjection.LoadInjections(services, appConfigurations);
+            CommonInjection.LoadInjections(services);
+            CustomerInjection.LoadInjections(services);
+            SearchInjection.LoadInjections(services);
+            SlotSchedulerInjection.LoadInjections(services);
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+
             InitializeSerilog(serviceProvider);
 
             if (env.IsDevelopment())
@@ -171,18 +89,24 @@ namespace Bookmyslot.Api
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
 
+        private Dictionary<string, string> GetAppConfigurations()
+        {
+            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
+            var bookMySlotConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.BookMySlotDatabase);
+            var cacheConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.CacheDatabase);
+            appConfigurations.Add(AppSettingKeysConstants.BookMySlotDatabase, bookMySlotConnectionString);
+            appConfigurations.Add(AppSettingKeysConstants.CacheDatabase, cacheConnectionString);
 
-
-
-
+            return appConfigurations;
         }
 
         private static void InitializeSerilog(IServiceProvider serviceProvider)
@@ -215,7 +139,7 @@ namespace Bookmyslot.Api
             Log.Debug("Starting Bookmyslot web host");
         }
 
-        private static void InitializeModelInValidState(IServiceCollection services)
+        private static void BadRequestConfiguration(IServiceCollection services)
         {
             services.AddMvc()
        .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
@@ -229,23 +153,7 @@ namespace Bookmyslot.Api
        });
         }
 
-        private void DependencyInjections(IServiceCollection services)
-        {
-            services.AddHttpContextAccessor();
-
-            Dictionary<string, string> appConfigurations = GetAppConfigurations();
-
-            CommonInjection.CommonInjections(services);
-
-            CustomerInjection.CustomerBusinessInjections(services);
-            CustomerInjection.CustomerRepositoryInjections(services, appConfigurations);
-
-            SlotSchedulerInjection.SlotSchedulerCommonInjections(services);
-            SlotSchedulerInjection.SlotSchedulerBusinessInjections(services);
-            SlotSchedulerInjection.SlotSchedulerRepositoryInjections(services, appConfigurations);
-        }
-
-        private static void InitializeSwagger(IServiceCollection services)
+        private static void SwaggerDocumentation(IServiceCollection services)
         {
             services.AddOpenApiDocument(config =>
             {
@@ -255,7 +163,7 @@ namespace Bookmyslot.Api
                     document.Info.Title = "Bookmyslot Customer API";
                     document.Info.Description = "Bookmyslot Customer API to manage customer data";
                     document.Info.TermsOfService = "None";
-                    document.Info.Contact = new OpenApiContact
+                    document.Info.Contact = new NSwag.OpenApiContact
                     {
                         Name = "TA",
                         Email = string.Empty,
@@ -266,40 +174,9 @@ namespace Bookmyslot.Api
                         Name = "",
                         //Url = "https://example.com/license"
                     };
-                    //document.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
-                    //document.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme()
-                    //{
-                    //    Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
-                    //    Name = "Authorization",
-                    //    In = NSwag.SwaggerSecurityApiKeyLocation.Header,
-                    //    Description = "Bearer token"
-                    //}));
-
                 };
-
-                config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
-                config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Bearer token"
-                }));
-
             });
         }
-
-        private Dictionary<string, string> GetAppConfigurations()
-        {
-            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
-            var bookMySlotConnectionString = Configuration.GetConnectionString(AppConfigurationConstants.BookMySlotDatabase);
-            appConfigurations.Add(AppConfigurationConstants.BookMySlotDatabaseConnectionString, bookMySlotConnectionString);
-
-            return appConfigurations;
-        }
-
-
-
 
     }
 }

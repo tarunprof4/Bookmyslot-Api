@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Compression.Constants;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using System;
 using System.Security.Cryptography;
 using System.Web;
