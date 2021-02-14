@@ -8,9 +8,9 @@ using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
-using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Repositories

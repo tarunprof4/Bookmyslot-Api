@@ -5,8 +5,10 @@ using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Injections;
 using Bookmyslot.Api.Web.Common;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,17 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<IdentityUser, IdentityRole>();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            })
+                    .AddGoogle(options =>
+                    {
+                        options.ClientId = "952200248622-4dhfmtdcf4u1b3ektt6giacpotc60vkl.apps.googleusercontent.com";
+                        options.ClientSecret = "b0jpd7fNb6D5MgLi21x3atTn";
+                    });
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
@@ -89,8 +102,9 @@ namespace Bookmyslot.Api
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
+            app.UseAuthentication();
+            //app.UseAuthorization();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
