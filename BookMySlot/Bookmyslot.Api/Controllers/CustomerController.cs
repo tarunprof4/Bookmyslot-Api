@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    [Authorize]
+    
     public class CustomerController : BaseApiController
     {
         private readonly ICustomerBusiness customerBusiness;

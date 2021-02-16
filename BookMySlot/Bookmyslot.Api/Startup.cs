@@ -6,6 +6,7 @@ using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Injections;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -31,17 +34,7 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-            })
-                    .AddGoogle(options =>
-                    {
-                        options.ClientId = "952200248622-4dhfmtdcf4u1b3ektt6giacpotc60vkl.apps.googleusercontent.com";
-                        options.ClientSecret = "b0jpd7fNb6D5MgLi21x3atTn";
-                    });
+
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
@@ -53,7 +46,29 @@ namespace Bookmyslot.Api
 
             SwaggerDocumentation(services);
 
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options))
+
+
+                 .AddGoogle(googleOptions =>
+                             {
+                                 googleOptions.ClientId = "952200248622-4dhfmtdcf4u1b3ektt6giacpotc60vkl.apps.googleusercontent.com";
+                                 googleOptions.ClientSecret = "b0jpd7fNb6D5MgLi21x3atTn";
+
+                             });
+    //.AddFacebook(facebookOptions =>
+    //{
+    //    facebookOptions.AppId = "2817970748513714";
+    //    facebookOptions.AppSecret = "12a2014e0c481e0b0d0b428a506a6fb1";
+
+    //})
+    
+
             BadRequestConfiguration(services);
+
+
         }
 
         private static void RegisterFilters(IServiceCollection services)
@@ -103,7 +118,7 @@ namespace Bookmyslot.Api
             app.UseSwaggerUi3();
 
             app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
 
             app.UseEndpoints(endpoints =>
@@ -189,6 +204,16 @@ namespace Bookmyslot.Api
                         //Url = "https://example.com/license"
                     };
                 };
+
+
+                config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+                config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Bearer token"
+                }));
             });
         }
 
