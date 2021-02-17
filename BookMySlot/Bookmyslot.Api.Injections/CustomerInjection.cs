@@ -16,6 +16,7 @@ namespace Bookmyslot.Api.Injections
         private static void CustomerBusinessInjections(IServiceCollection services)
         {
             services.AddTransient<IRegisterCustomerBusiness, RegisterCustomerBusiness>();
+            services.AddTransient<ILoginCustomerBusiness, LoginCustomerBusiness>();
             services.AddTransient<IProfileSettingsBusiness, ProfileSettingsBusiness>();
             services.AddTransient<ICustomerBusiness, CustomerBusiness>();
         }

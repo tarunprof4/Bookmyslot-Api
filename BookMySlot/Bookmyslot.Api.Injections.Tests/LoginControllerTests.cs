@@ -1,6 +1,5 @@
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +9,7 @@ using System;
 
 namespace Bookmyslot.Api.Injections.Tests
 {
-    public class EmailContollerTests
+    public class LoginControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -27,13 +26,11 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
-            var resendSlotInformationBusiness = serviceProvider.GetService<IResendSlotInformationBusiness>();
+            var loginCustomerBusiness = serviceProvider.GetService<ILoginCustomerBusiness>();
 
-            var controller = new EmailController(keyEncryptor, resendSlotInformationBusiness);
+            var controller = new LoginController(loginCustomerBusiness);
 
-            Assert.IsNotNull(keyEncryptor);
-            Assert.IsNotNull(resendSlotInformationBusiness);
+            Assert.IsNotNull(loginCustomerBusiness);
             Assert.IsNotNull(controller);
         }
     }

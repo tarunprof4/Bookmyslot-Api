@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
+    [Authorize]
     public class ProfileSettingsController : BaseApiController
     {
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
@@ -43,6 +45,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("GetProfileSettings")]
         public async Task<IActionResult> Get(string email)
         {
+            var claims = User.Claims;
             var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);
             return this.CreateGetHttpResponse(customerResponse);
         }
