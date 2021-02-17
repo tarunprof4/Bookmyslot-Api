@@ -19,9 +19,6 @@ namespace Bookmyslot.Api.Customers.Business
         private readonly ISocialLoginTokenValidator socialLoginTokenValidator;
         private readonly IJwtTokenProvider jwtTokenProvider;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LoginController"/> class. 
-        /// </summary>
         public LoginCustomerBusiness(IRegisterCustomerBusiness registerCustomerBusiness, ICustomerBusiness customerBusiness, ISocialLoginTokenValidator socialLoginTokenValidator, IJwtTokenProvider jwtTokenProvider)
         {
             this.registerCustomerBusiness = registerCustomerBusiness;

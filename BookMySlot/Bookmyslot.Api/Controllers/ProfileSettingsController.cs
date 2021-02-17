@@ -45,7 +45,6 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("GetProfileSettings")]
         public async Task<IActionResult> Get(string email)
         {
-            var claims = User.Claims;
             var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);
             return this.CreateGetHttpResponse(customerResponse);
         }
