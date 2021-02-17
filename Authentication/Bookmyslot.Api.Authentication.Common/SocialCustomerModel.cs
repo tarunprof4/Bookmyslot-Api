@@ -1,6 +1,6 @@
-﻿namespace Bookmyslot.Api.Authorization.Common
+﻿namespace Bookmyslot.Api.Authentication.Common
 {
-    public class SocialCustomer
+    public class SocialCustomerModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -1,6 +1,6 @@
-﻿using Bookmyslot.Api.Authorization;
-using Bookmyslot.Api.Authorization.Common.Interfaces;
-using Bookmyslot.Api.Authorization.Google;
+﻿using Bookmyslot.Api.Authentication;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Authentication.Google;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections

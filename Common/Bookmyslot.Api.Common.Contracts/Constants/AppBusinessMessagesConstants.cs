@@ -64,5 +64,10 @@
 
         public const string InvalidToken = "InvalidToken";
         public const string LoginFailed = "Login Failed";
+
+        public const string SocialLoginTokenDetailsMissing = "Token details Missing";
+
+        public const string TokenRequired = "token is required";
+        public const string TokenProviderRequired = "token provider is required";
     }
 }

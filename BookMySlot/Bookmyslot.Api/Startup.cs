@@ -1,4 +1,3 @@
-using Bookmyslot.Api.Authorization.Common.Constants;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Logging.Enrichers;
@@ -38,9 +37,9 @@ namespace Bookmyslot.Api
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
-            InitializeJwtAuthentication(services);
-
             Injections(services, appConfigurations);
+
+            InitializeJwtAuthentication(services);
 
             RegisterFilters(services);
 
@@ -65,9 +64,9 @@ namespace Bookmyslot.Api
                 ValidateIssuerSigningKey = true,
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidIssuer = JwtTokenConstants.Issuer,
-                ValidAudience = JwtTokenConstants.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtTokenConstants.SecretKey)),
+                //ValidIssuer = JwtTokenConstants.Issuer,
+                //ValidAudience = JwtTokenConstants.Audience,
+                //IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtTokenConstants.SecretKey)),
                 ClockSkew = TimeSpan.Zero
             };
         });

@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
-    <ProjectReference Include="..\Bookmyslot.Api.Authorization.Common\Bookmyslot.Api.Authorization.Common.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.Authentication.Common\Bookmyslot.Api.Authentication.Common.csproj" />
   </ItemGroup>
 
 </Project>

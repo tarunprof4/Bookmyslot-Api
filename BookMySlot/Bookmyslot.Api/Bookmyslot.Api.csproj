@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Authorization\Bookmyslot.Api.Authorization\Bookmyslot.Api.Authorization.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Web\Bookmyslot.Api.Common.Web.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Injections\Bookmyslot.Api.Injections.csproj" />

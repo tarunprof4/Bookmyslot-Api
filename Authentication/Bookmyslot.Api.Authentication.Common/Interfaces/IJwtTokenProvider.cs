@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Authorization.Common.Interfaces
+﻿namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface IJwtTokenProvider
     {

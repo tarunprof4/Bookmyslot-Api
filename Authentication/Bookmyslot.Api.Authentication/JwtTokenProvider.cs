@@ -1,18 +1,23 @@
-﻿using Bookmyslot.Api.Authorization.Common.Constants;
-using Bookmyslot.Api.Authorization.Common.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Bookmyslot.Api.Authorization
+namespace Bookmyslot.Api.Authentication
 {
     public class JwtTokenProvider: IJwtTokenProvider
     {
+        private readonly IAuthenticationConfiguration authenticationConfiguration;
+
+        public JwtTokenProvider(IAuthenticationConfiguration authenticationConfiguration)
+        {
+            this.authenticationConfiguration = authenticationConfiguration;
+        }
         public string GenerateToken(string email)
         {
-            var mySecret = JwtTokenConstants.SecretKey;
+            var mySecret = this.authenticationConfiguration.SecretKey;
             var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret));
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -20,11 +25,11 @@ namespace Bookmyslot.Api.Authorization
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(JwtTokenConstants.ClaimEmail, email),
+                    new Claim(this.authenticationConfiguration.ClaimEmail, email),
                 }),
-                Expires = DateTime.UtcNow.AddHours(JwtTokenConstants.TokenExpiryHours),
-                Issuer = JwtTokenConstants.Issuer,
-                Audience = JwtTokenConstants.Audience,
+                Expires = DateTime.UtcNow.AddHours(this.authenticationConfiguration.ExpiryInHours),
+                Issuer = this.authenticationConfiguration.Issuer,
+                Audience = this.authenticationConfiguration.Audience,
                 SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
             };
 

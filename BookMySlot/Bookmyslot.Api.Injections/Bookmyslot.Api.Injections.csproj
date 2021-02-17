@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Authorization\Bookmyslot.Api.Authorization.Google\Bookmyslot.Api.Authorization.Google.csproj" />
-    <ProjectReference Include="..\..\Authorization\Bookmyslot.Api.Authorization\Bookmyslot.Api.Authorization.csproj" />
+    <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.Google\Bookmyslot.Api.Authentication.Google.csproj" />
+    <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication\Bookmyslot.Api.Authentication.csproj" />
     <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Business\Bookmyslot.Api.Cache.Business.csproj" />
     <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Repositories\Bookmyslot.Api.Cache.Repositories.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />

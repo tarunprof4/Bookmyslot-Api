@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Authorization.Common;
+﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Http;
@@ -26,9 +26,9 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Create new customer
         /// </summary>
-        /// <param name="registerCustomerModel">register customer model</param>
+        /// <param name="socialCustomerModel">social customer model</param>
         /// <returns >returns email id of created customer</returns>
-        /// <response code="201">Returns email id of created customer</response>
+        /// <response code="201">Returns access token</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="500">internal server error</response>
         // POST api/<CustomerController>
@@ -38,9 +38,9 @@ namespace Bookmyslot.Api.Controllers
         [HttpPost]
         [ActionName("LoginSocialUser")]
         [Route("api/v1/Login/SocialCustomerLogin")]
-        public async Task<IActionResult> SocialCustomerLogin([FromBody] SocialCustomer socialCustomer)
+        public async Task<IActionResult> SocialCustomerLogin([FromBody] SocialCustomerModel socialCustomerModel)
         {
-            var loginResponse = await this.loginCustomerBusiness.LoginSocialCustomer(socialTokenProvider);
+            var loginResponse = await this.loginCustomerBusiness.LoginSocialCustomer(socialCustomerModel);
           
             return this.CreatePostHttpResponse(loginResponse);
         }
