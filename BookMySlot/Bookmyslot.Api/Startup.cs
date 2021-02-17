@@ -1,3 +1,4 @@
+using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Logging.Enrichers;
@@ -34,12 +35,14 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var authenticationConfiguration = new AuthenticationConfiguration(Configuration);
+            services.AddSingleton(authenticationConfiguration);
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
             Injections(services, appConfigurations);
 
-            InitializeJwtAuthentication(services);
+            InitializeJwtAuthentication(services, authenticationConfiguration);
 
             RegisterFilters(services);
 
@@ -50,7 +53,7 @@ namespace Bookmyslot.Api
             BadRequestConfiguration(services);
         }
 
-        private static void InitializeJwtAuthentication(IServiceCollection services)
+        private static void InitializeJwtAuthentication(IServiceCollection services, AuthenticationConfiguration authenticationConfiguration)
         {
             services.AddAuthentication(options =>
             {
@@ -64,9 +67,9 @@ namespace Bookmyslot.Api
                 ValidateIssuerSigningKey = true,
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                //ValidIssuer = JwtTokenConstants.Issuer,
-                //ValidAudience = JwtTokenConstants.Audience,
-                //IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JwtTokenConstants.SecretKey)),
+                ValidIssuer = authenticationConfiguration.Issuer,
+                ValidAudience = authenticationConfiguration.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authenticationConfiguration.SecretKey)),
                 ClockSkew = TimeSpan.Zero
             };
         });

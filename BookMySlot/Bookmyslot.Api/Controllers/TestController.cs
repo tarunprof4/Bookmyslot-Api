@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Configuration;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -18,11 +19,14 @@ namespace Bookmyslot.Api.Controllers
     public class TestController : BaseApiController
     {
         private readonly IKeyEncryptor keyEncryptor;
+
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
-        public TestController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness)
+        private readonly AuthenticationConfiguration authenticationConfiguration;
+        public TestController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness, AuthenticationConfiguration authenticationConfiguration)
         {
             this.keyEncryptor = keyEncryptor;
             this.resendSlotInformationBusiness = resendSlotInformationBusiness;
+            this.authenticationConfiguration = authenticationConfiguration;
         }
 
         [HttpGet()]

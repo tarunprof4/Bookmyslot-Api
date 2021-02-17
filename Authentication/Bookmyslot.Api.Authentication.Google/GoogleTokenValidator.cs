@@ -1,6 +1,7 @@
 ﻿
 
 using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
@@ -14,9 +15,9 @@ namespace Bookmyslot.Api.Authentication.Google
 {
     public class GoogleTokenValidator : ITokenValidator
     {
-        private readonly IAuthenticationConfiguration authenticationConfiguration;
+        private readonly AuthenticationConfiguration authenticationConfiguration;
 
-        public GoogleTokenValidator(IAuthenticationConfiguration authenticationConfiguration)
+        public GoogleTokenValidator(AuthenticationConfiguration authenticationConfiguration)
         {
             this.authenticationConfiguration = authenticationConfiguration;
         }

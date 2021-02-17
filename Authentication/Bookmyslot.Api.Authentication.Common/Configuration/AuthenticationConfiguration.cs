@@ -3,9 +3,9 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace Bookmyslot.Api.Authentication.Common.Constants
+namespace Bookmyslot.Api.Authentication.Common.Configuration
 {
-    public class AuthenticationConfiguration : IAuthenticationConfiguration
+    public class AuthenticationConfiguration 
     {
         private readonly string subject;
 

@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Configuration;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,9 +10,9 @@ namespace Bookmyslot.Api.Authentication
 {
     public class JwtTokenProvider: IJwtTokenProvider
     {
-        private readonly IAuthenticationConfiguration authenticationConfiguration;
+        private readonly AuthenticationConfiguration authenticationConfiguration;
 
-        public JwtTokenProvider(IAuthenticationConfiguration authenticationConfiguration)
+        public JwtTokenProvider(AuthenticationConfiguration authenticationConfiguration)
         {
             this.authenticationConfiguration = authenticationConfiguration;
         }
