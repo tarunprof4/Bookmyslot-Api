@@ -85,7 +85,7 @@ namespace Bookmyslot.Api
             services.AddHttpContextAccessor();
 
             AppInjection.LoadInjections(services);
-            AuthorizationInjection.LoadInjections(services);
+            AuthenticationInjection.LoadInjections(services);
             CacheInjection.LoadInjections(services, appConfigurations);
             DataBaseInjection.LoadInjections(services, appConfigurations);
             CommonInjection.LoadInjections(services);

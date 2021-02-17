@@ -44,6 +44,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         {
             var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(null);
 
+
             Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.RegisterCustomerDetailsMissing));
             Assert.AreEqual(registerCustomerResponse.ResultType, ResultType.ValidationError);
         }

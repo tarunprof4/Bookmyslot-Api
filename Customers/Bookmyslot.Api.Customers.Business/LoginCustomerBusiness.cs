@@ -41,26 +41,31 @@ namespace Bookmyslot.Api.Customers.Business
                 {
                     var validatedSocialCustomer = validateTokenResponse.Result;
 
-                    var checkIfCustomerExistsResponse = CheckIfCustomerExists(validatedSocialCustomer.Email);
-                    if (checkIfCustomerExistsResponse.Result)
-                    {
-                        return CreateJwtToken(validatedSocialCustomer.Email);
-                    }
-
-                    var registerCustomerModel = CreateRegisterCustomerModel(validatedSocialCustomer);
-                    var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
-                    if (registerCustomerResponse.ResultType == ResultType.Success)
-                    {
-                        return CreateJwtToken(registerCustomerModel.Email);
-                    }
-
-                    return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                    return await AllowLoginOrRegistration(validatedSocialCustomer);
                 }
 
                 return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
             }
 
             return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
+        }
+
+        private async Task<Response<string>> AllowLoginOrRegistration(SocialCustomerModel cocialCustomerModel)
+        {
+            var checkIfCustomerExistsResponse = CheckIfCustomerExists(cocialCustomerModel.Email);
+            if (checkIfCustomerExistsResponse.Result)
+            {
+                return CreateJwtToken(cocialCustomerModel.Email);
+            }
+
+            var registerCustomerModel = CreateRegisterCustomerModel(cocialCustomerModel);
+            var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
+            if (registerCustomerResponse.ResultType == ResultType.Success)
+            {
+                return CreateJwtToken(registerCustomerModel.Email);
+            }
+
+            return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
         }
 
         private Response<string> CreateJwtToken(string email)
