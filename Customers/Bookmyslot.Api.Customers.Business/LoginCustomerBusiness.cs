@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.Customers.Business
 
             if (results.IsValid)
             {
-                var validateTokenResponse = await this.socialLoginTokenValidator.ValidateToken(socialCustomerModel.Token);
+                var validateTokenResponse = await this.socialLoginTokenValidator.ValidateToken(socialCustomerModel.IdToken);
                 if (validateTokenResponse.ResultType == ResultType.Success)
                 {
                     var validatedSocialCustomer = validateTokenResponse.Result;

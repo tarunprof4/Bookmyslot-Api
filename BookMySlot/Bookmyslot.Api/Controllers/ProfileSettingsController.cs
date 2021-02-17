@@ -1,9 +1,11 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Authentication.Common.Configuration;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
@@ -16,14 +18,17 @@ namespace Bookmyslot.Api.Controllers
     public class ProfileSettingsController : BaseApiController
     {
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
+        private readonly AuthenticationConfiguration authenticationConfiguration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileSettingsController"/> class. 
         /// </summary>
         /// <param name="profileSettingsBusiness">profileSettings Business</param>
-        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness)
+        /// <param name="authenticationConfiguration">authenticationConfiguration</param>
+        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, AuthenticationConfiguration authenticationConfiguration)
         {
             this.profileSettingsBusiness = profileSettingsBusiness;
+            this.authenticationConfiguration = authenticationConfiguration;
         }
 
 
@@ -45,6 +50,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("GetProfileSettings")]
         public async Task<IActionResult> Get(string email)
         {
+            email = User.Claims.FirstOrDefault(c => c.Type == this.authenticationConfiguration.ClaimEmail).Value;
             var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);
             return this.CreateGetHttpResponse(customerResponse);
         }

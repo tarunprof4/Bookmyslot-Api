@@ -127,7 +127,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
         private SocialCustomerModel GetDefaultSocialCustomerModel()
         {
-            return new SocialCustomerModel() { Token = TOKEN, Provider = PROVIDER };
+            return new SocialCustomerModel() { IdToken = TOKEN, Provider = PROVIDER };
         }
 
 

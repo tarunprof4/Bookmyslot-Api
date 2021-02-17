@@ -12,7 +12,7 @@ namespace Bookmyslot.Api.Customers.Business.Validations
     {
         public SocialLoginCustomerValidator()
         {
-            RuleFor(x => x.Token).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TokenRequired);
+            RuleFor(x => x.IdToken).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TokenRequired);
             RuleFor(x => x.Provider).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TokenProviderRequired);
         }
         protected override bool PreValidate(ValidationContext<SocialCustomerModel> context, ValidationResult result)

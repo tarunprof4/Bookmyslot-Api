@@ -2,6 +2,7 @@
 
 using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Configuration;
+using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
@@ -42,7 +43,8 @@ namespace Bookmyslot.Api.Authentication.Google
         private SocialCustomerModel CreateSocialCustomerModel(GoogleJsonWebSignature.Payload payload)
         {
             return new SocialCustomerModel() { FirstName = payload.GivenName, LastName = payload.FamilyName, 
-                Email = payload.Email };
+                Email = payload.Email, Provider = LoginConstants.ProviderGoogle
+            };
         }
     }
 }
