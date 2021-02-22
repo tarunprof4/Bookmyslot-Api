@@ -1,3 +1,4 @@
+using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Logging.Enrichers;
@@ -5,15 +6,20 @@ using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Injections;
 using Bookmyslot.Api.Web.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Bookmyslot.Api
 {
@@ -29,10 +35,14 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var authenticationConfiguration = new AuthenticationConfiguration(Configuration);
+            services.AddSingleton(authenticationConfiguration);
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 
             Injections(services, appConfigurations);
+
+            InitializeJwtAuthentication(services, authenticationConfiguration);
 
             RegisterFilters(services);
 
@@ -41,6 +51,28 @@ namespace Bookmyslot.Api
             SwaggerDocumentation(services);
 
             BadRequestConfiguration(services);
+        }
+
+        private static void InitializeJwtAuthentication(IServiceCollection services, AuthenticationConfiguration authenticationConfiguration)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = authenticationConfiguration.Issuer,
+                ValidAudience = authenticationConfiguration.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authenticationConfiguration.SecretKey)),
+                ClockSkew = TimeSpan.Zero
+            };
+        });
         }
 
         private static void RegisterFilters(IServiceCollection services)
@@ -56,6 +88,7 @@ namespace Bookmyslot.Api
             services.AddHttpContextAccessor();
 
             AppInjection.LoadInjections(services);
+            AuthenticationInjection.LoadInjections(services);
             CacheInjection.LoadInjections(services, appConfigurations);
             DataBaseInjection.LoadInjections(services, appConfigurations);
             CommonInjection.LoadInjections(services);
@@ -90,6 +123,7 @@ namespace Bookmyslot.Api
             app.UseSwaggerUi3();
 
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -163,18 +197,27 @@ namespace Bookmyslot.Api
                     document.Info.Title = "Bookmyslot Customer API";
                     document.Info.Description = "Bookmyslot Customer API to manage customer data";
                     document.Info.TermsOfService = "None";
-                    document.Info.Contact = new NSwag.OpenApiContact
+                    document.Info.Contact = new OpenApiContact
                     {
                         Name = "TA",
                         Email = string.Empty,
                         //Url = "https://twitter.com/spboyer"
                     };
-                    document.Info.License = new NSwag.OpenApiLicense
+                    document.Info.License = new OpenApiLicense
                     {
                         Name = "",
                         //Url = "https://example.com/license"
                     };
                 };
+
+                config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+                config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Bearer token"
+                }));
             });
         }
 

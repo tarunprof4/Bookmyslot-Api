@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Logging;
-using Bookmyslot.Api.Common.Logging.Contracts;
+﻿using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;

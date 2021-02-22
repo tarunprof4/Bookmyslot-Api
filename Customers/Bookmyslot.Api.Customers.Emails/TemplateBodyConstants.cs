@@ -8,7 +8,7 @@
 //<html>
 //<head>
 //    <style>
-       
+
 //        body {
 //            font-family: Arial;
 //            font-size: 14px;
@@ -130,6 +130,6 @@
 
 //        public const string ResendSlotInformationTemplateBody = "Hello @Model.FirstName, welcome to RazorEngine!";
 
-        
+
 //    }
 //}

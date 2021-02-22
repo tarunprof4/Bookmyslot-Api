@@ -20,5 +20,26 @@
         public const string StaticLogOutPutTemplate = "staticLogOutputTemplate";
 
         public const string ElasticSearchUrl = "ElasticSearchUrl";
+
+
+        public const string AuthenticationSettings = "AuthenticationSettings";
+        public const string JwtTokenSettings = "JwtTokenSettings";
+        public const string SocialLogin = "SocialLogin";
+        public const string GoogleAuthenticationSettings = "GoogleAuthenticationSettings";
+
+        public const string JwtTokenSubject = "Subject";
+        public const string JwtTokenIssuer = "Issuer";
+        public const string JwtTokenAudience = "Audience";
+        public const string JwtTokenExpiryInHours = "ExpiryInHours";
+        public const string JwtTokenSecretKey = "SecretKey";
+
+        public const string JwtTokenClaimSettings = "JwtTokenClaimSettings";
+        public const string JwtTokenClaimEmail = "ClaimEmail";
+        public const string ClientId = "ClientId";
+        public const string ClientSecret = "ClientSecret";
+
+
+
+
     }
 }
