@@ -18,7 +18,6 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    [Authorize]
     public class SlotController : BaseApiController
     {
         private readonly ISlotBusiness slotBusiness;
