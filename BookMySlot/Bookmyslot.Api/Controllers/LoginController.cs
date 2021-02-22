@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Controllers
         /// Create new customer
         /// </summary>
         /// <param name="socialCustomerModel">social customer model</param>
-        /// <returns >returns email id of created customer</returns>
+        /// <returns >returns access token for customer</returns>
         /// <response code="201">Returns access token</response>
         /// <response code="400">validation error bad request</response>
         /// <response code="500">internal server error</response>
