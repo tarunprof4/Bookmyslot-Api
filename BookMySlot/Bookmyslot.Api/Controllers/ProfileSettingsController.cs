@@ -14,7 +14,6 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    [Authorize]
     public class ProfileSettingsController : BaseApiController
     {
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
@@ -50,7 +49,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("GetProfileSettings")]
         public async Task<IActionResult> Get(string email)
         {
-            email = User.Claims.FirstOrDefault(c => c.Type == this.authenticationConfiguration.ClaimEmail).Value;
+            //email = User.Claims.FirstOrDefault(c => c.Type == this.authenticationConfiguration.ClaimEmail).Value;
             var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);
             return this.CreateGetHttpResponse(customerResponse);
         }
