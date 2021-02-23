@@ -42,6 +42,13 @@ namespace Bookmyslot.Api
 
             Injections(services, appConfigurations);
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             InitializeJwtAuthentication(services, authenticationConfiguration);
 
             RegisterFilters(services);
@@ -117,7 +124,7 @@ namespace Bookmyslot.Api
             app.ConfigureGlobalExceptionHandler();
 
             app.UseRouting();
-
+            app.UseCors("MyPolicy");
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
