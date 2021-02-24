@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Authentication.Common.Configuration
 
         private readonly string audience;
 
-        private readonly int expiryInHours;
+        private readonly int authenticationTokenexpiryInHours;
 
         private readonly string secretKey;
 
@@ -25,7 +25,7 @@ namespace Bookmyslot.Api.Authentication.Common.Configuration
             this.subject = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenSubject).Value;
             this.issuer = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenIssuer).Value;
             this.audience = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenAudience).Value;
-            this.expiryInHours = Convert.ToInt32(configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenExpiryInHours).Value);
+            this.authenticationTokenexpiryInHours = Convert.ToInt32(configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenExpiryInHours).Value);
             this.secretKey = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenSecretKey).Value; ;
 
             this.googleClientId = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.SocialLogin).GetSection(AppSettingKeysConstants.GoogleAuthenticationSettings).GetSection(AppSettingKeysConstants.ClientId).Value;
@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Authentication.Common.Configuration
 
         public string Audience => this.audience;
 
-        public int ExpiryInHours => this.expiryInHours;
+        public int AuthenticationTokenExpiryInHours => this.authenticationTokenexpiryInHours;
 
         public string SecretKey => this.secretKey;
 

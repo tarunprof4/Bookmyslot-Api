@@ -22,6 +22,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         private Mock<ICustomerBusiness> customerBusinessMock;
         private Mock<ISocialLoginTokenValidator> socialLoginTokenValidatorMock;
         private Mock<IJwtTokenProvider> jwtTokenProviderMock;
+        private Mock<ICurrentUser>  currentUser;
 
         [SetUp]
         public void SetUp()
@@ -30,8 +31,9 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerBusinessMock = new Mock<ICustomerBusiness>();
             socialLoginTokenValidatorMock = new Mock<ISocialLoginTokenValidator>();
             jwtTokenProviderMock = new Mock<IJwtTokenProvider>();
+            currentUser = new Mock<ICurrentUser>();
             loginCustomerBusiness = new LoginCustomerBusiness(registerCustomerBusinessMock.Object, customerBusinessMock.Object,
-                socialLoginTokenValidatorMock.Object, jwtTokenProviderMock.Object);
+                socialLoginTokenValidatorMock.Object, jwtTokenProviderMock.Object, currentUser.Object);
         }
 
         [Test]

@@ -30,11 +30,11 @@ namespace Bookmyslot.Api.Customers.Business
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdNotValid } };
+                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdNotValid } };
             }
 
             email = email.ToLowerInvariant();
-            return await customerRepository.GetCustomerByEmail(email);
+            return await customerRepository.GetCustomerIdByEmail(email);
         }
 
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)

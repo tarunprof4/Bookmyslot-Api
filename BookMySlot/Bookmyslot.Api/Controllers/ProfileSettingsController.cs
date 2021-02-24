@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Configuration;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
@@ -14,21 +15,23 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProfileSettingsController : BaseApiController
     {
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
         private readonly AuthenticationConfiguration authenticationConfiguration;
+        private readonly ICurrentUser currentUser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileSettingsController"/> class. 
         /// </summary>
         /// <param name="profileSettingsBusiness">profileSettings Business</param>
         /// <param name="authenticationConfiguration">authenticationConfiguration</param>
-        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, AuthenticationConfiguration authenticationConfiguration)
+        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, AuthenticationConfiguration authenticationConfiguration, ICurrentUser currentUser)
         {
             this.profileSettingsBusiness = profileSettingsBusiness;
             this.authenticationConfiguration = authenticationConfiguration;
+            this.currentUser = currentUser;
         }
 
 
@@ -50,7 +53,10 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("GetProfileSettings")]
         public async Task<IActionResult> Get(string email)
         {
-            email = User.Claims.FirstOrDefault(c => c.Type == this.authenticationConfiguration.ClaimEmail).Value;
+            email = this.currentUser.GetCurrentUserEmail();
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache(email);
+            var customerId = currentUserResponse.Result;
+
             var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);
             return this.CreateGetHttpResponse(customerResponse);
         }

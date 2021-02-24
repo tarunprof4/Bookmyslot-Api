@@ -18,13 +18,15 @@ namespace Bookmyslot.Api.Customers.Business
         private readonly ICustomerBusiness customerBusiness;
         private readonly ISocialLoginTokenValidator socialLoginTokenValidator;
         private readonly IJwtTokenProvider jwtTokenProvider;
+        private readonly ICurrentUser currentUser;
 
-        public LoginCustomerBusiness(IRegisterCustomerBusiness registerCustomerBusiness, ICustomerBusiness customerBusiness, ISocialLoginTokenValidator socialLoginTokenValidator, IJwtTokenProvider jwtTokenProvider)
+        public LoginCustomerBusiness(IRegisterCustomerBusiness registerCustomerBusiness, ICustomerBusiness customerBusiness, ISocialLoginTokenValidator socialLoginTokenValidator, IJwtTokenProvider jwtTokenProvider, ICurrentUser currentUser)
         {
             this.registerCustomerBusiness = registerCustomerBusiness;
             this.customerBusiness = customerBusiness;
             this.socialLoginTokenValidator = socialLoginTokenValidator;
             this.jwtTokenProvider = jwtTokenProvider;
+            this.currentUser = currentUser;
         }
         public async Task<Response<string>> LoginSocialCustomer(SocialCustomerModel socialCustomerModel)
         {
@@ -41,7 +43,7 @@ namespace Bookmyslot.Api.Customers.Business
                     var tokenResponse =  await AllowLoginOrRegistration(validatedSocialCustomer);
                     if(tokenResponse.ResultType == ResultType.Success)
                     {
-
+                        await this.currentUser.SetCurrentUserInCache(validatedSocialCustomer.Email);
                     }
                     return tokenResponse;
                 }

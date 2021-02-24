@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.Authentication
                 {
                     new Claim(this.authenticationConfiguration.ClaimEmail, email),
                 }),
-                Expires = DateTime.UtcNow.AddHours(this.authenticationConfiguration.ExpiryInHours),
+                Expires = DateTime.UtcNow.AddHours(this.authenticationConfiguration.AuthenticationTokenExpiryInHours),
                 Issuer = this.authenticationConfiguration.Issuer,
                 Audience = this.authenticationConfiguration.Audience,
                 SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)

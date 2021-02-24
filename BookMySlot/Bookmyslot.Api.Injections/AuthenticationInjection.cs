@@ -16,6 +16,7 @@ namespace Bookmyslot.Api.Injections
             services.AddSingleton<IJwtTokenProvider, JwtTokenProvider>();
             services.AddSingleton<ISocialLoginTokenValidator, SocialLoginTokenValidator>();
             services.AddSingleton<ITokenValidator, GoogleTokenValidator>();
+            services.AddTransient<ICurrentUser, CurrentUser>();
         }
     }
 }
