@@ -28,8 +28,8 @@ namespace Bookmyslot.Api.Injections
 
         private static void CacheBusinessInjections(IServiceCollection services)
         {
-            services.AddTransient<IDistributedDatabaseCacheBuisness, DistributedDatabaseCacheBuisness>();
-            services.AddTransient<IDistributedInMemoryCacheBuisness, DistributedInMemoryCacheBuisness>();
+            services.AddTransient<IDistributedDatabaseCacheBuisness, DistributedDatabaseCacheBusiness>();
+            services.AddTransient<IDistributedInMemoryCacheBuisness, DistributedInMemoryCacheBusiness>();
         }
 
 

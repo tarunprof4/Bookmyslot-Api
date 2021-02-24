@@ -1,22 +1,26 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Cache.Contracts;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Contracts;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.Cache.Contracts.Interfaces
+namespace Bookmyslot.Api.Cache.Business
 {
-
-    public class DistributedInMemoryCacheBuisness : IDistributedInMemoryCacheBuisness
+    public class DistributedDatabaseCacheBusiness : IDistributedDatabaseCacheBuisness
     {
         private readonly IDistributedCache distributedCache;
 
-        public DistributedInMemoryCacheBuisness(IDistributedCache distributedCache)
+        public DistributedDatabaseCacheBusiness(IDistributedCache distributedCache)
         {
             this.distributedCache = distributedCache;
         }
-        public async Task<Response<T>> GetFromCacheAsync<T>(CacheModel cacheModel, Func<Task<Response<T>>> retrieveValues) where T : class
+
+        public async Task<Response<T>> GetFromCacheAsync<T>(
+           CacheModel cacheModel,
+           Func<Task<Response<T>>> retrieveValues) where T : class
         {
             var cachedBytes = await this.distributedCache.GetAsync(cacheModel.Key);
 
@@ -36,10 +40,8 @@ namespace Bookmyslot.Api.Cache.Contracts.Interfaces
                 return invokedResponse;
             }
 
-            var serializedResponse =  Encoding.UTF8.GetString(cachedBytes);
+            var serializedResponse = Encoding.UTF8.GetString(cachedBytes);
             return new Response<T>() { Result = JsonConvert.DeserializeObject<T>(serializedResponse) };
         }
-
-    
     }
 }

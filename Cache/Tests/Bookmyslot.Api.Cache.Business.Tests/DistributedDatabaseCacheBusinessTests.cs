@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Cache.Business.Tests
 {
-    public class DistributedInMemoryCacheBuisnessTests
+    public class DistributedDatabaseCaceBusinessTests
     {
         private const string KEY = "key";
-        private IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
+        private IDistributedDatabaseCacheBuisness distributedDatabaseCacheBuisness;
         private Mock<IDistributedCache> distributedCacheMock;
 
 
@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.Cache.Business.Tests
         public void Setup()
         {
             distributedCacheMock = new Mock<IDistributedCache>();
-            distributedInMemoryCacheBuisness = new DistributedInMemoryCacheBuisness(distributedCacheMock.Object);
+            distributedDatabaseCacheBuisness = new DistributedDatabaseCacheBusiness(distributedCacheMock.Object);
         }
 
 
@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Cache.Business.Tests
             var keyStringBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(KEY));
             distributedCacheMock.Setup(a => a.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(keyStringBytes));
 
-            var cacheResponse = await distributedInMemoryCacheBuisness.GetFromCacheAsync(cacheModel, () => Invoke(KEY));
+            var cacheResponse = await distributedDatabaseCacheBuisness.GetFromCacheAsync(cacheModel, () => Invoke(KEY));
 
             distributedCacheMock.Verify((m => m.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())), Times.Once());
             distributedCacheMock.Verify((m => m.SetAsync(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<DistributedCacheEntryOptions>(), It.IsAny<CancellationToken>())), Times.Never());
@@ -52,7 +52,7 @@ namespace Bookmyslot.Api.Cache.Business.Tests
             distributedCacheMock.Setup(a => a.GetAsync(It.IsAny<string>(), new CancellationToken())).Returns(Task.FromResult(emptyBytes));
             distributedCacheMock.Setup(m => m.SetAsync(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<DistributedCacheEntryOptions>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(keyStringBytes));
 
-            var cacheResponse = await distributedInMemoryCacheBuisness.GetFromCacheAsync(cacheModel, () => Invoke(KEY));
+            var cacheResponse = await distributedDatabaseCacheBuisness.GetFromCacheAsync(cacheModel, () => Invoke(KEY));
 
             distributedCacheMock.Verify((m => m.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())), Times.Once());
             distributedCacheMock.Verify((m => m.SetAsync(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<DistributedCacheEntryOptions>(), It.IsAny<CancellationToken>())), Times.Once());

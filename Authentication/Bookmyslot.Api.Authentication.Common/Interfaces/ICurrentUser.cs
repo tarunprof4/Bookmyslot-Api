@@ -8,7 +8,5 @@ namespace Bookmyslot.Api.Authentication.Common.Interfaces
         Task<Response<string>> GetCurrentUserFromCache();
 
         Task SetCurrentUserInCache(string email);
-
-        string GetEmailFromClaims();
     }
 }

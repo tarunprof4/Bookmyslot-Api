@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Authentication
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetEmailFromClaims()
+        private string GetEmailFromClaims()
         {
             var email = this.httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == this.authenticationConfiguration.ClaimEmail).Value;
             return email;
@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.Authentication
         {
             var cacheModel = new CacheModel();
             cacheModel.Key = string.Format(CacheConstants.CustomerInfomationCacheKey, email);
-            cacheModel.ExpiryTimeUtc = new TimeSpan(authenticationConfiguration.AuthenticationTokenExpiryInHours, 0, 0);
+            cacheModel.ExpiryTimeUtc = new TimeSpan(authenticationConfiguration.TokenExpiryInHours, 0, 0);
             return cacheModel;
         }
     }
