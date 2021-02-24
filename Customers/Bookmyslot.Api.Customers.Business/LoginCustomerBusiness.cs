@@ -38,7 +38,12 @@ namespace Bookmyslot.Api.Customers.Business
                 {
                     var validatedSocialCustomer = validateTokenResponse.Result;
 
-                    return await AllowLoginOrRegistration(validatedSocialCustomer);
+                    var tokenResponse =  await AllowLoginOrRegistration(validatedSocialCustomer);
+                    if(tokenResponse.ResultType == ResultType.Success)
+                    {
+
+                    }
+                    return tokenResponse;
                 }
 
                 return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
@@ -47,15 +52,15 @@ namespace Bookmyslot.Api.Customers.Business
             return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
 
-        private async Task<Response<string>> AllowLoginOrRegistration(SocialCustomerModel cocialCustomerModel)
+        private async Task<Response<string>> AllowLoginOrRegistration(SocialCustomerModel socialCustomerModel)
         {
-            var checkIfCustomerExistsResponse = CheckIfCustomerExists(cocialCustomerModel.Email);
+            var checkIfCustomerExistsResponse = CheckIfCustomerExists(socialCustomerModel.Email);
             if (checkIfCustomerExistsResponse.Result)
             {
-                return CreateJwtToken(cocialCustomerModel.Email);
+                return CreateJwtToken(socialCustomerModel.Email);
             }
 
-            var registerCustomerModel = CreateRegisterCustomerModel(cocialCustomerModel);
+            var registerCustomerModel = CreateRegisterCustomerModel(socialCustomerModel);
             var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
             if (registerCustomerResponse.ResultType == ResultType.Success)
             {

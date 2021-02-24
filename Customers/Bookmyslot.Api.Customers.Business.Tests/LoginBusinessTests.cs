@@ -133,7 +133,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
         private CustomerModel GetDefaultCustomerModel()
         {
-            return new CustomerModel() { Email = EMAIL };
+            return new CustomerModel() {  };
         }
 
      

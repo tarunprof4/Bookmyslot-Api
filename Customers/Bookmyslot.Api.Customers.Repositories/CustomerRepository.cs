@@ -33,7 +33,16 @@ namespace Bookmyslot.Api.Customers.Repositories
             return ResponseModelFactory.CreateCustomerModelResponse(registerCustomerEntity);
         }
 
-        
+
+        public async Task<Response<string>> GetCustomerIdByEmail(string email)
+        {
+            var parameters = new { Email = email };
+            var sql = CustomerTableQueries.GetCustomerIdByEmailQuery;
+            var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerIdByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
+
+            return ResponseModelFactory.CreateCustomerIdResponse(registerCustomerEntity);
+        }
+
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
             var parameters = new { CustomerId = customerId };
@@ -43,6 +52,8 @@ namespace Bookmyslot.Api.Customers.Repositories
 
             return ResponseModelFactory.CreateCustomerModelResponse(registerCustomerEntity);
         }
+
+     
 
         public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
         {

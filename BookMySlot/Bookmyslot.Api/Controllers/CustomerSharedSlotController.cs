@@ -139,7 +139,6 @@ namespace Bookmyslot.Api.Controllers
                 if (sharedSlotModel.BookedByCustomerModel != null)
                 {
                     sharedSlotModel.BookedByCustomerModel.Id = string.Empty;
-                    sharedSlotModel.BookedByCustomerModel.Email = string.Empty;
                 }
             }
         }

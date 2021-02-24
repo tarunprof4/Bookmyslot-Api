@@ -26,6 +26,17 @@ namespace Bookmyslot.Api.Customers.Business
             return await customerRepository.GetCustomerByEmail(email);
         }
 
+        public async Task<Response<string>> GetCustomerIdByEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return new Response<CustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdNotValid } };
+            }
+
+            email = email.ToLowerInvariant();
+            return await customerRepository.GetCustomerByEmail(email);
+        }
+
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
             if (string.IsNullOrWhiteSpace(customerId))
@@ -35,6 +46,8 @@ namespace Bookmyslot.Api.Customers.Business
 
             return await customerRepository.GetCustomerById(customerId);
         }
+
+      
 
         public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
         {

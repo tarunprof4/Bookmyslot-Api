@@ -10,7 +10,6 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
         {
             return new CustomerModel()
             {
-                Email = registerCustomerEntity.Email,
                 Id= registerCustomerEntity.UniqueId,
                 FirstName = registerCustomerEntity.FirstName,
                 LastName = registerCustomerEntity.LastName,

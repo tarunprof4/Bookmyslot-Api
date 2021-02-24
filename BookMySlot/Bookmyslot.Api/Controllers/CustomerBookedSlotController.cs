@@ -112,7 +112,6 @@ namespace Bookmyslot.Api.Controllers
                 bookSlotModel.SlotModel.CreatedBy = string.Empty;
 
                 bookSlotModel.CreatedByCustomerModel.Id = string.Empty;
-                bookSlotModel.CreatedByCustomerModel.Email = string.Empty;
             }
         }
 

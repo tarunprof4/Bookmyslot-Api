@@ -74,8 +74,8 @@ namespace Bookmyslot.Api.Controllers
         {
             var cacheModel = new CacheModel();
             var md5HashKey = this.md5Hash.Create(pageParameterModel);
-            cacheModel.Key = string.Format("GetDistinctCustomersNearestSlotFromToday-{0}", md5HashKey);
-            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, CacheConstants.GetDistinctCustomersNearestSlotFromToday);
+            cacheModel.Key = string.Format(CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey, md5HashKey);
+            cacheModel.ExpiryTimeUtc = new TimeSpan(0, CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheExpiryMinutes, 0);
             return cacheModel;
         }
 
@@ -112,8 +112,6 @@ namespace Bookmyslot.Api.Controllers
         {
             foreach (var customerSlotModel in customerSlotModels)
             {
-                customerSlotModel.CustomerModel.Email = string.Empty;
-
                 customerSlotModel.SlotModels = new List<SlotModel>();
             }
         }
@@ -126,8 +124,6 @@ namespace Bookmyslot.Api.Controllers
                 slotModel.Value = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(slotModel));
                 slotModel.Key.CreatedBy = string.Empty;
             }
-
-            bookSlotModel.CustomerModel.Email = string.Empty;
         }
     }
 }
