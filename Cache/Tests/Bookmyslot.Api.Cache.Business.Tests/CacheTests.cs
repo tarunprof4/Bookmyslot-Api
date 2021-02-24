@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,12 +26,16 @@ namespace Bookmyslot.Api.Cache.Business.Tests
         [Test]
         public void CheckIfAllCacheKeysAreUnique()
         {
-            var cacheKeys = new Dictionary<string, string>();
-            
-            cacheKeys.Add(CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey, CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey);
-            cacheKeys.Add(CacheConstants.CustomerInfomationCacheKey, CacheConstants.CustomerInfomationCacheKey);
+            var cacheKeyDictionary = new Dictionary<string, string>();
+            List<string> cacheKeys = typeof(CacheConstants).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
+                .Select(x => (string)x.GetRawConstantValue())
+                .ToList();
+
+            foreach (var cacheKey in cacheKeys)
+            {
+                cacheKeyDictionary.Add(cacheKey, cacheKey);
+            }
         }
-
-
     }
 }
