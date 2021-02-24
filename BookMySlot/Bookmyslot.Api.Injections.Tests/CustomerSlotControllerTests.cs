@@ -30,6 +30,7 @@ namespace Bookmyslot.Api.Injections.Tests
             var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
             var distributedInMemoryCacheBuisness = serviceProvider.GetService<IDistributedInMemoryCacheBuisness>();
             var hash = serviceProvider.GetService<IHashing>();
+
             var controller = new CustomerSlotController(customerSlotBusiness, keyEncryptor, distributedInMemoryCacheBuisness, hash);
 
             Assert.IsNotNull(customerSlotBusiness);

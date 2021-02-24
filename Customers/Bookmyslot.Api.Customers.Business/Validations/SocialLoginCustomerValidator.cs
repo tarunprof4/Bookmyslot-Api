@@ -1,10 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Customers.Contracts;
 using FluentValidation;
 using FluentValidation.Results;
-using System.Text.RegularExpressions;
 
 namespace Bookmyslot.Api.Customers.Business.Validations
 {

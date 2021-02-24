@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Authentication.Common.Constants
+﻿namespace Bookmyslot.Api.Authentication.Common.Constants
 {
     public class LoginConstants
     {

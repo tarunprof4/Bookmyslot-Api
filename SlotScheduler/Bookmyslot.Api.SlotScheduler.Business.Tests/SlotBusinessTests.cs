@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<Guid> slotModelResponseMock = new Response<Guid>() { Result = slotModel.Id };
             slotRepositoryMock.Setup(a => a.CreateSlot(slotModel)).Returns(Task.FromResult(slotModelResponseMock));
 
-            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel);
+            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelResponseMock.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelResponseMock.Result, SlotId);
@@ -78,7 +78,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<Guid> slotModelResponseMock = new Response<Guid>() { Result = slotModel.Id };
             slotRepositoryMock.Setup(a => a.CreateSlot(slotModel)).Returns(Task.FromResult(slotModelResponseMock));
 
-            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel);
+            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Result, Guid.Empty);

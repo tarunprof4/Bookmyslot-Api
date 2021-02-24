@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.Extensions.Configuration;
 using System;
 

@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Cache.Contracts;
+﻿using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
@@ -28,15 +27,14 @@ namespace Bookmyslot.Api.Controllers
         private readonly IKeyEncryptor keyEncryptor;
         private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
         private readonly IHashing md5Hash;
-        private readonly ICurrentUser currentUser;
+        
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash, ICurrentUser currentUser)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.keyEncryptor = keyEncryptor;
             this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
             this.md5Hash = md5Hash;
-            this.currentUser = currentUser;
         }
 
         /// <summary>
@@ -102,12 +100,9 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/CustomerSlot/GetCustomerAvailableSlots")]
         [HttpGet()]
         [ActionName("GetCustomerAvailableSlots")]
-        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel)
+        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerInfo)
         {
-            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
-
-            var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerId);
+            var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);
             if (bookSlotModelResponse.ResultType == ResultType.Success)
             {
                 HideUncessaryDetailsForGetCustomerAvailableSlots(bookSlotModelResponse.Result);

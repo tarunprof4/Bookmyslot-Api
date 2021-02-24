@@ -1,3 +1,4 @@
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -28,8 +29,9 @@ namespace Bookmyslot.Api.Injections.Tests
         {
             var slotBusiness = serviceProvider.GetService<ISlotBusiness>();
             var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
+            var currentUser = serviceProvider.GetService<ICurrentUser>();
 
-            var controller = new SlotController(slotBusiness, keyEncryptor);
+            var controller = new SlotController(slotBusiness, keyEncryptor, currentUser);
 
             Assert.IsNotNull(slotBusiness);
             Assert.IsNotNull(keyEncryptor);

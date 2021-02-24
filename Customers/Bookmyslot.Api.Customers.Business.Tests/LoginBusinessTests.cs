@@ -6,7 +6,6 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business.Tests
@@ -48,6 +47,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomerByEmail(It.IsAny<string>())), Times.Never());
             socialLoginTokenValidatorMock.Verify((m => m.ValidateToken(It.IsAny<string>())), Times.Never());
             jwtTokenProviderMock.Verify((m => m.GenerateToken(It.IsAny<string>())), Times.Never());
+            currentUser.Verify((m => m.SetCurrentUserInCache(It.IsAny<string>())), Times.Never());
         }
 
         [Test]
@@ -63,6 +63,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomerByEmail(It.IsAny<string>())), Times.Never());
             socialLoginTokenValidatorMock.Verify((m => m.ValidateToken(It.IsAny<string>())), Times.Never());
             jwtTokenProviderMock.Verify((m => m.GenerateToken(It.IsAny<string>())), Times.Never());
+            currentUser.Verify((m => m.SetCurrentUserInCache(It.IsAny<string>())), Times.Never());
         }
 
 
@@ -81,6 +82,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomerByEmail(It.IsAny<string>())), Times.Never());
             socialLoginTokenValidatorMock.Verify((m => m.ValidateToken(It.IsAny<string>())), Times.Once());
             jwtTokenProviderMock.Verify((m => m.GenerateToken(It.IsAny<string>())), Times.Never());
+            currentUser.Verify((m => m.SetCurrentUserInCache(It.IsAny<string>())), Times.Never());
         }
 
 
@@ -101,6 +103,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomerByEmail(It.IsAny<string>())), Times.Once());
             socialLoginTokenValidatorMock.Verify((m => m.ValidateToken(It.IsAny<string>())), Times.Once());
             jwtTokenProviderMock.Verify((m => m.GenerateToken(It.IsAny<string>())), Times.Once());
+            currentUser.Verify((m => m.SetCurrentUserInCache(It.IsAny<string>())), Times.Once());
         }
 
 
@@ -124,6 +127,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomerByEmail(It.IsAny<string>())), Times.Once());
             socialLoginTokenValidatorMock.Verify((m => m.ValidateToken(It.IsAny<string>())), Times.Once());
             jwtTokenProviderMock.Verify((m => m.GenerateToken(It.IsAny<string>())), Times.Once());
+            currentUser.Verify((m => m.SetCurrentUserInCache(It.IsAny<string>())), Times.Once());
         }
 
 

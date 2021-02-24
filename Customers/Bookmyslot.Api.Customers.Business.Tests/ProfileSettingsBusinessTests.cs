@@ -37,7 +37,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByCustomerId(email);
 
             Assert.AreEqual(profileSettingsResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(profileSettingsResponse.Messages.First(), AppBusinessMessagesConstants.EmailIdNotValid);
+            Assert.AreEqual(profileSettingsResponse.Messages.First(), AppBusinessMessagesConstants.CustomerIdNotValid);
             profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByCustomerId(It.IsAny<string>())), Times.Never());
         }
 

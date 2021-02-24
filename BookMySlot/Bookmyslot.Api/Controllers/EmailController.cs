@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -25,10 +26,12 @@ namespace Bookmyslot.Api.Controllers
 
         private readonly IKeyEncryptor keyEncryptor;
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
-        public EmailController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness)
+        private readonly ICurrentUser currentUser;
+        public EmailController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness, ICurrentUser currentUser)
         {
             this.keyEncryptor = keyEncryptor;
             this.resendSlotInformationBusiness = resendSlotInformationBusiness;
+            this.currentUser = currentUser;
         }
 
         //[HttpPost()]
@@ -58,11 +61,14 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> ResendSlotMeetingInformation([FromBody] ResendSlotInformation resendSlotInformation)
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
             var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformation.ResendSlotModel));
 
             if (slotModel != null)
             {
-                var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, resendSlotInformation.ResendTo);
+                var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, customerId);
                 return this.CreatePostHttpResponse(resendSlotInformationResponse);
             }
 
