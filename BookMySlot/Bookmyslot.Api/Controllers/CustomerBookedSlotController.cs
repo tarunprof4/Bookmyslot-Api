@@ -1,8 +1,10 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,15 +17,18 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
+    [Authorize]
     public class CustomerBookedSlotController : BaseApiController
     {
         private readonly ICustomerBookedSlotBusiness customerBookedSlotBusiness;
         private readonly IKeyEncryptor keyEncryptor;
+        private readonly ICurrentUser currentUser;
 
-        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, IKeyEncryptor keyEncryptor)
+        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser)
         {
             this.customerBookedSlotBusiness = customerBookedSlotBusiness;
             this.keyEncryptor = keyEncryptor;
+            this.currentUser = currentUser;
         }
 
 
@@ -41,8 +46,10 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerBookedSlot/GetCustomerBookedSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerBookedSlots(string customerId)
+        public async Task<IActionResult> GetCustomerBookedSlots()
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(customerId);
             if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
@@ -66,8 +73,10 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerBookedSlot/GetCustomerCompletedSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerCompletedSlots(string customerId)
+        public async Task<IActionResult> GetCustomerCompletedSlots()
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(customerId);
             if (customerBookedSlotModels.ResultType == ResultType.Success)
             {
@@ -92,8 +101,10 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerBookedSlot/GetCustomerCancelledSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerCancelledSlots(string customerId)
+        public async Task<IActionResult> GetCustomerCancelledSlots()
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
             var customercancelledSlotInformationModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (customercancelledSlotInformationModels.ResultType == ResultType.Success)
             {

@@ -15,22 +15,20 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ProfileSettingsController : BaseApiController
     {
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
-        private readonly AuthenticationConfiguration authenticationConfiguration;
         private readonly ICurrentUser currentUser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileSettingsController"/> class. 
         /// </summary>
         /// <param name="profileSettingsBusiness">profileSettings Business</param>
-        /// <param name="authenticationConfiguration">authenticationConfiguration</param>
-        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, AuthenticationConfiguration authenticationConfiguration, ICurrentUser currentUser)
+        /// <param name="currentUser">currentUser</param>
+        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser)
         {
             this.profileSettingsBusiness = profileSettingsBusiness;
-            this.authenticationConfiguration = authenticationConfiguration;
             this.currentUser = currentUser;
         }
 
@@ -80,7 +78,8 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("UpdateProfileSettings")]
         public async Task<IActionResult> Put([FromBody] ProfileSettingsModel profileSettingsModel)
         {
-            var customerId = "29645471f47c4555918da55aed49b23a";
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
             var customerResponse = await this.profileSettingsBusiness.UpdateProfileSettings(profileSettingsModel, customerId);
             return this.CreatePutHttpResponse(customerResponse);
         }

@@ -1,9 +1,11 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -16,14 +18,17 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
+    [Authorize]
     public class SlotSchedulerController : BaseApiController
     {
         private readonly ISlotSchedulerBusiness slotSchedulerBusiness;
         private readonly IKeyEncryptor keyEncryptor;
-        public SlotSchedulerController(ISlotSchedulerBusiness slotSchedulerBusiness, IKeyEncryptor keyEncryptor)
+        private readonly ICurrentUser currentUser;
+        public SlotSchedulerController(ISlotSchedulerBusiness slotSchedulerBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser)
         {
             this.slotSchedulerBusiness = slotSchedulerBusiness;
             this.keyEncryptor = keyEncryptor;
+            this.currentUser = currentUser;
         }
 
 
@@ -32,11 +37,14 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("ScheduleSlot")]
         public async Task<IActionResult> Post([FromBody] SlotSchedulerModel slotSchedulerModel)
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
             var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerModel.SlotModelKey));
 
             if (customerSlotModel != null)
             {
-                var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel.Key);
+                var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel.Key, customerId);
                 return this.CreatePostHttpResponse(slotScheduleResponse);
             }
 

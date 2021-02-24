@@ -16,9 +16,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             this.slotRepository = slotRepository;
         }
-        public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel)
+        public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel, string bookedBy)
         {
-            slotModel.BookedBy = UserService.GetUser();
+            slotModel.BookedBy = bookedBy;
 
             var currentDate = DateTime.UtcNow;
 

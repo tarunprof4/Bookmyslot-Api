@@ -30,9 +30,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             slotModel.Title = slotModel.Title.Trim();
             slotModel.BookedBy = string.Empty;
         }
-        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
+        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel, string createdBy)
         {
-            slotModel.CreatedBy = UserService.GetUser();
+            slotModel.CreatedBy = createdBy;
 
             var currentDate = DateTime.UtcNow;
             var slotDate = DateTimeHelper.ConvertDateStringToDate(slotModel.SlotDate);

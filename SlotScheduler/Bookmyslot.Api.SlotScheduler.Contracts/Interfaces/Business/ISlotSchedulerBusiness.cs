@@ -5,6 +5,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface ISlotSchedulerBusiness
     {
-        Task<Response<bool>> ScheduleSlot(SlotModel slotModel);
+        Task<Response<bool>> ScheduleSlot(SlotModel slotModel, string bookedBy)
     }
 }

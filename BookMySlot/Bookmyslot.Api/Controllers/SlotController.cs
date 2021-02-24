@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -23,11 +24,13 @@ namespace Bookmyslot.Api.Controllers
     {
         private readonly ISlotBusiness slotBusiness;
         private readonly IKeyEncryptor keyEncryptor;
+        private readonly ICurrentUser currentUser;
 
-        public SlotController(ISlotBusiness slotBusiness, IKeyEncryptor keyEncryptor)
+        public SlotController(ISlotBusiness slotBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser)
         {
             this.slotBusiness = slotBusiness;
             this.keyEncryptor = keyEncryptor;
+            this.currentUser = currentUser;
         }
 
 
@@ -48,7 +51,10 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("CreateSlot")]
         public async Task<IActionResult> Post([FromBody] SlotModel slotModel)
         {
-            var slotResponse = await slotBusiness.CreateSlot(slotModel);
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
+            var slotResponse = await slotBusiness.CreateSlot(slotModel, customerId);
             return this.CreatePostHttpResponse(slotResponse);
         }
 
@@ -73,11 +79,14 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> CancelSlot([FromBody] CancelSlot cancelSlot)
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
             var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(cancelSlot.SlotKey));
 
             if (slotModel != null)
             {
-                var slotResponse = await slotBusiness.CancelSlot(slotModel.Id, cancelSlot.CancelledBy);
+                var slotResponse = await slotBusiness.CancelSlot(slotModel.Id, customerId);
                 return this.CreatePostHttpResponse(slotResponse);
             }
 

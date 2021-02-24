@@ -1,8 +1,10 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,15 +17,18 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
+    [Authorize]
     public class CustomerSharedSlotController : BaseApiController
     {
         private readonly ICustomerSharedSlotBusiness customerSharedSlotBusiness;
         private readonly IKeyEncryptor keyEncryptor;
+        private readonly ICurrentUser currentUser;
 
-        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, IKeyEncryptor keyEncryptor)
+        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser)
         {
             this.customerSharedSlotBusiness = customerSharedSlotBusiness;
             this.keyEncryptor = keyEncryptor;
+            this.currentUser = currentUser;
         }
 
         /// <summary>
@@ -40,8 +45,11 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSharedSlot/GetCustomerYetToBeBookedSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerYetToBeBookedSlots(string customerId)
+        public async Task<IActionResult> GetCustomerYetToBeBookedSlots()
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots(customerId);
             if (customerSharedSlotModels.ResultType == ResultType.Success)
             {
@@ -65,8 +73,11 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSharedSlot/GetCustomerBookedSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerBookedSlots(string customerId)
+        public async Task<IActionResult> GetCustomerBookedSlots()
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerBookedSlots(customerId);
             if (customerSharedSlotModels.ResultType == ResultType.Success)
             {
@@ -90,8 +101,11 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSharedSlot/GetCustomerCompletedSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerCompletedSlots(string customerId)
+        public async Task<IActionResult> GetCustomerCompletedSlots()
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots(customerId);
             if (customerSharedSlotModels.ResultType == ResultType.Success)
             {
@@ -116,8 +130,11 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSharedSlot/GetCustomerCancelledSlots")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerCancelledSlots(string customerId)
+        public async Task<IActionResult> GetCustomerCancelledSlots()
         {
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result;
+
             var cancelledSlotModels = await this.customerSharedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (cancelledSlotModels.ResultType == ResultType.Success)
             {
