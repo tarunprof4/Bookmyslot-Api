@@ -28,14 +28,15 @@ namespace Bookmyslot.Api.Authentication
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetCurrentUserEmail()
+        public string GetEmailFromClaims()
         {
             var email = this.httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == this.authenticationConfiguration.ClaimEmail).Value;
             return email;
         }
 
-        public async Task<Response<string>> GetCurrentUserFromCache(string email)
+        public async Task<Response<string>> GetCurrentUserFromCache()
         {
+            var email = GetEmailFromClaims();
             var cacheModel = CreateCacheModel(email);
             var customerIdResponse =
                   await

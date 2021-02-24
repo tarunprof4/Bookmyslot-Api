@@ -49,15 +49,14 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet("{email}")]
+        [HttpGet]
         [ActionName("GetProfileSettings")]
-        public async Task<IActionResult> Get(string email)
+        public async Task<IActionResult> Get()
         {
-            email = this.currentUser.GetCurrentUserEmail();
-            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache(email);
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result;
 
-            var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByEmail(email);
+            var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByCustomerId(customerId);
             return this.CreateGetHttpResponse(customerResponse);
         }
 

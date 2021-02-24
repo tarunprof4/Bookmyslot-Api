@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
     public interface IProfileSettingsBusiness
     {
 
-        Task<Response<ProfileSettingsModel>> GetProfileSettingsByEmail(string email);
+        Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId);
         Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId);
     }
 }

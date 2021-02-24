@@ -23,10 +23,10 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.dbInterceptor = dbInterceptor;
         }
 
-        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByEmail(string email)
+        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
         {
-            var parameters = new { Email = email };
-            var sql = CustomerTableQueries.GetProfileSettingsByEmailQuery;
+            var parameters = new { customerId = customerId };
+            var sql = CustomerTableQueries.GetProfileSettingsByCustomerIdQuery;
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetProfileSettingsByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateProfileSettingsModelResponse(registerCustomerEntity);

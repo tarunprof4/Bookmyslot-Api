@@ -9,6 +9,6 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
     {
         Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId);
 
-        Task<Response<ProfileSettingsModel>> GetProfileSettingsByEmail(string email);
+        Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId);
     }
 }

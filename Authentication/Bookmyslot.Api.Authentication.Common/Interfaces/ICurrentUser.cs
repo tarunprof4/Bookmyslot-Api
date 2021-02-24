@@ -8,10 +8,10 @@ namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface ICurrentUser
     {
-        Task<Response<string>> GetCurrentUserFromCache(string email);
+        Task<Response<string>> GetCurrentUserFromCache();
 
         Task SetCurrentUserInCache(string email);
 
-        string GetCurrentUserEmail();
+        string GetEmailFromClaims();
     }
 }

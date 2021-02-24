@@ -15,7 +15,7 @@
 
         public const string GetCustomerByIdQuery = @"select UniqueId, Email, FirstName, LastName, BioHeadLine from Customer where UniqueId = @CustomerId";
 
-        public const string GetProfileSettingsByEmailQuery = @"select Email, FirstName, LastName, Gender from Customer where Email = @Email";
+        public const string GetProfileSettingsByCustomerIdQuery = @"select Email, FirstName, LastName, Gender from Customer where UniqueId=@customerId";
 
     }
 }

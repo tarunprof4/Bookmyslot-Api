@@ -58,15 +58,14 @@ namespace Bookmyslot.Api.Customers.Business
             return false;
         }
 
-        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByEmail(string email)
+        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
         {
-            if (string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(customerId))
             {
-                return new Response<ProfileSettingsModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdNotValid } };
+                return new Response<ProfileSettingsModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.CustomerIdNotValid } };
             }
 
-            email = email.ToLowerInvariant();
-            return await profileSettingsRepository.GetProfileSettingsByEmail(email);
+            return await profileSettingsRepository.GetProfileSettingsByCustomerId(customerId);
         }
 
        

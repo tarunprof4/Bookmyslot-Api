@@ -34,19 +34,19 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [TestCase("   ")]
         public async Task GetProfileSettingsByEmail_InvalidEmailId_ReturnsValidationErrorResponse(string email)
         {
-            var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByEmail(email);
+            var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByCustomerId(email);
 
             Assert.AreEqual(profileSettingsResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(profileSettingsResponse.Messages.First(), AppBusinessMessagesConstants.EmailIdNotValid);
-            profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByEmail(It.IsAny<string>())), Times.Never());
+            profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByCustomerId(It.IsAny<string>())), Times.Never());
         }
 
         [Test]
         public async Task GetProfileSettingsByEmail_ValidEmailId_CallsGetProfileSettingsByEmailIdRepository()
         {
-            var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByEmail(EMAIL);
+            var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByCustomerId(EMAIL);
 
-            profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByEmail(It.IsAny<string>())), Times.Once());
+            profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByCustomerId(It.IsAny<string>())), Times.Once());
         }
 
 
