@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Email.Constants;
 using Bookmyslot.Api.Common.Email.Interfaces;
@@ -20,18 +21,19 @@ namespace Bookmyslot.Api.Common.Email
         private readonly SmtpClient smtpClient;
         private readonly string fromEmailAddress;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly EmailConfiguration emailConfiguration;
 
-        public EmailClient(IAppConfiguration appConfiguration, IHttpContextAccessor httpContextAccessor)
+        public EmailClient(IAppConfiguration appConfiguration, IHttpContextAccessor httpContextAccessor, EmailConfiguration emailConfiguration)
         {
             this.smtpClient = new SmtpClient();
             this.smtpClient.UseDefaultCredentials = false;
             this.smtpClient.EnableSsl = true;
-            this.smtpClient.Port = Convert.ToInt32(appConfiguration.EmailPort);
-            this.smtpClient.Host = appConfiguration.EmailStmpHost;
-            this.smtpClient.Credentials = new NetworkCredential(appConfiguration.EmailUserName,appConfiguration.EmailPassword);
+            this.smtpClient.Port = Convert.ToInt32(emailConfiguration.EmailPort);
+            this.smtpClient.Host = emailConfiguration.EmailStmpHost;
+            this.smtpClient.Credentials = new NetworkCredential(emailConfiguration.EmailUserName, emailConfiguration.EmailPassword);
             this.smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-            this.fromEmailAddress = appConfiguration.EmailUserName;
+            this.fromEmailAddress = emailConfiguration.EmailUserName;
 
             this.httpContextAccessor = httpContextAccessor;
         }

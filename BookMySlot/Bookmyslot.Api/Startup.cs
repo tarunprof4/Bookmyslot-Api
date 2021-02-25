@@ -40,6 +40,8 @@ namespace Bookmyslot.Api
             services.AddSingleton(authenticationConfiguration);
             var cacheConfiguration = new CacheConfiguration(Configuration);
             services.AddSingleton(cacheConfiguration);
+            var emailConfiguration = new EmailConfiguration(Configuration);
+            services.AddSingleton(emailConfiguration);
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 

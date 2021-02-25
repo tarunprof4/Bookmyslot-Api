@@ -8,11 +8,6 @@ namespace Bookmyslot.Api.Common
     {
         private readonly string appVersion;
 
-        private readonly string emailStmpHost;
-        private readonly string emailPort;
-        private readonly string emailUserName;
-        private readonly string emailPassword;
-
         private readonly string logOutputTemplate;
 
         private readonly string elasticSearchUrl;
@@ -23,11 +18,6 @@ namespace Bookmyslot.Api.Common
         {
             this.appVersion = configuration.GetSection(AppSettingKeysConstants.AppVersion).Value;
 
-            this.emailStmpHost = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailSmtpHost).Value;
-            this.emailPort = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailPort).Value;
-            this.emailUserName = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailUserName).Value;
-            this.emailPassword = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailPassword).Value;
-
             this.logOutputTemplate = configuration.GetSection(AppSettingKeysConstants.LogSettings).GetSection(AppSettingKeysConstants.LogOutPutTemplate).Value;
 
             this.elasticSearchUrl = configuration.GetSection(AppSettingKeysConstants.ElasticSearchUrl).Value;
@@ -36,11 +26,6 @@ namespace Bookmyslot.Api.Common
         }
 
         public string AppVersion => this.appVersion;
-
-        public string EmailStmpHost => this.emailStmpHost;
-        public string EmailPort => this.emailPort;
-        public string EmailUserName => this.emailUserName;
-        public string EmailPassword => this.emailPassword;
 
         public string LogOutputTemplate => this.logOutputTemplate;
 
