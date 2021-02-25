@@ -29,14 +29,15 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             slotModel.Title = slotModel.Title.Trim();
             slotModel.BookedBy = string.Empty;
         }
-        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel, string createdBy)
+        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel, string slotDateString, string createdBy)
         {
             slotModel.CreatedBy = createdBy;
 
             var currentDate = DateTime.UtcNow;
-            var slotDate = DateTimeHelper.ConvertDateStringToDate(slotModel.SlotDate);
+            var slotDate = DateTimeHelper.ConvertDateStringToDate(slotDateString);
             var slotDateWithTimeZone = slotDate.GetDateTimeByTimeZone(slotModel.TimeZone, slotModel.SlotStartTime);
             slotModel.SlotDateUtc = slotDateWithTimeZone.GetDateTimeToUtcByTimeZone(slotModel.TimeZone);
+            slotModel.SlotDate = slotModel.SlotDateUtc.GetDateTimeFromUtcToTimeZone(slotModel.TimeZone).ToString(DateTimeConstants.ApplicationOutputDatePattern);
 
             var validator = new SlotValidator(currentDate);
             ValidationResult results = validator.Validate(slotModel);
@@ -76,7 +77,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                     await this.slotRepository.UpdateSlot(slotModel);
                     cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
                 }
-                
+
                 await this.customerCancelledSlotRepository.CreateCustomerCancelledSlot(cancelledSlotModel);
                 return new Response<bool>() { Result = true };
             }

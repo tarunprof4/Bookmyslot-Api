@@ -54,7 +54,8 @@ namespace Bookmyslot.Api.Controllers
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result;
 
-            var slotResponse = await slotBusiness.CreateSlot(slotModel, customerId);
+            var slotDateString = slotModel.SlotDate;
+            var slotResponse = await slotBusiness.CreateSlot(slotModel, slotDateString, customerId);
             return this.CreatePostHttpResponse(slotResponse);
         }
 

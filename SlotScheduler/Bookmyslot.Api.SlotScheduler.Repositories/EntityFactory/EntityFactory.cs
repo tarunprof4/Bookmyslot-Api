@@ -15,6 +15,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
                 CreatedBy = slotModel.CreatedBy,
                 BookedBy = slotModel.BookedBy,
                 TimeZone = slotModel.TimeZone,
+                SlotDate = slotModel.SlotDate,
                 SlotDateUtc = slotModel.SlotDateUtc,
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime,
