@@ -1,8 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Contracts.Configuration
 {

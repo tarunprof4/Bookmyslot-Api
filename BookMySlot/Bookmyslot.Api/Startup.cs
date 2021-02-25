@@ -1,7 +1,6 @@
 using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
@@ -38,13 +37,8 @@ namespace Bookmyslot.Api
         {
             var authenticationConfiguration = new AuthenticationConfiguration(Configuration);
             services.AddSingleton(authenticationConfiguration);
-            var cacheConfiguration = new CacheConfiguration(Configuration);
-            services.AddSingleton(cacheConfiguration);
-            var emailConfiguration = new EmailConfiguration(Configuration);
-            services.AddSingleton(emailConfiguration);
-
+          
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
-
             Injections(services, appConfigurations);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -95,11 +89,11 @@ namespace Bookmyslot.Api
             });
         }
 
-        private static void Injections(IServiceCollection services, Dictionary<string, string> appConfigurations)
+        private  void Injections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddHttpContextAccessor();
 
-            AppInjection.LoadInjections(services);
+            AppConfigurationInjection.LoadInjections(services, Configuration);
             AuthenticationInjection.LoadInjections(services);
             CacheInjection.LoadInjections(services, appConfigurations);
             DataBaseInjection.LoadInjections(services, appConfigurations);
@@ -159,7 +153,7 @@ namespace Bookmyslot.Api
         {
 
             var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
-            var appConfiguration = serviceProvider.GetService<IAppConfiguration>();
+            var appConfiguration = serviceProvider.GetService<AppConfiguration>();
 
 
             Log.Logger = new LoggerConfiguration()

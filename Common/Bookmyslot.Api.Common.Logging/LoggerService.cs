@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Serilog;
@@ -14,9 +14,9 @@ namespace Bookmyslot.Api.Common.Logging
         private readonly ILogger serilogFileLogger;
         private readonly ILogger serilogElasticSearchLogger;
 
-        private readonly IAppConfiguration appConfiguration;
+        private readonly AppConfiguration appConfiguration;
         private readonly HttpContext httpContext;
-        public LoggerService(IAppConfiguration appConfiguration, IHttpContextAccessor httpContextAccessor)
+        public LoggerService(AppConfiguration appConfiguration, IHttpContextAccessor httpContextAccessor)
         {
             
             this.appConfiguration = appConfiguration;

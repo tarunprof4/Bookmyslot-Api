@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts.Configuration;
 using Microsoft.AspNetCore.Http;
 using Serilog.Core;
 using Serilog.Events;
@@ -7,9 +7,9 @@ namespace Bookmyslot.Api.Common.Logging.Enrichers
 {
     public class DefaultLogEnricher : ILogEventEnricher
     {
-        private readonly IAppConfiguration appConfiguration;
+        private readonly AppConfiguration appConfiguration;
         private readonly IHttpContextAccessor httpContextAccessor;
-        public DefaultLogEnricher(IAppConfiguration appConfiguration, IHttpContextAccessor IHttpContextAccessor)
+        public DefaultLogEnricher(AppConfiguration appConfiguration, IHttpContextAccessor IHttpContextAccessor)
         {
             this.appConfiguration = appConfiguration;
             this.httpContextAccessor = IHttpContextAccessor;

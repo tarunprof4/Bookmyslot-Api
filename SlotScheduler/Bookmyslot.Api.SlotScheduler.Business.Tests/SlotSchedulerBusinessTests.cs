@@ -56,6 +56,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModel = CreateValidSlotModel();
             slotModel.SlotDate = OlderSlotDate;
             slotModel.SlotDateUtc = OlderSlotDateUtc;
+            slotModel.BookedBy = CreatedBy;
 
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
 
@@ -69,7 +70,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task ScheduleSlot_ValidDetails_ReturnsSuccessResponse()
         {
             var slotModel = CreateValidSlotModel();
-            slotModel.BookedBy = CreatedBy;
+            
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
 
             slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Once());

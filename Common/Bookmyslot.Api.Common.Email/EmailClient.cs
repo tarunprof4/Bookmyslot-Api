@@ -1,6 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Email.Constants;
 using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Common.Logging;
@@ -23,7 +22,7 @@ namespace Bookmyslot.Api.Common.Email
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly EmailConfiguration emailConfiguration;
 
-        public EmailClient(IAppConfiguration appConfiguration, IHttpContextAccessor httpContextAccessor, EmailConfiguration emailConfiguration)
+        public EmailClient(IHttpContextAccessor httpContextAccessor, EmailConfiguration emailConfiguration)
         {
             this.smtpClient = new SmtpClient();
             this.smtpClient.UseDefaultCredentials = false;

@@ -1,10 +1,9 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Microsoft.Extensions.Configuration;
 
-namespace Bookmyslot.Api.Common
+namespace Bookmyslot.Api.Common.Contracts.Configuration
 {
-    public class AppConfiguration : IAppConfiguration
+    public class AppConfiguration
     {
         private readonly string appVersion;
 
