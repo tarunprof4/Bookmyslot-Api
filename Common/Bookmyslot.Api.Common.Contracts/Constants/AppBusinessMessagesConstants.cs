@@ -39,6 +39,7 @@
         public const string SlotStartDateInvalid = "slot start date cannot be less than todays date";
         public const string SlotEndTimeInvalid = "slot end time  cannot be less than slot start time";
         public const string SlotScheduleDateInvalid = "slot cannot be booked for past date";
+        public const string SlotScheduleCannotBookOwnSlot = "You cannot book your own slot please";
 
         public const string SlotIdInvalid = "slot id is not valid";
         public const string SlotIdDoesNotExists = "slot does not exists";

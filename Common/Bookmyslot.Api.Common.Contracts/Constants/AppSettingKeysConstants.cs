@@ -40,6 +40,7 @@
 
 
 
-
+        public const string CacheSettings = "CacheSettings";
+        public const string CacheHomePageInSeconds = "HomePageInSeconds";
     }
 }

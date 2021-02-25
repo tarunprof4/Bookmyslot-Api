@@ -1,4 +1,5 @@
 using Bookmyslot.Api.Authentication.Common.Configuration;
+using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Logging.Enrichers;
@@ -37,6 +38,8 @@ namespace Bookmyslot.Api
         {
             var authenticationConfiguration = new AuthenticationConfiguration(Configuration);
             services.AddSingleton(authenticationConfiguration);
+            var cacheConfiguration = new CacheConfiguration(Configuration);
+            services.AddSingleton(cacheConfiguration);
 
             Dictionary<string, string> appConfigurations = GetAppConfigurations();
 

@@ -34,7 +34,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             slotSchedulerBusiness = new SlotSchedulerBusiness(slotRepositoryMock.Object);
         }
 
-   
+
         [Test]
         public async Task ScheduleSlot_SlotDateOlderThanCurrentDate_ReturnsValidationResponse()
         {
@@ -49,10 +49,27 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Never());
         }
 
+
+        [Test]
+        public async Task ScheduleSlot_CustomerBookingOwnSlot_ReturnsValidationResponse()
+        {
+            var slotModel = CreateValidSlotModel();
+            slotModel.SlotDate = OlderSlotDate;
+            slotModel.SlotDateUtc = OlderSlotDateUtc;
+
+            var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
+
+            Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
+            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot);
+            slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Never());
+        }
+
+
         [Test]
         public async Task ScheduleSlot_ValidDetails_ReturnsSuccessResponse()
         {
             var slotModel = CreateValidSlotModel();
+            slotModel.BookedBy = CreatedBy;
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
 
             slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Once());

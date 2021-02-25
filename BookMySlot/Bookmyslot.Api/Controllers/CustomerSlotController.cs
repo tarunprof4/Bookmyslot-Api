@@ -3,6 +3,7 @@ using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
@@ -27,14 +28,16 @@ namespace Bookmyslot.Api.Controllers
         private readonly IKeyEncryptor keyEncryptor;
         private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
         private readonly IHashing md5Hash;
-        
+        private readonly CacheConfiguration cacheConfiguration;
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash)
+
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash, CacheConfiguration cacheConfiguration)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.keyEncryptor = keyEncryptor;
             this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
             this.md5Hash = md5Hash;
+            this.cacheConfiguration = cacheConfiguration;
         }
 
         /// <summary>
@@ -78,7 +81,7 @@ namespace Bookmyslot.Api.Controllers
             var cacheModel = new CacheModel();
             var md5HashKey = this.md5Hash.Create(pageParameterModel);
             cacheModel.Key = string.Format(CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey, md5HashKey);
-            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheExpiryMinutes);
+            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, this.cacheConfiguration.HomePageInSeconds);
             return cacheModel;
         }
 

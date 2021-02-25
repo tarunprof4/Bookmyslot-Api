@@ -18,15 +18,19 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel, string bookedBy)
         {
             slotModel.BookedBy = bookedBy;
-
             var currentDate = DateTime.UtcNow;
 
-            if (slotModel.SlotDateUtc > currentDate)
+            if (slotModel.BookedBy == slotModel.CreatedBy)
             {
-                return await this.slotRepository.UpdateSlot(slotModel);
-
+                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot });
             }
-            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleDateInvalid });
+
+            if (slotModel.SlotDateUtc < currentDate)
+            {
+                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleDateInvalid });
+            }
+
+            return await this.slotRepository.UpdateSlot(slotModel);
         }
     }
 }
