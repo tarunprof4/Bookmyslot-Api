@@ -49,7 +49,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 BookedBy = cancelledSlotEntity.BookedBy,
                 TimeZone = cancelledSlotEntity.TimeZone,
                 SlotDateUtc = cancelledSlotEntity.SlotDateUtc,
-                SlotDate = (cancelledSlotEntity.SlotDateUtc.GetDateTimeFromUtcToTimeZone(cancelledSlotEntity.TimeZone)).ToString(DateTimeConstants.ApplicationOutputDatePattern),
+                SlotDate = cancelledSlotEntity.SlotDate,
                 SlotStartTime = cancelledSlotEntity.SlotStartTime,
                 SlotEndTime = cancelledSlotEntity.SlotEndTime,
             };
