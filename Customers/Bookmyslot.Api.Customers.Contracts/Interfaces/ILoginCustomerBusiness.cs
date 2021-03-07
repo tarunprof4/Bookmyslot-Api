@@ -6,6 +6,8 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 {
     public interface ILoginCustomerBusiness
     {
-        Task<Response<string>> LoginSocialCustomer(SocialCustomerModel socialCustomer);
+        Task<Response<string>> LoginGoogleCustomer(SocialCustomerModel socialCustomerModel);
+
+        Task<Response<string>> LoginFacebokCustomer(SocialCustomerModel socialCustomerModel);
     }
 }

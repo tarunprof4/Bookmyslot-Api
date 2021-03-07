@@ -6,6 +6,8 @@ namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface ISocialLoginTokenValidator
     {
-        Task<Response<SocialCustomerModel>> ValidateToken(string token);
+        Task<Response<SocialCustomerModel>> LoginWithGoogle(string token);
+
+        Task<Response<SocialCustomerModel>> LoginWithFacebook(string token, string clientSecret);
     }
 }

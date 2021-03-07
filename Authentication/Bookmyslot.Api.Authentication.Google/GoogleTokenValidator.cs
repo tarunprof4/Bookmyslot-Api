@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication.Google
 {
-    public class GoogleTokenValidator : ITokenValidator
+    public class GoogleTokenValidator : IGoogleTokenValidator
     {
         private readonly AuthenticationConfiguration authenticationConfiguration;
 

@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task LoginSocialCustomer_MissingSocialCustomerModel_ReturnValidationErrorResponse()
         {
-            var loginResponse = await loginCustomerBusiness.LoginSocialCustomer(null);
+            var loginResponse = await loginCustomerBusiness.LoginGoogleCustomer(null);
 
 
             Assert.AreEqual(loginResponse.ResultType, ResultType.ValidationError);
@@ -53,7 +53,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task LoginSocialCustomer_InValidSocialCustomerModel_ReturnValidationErrorResponse()
         {
-            var loginResponse = await loginCustomerBusiness.LoginSocialCustomer(new SocialCustomerModel());
+            var loginResponse = await loginCustomerBusiness.LoginGoogleCustomer(new SocialCustomerModel());
 
 
             Assert.AreEqual(loginResponse.ResultType, ResultType.ValidationError);
@@ -74,7 +74,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             var inValidTokenResponse = new Response<SocialCustomerModel>() { ResultType = ResultType.ValidationError };
             socialLoginTokenValidatorMock.Setup(a => a.ValidateToken(It.IsAny<string>())).Returns(Task.FromResult(inValidTokenResponse));
 
-            var loginResponse = await loginCustomerBusiness.LoginSocialCustomer(socialCustomerModel);
+            var loginResponse = await loginCustomerBusiness.LoginGoogleCustomer(socialCustomerModel);
 
             Assert.AreEqual(loginResponse.ResultType, ResultType.ValidationError);
             Assert.IsTrue(loginResponse.Messages.Contains(AppBusinessMessagesConstants.LoginFailed));
@@ -96,7 +96,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             customerBusinessMock.Setup(a => a.GetCustomerByEmail(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponse));
             jwtTokenProviderMock.Setup(a => a.GenerateToken(It.IsAny<string>())).Returns(TOKEN);
 
-            var loginResponse = await loginCustomerBusiness.LoginSocialCustomer(socialCustomerModel);
+            var loginResponse = await loginCustomerBusiness.LoginGoogleCustomer(socialCustomerModel);
 
             Assert.AreEqual(loginResponse.ResultType, ResultType.Success);
             registerCustomerBusinessMock.Verify((m => m.RegisterCustomer(It.IsAny<RegisterCustomerModel>())), Times.Never());
@@ -120,7 +120,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             jwtTokenProviderMock.Setup(a => a.GenerateToken(It.IsAny<string>())).Returns(TOKEN);
 
 
-            var loginResponse = await loginCustomerBusiness.LoginSocialCustomer(socialCustomerModel);
+            var loginResponse = await loginCustomerBusiness.LoginGoogleCustomer(socialCustomerModel);
 
             Assert.AreEqual(loginResponse.ResultType, ResultType.Success);
             registerCustomerBusinessMock.Verify((m => m.RegisterCustomer(It.IsAny<RegisterCustomerModel>())), Times.Once());
