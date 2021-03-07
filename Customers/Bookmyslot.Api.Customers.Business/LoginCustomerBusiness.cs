@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
@@ -28,41 +29,16 @@ namespace Bookmyslot.Api.Customers.Business
             this.jwtTokenProvider = jwtTokenProvider;
             this.currentUser = currentUser;
         }
-        public async Task<Response<string>> LoginGoogleCustomer(SocialCustomerModel socialCustomerModel)
+
+        public async Task<Response<string>> LoginSocialCustomer(SocialCustomerModel socialCustomerModel)
         {
             var validator = new SocialLoginCustomerValidator();
             ValidationResult results = validator.Validate(socialCustomerModel);
 
             if (results.IsValid)
             {
-                var validateTokenResponse = await this.socialLoginTokenValidator.LoginWithGoogle(socialCustomerModel.IdToken);
-                if (validateTokenResponse.ResultType == ResultType.Success)
-                {
-                    var validatedSocialCustomer = validateTokenResponse.Result;
-
-                    var tokenResponse =  await AllowLoginOrRegistration(validatedSocialCustomer);
-                    if(tokenResponse.ResultType == ResultType.Success)
-                    {
-                        await this.currentUser.SetCurrentUserInCache(validatedSocialCustomer.Email);
-                    }
-                    return tokenResponse;
-                }
-
-                return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
-            }
-
-            return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
-        }
-
-        public async Task<Response<string>> LoginFacebokCustomer(SocialCustomerModel socialCustomerModel)
-        {
-            var validator = new SocialLoginCustomerValidator();
-            ValidationResult results = validator.Validate(socialCustomerModel);
-
-            if (results.IsValid)
-            {
-                var validateTokenResponse = await this.socialLoginTokenValidator.LoginWithFacebook(socialCustomerModel.IdToken, "");
-                if (validateTokenResponse.ResultType == ResultType.Success)
+                var validateTokenResponse =  await ValidateSocialCustomerToken(socialCustomerModel);
+                if(validateTokenResponse.ResultType == ResultType.Success)
                 {
                     var validatedSocialCustomer = validateTokenResponse.Result;
 
@@ -74,10 +50,25 @@ namespace Bookmyslot.Api.Customers.Business
                     return tokenResponse;
                 }
 
-                return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = validateTokenResponse.Messages };
             }
 
             return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
+        }
+
+        private async Task<Response<SocialCustomerModel>> ValidateSocialCustomerToken(SocialCustomerModel socialCustomerModel)
+        {
+            if (socialCustomerModel.Provider == LoginConstants.ProviderGoogle)
+            {
+                return await this.socialLoginTokenValidator.LoginWithGoogle(socialCustomerModel.IdToken);
+            }
+
+            else if (socialCustomerModel.Provider == LoginConstants.ProviderFacebook)
+            {
+                return await this.socialLoginTokenValidator.LoginWithFacebook(socialCustomerModel.IdToken);
+            }
+
+            return new Response<SocialCustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.InValidTokenProvider } };
         }
 
 
@@ -123,6 +114,6 @@ namespace Bookmyslot.Api.Customers.Business
             return false;
         }
 
-     
+       
     }
 }

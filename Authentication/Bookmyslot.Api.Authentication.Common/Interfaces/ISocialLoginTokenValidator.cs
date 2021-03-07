@@ -8,6 +8,6 @@ namespace Bookmyslot.Api.Authentication.Common.Interfaces
     {
         Task<Response<SocialCustomerModel>> LoginWithGoogle(string token);
 
-        Task<Response<SocialCustomerModel>> LoginWithFacebook(string token, string clientSecret);
+        Task<Response<SocialCustomerModel>> LoginWithFacebook(string token);
     }
 }

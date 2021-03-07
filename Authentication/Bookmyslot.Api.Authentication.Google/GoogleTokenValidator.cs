@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Authentication.Google
             catch (Exception ex)
             {
                 Log.Error(ex, string.Empty);
-                return Response<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InvalidToken });
+                return Response<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
             }
         }
 

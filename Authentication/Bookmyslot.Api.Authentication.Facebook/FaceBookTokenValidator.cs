@@ -15,7 +15,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
         {
             this.authenticationConfiguration = authenticationConfiguration;
         }
-        public Task<Response<SocialCustomerModel>> ValidateToken(string token, string clientSecret)
+        public Task<Response<SocialCustomerModel>> ValidateToken(string token)
         {
             throw new NotImplementedException();
         }
