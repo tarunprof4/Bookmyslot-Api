@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Create new customer
         /// </summary>
-        /// <param name="socialCustomerModel">social customer model</param>
+        /// <param name="socialCustomerLoginModel">social customer login model</param>
         /// <returns >returns access token for customer</returns>
         /// <response code="201">Returns access token</response>
         /// <response code="400">validation error bad request</response>
@@ -38,9 +38,9 @@ namespace Bookmyslot.Api.Controllers
         [HttpPost]
         [ActionName("LoginSocialUser")]
         [Route("api/v1/Login/SocialCustomerLogin")]
-        public async Task<IActionResult> SocialCustomerLogin([FromBody] SocialCustomerModel socialCustomerModel)
+        public async Task<IActionResult> SocialCustomerLogin([FromBody] SocialCustomerLoginModel socialCustomerLoginModel)
         {
-            var loginResponse = await this.loginCustomerBusiness.LoginSocialCustomer(socialCustomerModel);
+            var loginResponse = await this.loginCustomerBusiness.LoginSocialCustomer(socialCustomerLoginModel);
           
             return this.CreatePostHttpResponse(loginResponse);
         }

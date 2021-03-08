@@ -30,14 +30,14 @@ namespace Bookmyslot.Api.Customers.Business
             this.currentUser = currentUser;
         }
 
-        public async Task<Response<string>> LoginSocialCustomer(SocialCustomerModel socialCustomerModel)
+        public async Task<Response<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel)
         {
             var validator = new SocialLoginCustomerValidator();
-            ValidationResult results = validator.Validate(socialCustomerModel);
+            ValidationResult results = validator.Validate(socialCustomerLoginModel);
 
             if (results.IsValid)
             {
-                var validateTokenResponse =  await ValidateSocialCustomerToken(socialCustomerModel);
+                var validateTokenResponse =  await ValidateSocialCustomerToken(socialCustomerLoginModel);
                 if(validateTokenResponse.ResultType == ResultType.Success)
                 {
                     var validatedSocialCustomer = validateTokenResponse.Result;
@@ -56,16 +56,16 @@ namespace Bookmyslot.Api.Customers.Business
             return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
 
-        private async Task<Response<SocialCustomerModel>> ValidateSocialCustomerToken(SocialCustomerModel socialCustomerModel)
+        private async Task<Response<SocialCustomerModel>> ValidateSocialCustomerToken(SocialCustomerLoginModel socialCustomerLoginModel)
         {
-            if (socialCustomerModel.Provider == LoginConstants.ProviderGoogle)
+            if (socialCustomerLoginModel.Provider == LoginConstants.ProviderGoogle)
             {
-                return await this.socialLoginTokenValidator.LoginWithGoogle(socialCustomerModel.IdToken);
+                return await this.socialLoginTokenValidator.LoginWithGoogle(socialCustomerLoginModel.IdToken);
             }
 
-            else if (socialCustomerModel.Provider == LoginConstants.ProviderFacebook)
+            else if (socialCustomerLoginModel.Provider == LoginConstants.ProviderFacebook)
             {
-                return await this.socialLoginTokenValidator.LoginWithFacebook(socialCustomerModel.IdToken);
+                return await this.socialLoginTokenValidator.LoginWithFacebook(socialCustomerLoginModel.AuthToken);
             }
 
             return new Response<SocialCustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.InValidTokenProvider } };

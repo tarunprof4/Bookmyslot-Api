@@ -1,18 +1,21 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using FluentValidation;
 using FluentValidation.Results;
 
 namespace Bookmyslot.Api.Customers.Business.Validations
 {
-    public class SocialLoginCustomerValidator :  AbstractValidator<SocialCustomerModel>
+    public class SocialLoginCustomerValidator :  AbstractValidator<SocialCustomerLoginModel>
     {
         public SocialLoginCustomerValidator()
         {
-            RuleFor(x => x.IdToken).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TokenRequired);
+            RuleFor(x => x.AuthToken).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.AuthTokenRequired);
             RuleFor(x => x.Provider).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TokenProviderRequired);
+            
+            RuleFor(x => x).Cascade(CascadeMode.Stop).Must(googleValidateIdToken).WithMessage(AppBusinessMessagesConstants.TokenRequired);
         }
-        protected override bool PreValidate(ValidationContext<SocialCustomerModel> context, ValidationResult result)
+        protected override bool PreValidate(ValidationContext<SocialCustomerLoginModel> context, ValidationResult result)
         {
             if (context.InstanceToValidate == null)
             {
@@ -22,6 +25,15 @@ namespace Bookmyslot.Api.Customers.Business.Validations
             return true;
         }
 
-      
+        private bool googleValidateIdToken(SocialCustomerLoginModel socialCustomerLoginModel)
+        {
+            if(socialCustomerLoginModel.Provider == LoginConstants.ProviderGoogle)
+            {
+                var isTokenValid = string.IsNullOrWhiteSpace(socialCustomerLoginModel.IdToken);
+                return !isTokenValid;
+            }
+
+            return true;
+        }
     }
 }
