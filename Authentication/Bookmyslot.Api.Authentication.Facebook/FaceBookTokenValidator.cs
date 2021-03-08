@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
 
 
                 var isTokenValid = await this.ValidateAccessToken(validateTokenUrl);
-                var facebookUserInfo = await this.GetUserInfo(validateTokenUrl);
+                var facebookUserInfo = await this.GetUserInfo(userInfoUrl);
 
 
                 return new Response<SocialCustomerModel>() { Result = CreateSocialCustomerModel(facebookUserInfo.Result) };
