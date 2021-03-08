@@ -13,6 +13,7 @@ namespace Bookmyslot.Api.Authentication.Facebook.Configuration
         public FacebookAuthenticationConfiguration(IConfiguration configuration)
         {
             var faceBookSettings = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.SocialLogin).GetSection(AppSettingKeysConstants.FacebookAuthenticationSettings);
+
             this.clientId = faceBookSettings.GetSection(AppSettingKeysConstants.ClientId).Value;
             this.clientSecret = faceBookSettings.GetSection(AppSettingKeysConstants.ClientSecret).Value;
             this.tokenValidationUrl = faceBookSettings.GetSection(AppSettingKeysConstants.FacebookTokenValidationUrl).Value;

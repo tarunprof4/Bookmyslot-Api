@@ -13,10 +13,12 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
 
         public EmailConfiguration(IConfiguration configuration)
         {
-            this.emailStmpHost = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailSmtpHost).Value;
-            this.emailPort = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailPort).Value;
-            this.emailUserName = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailUserName).Value;
-            this.emailPassword = configuration.GetSection(AppSettingKeysConstants.EmailSettings).GetSection(AppSettingKeysConstants.EmailPassword).Value;
+            var emailSettings = configuration.GetSection(AppSettingKeysConstants.EmailSettings);
+
+            this.emailStmpHost = emailSettings.GetSection(AppSettingKeysConstants.EmailSmtpHost).Value;
+            this.emailPort = emailSettings.GetSection(AppSettingKeysConstants.EmailPort).Value;
+            this.emailUserName = emailSettings.GetSection(AppSettingKeysConstants.EmailUserName).Value;
+            this.emailPassword = emailSettings.GetSection(AppSettingKeysConstants.EmailPassword).Value;
         }
 
         public string EmailStmpHost => this.emailStmpHost;

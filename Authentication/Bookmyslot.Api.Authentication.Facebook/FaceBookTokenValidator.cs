@@ -3,13 +3,17 @@ using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Facebook.Contracts;
+using Bookmyslot.Api.Common;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Marvin.StreamExtensions;
 using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication.Facebook
@@ -18,6 +22,9 @@ namespace Bookmyslot.Api.Authentication.Facebook
     {
         private readonly FacebookAuthenticationConfiguration facebookAuthenticationConfiguration;
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly CancellationTokenSource cancellationTokenSource =
+           new CancellationTokenSource();
+
 
         public FaceBookTokenValidator(IHttpClientFactory httpClientFactory, FacebookAuthenticationConfiguration facebookAuthenticationConfiguration)
         {
@@ -47,68 +54,69 @@ namespace Bookmyslot.Api.Authentication.Facebook
 
 
 
+        //public async Task<Response<bool>> ValidateAccessToken(string url)
+        //{
+        //    var result = await httpClientFactory.CreateClient().GetAsync(url);
+        //    var responseAsString = await result.Content.ReadAsStringAsync();
+        //    var facebookTokenValidationResponse = JsonConvert.DeserializeObject<FacebookTokenValidation>(responseAsString);
+        //    return new Response<bool>() { Result = facebookTokenValidationResponse.Data.IsValid };
+
+        //}
+
+        //public async Task<Response<FacebookUserInfo>> GetUserInfo(string url)
+        //{
+        //    var result = await httpClientFactory.CreateClient().GetAsync(url);
+        //    var responseAsString = await result.Content.ReadAsStringAsync();
+        //    var facebookUserInfo = JsonConvert.DeserializeObject<FacebookUserInfo>(responseAsString);
+        //    return new Response<FacebookUserInfo>() { Result = facebookUserInfo };
+        //}
+
         public async Task<Response<bool>> ValidateAccessToken(string url)
         {
-            var result = await httpClientFactory.CreateClient().GetAsync(url);
-            var responseAsString = await result.Content.ReadAsStringAsync();
-            var facebookTokenValidationResponse = JsonConvert.DeserializeObject<FacebookTokenValidation>(responseAsString);
-            return new Response<bool>() { Result = facebookTokenValidationResponse.Data.IsValid };
+            var httpClient = httpClientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+
+            using (var response = await httpClient.SendAsync(request,
+                HttpCompletionOption.ResponseHeadersRead,
+                cancellationTokenSource.Token))
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    return await response.HandleError<bool>();
+                }
+
+                var stream = await response.Content.ReadAsStreamAsync();
+                var facebookTokenValidationResponse = stream.ReadAndDeserializeFromJson<FacebookTokenValidation>();
+
+                return new Response<bool>() { Result = facebookTokenValidationResponse.Data.IsValid };
+            }
 
         }
 
         public async Task<Response<FacebookUserInfo>> GetUserInfo(string url)
         {
-            var result = await httpClientFactory.CreateClient().GetAsync(url);
-            var responseAsString = await result.Content.ReadAsStringAsync();
-            var facebookUserInfo = JsonConvert.DeserializeObject<FacebookUserInfo>(responseAsString);
-            return new Response<FacebookUserInfo>() { Result = facebookUserInfo };
+            var httpClient = httpClientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            using (var response = await httpClient.SendAsync(request,
+                HttpCompletionOption.ResponseHeadersRead,
+                cancellationTokenSource.Token))
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    return await response.HandleError<FacebookUserInfo>();
+                }
+
+                var stream = await response.Content.ReadAsStreamAsync();
+                var facebookUserInfo = stream.ReadAndDeserializeFromJson<FacebookUserInfo>();
+
+                return new Response<FacebookUserInfo>() { Result = facebookUserInfo };
+            }
+
         }
-
-        //public async Task<Response<bool>> ValidateAccessToken(string url)
-        //{
-        //    var httpClient = httpClientFactory.CreateClient(ApiClient.CustomerApiClient);
-        //    var request = new HttpRequestMessage(HttpMethod.Get, email);
-        //    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    using (var response = await httpClient.SendAsync(request,
-        //        HttpCompletionOption.ResponseHeadersRead,
-        //        cancellationTokenSource.Token))
-        //    {
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            return await response.HandleError<bool>();
-        //        }
-
-        //        var stream = await response.Content.ReadAsStreamAsync();
-        //        var facebookTokenValidationResponse = stream.ReadAndDeserializeFromJson<FacebookTokenValidation>();
-
-        //        return new Response<bool>() { Result = facebookTokenValidationResponse.Data.IsValid };
-        //    }
-
-        //}
-
-        //public async Task<Response<SocialCustomerModel>> GetUserInfo(string url)
-        //{
-        //    var httpClient = httpClientFactory.CreateClient(ApiClient.CustomerApiClient);
-        //    var request = new HttpRequestMessage(HttpMethod.Get, email);
-        //    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    using (var response = await httpClient.SendAsync(request,
-        //        HttpCompletionOption.ResponseHeadersRead,
-        //        cancellationTokenSource.Token))
-        //    {
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            return await response.HandleError<SocialCustomerModel>();
-        //        }
-
-        //        var stream = await response.Content.ReadAsStreamAsync();
-        //        var facebookUserInfo = stream.ReadAndDeserializeFromJson<FacebookUserInfo>();
-
-        //        return new Response<SocialCustomerModel>() { Result = CreateSocialCustomerModel(facebookUserInfo) };
-        //    }
-
-        //}
 
 
         private SocialCustomerModel CreateSocialCustomerModel(FacebookUserInfo facebookUserInfo)
@@ -121,25 +129,6 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 Provider = LoginConstants.ProviderFacebook
             };
         }
-
-
-
-        //private async Task<Response<T>> HandleError<T>(this HttpResponseMessage httpResponseMessage)
-        //{
-        //    var errorStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-        //    var errors = errorStream.ReadAndDeserializeFromJson<List<string>>();
-
-        //    if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
-        //    {
-        //        return Response<T>.Empty(errors);
-        //    }
-
-        //    else if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest)
-        //    {
-        //        return Response<T>.ValidationError(errors);
-        //    }
-
-        //    return Response<T>.Error(errors);
-        //}
+      
     }
 }

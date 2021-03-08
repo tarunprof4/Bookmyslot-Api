@@ -10,6 +10,7 @@ namespace Bookmyslot.Api.Authentication.Google.Configuration
         public GoogleAuthenticationConfiguration(IConfiguration configuration)
         {
             var googleSettings = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.SocialLogin).GetSection(AppSettingKeysConstants.GoogleAuthenticationSettings);
+
             this.googleClientId = googleSettings.GetSection(AppSettingKeysConstants.ClientId).Value;
         }
 
