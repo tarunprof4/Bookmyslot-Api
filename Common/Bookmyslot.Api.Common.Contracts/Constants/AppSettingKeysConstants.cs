@@ -26,6 +26,7 @@
         public const string JwtTokenSettings = "JwtTokenSettings";
         public const string SocialLogin = "SocialLogin";
         public const string GoogleAuthenticationSettings = "GoogleAuthenticationSettings";
+        
 
         public const string JwtTokenSubject = "Subject";
         public const string JwtTokenIssuer = "Issuer";
@@ -42,5 +43,10 @@
 
         public const string CacheSettings = "CacheSettings";
         public const string CacheHomePageInSeconds = "HomePageInSeconds";
+
+        public const string FacebookAuthenticationSettings = "FacebookAuthenticationSettings";
+        public const string FacebookTokenValidationUrl = "TokenValidationUrl";
+        public const string FacebookUserInfoUrl = "UserInfoUrl";
+
     }
 }
