@@ -3,6 +3,7 @@ using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.Facebook.Configuration;
+using Bookmyslot.Api.Authentication.Facebook.Contracts;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Serilog;
@@ -23,7 +24,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
             this.httpClientFactory = httpClientFactory;
             this.facebookAuthenticationConfiguration = facebookAuthenticationConfiguration;
         }
-        public Task<Response<SocialCustomerModel>> ValidateToken(string token)
+        public async Task<Response<SocialCustomerModel>> ValidateToken(string token)
         {
             try
             {
@@ -54,6 +55,46 @@ namespace Bookmyslot.Api.Authentication.Facebook
             };
         }
 
+        public async Task<Response<bool>> ValidateAccessToken(string accessToken)
+        {
+            var httpClient = httpClientFactory.CreateClient(ApiClient.CustomerApiClient);
+            var request = new HttpRequestMessage(HttpMethod.Get, email);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            using (var response = await httpClient.SendAsync(request,
+                HttpCompletionOption.ResponseHeadersRead,
+                cancellationTokenSource.Token))
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    //return await response.HandleError<ProfileSettings>();
+                }
+
+                var stream = await response.Content.ReadAsStreamAsync();
+                var facebookTokenValidationResponse = stream.ReadAndDeserializeFromJson<FacebookTokenValidation>();
+
+                return new Response<bool>() { Result = facebookTokenValidationResponse };
+            }
+
+        }
+
+
+        private async Task<Response<T>> HandleError<T>(this HttpResponseMessage httpResponseMessage)
+        {
+            var errorStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+            var errors = errorStream.ReadAndDeserializeFromJson<List<string>>();
+
+            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return Response<T>.Empty(errors);
+            }
+
+            else if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                return Response<T>.ValidationError(errors);
+            }
+
+            return Response<T>.Failed(errors);
+        }
     }
 }
