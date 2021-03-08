@@ -99,7 +99,7 @@ namespace Bookmyslot.Api.Customers.Business
         private RegisterCustomerModel CreateRegisterCustomerModel(SocialCustomerModel socialCustomer)
         {
             return new RegisterCustomerModel() { FirstName = socialCustomer.FirstName, LastName = socialCustomer.LastName, 
-                Email = socialCustomer.Email };
+                Email = socialCustomer.Email, Provider = socialCustomer.Provider };
         }
 
 
