@@ -74,7 +74,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 }
 
                 var stream = await response.Content.ReadAsStreamAsync();
-                var facebookTokenValidationResponse = stream.ReadAndDeserializeFromJson<FacebookTokenValidation>();
+                var facebookTokenValidationResponse = await stream.ReadAndDeserializeFromJsonAsync<FacebookTokenValidation>();
 
                 if (facebookTokenValidationResponse.Data.IsValid)
                 {
@@ -101,12 +101,12 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 var stream = await response.Content.ReadAsStreamAsync();
                 if (!response.IsSuccessStatusCode)
                 {
-                    var facebookUserInfoError = stream.ReadAndDeserializeFromJson<FacebookUserInfoError>();
+                    var facebookUserInfoError = await stream.ReadAndDeserializeFromJsonAsync<FacebookUserInfoError>();
                     Log.Debug("FaceBook Get User Info Failed {@facebookUserInfoError}", facebookUserInfoError);
                     return Response<FacebookUserInfo>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
                 }
 
-                var facebookUserInfo = stream.ReadAndDeserializeFromJson<FacebookUserInfo>();
+                var facebookUserInfo = await stream.ReadAndDeserializeFromJsonAsync<FacebookUserInfo>();
                 return new Response<FacebookUserInfo>() { Result = facebookUserInfo };
             }
         }
