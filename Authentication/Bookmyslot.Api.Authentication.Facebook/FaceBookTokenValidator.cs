@@ -36,8 +36,10 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 var validateTokenUrl = string.Format(this.facebookAuthenticationConfiguration.TokenValidationUrl, authToken, this.facebookAuthenticationConfiguration.ClientId, this.facebookAuthenticationConfiguration.ClientSecret);
                 var userInfoUrl = string.Format(this.facebookAuthenticationConfiguration.UserInfoUrl, authToken);
 
-                var isTokenValidResponse = this.ValidateToken(validateTokenUrl);
-                var facebookUserInfoResponse = this.GetUserInfo(userInfoUrl);
+                var isTokenValidResponse =  this.ValidateToken(validateTokenUrl);
+                var facebookUserInfoResponse =  this.GetUserInfo(userInfoUrl);
+                
+                
                 await Task.WhenAll(isTokenValidResponse, facebookUserInfoResponse);
 
                 var isTokenValid = isTokenValidResponse.Result;
@@ -67,7 +69,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    Log.Error("FaceBook Validate Access Token Failed");
+                    Log.Debug("FaceBook Validate Access Token Failed");
                     return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
                 }
 
@@ -80,7 +82,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 }
                 else
                 {
-                    Log.Error("FaceBook Validate Access Token {@errorStream}", stream);
+                    Log.Debug("FaceBook Validate Access Token {@errorStream}", stream);
                     return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
                 }
             }
@@ -99,7 +101,8 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 var stream = await response.Content.ReadAsStreamAsync();
                 if (!response.IsSuccessStatusCode)
                 {
-                    Log.Error("FaceBook Get User Info Failed {@errorStream}", stream);
+                    var facebookUserInfoError = stream.ReadAndDeserializeFromJson<FacebookUserInfoError>();
+                    Log.Debug("FaceBook Get User Info Failed {@facebookUserInfoError}", facebookUserInfoError);
                     return Response<FacebookUserInfo>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
                 }
 
