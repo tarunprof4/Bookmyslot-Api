@@ -15,9 +15,9 @@ namespace Bookmyslot.Api.Authentication
             this.facebookTokenValidator = facebookTokenValidator;
         }
 
-        public async Task<Response<SocialCustomerModel>> LoginWithFacebook(string token)
+        public async Task<Response<SocialCustomerModel>> LoginWithFacebook(string authToken)
         {
-            return await this.facebookTokenValidator.ValidateToken(token);
+            return await this.facebookTokenValidator.ValidateAccessToken(authToken);
         }
 
         public async Task<Response<SocialCustomerModel>> LoginWithGoogle(string token)

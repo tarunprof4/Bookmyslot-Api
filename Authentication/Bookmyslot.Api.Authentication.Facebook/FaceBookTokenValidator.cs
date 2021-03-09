@@ -29,14 +29,14 @@ namespace Bookmyslot.Api.Authentication.Facebook
             this.httpClientFactory = httpClientFactory;
             this.facebookAuthenticationConfiguration = facebookAuthenticationConfiguration;
         }
-        public async Task<Response<SocialCustomerModel>> ValidateToken(string token)
+        public async Task<Response<SocialCustomerModel>> ValidateAccessToken(string authToken)
         {
             try
             {
-                var validateTokenUrl = string.Format(this.facebookAuthenticationConfiguration.TokenValidationUrl, token, this.facebookAuthenticationConfiguration.ClientId, this.facebookAuthenticationConfiguration.ClientSecret);
-                var userInfoUrl = string.Format(this.facebookAuthenticationConfiguration.UserInfoUrl, token);
+                var validateTokenUrl = string.Format(this.facebookAuthenticationConfiguration.TokenValidationUrl, authToken, this.facebookAuthenticationConfiguration.ClientId, this.facebookAuthenticationConfiguration.ClientSecret);
+                var userInfoUrl = string.Format(this.facebookAuthenticationConfiguration.UserInfoUrl, authToken);
 
-                var isTokenValidResponse = this.ValidateAccessToken(validateTokenUrl);
+                var isTokenValidResponse = this.ValidateToken(validateTokenUrl);
                 var facebookUserInfoResponse = this.GetUserInfo(userInfoUrl);
                 await Task.WhenAll(isTokenValidResponse, facebookUserInfoResponse);
 
@@ -56,7 +56,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
             }
         }
 
-        public async Task<Response<bool>> ValidateAccessToken(string url)
+        public async Task<Response<bool>> ValidateToken(string url)
         {
             var httpClient = httpClientFactory.CreateClient();
             HttpRequestMessage request = CreateHttpRequest(url);
