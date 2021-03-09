@@ -109,15 +109,10 @@ namespace Bookmyslot.Api
 
             InitializeSerilog(serviceProvider);
 
-            if (env.IsDevelopment())
+            if (env.IsEnvironment("Local"))
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            if (env.IsProduction())
-            {
-            }
-
 
             app.UseRequestResponseLogging();
 
