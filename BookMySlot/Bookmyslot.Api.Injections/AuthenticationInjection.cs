@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Authentication.Facebook;
 using Bookmyslot.Api.Authentication.Google;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +16,8 @@ namespace Bookmyslot.Api.Injections
         {
             services.AddSingleton<IJwtTokenProvider, JwtTokenProvider>();
             services.AddSingleton<ISocialLoginTokenValidator, SocialLoginTokenValidator>();
-            services.AddSingleton<ITokenValidator, GoogleTokenValidator>();
+            services.AddSingleton<IGoogleTokenValidator, GoogleTokenValidator>();
+            services.AddTransient<IFacebookTokenValidator, FaceBookTokenValidator>();
             services.AddTransient<ICurrentUser, CurrentUser>();
         }
     }

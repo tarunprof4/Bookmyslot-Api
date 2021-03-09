@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
@@ -28,31 +29,48 @@ namespace Bookmyslot.Api.Customers.Business
             this.jwtTokenProvider = jwtTokenProvider;
             this.currentUser = currentUser;
         }
-        public async Task<Response<string>> LoginSocialCustomer(SocialCustomerModel socialCustomerModel)
+
+        public async Task<Response<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel)
         {
             var validator = new SocialLoginCustomerValidator();
-            ValidationResult results = validator.Validate(socialCustomerModel);
+            ValidationResult results = validator.Validate(socialCustomerLoginModel);
 
             if (results.IsValid)
             {
-                var validateTokenResponse = await this.socialLoginTokenValidator.ValidateToken(socialCustomerModel.IdToken);
-                if (validateTokenResponse.ResultType == ResultType.Success)
+                var validateTokenResponse =  await ValidateSocialCustomerToken(socialCustomerLoginModel);
+                if(validateTokenResponse.ResultType == ResultType.Success)
                 {
                     var validatedSocialCustomer = validateTokenResponse.Result;
 
-                    var tokenResponse =  await AllowLoginOrRegistration(validatedSocialCustomer);
-                    if(tokenResponse.ResultType == ResultType.Success)
+                    var tokenResponse = await AllowLoginOrRegistration(validatedSocialCustomer);
+                    if (tokenResponse.ResultType == ResultType.Success)
                     {
                         await this.currentUser.SetCurrentUserInCache(validatedSocialCustomer.Email);
                     }
                     return tokenResponse;
                 }
 
-                return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = validateTokenResponse.Messages };
             }
 
             return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
+
+        private async Task<Response<SocialCustomerModel>> ValidateSocialCustomerToken(SocialCustomerLoginModel socialCustomerLoginModel)
+        {
+            if (socialCustomerLoginModel.Provider == LoginConstants.ProviderGoogle)
+            {
+                return await this.socialLoginTokenValidator.LoginWithGoogle(socialCustomerLoginModel.IdToken);
+            }
+
+            else if (socialCustomerLoginModel.Provider == LoginConstants.ProviderFacebook)
+            {
+                return await this.socialLoginTokenValidator.LoginWithFacebook(socialCustomerLoginModel.AuthToken);
+            }
+
+            return new Response<SocialCustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.InValidTokenProvider } };
+        }
+
 
         private async Task<Response<string>> AllowLoginOrRegistration(SocialCustomerModel socialCustomerModel)
         {
@@ -81,7 +99,7 @@ namespace Bookmyslot.Api.Customers.Business
         private RegisterCustomerModel CreateRegisterCustomerModel(SocialCustomerModel socialCustomer)
         {
             return new RegisterCustomerModel() { FirstName = socialCustomer.FirstName, LastName = socialCustomer.LastName, 
-                Email = socialCustomer.Email };
+                Email = socialCustomer.Email, Provider = socialCustomer.Provider };
         }
 
 
@@ -95,5 +113,7 @@ namespace Bookmyslot.Api.Customers.Business
 
             return false;
         }
+
+       
     }
 }

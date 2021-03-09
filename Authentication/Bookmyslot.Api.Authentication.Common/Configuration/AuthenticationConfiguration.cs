@@ -18,19 +18,18 @@ namespace Bookmyslot.Api.Authentication.Common.Configuration
 
         private readonly string claimEmail;
 
-        private readonly string googleClientId;
+        
         public AuthenticationConfiguration(IConfiguration configuration)
         {
-            this.subject = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenSubject).Value;
-            this.issuer = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenIssuer).Value;
-            this.audience = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenAudience).Value;
-            this.tokenexpiryInHours = Convert.ToInt32(configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenExpiryInHours).Value);
-            this.secretKey = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenSecretKey).Value; ;
+            var authenticationSettings = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings);
 
-            this.googleClientId = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.SocialLogin).GetSection(AppSettingKeysConstants.GoogleAuthenticationSettings).GetSection(AppSettingKeysConstants.ClientId).Value;
+            this.subject = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenSubject).Value;
+            this.issuer = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenIssuer).Value;
+            this.audience = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenAudience).Value;
+            this.tokenexpiryInHours = Convert.ToInt32(authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenExpiryInHours).Value);
+            this.secretKey = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenSecretKey).Value;
 
-
-            this.claimEmail = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings).GetSection(AppSettingKeysConstants.JwtTokenClaimSettings).GetSection(AppSettingKeysConstants.JwtTokenClaimEmail).Value; 
+            this.claimEmail = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenClaimSettings).GetSection(AppSettingKeysConstants.JwtTokenClaimEmail).Value; 
         }
 
         public string Subject => this.subject;
@@ -42,9 +41,6 @@ namespace Bookmyslot.Api.Authentication.Common.Configuration
         public int TokenExpiryInHours => this.tokenexpiryInHours;
 
         public string SecretKey => this.secretKey;
-
-        public string GoogleClientId => this.googleClientId;
-
         public string ClaimEmail => this.claimEmail;
     }
 }

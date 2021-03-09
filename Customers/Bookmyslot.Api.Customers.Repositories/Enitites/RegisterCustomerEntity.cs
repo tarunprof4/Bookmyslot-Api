@@ -4,7 +4,7 @@ using System;
 
 namespace Bookmyslot.Api.Customers.Repositories.Enitites
 {
-    [Table(TableNameConstants.Customer)]
+    [Table(TableNameConstants.Register)]
     public class RegisterCustomerEntity
     {
         [Key]

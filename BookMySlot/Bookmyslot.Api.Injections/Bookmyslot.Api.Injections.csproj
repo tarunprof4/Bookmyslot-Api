@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.Facebook\Bookmyslot.Api.Authentication.Facebook.csproj" />
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.Google\Bookmyslot.Api.Authentication.Google.csproj" />
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication\Bookmyslot.Api.Authentication.csproj" />
     <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Business\Bookmyslot.Api.Cache.Business.csproj" />

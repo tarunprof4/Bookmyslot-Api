@@ -7,16 +7,24 @@ namespace Bookmyslot.Api.Authentication
 {
     public class SocialLoginTokenValidator : ISocialLoginTokenValidator
     {
-        private readonly ITokenValidator tokenValidator;
-        public SocialLoginTokenValidator(ITokenValidator tokenValidator)
+        private readonly IGoogleTokenValidator googleTokenValidator;
+        private readonly IFacebookTokenValidator facebookTokenValidator;
+        public SocialLoginTokenValidator(IGoogleTokenValidator googleTokenValidator, IFacebookTokenValidator facebookTokenValidator)
         {
-            this.tokenValidator = tokenValidator;
+            this.googleTokenValidator = googleTokenValidator;
+            this.facebookTokenValidator = facebookTokenValidator;
         }
 
-        public async Task<Response<SocialCustomerModel>> ValidateToken(string token)
+        public async Task<Response<SocialCustomerModel>> LoginWithFacebook(string authToken)
         {
-            var isTokenValidResponse = await this.tokenValidator.ValidateToken(token);
-            return isTokenValidResponse;
+            return await this.facebookTokenValidator.ValidateAccessToken(authToken);
         }
+
+        public async Task<Response<SocialCustomerModel>> LoginWithGoogle(string idToken)
+        {
+            return await this.googleTokenValidator.ValidateToken(idToken);
+        }
+
+      
     }
 }

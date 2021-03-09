@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
-    public interface ITokenValidator
+
+    public interface IFacebookTokenValidator
     {
-        Task<Response<SocialCustomerModel>> ValidateToken(string token);
+        Task<Response<SocialCustomerModel>> ValidateAccessToken(string authToken);
     }
 }
