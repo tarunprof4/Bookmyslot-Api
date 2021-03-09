@@ -109,11 +109,11 @@ namespace Bookmyslot.Api
 
             InitializeSerilog(serviceProvider);
 
-            if (env.IsEnvironment("Local"))
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRequestResponseLogging();
 
             app.UseHttpsRedirection();
