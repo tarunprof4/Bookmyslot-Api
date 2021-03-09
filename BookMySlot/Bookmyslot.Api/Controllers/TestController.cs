@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Compression.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -22,11 +23,13 @@ namespace Bookmyslot.Api.Controllers
 
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
         private readonly AuthenticationConfiguration authenticationConfiguration;
-        public TestController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness, AuthenticationConfiguration authenticationConfiguration)
+        private readonly AppConfiguration appConfiguration;
+        public TestController(IKeyEncryptor keyEncryptor, IResendSlotInformationBusiness resendSlotInformationBusiness, AuthenticationConfiguration authenticationConfiguration, AppConfiguration appConfiguration)
         {
             this.keyEncryptor = keyEncryptor;
             this.resendSlotInformationBusiness = resendSlotInformationBusiness;
             this.authenticationConfiguration = authenticationConfiguration;
+            this.appConfiguration = appConfiguration;
         }
 
         [HttpGet()]
@@ -52,8 +55,7 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/test/Testing")]
         public async Task<IActionResult> Testing()
         {
-            CustomerModel customer = new CustomerModel() { FirstName = "Fir", LastName = "Las" };
-            return this.Ok(await Task.FromResult(customer));
+            return this.Ok(await Task.FromResult(this.appConfiguration.ReadDatabaseConnectionString));
         }
 
         private SlotModel GetDefaultSlotModel()

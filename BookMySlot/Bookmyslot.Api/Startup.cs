@@ -114,6 +114,10 @@ namespace Bookmyslot.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            if (env.IsProduction())
+            {
+            }
+
 
             app.UseRequestResponseLogging();
 
