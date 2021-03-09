@@ -68,7 +68,7 @@
         public const string SocialLoginTokenDetailsMissing = "Token details Missing";
 
         public const string AuthTokenRequired = "auth token is required";
-        public const string TokenRequired = "token is required";
+        public const string IdTokenRequired = "id token is required";
         public const string TokenProviderRequired = "token provider is required";
         public const string InValidTokenProvider = "invalid token provider";
     }

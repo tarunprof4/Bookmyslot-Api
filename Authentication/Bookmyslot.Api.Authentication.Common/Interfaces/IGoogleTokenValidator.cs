@@ -5,6 +5,6 @@ namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface IGoogleTokenValidator
     {
-        Task<Response<SocialCustomerModel>> ValidateToken(string token);
+        Task<Response<SocialCustomerModel>> ValidateToken(string idToken);
     }
 }

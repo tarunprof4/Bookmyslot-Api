@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Customers.Business.Validations
             RuleFor(x => x.AuthToken).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.AuthTokenRequired);
             RuleFor(x => x.Provider).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TokenProviderRequired);
             
-            RuleFor(x => x).Cascade(CascadeMode.Stop).Must(googleValidateIdToken).WithMessage(AppBusinessMessagesConstants.TokenRequired);
+            RuleFor(x => x).Cascade(CascadeMode.Stop).Must(googleValidateIdToken).WithMessage(AppBusinessMessagesConstants.IdTokenRequired);
         }
         protected override bool PreValidate(ValidationContext<SocialCustomerLoginModel> context, ValidationResult result)
         {
@@ -29,8 +29,8 @@ namespace Bookmyslot.Api.Customers.Business.Validations
         {
             if(socialCustomerLoginModel.Provider == LoginConstants.ProviderGoogle)
             {
-                var isTokenValid = string.IsNullOrWhiteSpace(socialCustomerLoginModel.IdToken);
-                return !isTokenValid;
+                var isIdTokenValid = string.IsNullOrWhiteSpace(socialCustomerLoginModel.IdToken);
+                return !isIdTokenValid;
             }
 
             return true;

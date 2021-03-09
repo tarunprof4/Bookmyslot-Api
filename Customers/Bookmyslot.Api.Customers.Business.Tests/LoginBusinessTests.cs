@@ -60,7 +60,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             Assert.AreEqual(loginResponse.ResultType, ResultType.ValidationError);
             Assert.IsTrue(loginResponse.Messages.Contains(AppBusinessMessagesConstants.AuthTokenRequired));
-            Assert.IsTrue(loginResponse.Messages.Contains(AppBusinessMessagesConstants.TokenRequired));
+            Assert.IsTrue(loginResponse.Messages.Contains(AppBusinessMessagesConstants.IdTokenRequired));
             registerCustomerBusinessMock.Verify((m => m.RegisterCustomer(It.IsAny<RegisterCustomerModel>())), Times.Never());
             customerBusinessMock.Verify((m => m.GetCustomerByEmail(It.IsAny<string>())), Times.Never());
             socialLoginTokenValidatorMock.Verify((m => m.LoginWithGoogle(It.IsAny<string>())), Times.Never());

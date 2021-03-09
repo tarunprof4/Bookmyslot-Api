@@ -22,13 +22,13 @@ namespace Bookmyslot.Api.Authentication.Google
         {
             this.googleAuthenticationConfiguration = googleAuthenticationConfiguration;
         }
-        public async Task<Response<SocialCustomerModel>> ValidateToken(string token)
+        public async Task<Response<SocialCustomerModel>> ValidateToken(string idToken)
         {
             try
             {
                 var validationSettings = new GoogleJsonWebSignature.ValidationSettings();
                 validationSettings.Audience = new List<string>() { this.googleAuthenticationConfiguration.GoogleClientId };
-                var validPayload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
+                var validPayload = await GoogleJsonWebSignature.ValidateAsync(idToken, validationSettings);
 
                 return new Response<SocialCustomerModel>() { Result = CreateSocialCustomerModel(validPayload) };
             }
