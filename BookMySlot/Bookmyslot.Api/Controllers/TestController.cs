@@ -1,4 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Configuration;
+using Bookmyslot.Api.Authentication.Facebook.Configuration;
+using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Customers.Contracts;
@@ -7,6 +9,9 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,11 +27,25 @@ namespace Bookmyslot.Api.Controllers
         private readonly IKeyEncryptor keyEncryptor;
 
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
-        private readonly AuthenticationConfiguration authenticationConfiguration;
         private readonly AppConfiguration appConfiguration;
-        public TestController(AppConfiguration appConfiguration)
+        private readonly AuthenticationConfiguration authenticationConfiguration;
+        private readonly CacheConfiguration cacheConfiguration;
+        private readonly EmailConfiguration emailConfiguration;
+        private readonly GoogleAuthenticationConfiguration googleAuthenticationConfiguration;
+        private readonly FacebookAuthenticationConfiguration facebookAuthenticationConfiguration;
+
+
+
+        public TestController(AppConfiguration appConfiguration, AuthenticationConfiguration authenticationConfiguration,
+            CacheConfiguration cacheConfiguration, EmailConfiguration emailConfiguration, GoogleAuthenticationConfiguration googleAuthenticationConfiguration,
+            FacebookAuthenticationConfiguration facebookAuthenticationConfiguration)
         {
             this.appConfiguration = appConfiguration;
+            this.authenticationConfiguration = authenticationConfiguration;
+            this.cacheConfiguration = cacheConfiguration;
+            this.emailConfiguration = emailConfiguration;
+            this.googleAuthenticationConfiguration = googleAuthenticationConfiguration;
+            this.facebookAuthenticationConfiguration = facebookAuthenticationConfiguration;
         }
 
         //[HttpGet()]
@@ -52,7 +71,34 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/test/Testing")]
         public async Task<IActionResult> Testing()
         {
-            return this.Ok(await Task.FromResult(this.appConfiguration.ReadDatabaseConnectionString));
+            
+            var configurations = new Dictionary<string, object>();
+            configurations.Add("appConfiguration", this.appConfiguration);
+            configurations.Add("authenticationConfiguration", this.authenticationConfiguration);
+            configurations.Add("cacheConfiguration", this.cacheConfiguration);
+            configurations.Add("emailConfiguration", this.emailConfiguration);
+            configurations.Add("googleAuthenticationConfiguration", this.googleAuthenticationConfiguration);
+            configurations.Add("facebookAuthenticationConfiguration", this.facebookAuthenticationConfiguration);
+
+            configurations.Add("currentDate", DateTime.UtcNow);
+
+            //configurations.Add("CurrentCulture", Thread.CurrentThread.CurrentCulture);
+            //configurations.Add("CurrentUICulture", Thread.CurrentThread.CurrentUICulture);
+
+            //var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            //foreach (var ci in allCultures)
+            //{
+            //    // Display the name of each culture.
+            //    Console.Write($"{ci.EnglishName} ({ci.Name}): ");
+            //    // Indicate the culture type.
+            //    if (ci.CultureTypes.HasFlag(CultureTypes.NeutralCultures))
+            //        Console.Write(" NeutralCulture");
+            //    if (ci.CultureTypes.HasFlag(CultureTypes.SpecificCultures))
+            //        Console.Write(" SpecificCulture");
+            //    Console.WriteLine();
+            //}
+
+            return this.Ok(await Task.FromResult(configurations));
         }
 
         private SlotModel GetDefaultSlotModel()

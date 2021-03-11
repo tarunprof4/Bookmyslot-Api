@@ -2,8 +2,8 @@
 {
     public class LoginConstants
     {
-        public const string ProviderGoogle = "GOOGLE";
+        public const string ProviderGoogle = "google";
 
-        public const string ProviderFacebook = "FACEBOOK";
+        public const string ProviderFacebook = "facebook";
     }
 }

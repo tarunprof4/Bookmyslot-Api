@@ -45,12 +45,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Staging": {
+    "Testing": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger/index.html",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Staging"
+        "ASPNETCORE_ENVIRONMENT": "Testing"
       }
     }
   }

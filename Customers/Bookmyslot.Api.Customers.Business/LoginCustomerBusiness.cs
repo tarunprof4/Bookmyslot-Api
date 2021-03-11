@@ -30,6 +30,11 @@ namespace Bookmyslot.Api.Customers.Business
             this.currentUser = currentUser;
         }
 
+        private void SanitizeSocialCustomerLoginModel(SocialCustomerLoginModel socialCustomerLoginModel)
+        {
+            socialCustomerLoginModel.Provider = socialCustomerLoginModel.Provider.Trim().ToLowerInvariant();
+        }
+
         public async Task<Response<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel)
         {
             var validator = new SocialLoginCustomerValidator();
@@ -37,6 +42,7 @@ namespace Bookmyslot.Api.Customers.Business
 
             if (results.IsValid)
             {
+                SanitizeSocialCustomerLoginModel(socialCustomerLoginModel);
                 var validateTokenResponse =  await ValidateSocialCustomerToken(socialCustomerLoginModel);
                 if(validateTokenResponse.ResultType == ResultType.Success)
                 {
