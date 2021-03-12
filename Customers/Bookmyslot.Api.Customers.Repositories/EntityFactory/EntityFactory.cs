@@ -16,10 +16,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
                 Gender = registerCustomerModel.Gender,
                 UserName = CreateUserName(registerCustomerModel.FirstName),
                 Email = registerCustomerModel.Email,
-                PhoneNumber = registerCustomerModel.PhoneNumber,
-                BioHeadLine = registerCustomerModel.BioHeadLine,
                 Provider = registerCustomerModel.Provider,
-                PhotoUrl = registerCustomerModel.PhotoUrl,
                 CreatedDateUtc = DateTime.UtcNow
             };
         }
