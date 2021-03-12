@@ -31,7 +31,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             var slotEntities = await this.dbInterceptor.GetQueryResults("GetDistinctCustomersNearestSlotFromToday", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
 
-            return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
+            return ResponseModelFactory.CreateDistinctCustomersNearestSlotFromTodayResponse(slotEntities);
         }
 
         

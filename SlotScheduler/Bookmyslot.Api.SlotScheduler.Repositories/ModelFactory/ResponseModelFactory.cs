@@ -33,6 +33,22 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
         }
 
+        internal static Response<IEnumerable<SlotModel>> CreateDistinctCustomersNearestSlotFromTodayResponse(IEnumerable<SlotEntity> slotEntities)
+        {
+            List<SlotModel> slotModels = new List<SlotModel>();
+            foreach (var slotEntity in slotEntities)
+            {
+                slotModels.Add(new SlotModel() { CreatedBy = slotEntity.CreatedBy });
+            }
+
+            if (slotModels.Count == 0)
+            {
+                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
+            }
+
+            return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+        }
+
 
         internal static Response<IEnumerable<CancelledSlotModel>> CreateCancelledSlotModels(IEnumerable<CancelledSlotEntity> cancelledSlotEntities)
         {
