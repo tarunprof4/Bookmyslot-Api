@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
@@ -15,11 +16,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CreatedBy = slotEntity.CreatedBy,
                 BookedBy = slotEntity.BookedBy,
                 TimeZone = slotEntity.TimeZone,
-                SlotDateUtc = slotEntity.SlotDateUtc,
+                SlotDateUtc = DateTime.SpecifyKind(slotEntity.SlotDateUtc, DateTimeKind.Utc),
                 SlotDate = slotEntity.SlotDate,
                 SlotStartTime = slotEntity.SlotStartTime,
                 SlotEndTime = slotEntity.SlotEndTime,
-                CreatedDateUtc = slotEntity.CreatedDateUtc
+                CreatedDateUtc = DateTime.SpecifyKind(slotEntity.CreatedDateUtc, DateTimeKind.Utc)
             };
         }
 
@@ -35,6 +36,17 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
         }
 
 
+        internal static List<string> CreateCustomersFromSlotModels(IEnumerable<SlotEntity> slotEntities)
+        {
+            List<string> customers = new List<string>();
+            foreach (var slotEntity in slotEntities)
+            {
+                customers.Add(slotEntity.CreatedBy);
+            }
+            return customers;
+        }
+
+
 
         internal static CancelledSlotModel CreateCancelledSlotModel(CancelledSlotEntity cancelledSlotEntity)
         {
@@ -46,7 +58,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CancelledBy = cancelledSlotEntity.CancelledBy,
                 BookedBy = cancelledSlotEntity.BookedBy,
                 TimeZone = cancelledSlotEntity.TimeZone,
-                SlotDateUtc = cancelledSlotEntity.SlotDateUtc,
+                SlotDateUtc = DateTime.SpecifyKind(cancelledSlotEntity.SlotDateUtc, DateTimeKind.Utc),
+                
                 SlotDate = cancelledSlotEntity.SlotDate,
                 SlotStartTime = cancelledSlotEntity.SlotStartTime,
                 SlotEndTime = cancelledSlotEntity.SlotEndTime,

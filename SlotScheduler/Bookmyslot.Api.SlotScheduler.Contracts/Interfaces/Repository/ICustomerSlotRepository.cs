@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface ICustomerSlotRepository
     {
-        Task<Response<IEnumerable<SlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel);
+        Task<Response<IEnumerable<string>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel);
 
         Task<Response<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email);
 

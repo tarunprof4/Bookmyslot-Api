@@ -29,15 +29,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
             {
                 var customerSlotModels = new List<CustomerSlotModel>();
-                var distinctCustomersLatestSlot = allCustomerSlotsResponse.Result;
+                var customerIds = allCustomerSlotsResponse.Result;
 
-                var customerIds = distinctCustomersLatestSlot.Select(a=>a.CreatedBy);
                 var customerModels = await this.customerBusiness.GetCustomersByCustomerIds(customerIds);
 
                 foreach(var customerModel in customerModels.Result)
                 {
                     var customerSlotModel = new CustomerSlotModel();
-                    customerSlotModel.SlotModels = distinctCustomersLatestSlot.Where(a => a.CreatedBy == customerModel.Id).ToList();
                     customerSlotModel.CustomerModel = customerModel;
                     customerSlotModels.Add(customerSlotModel);
                 }

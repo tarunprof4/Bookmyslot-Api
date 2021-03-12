@@ -37,8 +37,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var pageParameterModel = GetValidPageParameterModel();
             var slotModels = GetValidSlotModels();
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
-            customerSlotRepositoryMock.Setup(a => a.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())).Returns(Task.FromResult(slotModelResponseMock));
+            Response<IEnumerable<string>> customersResponseMock = new Response<IEnumerable<string>>() { Result = GetCustomersWithSlots() };
+            customerSlotRepositoryMock.Setup(a => a.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())).Returns(Task.FromResult(customersResponseMock));
             Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
@@ -47,8 +47,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var customerSlotModelResponse = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
 
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(customerSlotModelResponse.Result[0].SlotModels.First().CreatedBy, CreatedBy1);
-            Assert.NotNull(customerSlotModelResponse.Result[0].SlotModels);
             Assert.NotNull(customerSlotModelResponse.Result[0].CustomerModel);
             customerSlotRepositoryMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
@@ -58,8 +56,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task GetDistinctCustomersLatestSlot_NoRecordsFound_ReturnsEmptyResponse()
         {
             var pageParameterModel = GetValidPageParameterModel();
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
-            customerSlotRepositoryMock.Setup(a => a.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())).Returns(Task.FromResult(slotModelResponseMock));
+            Response<IEnumerable<string>> customersResponseMock = new Response<IEnumerable<string>>() { ResultType = ResultType.Empty };
+            customerSlotRepositoryMock.Setup(a => a.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())).Returns(Task.FromResult(customersResponseMock));
 
             var customerSlotModelResponse = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
 
@@ -144,6 +142,17 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             slotModels.Add(slotModel);
 
             return slotModels;
+        }
+
+
+        private IEnumerable<string> GetCustomersWithSlots()
+        {
+            List<string> customers = new List<string>();
+            customers.Add(CreatedBy1);
+            customers.Add(CreatedBy2);
+            customers.Add(CreatedBy3);
+
+            return customers;
         }
 
         private CustomerModel GetValidCustomerModelByCustomerId(string customerId)

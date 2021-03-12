@@ -33,20 +33,16 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
         }
 
-        internal static Response<IEnumerable<SlotModel>> CreateDistinctCustomersNearestSlotFromTodayResponse(IEnumerable<SlotEntity> slotEntities)
+        internal static Response<IEnumerable<string>> CreateDistinctCustomersNearestSlotFromTodayResponse(IEnumerable<SlotEntity> slotEntities)
         {
-            List<SlotModel> slotModels = new List<SlotModel>();
-            foreach (var slotEntity in slotEntities)
+            var customers = ModelFactory.CreateCustomersFromSlotModels(slotEntities);
+
+            if (customers.Count == 0)
             {
-                slotModels.Add(new SlotModel() { CreatedBy = slotEntity.CreatedBy });
+                return Response<IEnumerable<string>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
             }
 
-            if (slotModels.Count == 0)
-            {
-                return Response<IEnumerable<SlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
-            }
-
-            return new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            return new Response<IEnumerable<string>>() { Result = customers };
         }
 
 
