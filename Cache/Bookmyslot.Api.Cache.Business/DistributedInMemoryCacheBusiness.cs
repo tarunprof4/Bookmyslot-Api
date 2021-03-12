@@ -27,8 +27,8 @@ namespace Bookmyslot.Api.Cache.Contracts.Interfaces
                 {
                     var compressedBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(invokedResponse.Result));
 
-                    var options = cacheModel.IsSlidingExpiry ? new DistributedCacheEntryOptions().SetSlidingExpiration(cacheModel.ExpiryTimeUtc) :
-                        new DistributedCacheEntryOptions().SetAbsoluteExpiration(cacheModel.ExpiryTimeUtc);
+                    var options = cacheModel.IsSlidingExpiry ? new DistributedCacheEntryOptions().SetSlidingExpiration(cacheModel.ExpiryTime) :
+                        new DistributedCacheEntryOptions().SetAbsoluteExpiration(cacheModel.ExpiryTime);
 
                     await this.distributedCache.SetAsync(cacheModel.Key, compressedBytes, options);
                 }

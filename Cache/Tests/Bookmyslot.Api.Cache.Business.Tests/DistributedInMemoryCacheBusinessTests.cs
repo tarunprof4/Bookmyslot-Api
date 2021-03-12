@@ -71,7 +71,7 @@ namespace Bookmyslot.Api.Cache.Business.Tests
         {
             var cacheModel = new CacheModel();
             cacheModel.Key = KEY;
-            cacheModel.ExpiryTimeUtc = new TimeSpan(0, 0, 20);
+            cacheModel.ExpiryTime = TimeSpan.FromSeconds(20);
             cacheModel.IsSlidingExpiry = false;
             return cacheModel;
         }

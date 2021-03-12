@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.Authentication
         {
             var cacheModel = new CacheModel();
             cacheModel.Key = string.Format(CacheConstants.CustomerInfomationCacheKey, email);
-            cacheModel.ExpiryTimeUtc = new TimeSpan(authenticationConfiguration.TokenExpiryInHours, 0, 0);
+            cacheModel.ExpiryTime = TimeSpan.FromHours(authenticationConfiguration.TokenExpiryInHours);
             return cacheModel;
         }
     }
