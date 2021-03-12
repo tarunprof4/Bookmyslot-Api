@@ -3,15 +3,12 @@ using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

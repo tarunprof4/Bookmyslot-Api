@@ -7,7 +7,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.Tests
