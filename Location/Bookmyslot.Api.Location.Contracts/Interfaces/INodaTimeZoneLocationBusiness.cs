@@ -1,11 +1,9 @@
-﻿using Bookmyslot.Api.Location.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using Bookmyslot.Api.Location.Contracts.Configuration;
 
 namespace Bookmyslot.Api.Location.Interfaces
 {
     public interface INodaTimeZoneLocationBusiness
     {
-        NodaTimeZoneLocation GetNodaTimeZoneLocationInformation();
+        NodaTimeZoneLocationConfiguration GetNodaTimeZoneLocationInformation();
     }
 }

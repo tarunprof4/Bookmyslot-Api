@@ -42,6 +42,7 @@
         public const string SlotScheduleCannotBookOwnSlot = "You cannot book your own slot please";
 
         public const string SlotIdInvalid = "slot id is not valid";
+        
         public const string SlotIdDoesNotExists = "slot does not exists";
 
         public const string CorruptData = "Data is corrupt";
@@ -71,5 +72,8 @@
         public const string IdTokenRequired = "id token is required";
         public const string TokenProviderRequired = "token provider is required";
         public const string InValidTokenProvider = "invalid token provider";
+
+        public const string InValidTimeZone = "invaild timeZone";
+        public const string CustomerAdditionInformationNotFound = "Customer additional information Doesnt Exists";
     }
 }

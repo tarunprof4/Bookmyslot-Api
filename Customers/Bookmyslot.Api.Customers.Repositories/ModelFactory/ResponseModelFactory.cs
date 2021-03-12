@@ -52,6 +52,17 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
 
             return new Response<string>() { Result = registerCustomerEntity.UniqueId };
         }
+
+        internal static Response<CustomerAdditionalInformationModel> CreateCustomerAdditionalInformationModelResponse(CustomerAdditionalInformationEntity customerAdditionalInformationEntity)
+        {
+            if (customerAdditionalInformationEntity == null)
+            {
+                return Response<CustomerAdditionalInformationModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerAdditionInformationNotFound });
+            }
+
+            var customerAdditionalInformationModel = ModelFactory.CreateCustomerAdditionalInformationModel(customerAdditionalInformationEntity);
+            return Response<CustomerAdditionalInformationModel>.Success(customerAdditionalInformationModel);
+        }
     }
 
 }

@@ -1,7 +1,6 @@
-﻿using Bookmyslot.Api.Location.Contracts;
+﻿using Bookmyslot.Api.Location.Contracts.Configuration;
 using Bookmyslot.Api.Location.Interfaces;
 using NodaTime.TimeZones;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +8,7 @@ namespace Bookmyslot.Api.Location.Business
 {
     public class TzdbNodaTimeZoneLocationBusiness : INodaTimeZoneLocationBusiness
     {
-        public NodaTimeZoneLocation GetNodaTimeZoneLocationInformation()
+        public NodaTimeZoneLocationConfiguration GetNodaTimeZoneLocationInformation()
         {
             Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
 
@@ -20,7 +19,7 @@ namespace Bookmyslot.Api.Location.Business
             var countries = zoneWithCountryId.Values.Distinct().ToList();
 
 
-            return new NodaTimeZoneLocation(zoneWithCountryId, countries);
+            return new NodaTimeZoneLocationConfiguration(zoneWithCountryId, countries);
         }
     }
 }

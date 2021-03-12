@@ -5,6 +5,7 @@ using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Injections;
+using Bookmyslot.Api.Location.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -102,6 +103,7 @@ namespace Bookmyslot.Api
             SearchInjection.LoadInjections(services);
             SlotSchedulerInjection.LoadInjections(services);
             HttpFactoryInjections.LoadInjections(services);
+            LocationInjection.LoadInjections(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
@@ -149,6 +151,7 @@ namespace Bookmyslot.Api
             return appConfigurations;
         }
 
+       
         private static void InitializeSerilog(IServiceProvider serviceProvider)
         {
 

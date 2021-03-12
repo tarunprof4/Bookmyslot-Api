@@ -6,6 +6,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
 {
     internal class ModelFactory
     {
+      
         internal static CustomerModel CreateCustomerModel(RegisterCustomerEntity registerCustomerEntity)
         {
             return new CustomerModel()
@@ -37,6 +38,14 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
                 customerModels.Add(CreateCustomerModel(registerCustomerEntity));
             }
             return customerModels;
+        }
+
+        internal static CustomerAdditionalInformationModel CreateCustomerAdditionalInformationModel(CustomerAdditionalInformationEntity customerAdditionalInformationEntity)
+        {
+            return new CustomerAdditionalInformationModel()
+            {
+                TimeZone = customerAdditionalInformationEntity.TimeZone,
+            };
         }
     }
 }
