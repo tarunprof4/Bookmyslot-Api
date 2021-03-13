@@ -16,10 +16,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
 
         private bool isSlotDateValid(ZonedDateTime slotZonedDate)
         {
-            Instant now = SystemClock.Instance.GetCurrentInstant();
-            var utcZoneTime = now.InUtc();
-            Duration timeDifference = utcZoneTime - slotZonedDate;
-            if (timeDifference.TotalMinutes > 0)
+            var utcZoneTime = SystemClock.Instance.GetCurrentInstant().InUtc();
+            Duration timeDifference = slotZonedDate - utcZoneTime;
+            if (timeDifference.TotalHours > 0)
             {
                 return true;
             }

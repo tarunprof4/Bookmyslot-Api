@@ -83,73 +83,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Result, Guid.Empty);
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotTitleRequired));
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotStartDateInvalid));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
 
             slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Never());
         }
 
-        //[Test]
-        //public async Task UpdateSlot_ValidSlotDetails_ReturnsSlotUpdatedSuccessfully()
-        //{
-        //    var slotModel = CreateValidSlotModel();
-        //    Response<bool> slotModelUpdateResponseMock = new Response<bool>() { Result = true };
-        //    slotRepositoryMock.Setup(a => a.UpdateSlot(slotModel)).Returns(Task.FromResult(slotModelUpdateResponseMock));
-        //    Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { Result = slotModel };
-        //    slotRepositoryMock.Setup(a => a.GetSlot(slotModel.Id)).Returns(Task.FromResult(slotModelGetResponseMock));
-
-        //    var slotModelResponse = await this.slotBusiness.UpdateSlot(slotModel);
-
-        //    Assert.AreEqual(slotModelUpdateResponseMock.ResultType, ResultType.Success);
-
-        //    slotRepositoryMock.Verify((m => m.UpdateSlot(slotModel)), Times.Once());
-        //    slotRepositoryMock.Verify((m => m.GetSlot(slotModel.Id)), Times.Once());
-        //}
-
-
-        //[Test]
-        //public async Task UpdateSlot_SlotDetailsMissing_ReturnsSlotValidationResponse()
-        //{
-        //    var slotModelResponse = await this.slotBusiness.UpdateSlot(null);
-
-        //    Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-        //    Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotDetailsMissing));
-
-        //    slotRepositoryMock.Verify((m => m.UpdateSlot(null)), Times.Never());
-        //    slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
-        //}
-
-        //[Test]
-        //public async Task UpdateSlot_InValidSlotDetails_ReturnsSlotCreatedValidationResponse()
-        //{
-        //    var slotModel = new SlotModel();
-
-        //    var slotModelResponse = await this.slotBusiness.UpdateSlot(slotModel);
-
-        //    Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-        //    Assert.AreEqual(slotModelResponse.Result, false);
-        //    Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.UserIdMissing));
-        //    Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotStartDateInvalid));
-
-        //    slotRepositoryMock.Verify((m => m.UpdateSlot(null)), Times.Never());
-        //    slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
-        //}
-
-        //[Test]
-        //public async Task UpdateSlot_SlotDoesntExists_ReturnsSlotNotFoundResponse()
-        //{
-        //    var slotModel = CreateValidSlotModel();
-        //    Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { ResultType = ResultType.Empty };
-        //    slotRepositoryMock.Setup(a => a.GetSlot(It.IsAny<Guid>())).Returns(Task.FromResult(slotModelGetResponseMock));
-
-        //    var slotModelResponse = await this.slotBusiness.UpdateSlot(slotModel);
-
-        //    Assert.AreEqual(slotModelResponse.ResultType, ResultType.Empty);
-        //    Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessages.SlotIdDoesNotExists));
-        //    slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<Guid>())), Times.Once());
-        //    slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<SlotModel>())), Times.Never());
-        //}
 
         [Test]
         public async Task CancelSlot_CancelledByCreatedBy_ReturnsSlotDeletedSuccessfully()
