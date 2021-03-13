@@ -9,7 +9,7 @@ using NUnit.Framework;
 using System;
 namespace Bookmyslot.Api.Injections.Tests
 {
-    public class CustomerAdditionalInformationControllerTests
+    public class CustomerSettingsControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -25,12 +25,12 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var customerAdditionalInformationBusiness = serviceProvider.GetService<ICustomerSettingsBusiness>();
+            var customerSettingsBusiness = serviceProvider.GetService<ICustomerSettingsBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
 
-            var controller = new CustomerSettingsController(customerAdditionalInformationBusiness,  currentUser);
+            var controller = new CustomerSettingsController(customerSettingsBusiness,  currentUser);
 
-            Assert.IsNotNull(customerAdditionalInformationBusiness);
+            Assert.IsNotNull(customerSettingsBusiness);
             Assert.IsNotNull(controller);
         }
     }
