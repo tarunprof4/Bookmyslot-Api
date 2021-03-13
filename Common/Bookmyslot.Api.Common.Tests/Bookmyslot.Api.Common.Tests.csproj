@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Common.Email\Bookmyslot.Api.Common.Email.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.Common\Bookmyslot.Api.Common.csproj" />
   </ItemGroup>
 
 </Project>
