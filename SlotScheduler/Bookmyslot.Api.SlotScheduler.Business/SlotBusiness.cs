@@ -1,7 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.ExtensionMethods;
-using Bookmyslot.Api.Common.Contracts.Helpers;
 using Bookmyslot.Api.SlotScheduler.Business.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -29,17 +27,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             slotModel.Title = slotModel.Title.Trim();
             slotModel.BookedBy = string.Empty;
         }
-        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel, string slotDateString, string createdBy)
+        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel, string createdBy)
         {
             slotModel.CreatedBy = createdBy;
 
-            var currentDate = DateTime.UtcNow;
-            var slotDate = DateTimeHelper.ConvertDateStringToDate(slotDateString);
-            var slotDateWithTimeZone = slotDate.GetDateTimeByTimeZone(slotModel.TimeZone, slotModel.SlotStartTime);
-            slotModel.SlotDateUtc = slotDateWithTimeZone.GetDateTimeToUtcByTimeZone(slotModel.TimeZone);
-            slotModel.SlotDate = slotModel.SlotDateUtc.GetDateTimeFromUtcToTimeZone(slotModel.TimeZone).ToString(DateTimeConstants.ApplicationOutputDatePattern);
-
-            var validator = new SlotValidator(currentDate);
+            var validator = new SlotModelValidator();
             ValidationResult results = validator.Validate(slotModel);
 
             if (results.IsValid)
@@ -94,9 +86,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 CreatedBy = slotModel.CreatedBy,
                 CancelledBy = cancelledBy,
                 BookedBy = slotModel.BookedBy,
-                TimeZone = slotModel.TimeZone,
-                SlotDate = slotModel.SlotDate,
-                SlotDateUtc = slotModel.SlotDateUtc,
+                SlotZonedDate = slotModel.SlotZonedDate,
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime
             };

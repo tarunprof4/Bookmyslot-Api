@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NodaTime;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -19,25 +20,13 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 
         public string BookedBy { get; set; }
 
-        [DefaultValue("India Standard Time")]
-        [Required]
-        public string TimeZone { get; set; }
-
-        [Required]
-        public string SlotDate { get; set; }
-
-
-        [JsonIgnore]
-        public DateTime SlotDateUtc { get; set; }
+      
+        public ZonedDateTime SlotZonedDate { get; set; }
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]
-        [DefaultValue("10:00:00")]
-        [Required]
         public TimeSpan SlotStartTime { get; set; }
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]
-        [DefaultValue("11:00:00")]
-        [Required]
         public TimeSpan SlotEndTime { get; set; }
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]

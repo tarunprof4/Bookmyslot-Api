@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bookmyslot.Api.Common.Contracts.ExtensionMethods
+namespace Bookmyslot.Api.Common.ExtensionMethods
 {
     public static class DateTimeExtensions
     {
@@ -22,5 +22,6 @@ namespace Bookmyslot.Api.Common.Contracts.ExtensionMethods
             return TimeZoneInfo.ConvertTime(newDate, TimeZoneInfo.Utc, TimeZoneInfo.FindSystemTimeZoneById(timeZome));
         }
 
+      
     }
 }

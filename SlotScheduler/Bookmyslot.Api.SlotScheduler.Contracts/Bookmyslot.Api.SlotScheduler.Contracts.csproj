@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Contracts\Bookmyslot.Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.NodaTime\Bookmyslot.Api.Common.NodaTime.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Contracts\Bookmyslot.Api.Customers.Contracts.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -39,8 +40,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task ScheduleSlot_SlotDateOlderThanCurrentDate_ReturnsValidationResponse()
         {
             var slotModel = CreateValidSlotModel();
-            slotModel.SlotDate = OlderSlotDate;
-            slotModel.SlotDateUtc = OlderSlotDateUtc;
+            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
 
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
 
@@ -54,8 +54,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task ScheduleSlot_CustomerBookingOwnSlot_ReturnsValidationResponse()
         {
             var slotModel = CreateValidSlotModel();
-            slotModel.SlotDate = OlderSlotDate;
-            slotModel.SlotDateUtc = OlderSlotDateUtc;
+            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
             slotModel.BookedBy = CreatedBy;
 
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
@@ -81,9 +80,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var slotModel = new SlotModel();
             slotModel.Id = SlotId;
-            slotModel.SlotDate = ValidSlotDate;
-            slotModel.SlotDateUtc = ValidSlotDateUtc;
-            slotModel.TimeZone = TimeZoneConstants.IndianTimezone;
+            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDateUtc, TimeZoneConstants.IndianTimezone);
             slotModel.Title = Title;
             slotModel.CreatedBy = CreatedBy;
             slotModel.SlotStartTime = ValidSlotStartTime;
@@ -92,11 +89,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             return slotModel;
         }
 
-        private SlotModel CreateDefaultSlotModel()
-        {
-            var slotModel = new SlotModel();
-            slotModel.TimeZone = TimeZoneConstants.IndianTimezone;
-            return slotModel;
-        }
+      
     }
 }

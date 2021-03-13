@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.SlotScheduler.Contracts;
+﻿using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 Title = slotEntity.Title,
                 CreatedBy = slotEntity.CreatedBy,
                 BookedBy = slotEntity.BookedBy,
-                TimeZone = slotEntity.TimeZone,
-                SlotDateUtc = DateTime.SpecifyKind(slotEntity.SlotDateUtc, DateTimeKind.Utc),
-                SlotDate = slotEntity.SlotDate,
+                SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(slotEntity.SlotDateUtc, slotEntity.TimeZone),
                 SlotStartTime = slotEntity.SlotStartTime,
                 SlotEndTime = slotEntity.SlotEndTime,
                 CreatedDateUtc = DateTime.SpecifyKind(slotEntity.CreatedDateUtc, DateTimeKind.Utc)
@@ -57,10 +56,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CreatedBy = cancelledSlotEntity.CreatedBy,
                 CancelledBy = cancelledSlotEntity.CancelledBy,
                 BookedBy = cancelledSlotEntity.BookedBy,
-                TimeZone = cancelledSlotEntity.TimeZone,
-                SlotDateUtc = DateTime.SpecifyKind(cancelledSlotEntity.SlotDateUtc, DateTimeKind.Utc),
-                
-                SlotDate = cancelledSlotEntity.SlotDate,
+                SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(cancelledSlotEntity.SlotDateUtc, cancelledSlotEntity.TimeZone),
                 SlotStartTime = cancelledSlotEntity.SlotStartTime,
                 SlotEndTime = cancelledSlotEntity.SlotEndTime,
             };

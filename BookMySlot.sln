@@ -101,9 +101,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Authenticati
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Location", "Location", "{5F9167B0-5484-4A43-9B84-36CD91E18EF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Location.Contracts", "Location\Bookmyslot.Api.Location.Contracts\Bookmyslot.Api.Location.Contracts.csproj", "{B57AA492-624B-450D-9E5B-F3EAACBE5C97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Location.Contracts", "Location\Bookmyslot.Api.Location.Contracts\Bookmyslot.Api.Location.Contracts.csproj", "{B57AA492-624B-450D-9E5B-F3EAACBE5C97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Location.Business", "Location\Bookmyslot.Api.Location.Business\Bookmyslot.Api.Location.Business.csproj", "{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Location.Business", "Location\Bookmyslot.Api.Location.Business\Bookmyslot.Api.Location.Business.csproj", "{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Common.NodaTime", "Common\Bookmyslot.Api.Common.NodaTime\Bookmyslot.Api.Common.NodaTime.csproj", "{61BC68EC-8B63-44C7-A00F-E53391C78FB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -259,6 +261,10 @@ Global
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -307,6 +313,7 @@ Global
 		{870122E8-C941-4C20-8B57-C8B96267250A} = {862ED9A0-B7E1-44EE-A3A6-7DD4DF897E57}
 		{B57AA492-624B-450D-9E5B-F3EAACBE5C97} = {5F9167B0-5484-4A43-9B84-36CD91E18EF7}
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F} = {5F9167B0-5484-4A43-9B84-36CD91E18EF7}
+		{61BC68EC-8B63-44C7-A00F-E53391C78FB6} = {32F67FBB-22DF-46DC-89F3-84121457B5D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}

@@ -3,7 +3,6 @@ using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -98,21 +97,7 @@ namespace Bookmyslot.Api.Controllers
             return this.Ok(await Task.FromResult(configurations));
         }
 
-        private SlotModel GetDefaultSlotModel()
-        {
-            var slotModel = new SlotModel();
-            slotModel.Id = Guid.NewGuid();
-            slotModel.Title = "Title";
-            slotModel.CreatedBy = "CreatedBy";
-            slotModel.BookedBy = "BookedBy";
-            slotModel.TimeZone = "TimeZone";
-            slotModel.SlotDate = "2012-2-2";
-            slotModel.SlotDateUtc = DateTime.UtcNow;
-            slotModel.SlotStartTime = new TimeSpan(10, 10, 10);
-            slotModel.SlotEndTime = new TimeSpan(11, 11, 11);
-
-            return slotModel;
-        }
+     
     }
 
 

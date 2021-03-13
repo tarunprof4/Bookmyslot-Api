@@ -1,5 +1,6 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -19,8 +20,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private const string CreatedBy = "CreatedBy";
         private const string BookedBy = "BookedBy";
         private const string deletedBy = "deletedBy";
-        private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationInputDatePattern);
-        private readonly string InValidSlotDate = DateTime.UtcNow.AddDays(-2).ToString(DateTimeConstants.ApplicationInputDatePattern);
+        private readonly DateTime ValidSlotDate = DateTime.UtcNow.AddDays(2);
+        private readonly DateTime InValidSlotDate = DateTime.UtcNow.AddDays(-2);
         private readonly TimeSpan ValidSlotStartTime = new TimeSpan(0, 0, 0);
         private readonly TimeSpan ValidSlotEndTime = new TimeSpan(0, SlotConstants.MinimumSlotDuration, 0);
 
@@ -62,7 +63,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<Guid> slotModelResponseMock = new Response<Guid>() { Result = slotModel.Id };
             slotRepositoryMock.Setup(a => a.CreateSlot(slotModel)).Returns(Task.FromResult(slotModelResponseMock));
 
-            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel,slotModel.SlotDate, slotModel.CreatedBy);
+            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelResponseMock.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelResponseMock.Result, SlotId);
@@ -78,11 +79,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<Guid> slotModelResponseMock = new Response<Guid>() { Result = slotModel.Id };
             slotRepositoryMock.Setup(a => a.CreateSlot(slotModel)).Returns(Task.FromResult(slotModelResponseMock));
 
-            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel,slotModel.SlotDate, slotModel.CreatedBy);
+            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Result, Guid.Empty);
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotTitleMissing));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotTitleRequired));
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotStartDateInvalid));
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
 
@@ -236,8 +237,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var slotModel = new SlotModel();
             slotModel.Id = SlotId;
-            slotModel.SlotDate = ValidSlotDate;
-            slotModel.TimeZone = TimeZoneConstants.IndianTimezone;
+            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDate, TimeZoneConstants.IndianTimezone);
             slotModel.Title = Title;
             slotModel.CreatedBy = CreatedBy;
             slotModel.SlotStartTime = ValidSlotStartTime;
@@ -257,8 +257,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private SlotModel CreateInvalidSlotModel()
         {
             var slotModel = new SlotModel();
-            slotModel.SlotDate = InValidSlotDate;
-            slotModel.TimeZone = TimeZoneConstants.IndianTimezone;
+            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(InValidSlotDate, TimeZoneConstants.IndianTimezone);
             return slotModel;
         }
     }

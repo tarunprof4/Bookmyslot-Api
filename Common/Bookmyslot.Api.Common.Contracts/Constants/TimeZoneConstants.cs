@@ -2,6 +2,6 @@
 {
     public class TimeZoneConstants
     {
-        public const string IndianTimezone = "India Standard Time";
+        public const string IndianTimezone = "Asia/Kolkata";
     }
 }

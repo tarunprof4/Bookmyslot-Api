@@ -1,12 +1,12 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Email.Interfaces;
+using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Emails;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
         public async Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo)
         {
-            var pendingTimeForSlotMeeting = DateTime.UtcNow - slotModel.SlotDateUtc;
+            var pendingTimeForSlotMeeting = NodaTimeHelper.GetCurrentUtcZonedDateTime() - slotModel.SlotZonedDate;
             if (pendingTimeForSlotMeeting.TotalDays <= SlotConstants.MinimumDaysForSlotMeetingLink)
             {
                 var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);

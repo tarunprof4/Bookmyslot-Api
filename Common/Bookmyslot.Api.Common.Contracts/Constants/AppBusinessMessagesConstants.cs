@@ -32,14 +32,17 @@
       
         public const string NoRecordsFound = "no records found";
 
-        public const string SlotTitleMissing = "slot title is missing";
+        public const string SlotTitleRequired = "slot title is required";
         public const string UserIdMissing = "user id is missing";
         public const string SlotDetailsMissing = "slot details missing";
-        public const string TimeZoneMissing = "time zone missing";
+        public const string TimeZoneRequired = "time zone is required";
+        public const string SlotDateRequired = "slot date is required";
+        public const string InValidSlotDate = "invaild slot date";
         public const string SlotStartDateInvalid = "slot start date cannot be less than todays date";
         public const string SlotEndTimeInvalid = "slot end time  cannot be less than slot start time";
         public const string SlotScheduleDateInvalid = "slot cannot be booked for past date";
         public const string SlotScheduleCannotBookOwnSlot = "You cannot book your own slot please";
+        
 
         public const string SlotIdInvalid = "slot id is not valid";
         
@@ -74,6 +77,7 @@
         public const string InValidTokenProvider = "invalid token provider";
 
         public const string InValidTimeZone = "invaild timeZone";
+        
         public const string CustomerSettingsNotFound = "Customer settings information Doesnt Exists";
     }
 }
