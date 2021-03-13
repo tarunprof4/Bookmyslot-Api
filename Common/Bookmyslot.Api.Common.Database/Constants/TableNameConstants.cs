@@ -7,6 +7,6 @@
         public const string CancelledSlot = "CancelledSlot";
         public const string Cache = "Cache";
 
-        public const string CustomerAdditionalInformation = "CustomerAdditionalInformation";
+        public const string CustomerSettings = "CustomerSettings";
     }
 }

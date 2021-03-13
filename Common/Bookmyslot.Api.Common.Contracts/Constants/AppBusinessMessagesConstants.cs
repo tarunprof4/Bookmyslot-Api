@@ -74,6 +74,6 @@
         public const string InValidTokenProvider = "invalid token provider";
 
         public const string InValidTimeZone = "invaild timeZone";
-        public const string CustomerAdditionInformationNotFound = "Customer additional information Doesnt Exists";
+        public const string CustomerSettingsNotFound = "Customer settings information Doesnt Exists";
     }
 }

@@ -4,8 +4,8 @@ using System;
 
 namespace Bookmyslot.Api.Customers.Repositories.Enitites
 {
-    [Table(TableNameConstants.CustomerAdditionalInformation)]
-    public class CustomerAdditionalInformationEntity
+    [Table(TableNameConstants.CustomerSettings)]
+    public class CustomerSettingsEntity
     {
         public string CustomerId { get; set; }
 

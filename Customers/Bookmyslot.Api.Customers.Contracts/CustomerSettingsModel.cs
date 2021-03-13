@@ -1,6 +1,6 @@
 ﻿namespace Bookmyslot.Api.Customers.Contracts
 {
-    public class CustomerAdditionalInformationModel
+    public class CustomerSettingsModel
     {
         public string TimeZone { get; set; }
     }

@@ -19,14 +19,14 @@ namespace Bookmyslot.Api.Customers.Repositories.Queries
 
         public const string GetProfileSettingsByCustomerIdQuery = @"select Email, FirstName, LastName, Gender from" + " " + TableNameConstants.RegisterCustomer + " " + "where UniqueId=@customerId";
 
-        public const string GetCustomerAdditionInformationQuery = @"select timeZone from" + " " + TableNameConstants.CustomerAdditionalInformation + " " + "where CustomerId=@customerId";
+        public const string GetCustomerSettingsQuery = @"select timeZone from" + " " + TableNameConstants.CustomerSettings + " " + "where CustomerId=@customerId";
 
 
-        public const string InsertOrUpdateCustomerAdditionInformationQuery =
-            @"UPDATE" + " " + TableNameConstants.CustomerAdditionalInformation + " " + @"set TimeZone=@timeZone, ModifiedDateUtc=@ModifiedDateUtc where CustomerId=@customerId
+        public const string InsertOrUpdateCustomerSettingsQuery =
+            @"UPDATE" + " " + TableNameConstants.CustomerSettings + " " + @"set TimeZone=@timeZone, ModifiedDateUtc=@ModifiedDateUtc where CustomerId=@customerId
             IF @@ROWCOUNT=0
             BEGIN
-            INSERT INTO CustomerAdditionalInformation(TimeZone,ModifiedDateUtc, CustomerId )
+            INSERT INTO" + " " + TableNameConstants.CustomerSettings + " " + @"(TimeZone,ModifiedDateUtc, CustomerId)
             VALUES
             (@timeZone, @ModifiedDateUtc, @customerId)
             END";

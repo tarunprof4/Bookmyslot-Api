@@ -40,11 +40,11 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
             return customerModels;
         }
 
-        internal static CustomerAdditionalInformationModel CreateCustomerAdditionalInformationModel(CustomerAdditionalInformationEntity customerAdditionalInformationEntity)
+        internal static CustomerSettingsModel CreateCustomerSettingsModel(CustomerSettingsEntity customerSettingsEntity)
         {
-            return new CustomerAdditionalInformationModel()
+            return new CustomerSettingsModel()
             {
-                TimeZone = customerAdditionalInformationEntity.TimeZone,
+                TimeZone = customerSettingsEntity.TimeZone,
             };
         }
     }

@@ -25,10 +25,10 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var customerAdditionalInformationBusiness = serviceProvider.GetService<ICustomerAdditionalInformationBusiness>();
+            var customerAdditionalInformationBusiness = serviceProvider.GetService<ICustomerSettingsBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
 
-            var controller = new CustomerAdditionalInformationController(customerAdditionalInformationBusiness,  currentUser);
+            var controller = new CustomerSettingsController(customerAdditionalInformationBusiness,  currentUser);
 
             Assert.IsNotNull(customerAdditionalInformationBusiness);
             Assert.IsNotNull(controller);
