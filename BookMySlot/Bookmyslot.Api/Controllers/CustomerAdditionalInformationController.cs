@@ -53,7 +53,7 @@ namespace Bookmyslot.Api.Controllers
 
 
         /// <summary>
-        /// Update existing customer additional details
+        /// insert or Update existing customer additional details
         /// </summary>
         /// <param name="customerAdditionalInformationModel">customerAdditionalInformation model</param>
         /// <returns>success or failure bool</returns>

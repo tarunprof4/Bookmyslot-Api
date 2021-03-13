@@ -5,7 +5,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Queries
 
     public class CustomerTableQueries
     {
-        public const string UpdateProfileSettingQuery = @"UPDATE"+ " "+ TableNameConstants.RegisterCustomer + " " + @"SET 
+        public const string UpdateProfileSettingQuery = @"UPDATE" + " " + TableNameConstants.RegisterCustomer + " " + @"SET 
  FirstName = @FirstName,  LastName = @LastName, Gender=@Gender, ModifiedDateUtc =@ModifiedDateUtc
  WHERE UniqueId=@customerId";
 
@@ -21,10 +21,15 @@ namespace Bookmyslot.Api.Customers.Repositories.Queries
 
         public const string GetCustomerAdditionInformationQuery = @"select timeZone from" + " " + TableNameConstants.CustomerAdditionalInformation + " " + "where CustomerId=@customerId";
 
-        public const string InsertOrUpdateCustomerAdditionInformationQuery = @"UPDATE" + " " + TableNameConstants.CustomerAdditionalInformation + " " + @"SET 
-  TimeZone = @timeZone, ModifiedDateUtc =@ModifiedDateUtc
-  WHERE CustomerId=@customerId";
 
+        public const string InsertOrUpdateCustomerAdditionInformationQuery =
+            @"UPDATE" + " " + TableNameConstants.CustomerAdditionalInformation + " " + @"set TimeZone=@timeZone, ModifiedDateUtc=@ModifiedDateUtc where CustomerId=@customerId
+            IF @@ROWCOUNT=0
+            BEGIN
+            INSERT INTO CustomerAdditionalInformation(TimeZone,ModifiedDateUtc, CustomerId )
+            VALUES
+            (@timeZone, @ModifiedDateUtc, @customerId)
+            END";
 
     }
 }
