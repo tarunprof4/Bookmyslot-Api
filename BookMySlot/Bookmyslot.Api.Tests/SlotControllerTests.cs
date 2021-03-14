@@ -11,6 +11,7 @@ using Bookmyslot.Api.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
 {
-    public class Tests
+    public class SlotControllerTests
     {
         private const string CustomerId = "CustomerId";
         private const string ValidSlotTitle = "SlotTitle";
@@ -112,10 +113,49 @@ namespace Bookmyslot.Api.Tests
             slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Once());
         }
 
+
+        [Test]
+        public async Task CancelSlot_InValidSlotKey_ReturnsValidationResponse()
+        {
+            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
+
+            var postResponse = await slotController.CancelSlot(new CancelSlot());
+
+            var objectResult = postResponse as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
+            keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Never());
+        }
+
+
+        [Test]
+        public async Task CancelSlot_ValidSlotKey_ReturnsSuccessResponse()
+        {
+            var cancelSlot = new CancelSlot();
+            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlot));
+            Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
+            slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
+
+            var postResponse = await slotController.CancelSlot(cancelSlot);
+
+            var objectResult = postResponse as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
+            keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Once());
+        }
+
+
         private SlotViewModel DefaultEmptySlotViewModel()
         {
             return new SlotViewModel();
         }
+
+
 
         private SlotViewModel DefaultInValidSlotViewModel()
         {
@@ -141,6 +181,8 @@ namespace Bookmyslot.Api.Tests
             var countries = zoneWithCountryId.Values.Distinct().ToList();
             return new NodaTimeZoneLocationConfiguration(zoneWithCountryId, countries);
         }
+
+       
 
     }
 }

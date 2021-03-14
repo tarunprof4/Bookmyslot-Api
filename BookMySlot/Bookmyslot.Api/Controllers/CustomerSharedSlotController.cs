@@ -69,7 +69,6 @@ namespace Bookmyslot.Api.Controllers
         /// <response code="500">internal server error</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerSharedSlot/GetCustomerBookedSlots")]
         [HttpGet()]
