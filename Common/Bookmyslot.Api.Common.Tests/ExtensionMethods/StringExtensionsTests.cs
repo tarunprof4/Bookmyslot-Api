@@ -22,8 +22,8 @@ namespace Bookmyslot.Api.Common.Tests.ExtensionMethods
             Assert.IsTrue(isDateValid);
         }
 
-
-        [TestCase("13-01-2000")]
+        [TestCase("1-13-2000")]
+        [TestCase("13-1-2000")]
         [TestCase("13-12-2000")]
         public void IsDateValid_InValidDateToCheck_ReturnsFalseResponse(string dateString)
         {
