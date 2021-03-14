@@ -25,13 +25,7 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<bool>> UpdateCustomerSettings(string customerId, CustomerSettingsModel customerSettingsModel)
         {
-            var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
-            if (nodaTimeZoneLocationConfiguration.ZoneWithCountryId.ContainsKey(customerSettingsModel.TimeZone))
-            {
-                return await this.customerAdditionalInformationRepository.UpdateCustomerSettings(customerId, customerSettingsModel);
-            }
-
-            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidTimeZone });
+            return await this.customerAdditionalInformationRepository.UpdateCustomerSettings(customerId, customerSettingsModel);
         }
     }
 }

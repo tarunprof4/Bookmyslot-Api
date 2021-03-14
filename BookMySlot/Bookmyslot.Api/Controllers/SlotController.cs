@@ -60,18 +60,17 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("CreateSlot")]
         public async Task<IActionResult> Post([FromBody] SlotViewModel slotViewModel)
         {
-            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
-
             var validator = new SlotViewModelValidator(this.nodaTimeZoneLocationBusiness);
             ValidationResult results = validator.Validate(slotViewModel);
 
             if (results.IsValid)
             {
+                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                var customerId = currentUserResponse.Result;
+
                 var slotResponse = await slotBusiness.CreateSlot(CreateSlotModel(slotViewModel), customerId);
                 return this.CreatePostHttpResponse(slotResponse);
             }
-
             var validationResponse =  Response<Guid>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePostHttpResponse(validationResponse);
         }

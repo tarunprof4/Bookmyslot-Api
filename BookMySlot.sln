@@ -107,7 +107,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Location.Bus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Common.NodaTime", "Common\Bookmyslot.Api.Common.NodaTime\Bookmyslot.Api.Common.NodaTime.csproj", "{61BC68EC-8B63-44C7-A00F-E53391C78FB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Tests", "BookMySlot\Bookmyslot.Api.Tests\Bookmyslot.Api.Tests.csproj", "{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Tests", "BookMySlot\Bookmyslot.Api.Tests\Bookmyslot.Api.Tests.csproj", "{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Customers.ViewModels", "Customers\Bookmyslot.Api.Customers.ViewModels\Bookmyslot.Api.Customers.ViewModels.csproj", "{D24651F0-F765-4F31-A624-616C97D5BA39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +273,10 @@ Global
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D24651F0-F765-4F31-A624-616C97D5BA39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D24651F0-F765-4F31-A624-616C97D5BA39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D24651F0-F765-4F31-A624-616C97D5BA39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D24651F0-F765-4F31-A624-616C97D5BA39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -321,6 +327,7 @@ Global
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F} = {5F9167B0-5484-4A43-9B84-36CD91E18EF7}
 		{61BC68EC-8B63-44C7-A00F-E53391C78FB6} = {32F67FBB-22DF-46DC-89F3-84121457B5D7}
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87} = {E49C57E8-84BA-4EBC-9295-D327F1FC9CA9}
+		{D24651F0-F765-4F31-A624-616C97D5BA39} = {CE9B1978-0B2F-483D-8FD9-48D7043D1606}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}
