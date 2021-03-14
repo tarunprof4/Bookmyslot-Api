@@ -8,7 +8,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
     public class SlotModel
     {
-        [DefaultValue("00000000-0000-0000-0000-000000000000")]
         public Guid Id { get; set; }
         
         public string Title { get; set; }
