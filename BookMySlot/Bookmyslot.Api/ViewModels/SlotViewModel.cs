@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bookmyslot.Api.SlotScheduler.Contracts.ViewModels
+namespace Bookmyslot.Api.ViewModels
 {
     public class SlotViewModel
     {

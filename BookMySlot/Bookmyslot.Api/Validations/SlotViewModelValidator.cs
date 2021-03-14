@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.ExtensionMethods;
 using Bookmyslot.Api.Location.Interfaces;
-using Bookmyslot.Api.SlotScheduler.Contracts.ViewModels;
+using Bookmyslot.Api.ViewModels;
 using FluentValidation;
 using FluentValidation.Results;
 

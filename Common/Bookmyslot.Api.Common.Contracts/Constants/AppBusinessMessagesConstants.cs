@@ -3,7 +3,6 @@
     public class AppBusinessMessagesConstants
     {
         public const string ApplicationName = "BookMySlot";
-        public const string CustomerDetailsMissing = "Customer details missing";
         public const string RegisterCustomerDetailsMissing = "Customer Registration details missing";
         public const string ProfileSettingDetailsMissing = "Profile Settings details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
@@ -23,7 +22,6 @@
         public const string BioHeadLineNotValid = "Bio headline is not valid";
 
 
-        public const string EmailIdMissing = "Email id is missing";
         public const string EmailIdNotValid = "Email id is not valid";
         public const string CustomerIdNotValid = "Customer id is not valid";
         public const string EmailIdExists = "Email id exists";
@@ -33,7 +31,6 @@
         public const string NoRecordsFound = "no records found";
 
         public const string SlotTitleRequired = "slot title is required";
-        public const string UserIdMissing = "user id is missing";
         public const string SlotDetailsMissing = "slot details missing";
         public const string TimeZoneRequired = "time zone is required";
         public const string SlotDateRequired = "slot date is required";

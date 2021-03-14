@@ -7,7 +7,7 @@ using Bookmyslot.Api.Location.Contracts.Configuration;
 using Bookmyslot.Api.Location.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
-using Bookmyslot.Api.SlotScheduler.Contracts.ViewModels;
+using Bookmyslot.Api.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
