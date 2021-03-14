@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using System;
+﻿using System;
 using System.Globalization;
 
 namespace Bookmyslot.Api.Common.ExtensionMethods

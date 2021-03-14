@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using NodaTime;
+﻿using NodaTime;
 using NodaTime.Text;
 using System;
 using System.Globalization;
