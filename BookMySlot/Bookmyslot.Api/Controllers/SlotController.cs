@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Create new slot for the user
         /// </summary>
-        /// <param name="slotViewModel">slot model</param>
+        /// <param name="slotViewModel">slot view model</param>
         /// <returns >returns email id of created slot</returns>
         /// <response code="201">Returns slot id of created slot</response>
         /// <response code="400">validation error bad request</response>

@@ -3,6 +3,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using FluentValidation;
 using NodaTime;
+using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.Validations
 {
@@ -11,7 +12,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
         public SlotModelValidator()
         {
             RuleFor(x => x.SlotZonedDate).Cascade(CascadeMode.Stop).Must(isSlotDateValid).WithMessage(AppBusinessMessagesConstants.InValidSlotDate);
-            RuleFor(x => x.SlotEndTime.TotalMinutes).Cascade(CascadeMode.Stop).GreaterThanOrEqualTo(x => x.SlotStartTime.TotalMinutes + SlotConstants.MinimumSlotDuration).WithMessage(AppBusinessMessagesConstants.SlotEndTimeInvalid);
+            RuleFor(x => x).Cascade(CascadeMode.Stop).Must(isSlotEndTimeValid).WithMessage(AppBusinessMessagesConstants.SlotEndTimeInvalid);
+            RuleFor(x => x.SlotDuration).Cascade(CascadeMode.Stop).Must(isSlotDurationValid).WithMessage(AppBusinessMessagesConstants.SlotDurationInvalid);
         }
 
         private bool isSlotDateValid(ZonedDateTime slotZonedDate)
@@ -24,6 +26,24 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
             }
             return false;
         }
-     
+
+        private bool isSlotEndTimeValid(SlotModel slotModel)
+        {
+            if (slotModel.SlotEndTime > slotModel.SlotStartTime)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool isSlotDurationValid(TimeSpan slotDuration)
+        {
+            if (slotDuration.TotalMinutes >= SlotConstants.MinimumSlotDuration)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Common.Helpers
 
         public static ZonedDateTime ConvertUtcDateTimeToZonedDateTime(DateTime utcDateTime, string timeZone)
         {
-            var nodaUtcTime = Instant.FromDateTimeUtc(DateTime.SpecifyKind(utcDateTime, DateTimeKind.Utc));
+            var nodaUtcTime = Instant.FromDateTimeUtc(utcDateTime);
             var dateTimeZone = DateTimeZoneProviders.Tzdb[timeZone];
             var zoneDateTime = nodaUtcTime.InZone(dateTimeZone);
             return zoneDateTime;

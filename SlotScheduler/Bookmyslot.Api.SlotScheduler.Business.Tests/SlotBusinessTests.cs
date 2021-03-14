@@ -85,6 +85,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(slotModelResponse.Result, Guid.Empty);
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotDurationInvalid));
+
 
             slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Never());
         }
@@ -197,6 +199,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var slotModel = new SlotModel();
             slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(InValidSlotDate, TimeZoneConstants.IndianTimezone);
+            slotModel.SlotStartTime = new TimeSpan(23, 0, 0);
             return slotModel;
         }
     }

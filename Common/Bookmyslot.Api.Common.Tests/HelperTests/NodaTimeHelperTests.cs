@@ -16,8 +16,8 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         }
 
         [TestCase("01-01-2000", TimeZoneConstants.IndianTimezone)]
-        [TestCase("31-03-2021", TimeZoneConstants.LondonTimezone)]
-        [TestCase("31-12-2020", TimeZoneConstants.LondonTimezone)]
+        [TestCase("03-31-2021", TimeZoneConstants.LondonTimezone)]
+        [TestCase("12-31-2020", TimeZoneConstants.LondonTimezone)]
         public void ConvertLocalDateTimeToZonedDateTime_PassedTimeZone_ReturnsRespectiveZonedDateTime(string dateString, string timeZone)
         {
             var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, new TimeSpan());
