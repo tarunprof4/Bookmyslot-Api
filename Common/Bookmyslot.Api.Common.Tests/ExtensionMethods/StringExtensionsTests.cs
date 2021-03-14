@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.ExtensionMethods;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.ExtensionMethods;
 using NUnit.Framework;
 
 namespace Bookmyslot.Api.Common.Tests.ExtensionMethods
@@ -18,7 +19,7 @@ namespace Bookmyslot.Api.Common.Tests.ExtensionMethods
         [TestCase("11-13-2000")]
         public void IsDateValid_ValidDateToCheck_ReturnsTrueResponse(string dateString)
         {
-            var isDateValid = dateString.isDateValid();
+            var isDateValid = dateString.isDateValid(DateTimeConstants.ApplicationInputDatePattern);
             Assert.IsTrue(isDateValid);
         }
 
@@ -27,7 +28,7 @@ namespace Bookmyslot.Api.Common.Tests.ExtensionMethods
         [TestCase("13-12-2000")]
         public void IsDateValid_InValidDateToCheck_ReturnsFalseResponse(string dateString)
         {
-            var isDateValid = dateString.isDateValid();
+            var isDateValid = dateString.isDateValid(DateTimeConstants.ApplicationInputDatePattern);
             Assert.IsFalse(isDateValid);
         }
 

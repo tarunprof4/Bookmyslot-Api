@@ -44,7 +44,7 @@ namespace Bookmyslot.Api.Validations
 
         private bool isSlotDateValid(string slotDate)
         {
-            return slotDate.isDateValid();
+            return slotDate.isDateValid(DateTimeConstants.ApplicationInputDatePattern);
         }
 
     }

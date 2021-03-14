@@ -1,23 +1,28 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using NodaTime;
+using NodaTime.Text;
 using System;
+using System.Globalization;
 
 namespace Bookmyslot.Api.Common.Helpers
 {
 
     public static class NodaTimeHelper
     {
-        public static LocalDateTime ConvertDateStringToLocalDateTime(string dateString, TimeSpan timeSpan)
+        public static LocalDateTime ConvertDateStringToLocalDateTime(string dateString, string datePattern, TimeSpan timeSpan)
         {
-            var inputDateString = dateString.Split(DateTimeConstants.DateDelimiter);
-            var month = Convert.ToInt32(inputDateString[0]);
-            var date = Convert.ToInt32(inputDateString[1]);
-            var year = Convert.ToInt32(inputDateString[2]);
+            var localDatePattern = LocalDatePattern.CreateWithInvariantCulture(datePattern);
+            var locadDate = localDatePattern.Parse(dateString);
 
-
-
-            return new LocalDateTime(year, month, date, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+            return new LocalDateTime(locadDate.Value.Year, locadDate.Value.Month, locadDate.Value.Day, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
         }
+
+        public static ZonedDateTime ConvertDateStringToZonedDateTime(string dateString, string datePattern, TimeSpan timeSpan, string timeZone)
+        {
+            var localDateTime = ConvertDateStringToLocalDateTime(dateString, datePattern, timeSpan);
+            return ConvertLocalDateTimeToZonedDateTime(localDateTime, timeZone);
+        }
+
 
         public static ZonedDateTime ConvertLocalDateTimeToZonedDateTime(LocalDateTime localDateTime, string timeZone)
         {
@@ -45,6 +50,12 @@ namespace Bookmyslot.Api.Common.Helpers
         {
             Instant now = SystemClock.Instance.GetCurrentInstant();
             return now.InUtc();
+        }
+
+        public static string FormatLocalDate(LocalDate localDate, string datePattern)
+        {
+            var formattedDate = localDate.ToString(datePattern, CultureInfo.InvariantCulture);
+            return formattedDate;
         }
 
     }
