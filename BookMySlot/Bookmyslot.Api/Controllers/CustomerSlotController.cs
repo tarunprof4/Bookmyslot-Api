@@ -4,15 +4,19 @@ using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.ViewModels;
+using Bookmyslot.Api.Common.ViewModels.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
@@ -43,7 +47,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Gets customer slots
         /// </summary>
-        /// <param name="pageParameterModel">pageParameterModel</param>
+        /// <param name="pageParameterViewModel">pageParameterModel</param>
         /// <returns>returns slot model</returns>
         /// <response code="200">Returns customer slot information</response>
         /// <response code="404">no slots found</response>
@@ -57,23 +61,32 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/CustomerSlot/GetDistinctCustomersNearestSlotFromToday")]
         [HttpGet()]
         [ActionName("GetHomePageSlots")]
-        public async Task<IActionResult> GetDistinctCustomersNearestSlotFromToday([FromQuery] PageParameterModel pageParameterModel)
+        public async Task<IActionResult> GetDistinctCustomersNearestSlotFromToday([FromQuery] PageParameterViewModel pageParameterViewModel)
         {
-            var cacheModel = CreateCacheModel(pageParameterModel);
+            var validator = new PageParameterViewModelValidator();
+            ValidationResult results = validator.Validate(pageParameterViewModel);
 
-            var customerSlotModels =
-                  await
-                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
-                      cacheModel,
-                      () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel));
-
-
-            //var customerSlotModels = await this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
-            if (customerSlotModels.ResultType == ResultType.Success)
+            if (results.IsValid)
             {
-                HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(customerSlotModels.Result);
+                var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
+                var cacheModel = CreateCacheModel(pageParameterModel);
+
+                var customerSlotModels =
+                      await
+                      this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
+                          cacheModel,
+                          () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel));
+
+
+                if (customerSlotModels.ResultType == ResultType.Success)
+                {
+                    HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(customerSlotModels.Result);
+                }
+                return this.CreateGetHttpResponse(customerSlotModels);
             }
-            return this.CreateGetHttpResponse(customerSlotModels);
+
+            var validationResponse = Response<CustomerSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            return this.CreateGetHttpResponse(validationResponse);
         }
 
         private CacheModel CreateCacheModel(PageParameterModel pageParameterModel)
@@ -90,7 +103,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Gets customer slots
         /// </summary>
-        /// <param name="pageParameterModel">pageParameterModel</param>
+        /// <param name="pageParameterViewModel">pageParameterModel</param>
         /// <returns>returns slot model</returns>
         /// <response code="200">Returns customer slot information</response>
         /// <response code="404">no slots found</response>
@@ -104,14 +117,24 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/CustomerSlot/GetCustomerAvailableSlots")]
         [HttpGet()]
         [ActionName("GetCustomerAvailableSlots")]
-        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterModel pageParameterModel, string customerInfo)
+        public async Task<IActionResult> GetCustomerAvailableSlots([FromQuery] PageParameterViewModel pageParameterViewModel, string customerInfo)
         {
-            var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);
-            if (bookSlotModelResponse.ResultType == ResultType.Success)
+            var validator = new PageParameterViewModelValidator();
+            ValidationResult results = validator.Validate(pageParameterViewModel);
+
+            if (results.IsValid)
             {
-                HideUncessaryDetailsForGetCustomerAvailableSlots(bookSlotModelResponse.Result);
+                var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
+                var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);
+                if (bookSlotModelResponse.ResultType == ResultType.Success)
+                {
+                    HideUncessaryDetailsForGetCustomerAvailableSlots(bookSlotModelResponse.Result);
+                }
+                return this.CreateGetHttpResponse(bookSlotModelResponse);
             }
-            return this.CreateGetHttpResponse(bookSlotModelResponse);
+
+            var validationResponse = Response<BookSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            return this.CreateGetHttpResponse(validationResponse);
         }
 
         private void HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(List<CustomerSlotModel> customerSlotModels)
@@ -130,6 +153,11 @@ namespace Bookmyslot.Api.Controllers
                 slotModel.Value = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(slotModel));
                 slotModel.Key.CreatedBy = string.Empty;
             }
+        }
+
+        private PageParameterModel CreatePageParameterModel(PageParameterViewModel pageParameterViewModel)
+        {
+            return new PageParameterModel() { PageNumber = pageParameterViewModel.PageNumber, PageSize = pageParameterViewModel.PageSize };
         }
     }
 }
