@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Bookmyslot.Api.ViewModels
 {
@@ -19,10 +20,12 @@ namespace Bookmyslot.Api.ViewModels
 
         [DefaultValue("10:00:00")]
         [Required]
+        [JsonConverter(typeof(JsonTimeSpanConverter))]
         public TimeSpan SlotStartTime { get; set; }
 
         [DefaultValue("11:00:00")]
         [Required]
+        [JsonConverter(typeof(JsonTimeSpanConverter))]
         public TimeSpan SlotEndTime { get; set; }
     }
 }
