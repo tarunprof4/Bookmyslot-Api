@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.ViewModels\Bookmyslot.Api.Common.ViewModels.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Web\Bookmyslot.Api.Common.Web.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.ViewModels\Bookmyslot.Api.Customers.ViewModels.csproj" />
+    <ProjectReference Include="..\..\SlotScheduler\Bookmyslot.Api.SlotScheduler.ViewModels\Bookmyslot.Api.SlotScheduler.ViewModels.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Injections\Bookmyslot.Api.Injections.csproj" />
   </ItemGroup>
 

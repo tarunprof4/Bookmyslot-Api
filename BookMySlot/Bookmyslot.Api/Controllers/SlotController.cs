@@ -96,13 +96,12 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> CancelSlot([FromBody] CancelSlot cancelSlot)
         {
-            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
-
             var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(cancelSlot.SlotKey));
 
             if (slotModel != null)
             {
+                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                var customerId = currentUserResponse.Result;
                 var slotResponse = await slotBusiness.CancelSlot(slotModel.Id, customerId);
                 return this.CreatePostHttpResponse(slotResponse);
             }

@@ -4,12 +4,16 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -59,21 +63,34 @@ namespace Bookmyslot.Api.Controllers
         [HttpPost()]
         [Route("api/v1/email/ResendSlotMeetingInformation")]
 
-        public async Task<IActionResult> ResendSlotMeetingInformation([FromBody] ResendSlotInformation resendSlotInformation)
+        public async Task<IActionResult> ResendSlotMeetingInformation([FromBody] ResendSlotInformationViewModel resendSlotInformationViewModel)
         {
-            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var validator = new ResendSlotInformationViewModelValidator();
+            ValidationResult results = validator.Validate(resendSlotInformationViewModel);
 
-            var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformation.ResendSlotModel));
-
-            if (slotModel != null)
+            if (results.IsValid)
             {
-                var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, customerId);
-                return this.CreatePostHttpResponse(resendSlotInformationResponse);
-            }
+                var resendSlotInformationModel = CreateResendSlotInformationModel(resendSlotInformationViewModel);
+                var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformationModel.ResendSlotModel));
 
-            var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
-            return this.CreatePostHttpResponse(validationErrorResponse);
+                if (slotModel != null)
+                {
+                    var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                    var customerId = currentUserResponse.Result;
+                    var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, customerId);
+                    return this.CreatePostHttpResponse(resendSlotInformationResponse);
+                }
+
+                var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
+                return this.CreatePostHttpResponse(validationErrorResponse);
+            }
+            var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            return this.CreatePostHttpResponse(validationResponse);
+        }
+
+        private ResendSlotInformation CreateResendSlotInformationModel(ResendSlotInformationViewModel resendSlotInformationViewModel)
+        {
+            return new ResendSlotInformation() { ResendSlotModel = resendSlotInformationViewModel.ResendSlotModel };
         }
     }
 
