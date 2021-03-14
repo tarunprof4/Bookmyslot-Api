@@ -6,10 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Contracts\Bookmyslot.Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common\Bookmyslot.Api.Common.csproj" />
+    <ProjectReference Include="..\..\Location\Bookmyslot.Api.Location.Contracts\Bookmyslot.Api.Location.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

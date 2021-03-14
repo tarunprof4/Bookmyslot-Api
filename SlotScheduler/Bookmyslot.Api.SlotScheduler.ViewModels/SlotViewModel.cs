@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Bookmyslot.Api.ViewModels
+namespace Bookmyslot.Api.SlotScheduler.ViewModels
 {
     public class SlotViewModel
     {

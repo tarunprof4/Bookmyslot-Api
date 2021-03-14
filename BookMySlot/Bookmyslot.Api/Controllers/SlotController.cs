@@ -8,8 +8,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
-using Bookmyslot.Api.Validations;
-using Bookmyslot.Api.ViewModels;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;

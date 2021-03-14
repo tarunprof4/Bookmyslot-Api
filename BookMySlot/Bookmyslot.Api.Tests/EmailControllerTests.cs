@@ -11,9 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
@@ -21,6 +19,8 @@ namespace Bookmyslot.Api.Tests
     public class EmailControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string InValidResendSlotModel = "InValidResendSlotModel";
+        private const string ValidResendSlotModel = "ValidResendSlotModel";
 
         private EmailController emailController;
         private Mock<IKeyEncryptor> keyEncryptorMock;
@@ -73,7 +73,7 @@ namespace Bookmyslot.Api.Tests
         {
             keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
 
-            var response = await emailController.ResendSlotMeetingInformation(new ResendSlotInformationViewModel()); ;
+            var response = await emailController.ResendSlotMeetingInformation(new ResendSlotInformationViewModel() { ResendSlotModel = InValidResendSlotModel }); ;
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -89,7 +89,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task ResendSlotMeetingInformation_ValidResendSlotInformationModel_ReturnsValidationResponse()
         {
-            var resendSlotInformationViewModel = new ResendSlotInformationViewModel();
+            var resendSlotInformationViewModel = new ResendSlotInformationViewModel() { ResendSlotModel = ValidResendSlotModel };
             keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(resendSlotInformationViewModel));
             Response<bool> resendSlotInformationBusinessMockResponse = new Response<bool>() { Result = true };
             resendSlotInformationBusinessMock.Setup(a => a.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(resendSlotInformationBusinessMockResponse));
@@ -98,7 +98,7 @@ namespace Bookmyslot.Api.Tests
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
             keyEncryptorMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());

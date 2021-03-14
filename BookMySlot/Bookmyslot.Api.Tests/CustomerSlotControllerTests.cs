@@ -11,7 +11,7 @@
 
 //namespace Bookmyslot.Api.Tests
 //{
-  
+
 //    public class CustomerSlotControllerTests
 //    {
 //        private const string CustomerId = "CustomerId";
@@ -20,7 +20,7 @@
 //        private Mock<IKeyEncryptor> keyEncryptorMock;
 //        private Mock<IDistributedInMemoryCacheBuisness> distributedInMemoryCacheBuisnessMock;
 //        private Mock<IHashing> hashingMock;
-        
+
 
 //        [SetUp]
 //        public void Setup()

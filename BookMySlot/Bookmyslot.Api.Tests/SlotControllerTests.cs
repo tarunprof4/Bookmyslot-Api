@@ -8,7 +8,6 @@ using Bookmyslot.Api.Location.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
-using Bookmyslot.Api.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -60,7 +59,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotDetailsMissing));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
         }
 
@@ -76,7 +75,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotTitleRequired));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.TimeZoneRequired));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotDateRequired));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
         }
 
@@ -92,7 +91,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidTimeZone));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
         }
 
@@ -158,7 +157,7 @@ namespace Bookmyslot.Api.Tests
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotInfoMissing));
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
             keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Never());
@@ -178,7 +177,7 @@ namespace Bookmyslot.Api.Tests
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotInfoMissing));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());

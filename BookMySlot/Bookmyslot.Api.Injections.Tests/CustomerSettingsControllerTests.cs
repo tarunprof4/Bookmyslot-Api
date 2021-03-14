@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Location.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,8 +28,10 @@ namespace Bookmyslot.Api.Injections.Tests
         {
             var customerSettingsBusiness = serviceProvider.GetService<ICustomerSettingsBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
+            var nodaTimeZoneLocationBusiness = serviceProvider.GetService<INodaTimeZoneLocationBusiness>();
+            
 
-            var controller = new CustomerSettingsController(customerSettingsBusiness,  currentUser);
+            var controller = new CustomerSettingsController(customerSettingsBusiness,  currentUser, nodaTimeZoneLocationBusiness);
 
             Assert.IsNotNull(customerSettingsBusiness);
             Assert.IsNotNull(controller);

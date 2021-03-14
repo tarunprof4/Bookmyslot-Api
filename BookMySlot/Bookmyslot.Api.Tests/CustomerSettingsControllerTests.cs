@@ -5,6 +5,7 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.Api.Location.Contracts.Configuration;
 using Bookmyslot.Api.Location.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
@@ -40,6 +41,7 @@ namespace Bookmyslot.Api.Tests
 
             Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
+            nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
         }
 
 
@@ -52,9 +54,7 @@ namespace Bookmyslot.Api.Tests
             var response = await customerSettingsController.Get();
 
             var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CustomerSettingsMissing));
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             customerSettingsBusinessMock.Verify((m => m.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())), Times.Never());
         }
@@ -112,10 +112,17 @@ namespace Bookmyslot.Api.Tests
             var response = await customerSettingsController.Put(new CustomerSettingsViewModel() { TimeZone = ValidTimeZone });
 
             var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSettingsBusinessMock.Verify((m => m.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())), Times.Once());
+        }
+
+        private NodaTimeZoneLocationConfiguration DefaultNodaTimeLocationConfiguration()
+        {
+            Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
+            zoneWithCountryId.Add(ValidTimeZone, ValidTimeZoneCountry);
+            var countries = zoneWithCountryId.Values.Distinct().ToList();
+            return new NodaTimeZoneLocationConfiguration(zoneWithCountryId, countries);
         }
     }
 }

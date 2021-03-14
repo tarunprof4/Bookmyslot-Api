@@ -1,11 +1,10 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.ExtensionMethods;
 using Bookmyslot.Api.Location.Interfaces;
-using Bookmyslot.Api.ViewModels;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Bookmyslot.Api.Validations
+namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
 {
     public class SlotViewModelValidator : AbstractValidator<SlotViewModel>
     {

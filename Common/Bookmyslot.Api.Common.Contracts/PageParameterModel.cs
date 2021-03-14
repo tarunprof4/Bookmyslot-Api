@@ -1,7 +1,4 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Newtonsoft.Json;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace Bookmyslot.Api.Common.Contracts
 {

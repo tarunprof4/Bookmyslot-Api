@@ -1,6 +1,5 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
@@ -11,7 +10,6 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

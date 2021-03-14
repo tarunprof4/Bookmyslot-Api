@@ -2,9 +2,6 @@
 using Bookmyslot.Api.Location.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Customers.ViewModels.Validations
 {

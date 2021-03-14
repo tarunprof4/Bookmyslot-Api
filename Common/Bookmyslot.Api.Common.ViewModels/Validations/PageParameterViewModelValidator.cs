@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using FluentValidation;
 using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.ViewModels.Validations
 {
