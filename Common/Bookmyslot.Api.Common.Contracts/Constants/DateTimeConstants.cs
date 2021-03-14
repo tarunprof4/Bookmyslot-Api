@@ -2,7 +2,7 @@
 {
     public class DateTimeConstants
     {
-        public const string ApplicationInputDatePattern = "dd-MM-yyyy";
+        public const string ApplicationInputDatePattern = "MM-dd-yyyy";
         public const string ApplicationOutputDatePattern = "MMM dd,yyyy";
         public const string DateDelimiter = "-";
     }

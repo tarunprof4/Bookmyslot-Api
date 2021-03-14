@@ -10,9 +10,11 @@ namespace Bookmyslot.Api.Common.Helpers
         public static LocalDateTime ConvertDateStringToLocalDateTime(string dateString, TimeSpan timeSpan)
         {
             var inputDateString = dateString.Split(DateTimeConstants.DateDelimiter);
-            var date = Convert.ToInt32(inputDateString[0]);
-            var month = Convert.ToInt32(inputDateString[1]);
+            var month = Convert.ToInt32(inputDateString[0]);
+            var date = Convert.ToInt32(inputDateString[1]);
             var year = Convert.ToInt32(inputDateString[2]);
+
+
 
             return new LocalDateTime(year, month, date, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
         }
@@ -21,7 +23,7 @@ namespace Bookmyslot.Api.Common.Helpers
         {
             var dateTimeZone = DateTimeZoneProviders.Tzdb[timeZone];
             var zoneDateTime = dateTimeZone.AtStrictly(localDateTime);
-            
+
             return zoneDateTime;
         }
 

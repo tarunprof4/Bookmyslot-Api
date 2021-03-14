@@ -15,8 +15,8 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         {
         }
 
-        [TestCase("1-1-2000", TimeZoneConstants.IndianTimezone)]
-        [TestCase("31-3-2021", TimeZoneConstants.LondonTimezone)]
+        [TestCase("01-01-2000", TimeZoneConstants.IndianTimezone)]
+        [TestCase("31-03-2021", TimeZoneConstants.LondonTimezone)]
         [TestCase("31-12-2020", TimeZoneConstants.LondonTimezone)]
         public void ConvertLocalDateTimeToZonedDateTime_PassedTimeZone_ReturnsRespectiveZonedDateTime(string dateString, string timeZone)
         {
@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         }
 
 
-        [TestCase("1-1-2000", TimeZoneConstants.IndianTimezone, 18, 30, 0)]
+        [TestCase("01-01-2000", TimeZoneConstants.IndianTimezone, 18, 30, 0)]
         [TestCase("12-12-2000", TimeZoneConstants.IndianTimezone, 18, 30, 0)]
         public void ConvertZonedDateTimeToUtcDateTime_PassIndiaTimeZone_ReturnsUtcZonedDateTime(string dateString, string timeZone, int utcHour, int utcMinute, int utcSecond)
         {
