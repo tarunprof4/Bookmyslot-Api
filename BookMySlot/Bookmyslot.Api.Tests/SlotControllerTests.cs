@@ -7,6 +7,7 @@ using Bookmyslot.Api.Location.Contracts.Configuration;
 using Bookmyslot.Api.Location.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ namespace Bookmyslot.Api.Tests
     public class SlotControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string InValidSlotKey = "InValidSlotKey";
         private const string ValidSlotTitle = "SlotTitle";
         private const string InValidTimeZone = "InValidTimeZone";
         private const string InValidSlotDate = "31-31-2000";
@@ -115,35 +117,69 @@ namespace Bookmyslot.Api.Tests
 
 
         [Test]
-        public async Task CancelSlot_InValidSlotKey_ReturnsValidationResponse()
+        public async Task CancelSlot_NullCancelSlotViewModel_ReturnsValidationResponse()
         {
-            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
+            var response = await slotController.CancelSlot(null);
 
-            var postResponse = await slotController.CancelSlot(new CancelSlot());
-
-            var objectResult = postResponse as ObjectResult;
+            var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
-            keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotInfoMissing));
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Never());
             slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Never());
         }
 
 
+
         [Test]
-        public async Task CancelSlot_ValidSlotKey_ReturnsSuccessResponse()
+        public async Task CancelSlot_EmptyCancelSlotViewModel_ReturnsValidationResponse()
         {
-            var cancelSlot = new CancelSlot();
-            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlot));
-            Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
-            slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
+            var response = await slotController.CancelSlot(new CancelSlotViewModel());
 
-            var postResponse = await slotController.CancelSlot(cancelSlot);
-
-            var objectResult = postResponse as ObjectResult;
+            var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotRequired));
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Never());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Never());
+        }
+
+
+
+        [Test]
+        public async Task CancelSlot_InValidCancelSlotViewModel_ReturnsValidationResponse()
+        {
+            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
+
+            var response = await slotController.CancelSlot(new CancelSlotViewModel() { SlotKey = InValidSlotKey });
+
+            var objectResult = response as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotInfoMissing));
+            keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Never());
+        }
+
+
+
+        [Test]
+        public async Task CancelSlot_ValidCancelSlotViewModel_ReturnsValidationResponse()
+        {
+            var cancelSlotViewModel = new CancelSlotViewModel();
+            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlotViewModel));
+            Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
+            slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<Guid>(),It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
+
+            var response = await slotController.CancelSlot(cancelSlotViewModel);
+
+            var objectResult = response as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotInfoMissing));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
             slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Once());
@@ -182,7 +218,7 @@ namespace Bookmyslot.Api.Tests
             return new NodaTimeZoneLocationConfiguration(zoneWithCountryId, countries);
         }
 
-       
+
 
     }
 }

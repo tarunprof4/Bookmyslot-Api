@@ -85,5 +85,8 @@
 
         public const string ResendSlotInfoMissing = "resend slot Info missing";
         public const string ResendSlotInfoRequired = "resend slot Info required";
+
+        public const string CancelSlotInfoMissing = "cancel slot info missing";
+        public const string CancelSlotRequired = "cancel slot info required";
     }
 }

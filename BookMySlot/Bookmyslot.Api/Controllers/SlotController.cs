@@ -6,6 +6,8 @@ using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Location.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
 using Bookmyslot.Api.Validations;
 using Bookmyslot.Api.ViewModels;
 using Bookmyslot.Api.Web.Common;
@@ -80,7 +82,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Cancel User slot
         /// </summary>
-        /// <param name="cancelSlot">user slot information</param>
+        /// <param name="cancelSlotViewModel">user slot information</param>
         /// <returns >success or failure bool</returns>
         /// <response code="201">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
@@ -94,20 +96,28 @@ namespace Bookmyslot.Api.Controllers
         [HttpPost()]
         [Route("api/v1/Slot/CancelSlot")]
 
-        public async Task<IActionResult> CancelSlot([FromBody] CancelSlot cancelSlot)
+        public async Task<IActionResult> CancelSlot([FromBody] CancelSlotViewModel cancelSlotViewModel)
         {
-            var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(cancelSlot.SlotKey));
+            var validator = new CancelSlotViewModelValidator();
+            ValidationResult results = validator.Validate(cancelSlotViewModel);
 
-            if (slotModel != null)
+            if (results.IsValid)
             {
-                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result;
-                var slotResponse = await slotBusiness.CancelSlot(slotModel.Id, customerId);
-                return this.CreatePostHttpResponse(slotResponse);
-            }
+                var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(cancelSlotViewModel.SlotKey));
 
-            var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
-            return this.CreatePostHttpResponse(validationErrorResponse);
+                if (slotModel != null)
+                {
+                    var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                    var customerId = currentUserResponse.Result;
+                    var slotResponse = await slotBusiness.CancelSlot(slotModel.Id, customerId);
+                    return this.CreatePostHttpResponse(slotResponse);
+                }
+
+                var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
+                return this.CreatePostHttpResponse(validationErrorResponse);
+            }
+            var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            return this.CreatePostHttpResponse(validationResponse);
         }
 
 
@@ -124,6 +134,8 @@ namespace Bookmyslot.Api.Controllers
             slotModel.SlotEndTime = slotViewModel.SlotEndTime;
             return slotModel;
         }
+
+
 
     }
 
