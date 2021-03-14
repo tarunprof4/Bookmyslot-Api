@@ -34,7 +34,6 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Gets profile settings by email
         /// </summary>
-        /// <param name="email">customer email id</param>
         /// <returns >customer details</returns>
         /// <response code="200">Returns customer details</response>
         /// <response code="404">no customer found</response>
