@@ -8,6 +8,7 @@ namespace Bookmyslot.Api.Common.ViewModels.Validations
     {
         public PageParameterViewModelValidator()
         {
+            RuleFor(x => x.PageNumber).Cascade(CascadeMode.Stop).Must(isPageNumberValid).WithMessage(AppBusinessMessagesConstants.InValidPageNumber);
             RuleFor(x => x.PageSize).Cascade(CascadeMode.Stop).Must(isPageSizeValid).WithMessage(AppBusinessMessagesConstants.InValidPageSize);
         }
 
@@ -21,6 +22,14 @@ namespace Bookmyslot.Api.Common.ViewModels.Validations
             return true;
         }
 
+        private bool isPageNumberValid(int pageNumber)
+        {
+            if (pageNumber >= 0)
+            {
+                return true;
+            }
+            return false;
+        }
 
         private bool isPageSizeValid(int pageSize)
         {

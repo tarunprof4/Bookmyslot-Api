@@ -87,6 +87,7 @@ namespace Bookmyslot.Api.Tests
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageNumber));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
             customerSlotBusinessMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Never());
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>())), Times.Never());
@@ -148,6 +149,7 @@ namespace Bookmyslot.Api.Tests
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageNumber));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
             customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Never());
             keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());

@@ -4,7 +4,7 @@ namespace Bookmyslot.Api.Authentication.Common
 {
     public class SocialCustomerLoginModel
     {
-        [DefaultValue("facebok")]
+        [DefaultValue("facebook")]
         public string Provider { get; set; }
         public string IdToken { get; set; }
 
