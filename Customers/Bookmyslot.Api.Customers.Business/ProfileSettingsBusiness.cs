@@ -22,23 +22,14 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
         {
-            var validator = new ProfileSettingsValidator();
-            ValidationResult results = validator.Validate(profileSettingsModel);
-
-            if (results.IsValid)
+            var profileExists = await CheckIfProfileExists(customerId);
+            if (profileExists)
             {
-                var profileExists = await CheckIfProfileExists(customerId);
-                if (profileExists)
-                {
-                    SanitizeProfileSettingsModel(profileSettingsModel);
-                    return await this.profileSettingsRepository.UpdateProfileSettings(profileSettingsModel, customerId);
-                }
-
-                return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessagesConstants.CustomerNotFound } };
+                SanitizeProfileSettingsModel(profileSettingsModel);
+                return await this.profileSettingsRepository.UpdateProfileSettings(profileSettingsModel, customerId);
             }
 
-            else
-                return new Response<bool>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
+            return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessagesConstants.CustomerNotFound } };
         }
 
         private void SanitizeProfileSettingsModel(ProfileSettingsModel profileSettingsModel)

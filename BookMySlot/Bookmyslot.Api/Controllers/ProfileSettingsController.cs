@@ -1,10 +1,15 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.Api.Customers.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
@@ -60,7 +65,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Update existing customer
         /// </summary>
-        /// <param name="profileSettingsModel">profileSettings model</param>
+        /// <param name="profileSettingsViewModel">profileSettings model</param>
         /// <returns>success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
@@ -73,12 +78,30 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
         [ActionName("UpdateProfileSettings")]
-        public async Task<IActionResult> Put([FromBody] ProfileSettingsModel profileSettingsModel)
+        public async Task<IActionResult> Put([FromBody] ProfileSettingsViewModel profileSettingsViewModel)
         {
-            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
-            var customerResponse = await this.profileSettingsBusiness.UpdateProfileSettings(profileSettingsModel, customerId);
-            return this.CreatePutHttpResponse(customerResponse);
+            var validator = new ProfileSettingsViewModelValidator();
+            ValidationResult results = validator.Validate(profileSettingsViewModel);
+
+            if (results.IsValid)
+            {
+                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                var customerId = currentUserResponse.Result;
+                var customerResponse = await this.profileSettingsBusiness.UpdateProfileSettings(CreateProfileSettingsModel(profileSettingsViewModel), customerId);
+                return this.CreatePutHttpResponse(customerResponse);
+            }
+            var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            return this.CreatePutHttpResponse(validationResponse);
         }
+
+        private ProfileSettingsModel CreateProfileSettingsModel(ProfileSettingsViewModel profileSettingsViewModel)
+        {
+            var profileSettingsModel = new ProfileSettingsModel();
+            profileSettingsModel.FirstName = profileSettingsViewModel.FirstName;
+            profileSettingsModel.LastName = profileSettingsViewModel.LastName;
+            profileSettingsModel.Gender = profileSettingsViewModel.Gender;
+            return profileSettingsModel;
+        }
+
     }
 }
