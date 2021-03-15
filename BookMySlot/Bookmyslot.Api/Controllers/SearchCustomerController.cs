@@ -1,8 +1,12 @@
-﻿using Bookmyslot.Api.Search.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Search.Contracts;
+using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
@@ -48,6 +52,11 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("SearchCustomer")]
         public async Task<IActionResult> Get(string searchKey)
         {
+            if (string.IsNullOrWhiteSpace(searchKey))
+            {
+                var validationResponse = Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidSearchKey });
+                return this.CreateGetHttpResponse(validationResponse);
+            }
             var customerResponse = await searchCustomerBusiness.SearchCustomers(searchKey);
             return this.CreateGetHttpResponse(customerResponse);
         }

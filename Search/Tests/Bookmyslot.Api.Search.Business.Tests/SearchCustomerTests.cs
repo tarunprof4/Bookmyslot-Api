@@ -21,15 +21,6 @@ namespace Bookmyslot.Api.Search.Business.Tests
             searchCustomerBusiness = new SearchCustomerBusiness(searchCustomerRepositoryMock.Object);
         }
 
-        [TestCase("")]
-        [TestCase("   ")]
-        public async Task SearchCustomers_InvalidSearchKey_ReturnsValidationErrorResponse(string searchKey)
-        {
-            var customer = await searchCustomerBusiness.SearchCustomers(searchKey);
-
-            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(customer.Messages.First(), AppBusinessMessagesConstants.InValidSearchKey);
-        }
 
         [Test]
         public async Task SearchCustomers_ValidSearchKey_ReturnsSuccessResponse()
