@@ -1,9 +1,6 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Business.Tests

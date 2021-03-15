@@ -1,13 +1,10 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using FluentValidation;
 using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
 {
-   
+
     public class SlotSchedulerViewModelValidator : AbstractValidator<SlotSchedulerViewModel>
     {
         public SlotSchedulerViewModelValidator()
