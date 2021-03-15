@@ -99,7 +99,6 @@ namespace Bookmyslot.Api.Tests
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
             keyEncryptorMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Once());

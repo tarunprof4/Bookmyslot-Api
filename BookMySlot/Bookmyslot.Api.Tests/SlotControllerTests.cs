@@ -30,6 +30,7 @@ namespace Bookmyslot.Api.Tests
         private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
         private const string ValidTimeZoneCountry = "India";
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationInputDatePattern);
+        private const string ValidSlotKey= "ValidSlotKey";
 
         private SlotController slotController;
         private Mock<ISlotBusiness> slotBusinessMock;
@@ -168,7 +169,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task CancelSlot_ValidCancelSlotViewModel_ReturnsValidationResponse()
         {
-            var cancelSlotViewModel = new CancelSlotViewModel();
+            var cancelSlotViewModel = new CancelSlotViewModel() { SlotKey = ValidSlotKey };
             keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlotViewModel));
             Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
             slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<Guid>(),It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
@@ -178,7 +179,6 @@ namespace Bookmyslot.Api.Tests
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotInfoMissing));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             keyEncryptorMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
             slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<Guid>(), It.IsAny<string>())), Times.Once());

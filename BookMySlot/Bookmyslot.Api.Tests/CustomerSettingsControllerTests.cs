@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Tests
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSettingsBusinessMock.Verify((m => m.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())), Times.Never());
         }
 
@@ -111,7 +111,7 @@ namespace Bookmyslot.Api.Tests
 
             var response = await customerSettingsController.Put(new CustomerSettingsViewModel() { TimeZone = ValidTimeZone });
 
-            var objectResult = response as ObjectResult;
+            var objectResult = response as NoContentResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSettingsBusinessMock.Verify((m => m.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())), Times.Once());
