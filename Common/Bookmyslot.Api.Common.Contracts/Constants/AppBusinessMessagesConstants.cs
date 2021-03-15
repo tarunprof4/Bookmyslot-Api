@@ -88,5 +88,9 @@
 
         public const string CancelSlotInfoMissing = "cancel slot info missing";
         public const string CancelSlotRequired = "cancel slot info required";
+
+
+        public const string SlotScheduleInfoMissing = "slot scheduler Info missing";
+        public const string SlotScheduleInfoRequired = "slot scheduler Info required";
     }
 }

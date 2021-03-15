@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Resend slot information email to the customers
         /// </summary>
-        /// <param name="resendSlotInformation">slot information</param>
+        /// <param name="resendSlotInformationViewModel">slot information</param>
         /// <returns >success or failure bool</returns>
         /// <response code="201">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
@@ -70,8 +70,7 @@ namespace Bookmyslot.Api.Controllers
 
             if (results.IsValid)
             {
-                var resendSlotInformationModel = CreateResendSlotInformationModel(resendSlotInformationViewModel);
-                var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformationModel.ResendSlotModel));
+                var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(resendSlotInformationViewModel.ResendSlotModel));
 
                 if (slotModel != null)
                 {
@@ -88,10 +87,7 @@ namespace Bookmyslot.Api.Controllers
             return this.CreatePostHttpResponse(validationResponse);
         }
 
-        private ResendSlotInformation CreateResendSlotInformationModel(ResendSlotInformationViewModel resendSlotInformationViewModel)
-        {
-            return new ResendSlotInformation() { ResendSlotModel = resendSlotInformationViewModel.ResendSlotModel };
-        }
+      
     }
 
 

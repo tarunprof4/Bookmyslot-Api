@@ -4,11 +4,15 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -35,21 +39,31 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/SlotScheduler")]
         [HttpPost]
         [ActionName("ScheduleSlot")]
-        public async Task<IActionResult> Post([FromBody] SlotSchedulerModel slotSchedulerModel)
+        public async Task<IActionResult> Post([FromBody] SlotSchedulerViewModel slotSchedulerViewModel)
         {
-            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var validator = new SlotSchedulerViewModelValidator();
+            ValidationResult results = validator.Validate(slotSchedulerViewModel);
 
-            var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerModel.SlotModelKey));
-
-            if (customerSlotModel != null)
+            if (results.IsValid)
             {
-                var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel.Key, customerId);
-                return this.CreatePostHttpResponse(slotScheduleResponse);
+                var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerViewModel.SlotModelKey));
+
+                if (customerSlotModel != null)
+                {
+                    var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                    var customerId = currentUserResponse.Result;
+                    var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel.Key, customerId);
+                    return this.CreatePostHttpResponse(slotScheduleResponse);
+                }
+
+                var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
+                return this.CreatePostHttpResponse(validationErrorResponse);
             }
 
-            var validationErrorResponse = Response<List<CustomerSlotModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
-            return this.CreatePostHttpResponse(validationErrorResponse);
+            var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            return this.CreatePostHttpResponse(validationResponse);
         }
+
+
     }
 }
