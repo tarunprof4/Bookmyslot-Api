@@ -7,9 +7,9 @@ using System.Text.RegularExpressions;
 namespace Bookmyslot.Api.Customers.ViewModels.Validations
 {
 
-    public class RegisterViewModelValidator : AbstractValidator<RegisterCustomerViewModel>
+    public class RegisterCustomerViewModelValidator : AbstractValidator<RegisterCustomerViewModel>
     {
-        public RegisterViewModelValidator()
+        public RegisterCustomerViewModelValidator()
         {
             RuleFor(x => x.FirstName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.FirstNameRequired).Must(isNameValid).WithMessage(AppBusinessMessagesConstants.FirstNameInValid);
             RuleFor(x => x.LastName).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.LastNameRequired).Must(isNameValid).WithMessage(AppBusinessMessagesConstants.LastNameInValid);

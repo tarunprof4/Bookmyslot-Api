@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("RegisterCustomer")]
         public async Task<IActionResult> Post([FromBody] RegisterCustomerViewModel registerCustomerViewModel)
         {
-            var validator = new RegisterViewModelValidator();
+            var validator = new RegisterCustomerViewModelValidator();
             ValidationResult results = validator.Validate(registerCustomerViewModel);
 
             if (results.IsValid)
