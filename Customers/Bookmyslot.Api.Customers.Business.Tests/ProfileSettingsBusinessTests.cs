@@ -64,14 +64,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             profileSettingRepositoryMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Once());
         }
 
-        [Test]
-        public async Task UpdateProfileSettings_MissingProfileSettingsDetails_ReturnsValidationError()
-        {
-            var profileSettingsResponse = await profileSettingsBusiness.UpdateProfileSettings(null, CUSTOMERID);
-
-            Assert.IsTrue(profileSettingsResponse.Messages.Contains(AppBusinessMessagesConstants.ProfileSettingDetailsMissing));
-            Assert.AreEqual(profileSettingsResponse.ResultType, ResultType.ValidationError);
-        }
 
         [Test]
         public async Task UpdateProfileSettings_CustomerDoesntExists_ReturnsCustomerNotFoundError()

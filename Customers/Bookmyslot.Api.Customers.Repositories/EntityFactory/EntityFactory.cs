@@ -13,7 +13,6 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
                 UniqueId = CreateUniqueId(),
                 FirstName = registerCustomerModel.FirstName,
                 LastName = registerCustomerModel.LastName,
-                Gender = registerCustomerModel.Gender,
                 UserName = CreateUserName(registerCustomerModel.FirstName),
                 Email = registerCustomerModel.Email,
                 Provider = registerCustomerModel.Provider,

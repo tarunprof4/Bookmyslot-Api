@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Bookmyslot.Api.Customers.ViewModels
 {

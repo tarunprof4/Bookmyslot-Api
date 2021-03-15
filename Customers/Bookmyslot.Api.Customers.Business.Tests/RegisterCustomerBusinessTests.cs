@@ -39,28 +39,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             registerCustomerRepositoryMock.Verify((m => m.CreateCustomer(registerCustomerModel)), Times.Once());
         }
 
-        [Test]
-        public async Task RegisterCustomer_CreateMissingCustomerDetails_ReturnsValidationError()
-        {
-            var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(null);
-
-
-            Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.RegisterCustomerDetailsMissing));
-            Assert.AreEqual(registerCustomerResponse.ResultType, ResultType.ValidationError);
-        }
-
-        [Test]
-        public async Task RegisterCustomer_CreateInvalidCustomer_ReturnsValidationError()
-        {
-            var registerCustomerModel = new RegisterCustomerModel();
-
-            var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
-
-            Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.FirstNameInValid));
-            Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.LastNameInValid));
-            Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.EmailIdNotValid));
-            Assert.AreEqual(registerCustomerResponse.ResultType, ResultType.ValidationError);
-        }
+     
 
         [Test]
         public async Task RegisterCustomer_CustomerWithSameEmailIdAlreadyExists_ReturnsError()
@@ -77,18 +56,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-        [Test]
-        public async Task CreateCustomer_WithInvalidCustomerNameAndEmail_ReturnsValidationError()
-        {
-            var registerCustomerModel = new RegisterCustomerModel() { FirstName = " 12 ", Email = "asdf.com", LastName="12" };
-
-            var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
-
-            Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.FirstNameInValid));
-            Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.LastNameInValid));
-            Assert.IsTrue(registerCustomerResponse.Messages.Contains(AppBusinessMessagesConstants.EmailIdNotValid));
-            Assert.AreEqual(registerCustomerResponse.ResultType, ResultType.ValidationError);
-        }
+      
 
         private RegisterCustomerModel CreateRegisterCustomerModel()
         {

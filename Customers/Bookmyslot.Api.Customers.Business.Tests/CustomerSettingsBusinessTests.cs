@@ -1,14 +1,7 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
-using Bookmyslot.Api.Location.Contracts.Configuration;
-using Bookmyslot.Api.Location.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business.Tests
 {

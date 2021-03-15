@@ -97,7 +97,6 @@ namespace Bookmyslot.Api.Tests
             var response = await emailController.ResendSlotMeetingInformation(resendSlotInformationViewModel);
 
             var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             keyEncryptorMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());

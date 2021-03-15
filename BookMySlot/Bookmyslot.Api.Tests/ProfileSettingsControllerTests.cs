@@ -9,9 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
@@ -59,7 +57,7 @@ namespace Bookmyslot.Api.Tests
 
 
         [Test]
-        public async Task SaveProfileSettings_NullProfileSettings_ReturnsValidationResponse()
+        public async Task UpdateProfileSettings_NullProfileSettings_ReturnsValidationResponse()
         {
             var response = await profileSettingsController.Put(null);
 
@@ -72,7 +70,7 @@ namespace Bookmyslot.Api.Tests
         }
 
         [Test]
-        public async Task SaveProfileSettings_EmptyProfileSettings_ReturnsValidationResponse()
+        public async Task UpdateProfileSettings_EmptyProfileSettings_ReturnsValidationResponse()
         {
             var response = await profileSettingsController.Put(new ProfileSettingsViewModel()); ;
 
@@ -91,7 +89,7 @@ namespace Bookmyslot.Api.Tests
 
 
         [Test]
-        public async Task SaveProfileSettings_InValidProfileSettings_ReturnsValidationResponse()
+        public async Task UpdateProfileSettings_InValidProfileSettings_ReturnsValidationResponse()
         {
             var response = await profileSettingsController.Put(DefaultInValidProfileSettingViewModel()); ;
 
@@ -108,15 +106,15 @@ namespace Bookmyslot.Api.Tests
 
 
         [Test]
-        public async Task SaveProfileSettings_ValidProfileSettings_ReturnsSuccessResponse()
+        public async Task UpdateProfileSettings_ValidProfileSettings_ReturnsSuccessResponse()
         {
             Response<bool> profileSettingsBusinessMockResponse = new Response<bool>() { Result = true };
             profileSettingsBusinessMock.Setup(a => a.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             var response = await profileSettingsController.Put(DefaultValidProfileSettingViewModel()); ;
 
-            var objectResult = response as ObjectResult;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            var objectResult = response as NoContentResult;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Once());
         }
