@@ -21,10 +21,10 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         private const string BookedBy = "BookedBy";
         private const string TimeZone = TimeZoneConstants.IndianTimezone;
         private const string SlotDate = "Mar 22,2021";
-        private DateTime SlotDateUtc = DateTime.UtcNow;
-        private TimeSpan SlotStartTime = new TimeSpan(1, 1, 1);
-        private TimeSpan SlotEndTime = new TimeSpan(2, 2, 2);
-        private DateTime CreatedDateUtc = DateTime.UtcNow;
+        private readonly DateTime SlotDateUtc = DateTime.UtcNow;
+        private readonly TimeSpan SlotStartTime = new TimeSpan(1, 1, 1);
+        private readonly TimeSpan SlotEndTime = new TimeSpan(2, 2, 2);
+        private readonly DateTime CreatedDateUtc = DateTime.UtcNow;
 
         private CustomerBookedSlotRepository customerBookedSlotRepository;
         private Mock<IDbConnection> dbConnectionMock;
