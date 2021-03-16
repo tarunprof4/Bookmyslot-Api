@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
 
             customerRepositoryMock.Verify((m => m.GetCustomerByEmail(registerCustomerModel.Email)), Times.Once());
-            registerCustomerRepositoryMock.Verify((m => m.CreateCustomer(registerCustomerModel)), Times.Once());
+            registerCustomerRepositoryMock.Verify((m => m.RegisterCustomer(registerCustomerModel)), Times.Once());
         }
 
      
@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
 
             customerRepositoryMock.Verify((m => m.GetCustomerByEmail(registerCustomerModel.Email)), Times.Once());
-            registerCustomerRepositoryMock.Verify((m => m.CreateCustomer(registerCustomerModel)), Times.Never());
+            registerCustomerRepositoryMock.Verify((m => m.RegisterCustomer(registerCustomerModel)), Times.Never());
             Assert.AreEqual(registerCustomerResponse.ResultType, ResultType.ValidationError);
         }
 

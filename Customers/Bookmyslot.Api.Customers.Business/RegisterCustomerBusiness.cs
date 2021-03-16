@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Customers.Business
             if (!customerExists)
             {
                 SanitizeCustomerModel(registerCustomerModel);
-                return await registerCustomerRepository.CreateCustomer(registerCustomerModel);
+                return await registerCustomerRepository.RegisterCustomer(registerCustomerModel);
             }
 
             return new Response<string>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdExists } };

@@ -19,12 +19,12 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
         }
-        public async Task<Response<string>> CreateCustomer(RegisterCustomerModel registerCustomerModel)
+        public async Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
         {
-            var resgiterCustomerEntity = EntityFactory.EntityFactory.CreateRegisterCustomerEntity(registerCustomerModel);
+            var registerCustomerEntity = EntityFactory.EntityFactory.CreateRegisterCustomerEntity(registerCustomerModel);
 
-            var parameters = new { customerEntity = resgiterCustomerEntity };
-            await this.dbInterceptor.GetQueryResults("CreateCustomer", parameters, () => this.connection.InsertAsync<string, RegisterCustomerEntity>(resgiterCustomerEntity));
+            var parameters = new { customerEntity = registerCustomerEntity };
+            await this.dbInterceptor.GetQueryResults("CreateCustomer", parameters, () => this.connection.InsertAsync<string, RegisterCustomerEntity>(registerCustomerEntity));
 
             return new Response<string>() { Result = registerCustomerModel.Email };
         }

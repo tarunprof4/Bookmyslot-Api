@@ -5,6 +5,6 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 {
     public interface IRegisterCustomerRepository
     {
-        Task<Response<string>> CreateCustomer(RegisterCustomerModel registerCustomerModel);
+        Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel);
     }
 }
