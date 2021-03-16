@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 {
-    public class CustomerBookedSlotRepositoryTests
+    public class CustomerSharedSlotRepositoryTests
     {
         private const string CustomerId = "CustomerId";
 
@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         private TimeSpan SlotEndTime = new TimeSpan(2, 2, 2);
         private DateTime CreatedDateUtc = DateTime.UtcNow;
 
-        private CustomerBookedSlotRepository customerBookedSlotRepository;
+        private CustomerSharedSlotRepository customerSharedSlotRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
 
@@ -35,8 +35,44 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         {
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            customerBookedSlotRepository = new CustomerBookedSlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
+            customerSharedSlotRepository = new CustomerSharedSlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
         }
+
+        [Test]
+        public async Task GetCustomerYetToBeBookedSlots_NoRecordsFound_ReturnsEmptyResponse()
+        {
+            IEnumerable<SlotEntity> slotEntities = new List<SlotEntity>();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(slotEntities));
+
+            var slotModelsResponse = await customerSharedSlotRepository.GetCustomerYetToBeBookedSlots(CustomerId);
+
+            Assert.AreEqual(slotModelsResponse.ResultType, ResultType.Empty);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>()), Times.Once);
+        }
+
+        [Test]
+        public async Task GetCustomerYetToBeBookedSlots_HasRecord_ReturnsSuccessResponse()
+        {
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(DefaultCreateSlotEntities()));
+
+            var slotModelResponse = await customerSharedSlotRepository.GetCustomerYetToBeBookedSlots(CustomerId);
+
+            foreach (var slotModel in slotModelResponse.Result)
+            {
+                Assert.AreEqual(slotModel.Id, Id);
+                Assert.AreEqual(slotModel.Title, Title);
+                Assert.AreEqual(slotModel.CreatedBy, CreatedBy);
+                Assert.AreEqual(slotModel.BookedBy, BookedBy);
+                Assert.AreEqual(slotModel.SlotZonedDate.Zone.Id, TimeZone);
+                Assert.AreEqual(slotModel.SlotStartTime, SlotStartTime);
+                Assert.AreEqual(slotModel.SlotEndTime, SlotEndTime);
+                Assert.AreEqual(slotModel.CreatedDateUtc, CreatedDateUtc);
+            }
+            Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>()), Times.Once);
+        }
+
+
 
         [Test]
         public async Task GetCustomerBookedSlots_NoRecordsFound_ReturnsEmptyResponse()
@@ -44,7 +80,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             IEnumerable<SlotEntity> slotEntities = new List<SlotEntity>();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(slotEntities));
 
-            var slotModelsResponse = await customerBookedSlotRepository.GetCustomerBookedSlots(CustomerId);
+            var slotModelsResponse = await customerSharedSlotRepository.GetCustomerBookedSlots(CustomerId);
 
             Assert.AreEqual(slotModelsResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>()), Times.Once);
@@ -55,7 +91,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         {
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(DefaultCreateSlotEntities()));
 
-            var slotModelResponse = await customerBookedSlotRepository.GetCustomerBookedSlots(CustomerId);
+            var slotModelResponse = await customerSharedSlotRepository.GetCustomerBookedSlots(CustomerId);
 
             foreach (var slotModel in slotModelResponse.Result)
             {
@@ -73,14 +109,13 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         }
 
 
-
         [Test]
         public async Task GetCustomerCompletedSlots_NoRecordsFound_ReturnsEmptyResponse()
         {
             IEnumerable<SlotEntity> slotEntities = new List<SlotEntity>();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(slotEntities));
 
-            var slotModelsResponse = await customerBookedSlotRepository.GetCustomerCompletedSlots(CustomerId);
+            var slotModelsResponse = await customerSharedSlotRepository.GetCustomerCompletedSlots(CustomerId);
 
             Assert.AreEqual(slotModelsResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>()), Times.Once);
@@ -91,7 +126,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         {
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(DefaultCreateSlotEntities()));
 
-            var slotModelResponse = await customerBookedSlotRepository.GetCustomerCompletedSlots(CustomerId);
+            var slotModelResponse = await customerSharedSlotRepository.GetCustomerCompletedSlots(CustomerId);
 
             foreach (var slotModel in slotModelResponse.Result)
             {
@@ -107,10 +142,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>()), Times.Once);
         }
-
-
-
-
 
 
         private IEnumerable<SlotEntity> DefaultCreateSlotEntities()
