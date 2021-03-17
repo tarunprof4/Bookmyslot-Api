@@ -21,12 +21,10 @@ namespace Bookmyslot.Api.Common.Database
             this.compression = compression;
         }
 
-        public async Task<T> GetQueryResults<T>(string sql, object parameters, Func<Task<T>> retrieveValues)
+        public async Task<T> GetQueryResults<T>(string operationName, object parameters, Func<Task<T>> retrieveValues)
         {
-          
-
             var requestId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.RequestId];
-            var databaseRequestLog = new DatabaseRequestLog(requestId, sql, parameters);
+            var databaseRequestLog = new DatabaseRequestLog(requestId, operationName, parameters);
             Log.Debug("{@databaseRequestLog}", databaseRequestLog);
 
             Stopwatch stopWatch = new Stopwatch();

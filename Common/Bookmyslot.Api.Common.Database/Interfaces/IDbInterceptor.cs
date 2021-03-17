@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.Common.Database.Interfaces
 {
     public interface IDbInterceptor
     {
-        Task<T> GetQueryResults<T>(string sql, object parameters, Func<Task<T>> retrieveValues);
+        Task<T> GetQueryResults<T>(string operationName, object parameters, Func<Task<T>> retrieveValues);
     }
 
 }
