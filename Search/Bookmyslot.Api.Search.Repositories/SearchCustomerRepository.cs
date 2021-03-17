@@ -9,6 +9,7 @@ using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Bookmyslot.Api.Search.Repositories
 
         public SearchCustomerRepository(AppConfiguration appConfiguration, IDbInterceptor dbInterceptor)
         {
-            this.connection = new SqlConnection(appConfiguration.ReadDatabaseConnectionString);
+            this.connection = new MySqlConnection(appConfiguration.ReadDatabaseConnectionString);
             this.dbInterceptor = dbInterceptor;
         }
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey)
