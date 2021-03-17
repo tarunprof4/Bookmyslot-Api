@@ -32,13 +32,13 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
         public async Task RegisterCustomer_ReturnsSuccessResponse()
         {
             var registerCustomerModel = DefaultCreateRegisterCustomerModel();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>())).Returns(Task.FromResult(registerCustomerModel.Email));
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
             var registerCustomerModelResponse = await registerCustomerRepository.RegisterCustomer(registerCustomerModel);
 
             Assert.AreEqual(registerCustomerModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(EMAIL, registerCustomerModelResponse.Result);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
         private RegisterCustomerModel DefaultCreateRegisterCustomerModel()

@@ -66,7 +66,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 {
                     var cancelledBy = slotModel.BookedBy;
                     slotModel.BookedBy = string.Empty;
-                    await this.slotRepository.UpdateSlot(slotModel.Id, slotModel.BookedBy);
+                    await this.slotRepository.UpdateBookedBySlot(slotModel.Id, slotModel.BookedBy);
                     cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
                 }
 

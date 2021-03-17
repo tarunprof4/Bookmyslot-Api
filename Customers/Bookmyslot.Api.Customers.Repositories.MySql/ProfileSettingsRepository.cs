@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Customers.Repositories
                 Gender = profileSettingsModel.Gender, ModifiedDateUtc = DateTime.UtcNow };
             var sql = CustomerTableQueries.UpdateProfileSettingQuery;
 
-            await this.dbInterceptor.GetQueryResults("UpdateProfileSettings", parameters, () => this.connection.QueryAsync<RegisterCustomerEntity>(sql, parameters));
+            await this.dbInterceptor.GetQueryResults("UpdateProfileSettings", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
             return new Response<bool>() { Result = true };
         }

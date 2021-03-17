@@ -56,7 +56,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             };
 
 
-            await this.dbInterceptor.GetQueryResults("CreateSlot", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            await this.dbInterceptor.GetQueryResults("CreateSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
             
             return new Response<string>() { Result = slotEntity.Id };
         }
@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
                 ModifiedDateUtc = DateTime.UtcNow,
                 IsDeleted = true
             };
-            await this.dbInterceptor.GetQueryResults("DeleteSlot", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            await this.dbInterceptor.GetQueryResults("DeleteSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
             
             return new Response<bool>() { Result = true };
         }
@@ -87,7 +87,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
      
 
-        public async Task<Response<bool>> UpdateSlot(string slotId, string bookedBy)
+        public async Task<Response<bool>> UpdateBookedBySlot(string slotId, string bookedBy)
         {
             var sql = SlotTableQueries.UpdateSlotQuery;
             var parameters = new
@@ -96,7 +96,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
                 BookedBy = bookedBy,
                 ModifiedDateUtc = DateTime.UtcNow,
             };
-            await this.dbInterceptor.GetQueryResults("UpdateSlot", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
+            await this.dbInterceptor.GetQueryResults("UpdateSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
             
             return new Response<bool>() { Result = true };
         }

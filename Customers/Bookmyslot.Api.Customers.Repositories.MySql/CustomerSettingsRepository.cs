@@ -45,7 +45,7 @@ namespace Bookmyslot.Api.Customers.Repositories
 
             var sql = CustomerTableQueries.InsertOrUpdateCustomerSettingsQuery;
 
-            await this.dbInterceptor.GetQueryResults("UpdateCustomerSettings", parameters, () => this.connection.QueryAsync<CustomerSettingsEntity>(sql, parameters));
+            await this.dbInterceptor.GetQueryResults("UpdateCustomerSettings", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
             return new Response<bool>() { Result = true };
         }

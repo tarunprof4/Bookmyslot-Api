@@ -82,12 +82,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         public async Task CreateSlot_ValidSlotModel_ReturnsSuccessResponse()
         {
             SlotModel slotModel = DefaultSlotModel();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>())).Returns(Task.FromResult(slotModel.Id));
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
             var slotModelResponse = await slotRepository.CreateSlot(slotModel);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             SlotModel slotModel = DefaultSlotModel();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
-            var slotModelResponse = await slotRepository.UpdateSlot(slotModel.Id, slotModel.BookedBy);
+            var slotModelResponse = await slotRepository.UpdateBookedBySlot(slotModel.Id, slotModel.BookedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelResponse.Result, true);

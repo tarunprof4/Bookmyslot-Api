@@ -111,7 +111,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.IsTrue(slotModel.BookedBy.Contains(slotModel.BookedBy));
 
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<string>())), Times.Once());
-            slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            slotRepositoryMock.Verify((m => m.UpdateBookedBySlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<string>())), Times.Once());
             customerCancelledSlotRepositoryMock.Verify((m => m.CreateCustomerCancelledSlot(It.IsAny<CancelledSlotModel>())), Times.Once());
         }
@@ -135,7 +135,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(slotModel.BookedBy, string.Empty);
 
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<string>())), Times.Once());
-            slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            slotRepositoryMock.Verify((m => m.UpdateBookedBySlot(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<string>())), Times.Never());
             customerCancelledSlotRepositoryMock.Verify((m => m.CreateCustomerCancelledSlot(It.IsAny<CancelledSlotModel>())), Times.Once());
         }
@@ -151,7 +151,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<string>())), Times.Never());
-            slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            slotRepositoryMock.Verify((m => m.UpdateBookedBySlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             customerCancelledSlotRepositoryMock.Verify((m => m.CreateCustomerCancelledSlot(It.IsAny<CancelledSlotModel>())), Times.Never());
 
         }
@@ -169,7 +169,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotIdDoesNotExists));
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<string>())), Times.Once());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<string>())), Times.Never());
-            slotRepositoryMock.Verify((m => m.UpdateSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            slotRepositoryMock.Verify((m => m.UpdateBookedBySlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             customerCancelledSlotRepositoryMock.Verify((m => m.CreateCustomerCancelledSlot(It.IsAny<CancelledSlotModel>())), Times.Never());
         }
 

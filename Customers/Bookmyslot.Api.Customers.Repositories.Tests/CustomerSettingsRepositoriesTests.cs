@@ -5,7 +5,6 @@ using Bookmyslot.Api.Customers.Repositories.Enitites;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -61,14 +60,13 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
         public async Task UpdateCustomerSettings_ReturnsSuccessResponse()
         {
             var customerSettingsModel = DefaultCreateCustomerSettingsModel();
-            IEnumerable<CustomerSettingsEntity> customerSettingsEntities = new List<CustomerSettingsEntity>();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<CustomerSettingsEntity>>>>())).Returns(Task.FromResult(customerSettingsEntities));
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
             var customerSettingsModelResponse = await customerSettingsRepository.UpdateCustomerSettings(CustomerId, customerSettingsModel);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(true, customerSettingsModelResponse.Result);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<CustomerSettingsEntity>>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
         private CustomerSettingsModel DefaultCreateCustomerSettingsModel()

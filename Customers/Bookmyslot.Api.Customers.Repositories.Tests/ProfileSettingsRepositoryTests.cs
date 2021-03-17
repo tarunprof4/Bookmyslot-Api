@@ -67,13 +67,13 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
         {
             var profileSettingsModel = DefaultCreateProfileSettingsModel();
             IEnumerable<RegisterCustomerEntity> customerSettingsEntities = new List<RegisterCustomerEntity>();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<RegisterCustomerEntity>>>>())).Returns(Task.FromResult(customerSettingsEntities));
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
             var customerSettingsModelResponse = await profileSettingsRepository.UpdateProfileSettings(profileSettingsModel, CustomerId);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(true, customerSettingsModelResponse.Result);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<RegisterCustomerEntity>>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
         private ProfileSettingsModel DefaultCreateProfileSettingsModel()

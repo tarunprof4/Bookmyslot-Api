@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
-using Bookmyslot.Api.Customers.Repositories.Enitites;
 using Bookmyslot.Api.Customers.Repositories.Queries;
 using Dapper;
 using System.Data;
@@ -38,7 +37,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             };
 
 
-            await this.dbInterceptor.GetQueryResults("RegisterCustomer", parameters, () => this.connection.QueryAsync<RegisterCustomerEntity>(sql, parameters));
+            await this.dbInterceptor.GetQueryResults("RegisterCustomer", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
             return new Response<string>() { Result = registerCustomerModel.Email };
         }

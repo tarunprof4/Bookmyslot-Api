@@ -43,7 +43,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             };
 
 
-            await this.dbInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
+            await this.dbInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
             return new Response<bool>() { Result = true };
         }

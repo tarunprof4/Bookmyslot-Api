@@ -43,12 +43,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         [Test]
         public async Task CreateCustomerCancelledSlot_NoRecordsFound_ReturnsEmptyResponse()
         {
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>())).Returns(Task.FromResult(Guid.NewGuid().ToString()));
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
             var cancelledSlotModelsResponse = await customerCancelledSlotRepository.CreateCustomerCancelledSlot(new CancelledSlotModel());
 
             Assert.AreEqual(cancelledSlotModelsResponse.ResultType, ResultType.Success);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
         [Test]
