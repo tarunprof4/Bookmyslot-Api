@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.Injections
             {
                 options.ConnectionString = appConfigurations[AppSettingKeysConstants.CacheDatabase];
                 options.SchemaName = "dbo";
-                options.TableName = TableNameConstants.Cache;
+                options.TableName = DatabaseConstants.CacheTable;
             });
 
             //services.AddStackExchangeRedisCache(options =>

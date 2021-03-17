@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookmyslot.Api.Customers.Repositories.Enitites
 {
-    [Table(TableNameConstants.CustomerSettings)]
+    [Table(DatabaseConstants.CustomerSettingsTable)]
     public class CustomerSettingsEntity
     {
         public string CustomerId { get; set; }
