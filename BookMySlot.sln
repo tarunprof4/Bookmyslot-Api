@@ -117,6 +117,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.SlotSchedule
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Customers.Repositories.MySql", "Customers\Bookmyslot.Api.Customers.Repositories.MySql\Bookmyslot.Api.Customers.Repositories.MySql.csproj", "{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.SlotScheduler.Repositories.MySql", "SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories.MySql\Bookmyslot.Api.SlotScheduler.Repositories.MySql.csproj", "{B1239B62-0EE9-450B-BF82-1F08C6AB430F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -295,6 +297,10 @@ Global
 		{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1239B62-0EE9-450B-BF82-1F08C6AB430F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1239B62-0EE9-450B-BF82-1F08C6AB430F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1239B62-0EE9-450B-BF82-1F08C6AB430F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1239B62-0EE9-450B-BF82-1F08C6AB430F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -349,6 +355,7 @@ Global
 		{39D2D2C7-502B-40A6-8171-67D2AEFD4FEF} = {32F67FBB-22DF-46DC-89F3-84121457B5D7}
 		{8755D11C-8420-4EDF-B283-943EA6B2FE5E} = {2D1A08CB-8508-4BF0-9E71-551355EA19DF}
 		{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA} = {CE9B1978-0B2F-483D-8FD9-48D7043D1606}
+		{B1239B62-0EE9-450B-BF82-1F08C6AB430F} = {2D1A08CB-8508-4BF0-9E71-551355EA19DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}
