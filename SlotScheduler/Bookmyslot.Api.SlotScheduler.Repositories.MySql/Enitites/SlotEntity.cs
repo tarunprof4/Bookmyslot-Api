@@ -1,6 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Database.Constants;
 using Dapper;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 {
