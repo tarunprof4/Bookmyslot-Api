@@ -96,7 +96,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             SlotModel slotModel = DefaultSlotModel();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
-            var slotModelResponse = await slotRepository.DeleteSlot(DefaultSlotModel());
+            var slotModelResponse = await slotRepository.DeleteSlot(DefaultSlotModel().Id);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelResponse.Result, true);
@@ -144,7 +144,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             SlotModel slotModel = DefaultSlotModel();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
-            var slotModelResponse = await slotRepository.UpdateSlot(DefaultSlotModel());
+            var slotModelResponse = await slotRepository.UpdateSlot(slotModel.Id, slotModel.BookedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelResponse.Result, true);

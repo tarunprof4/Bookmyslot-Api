@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bookmyslot.Api.Customers.Repositories\Bookmyslot.Api.Customers.Repositories.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.Customers.Repositories.MySql\Bookmyslot.Api.Customers.Repositories.MySql.csproj" />
   </ItemGroup>
 
 </Project>
