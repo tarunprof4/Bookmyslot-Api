@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
     public class SlotTableQueries
     {
 
-        public const string CreateSlotQuery = @"INSERT INTO" + " " + TableNameConstants.CancelledSlot + " " +
+        public const string CreateSlotQuery = @"INSERT INTO" + " " + TableNameConstants.Slot + " " +
             @"(Id, Title, CreatedBy, TimeZone, SlotDate, SlotDateUtc, SlotStartTime, SlotEndTime, CreatedDateUtc, IsDeleted)
  VALUES(@Id, @Title, @CreatedBy, @TimeZone, @SlotDate, @SlotDateUtc, @SlotStartTime, @SlotEndTime, @CreatedDateUtc, @IsDeleted); ";
 
