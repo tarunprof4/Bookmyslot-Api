@@ -25,10 +25,26 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel)
         {
-            var customerEntity = EntityFactory.EntityFactory.CreateCancelledSlotEntity(cancelledSlotModel);
+            var cancelledSlotEntity = EntityFactory.EntityFactory.CreateCancelledSlotEntity(cancelledSlotModel);
 
-            var parameters = new { cancelledSlotModel = cancelledSlotModel };
-            await this.dbInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.InsertAsync<Guid, CancelledSlotEntity>(customerEntity));
+            var sql = SlotTableQueries.CreateCancelledSlotQuery;
+            var parameters = new
+            {
+                Id = cancelledSlotEntity.Id,
+                Title = cancelledSlotEntity.Title,
+                CreatedBy = cancelledSlotEntity.CreatedBy,
+                CancelledBy = cancelledSlotEntity.CancelledBy,
+                BookedBy = cancelledSlotEntity.BookedBy,
+                TimeZone = cancelledSlotEntity.TimeZone,
+                SlotDate = cancelledSlotEntity.SlotDate,
+                SlotDateUtc = cancelledSlotEntity.SlotDateUtc,
+                SlotStartTime = cancelledSlotEntity.SlotStartTime,
+                SlotEndTime = cancelledSlotEntity.SlotEndTime,
+                CreatedDateUtc = cancelledSlotEntity.CreatedDateUtc,
+            };
+
+
+            await this.dbInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.QueryAsync<CancelledSlotEntity>(sql, parameters));
 
             return new Response<bool>() { Result = true };
         }

@@ -6,6 +6,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
     public class SlotTableQueries
     {
 
+        public const string CreateCancelledSlotQuery = @"INSERT INTO" + " " + TableNameConstants.CancelledSlot + " " +@"(Id, Title, CreatedBy, CancelledBy, BookedBy, TimeZone, SlotDate, SlotDateUtc, SlotStartTime, SlotEndTime, CreatedDateUtc)
+ VALUES(@Id, @Title, @CreatedBy, @CancelledBy, @BookedBy, @TimeZone, @SlotDate, @SlotDateUtc, @SlotStartTime, @SlotEndTime, @CreatedDateUtc); ";
+
+
+
         public const string GetAllSlotsQuery = @"SELECT * FROM" + " " + TableNameConstants.Slot + " " + "order by SlotDateUtc OFFSET @PageNumber ROWS FETCH Next @PageSize ROWS ONLY";
 
    
