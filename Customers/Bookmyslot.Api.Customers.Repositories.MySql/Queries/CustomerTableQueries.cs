@@ -27,7 +27,7 @@ VALUES(@UniqueId, @FirstName, @LastName, @UserName, @Email, @Provider, @PhotoUrl
         public const string GetCustomerSettingsQuery = @"select timeZone from" + " " + TableNameConstants.CustomerSettings + " " + "where CustomerId=@customerId";
 
 
-        public const string InsertOrUpdateCustomerSettingsQuery =
+        public const string InsertOrUpdateCustomerSettingsQuery1 =
             @"UPDATE" + " " + TableNameConstants.CustomerSettings + " " + @"set TimeZone=@timeZone, ModifiedDateUtc=@ModifiedDateUtc where CustomerId=@customerId
             IF @@ROWCOUNT=0
             BEGIN
@@ -35,6 +35,10 @@ VALUES(@UniqueId, @FirstName, @LastName, @UserName, @Email, @Provider, @PhotoUrl
             VALUES
             (@timeZone, @ModifiedDateUtc, @customerId)
             END";
+
+
+        public const string InsertOrUpdateCustomerSettingsQuery = @"INSERT INTO" + " " + TableNameConstants.CustomerSettings + " " + @"(CustomerId, TimeZone,  ModifiedDateUtc) VALUES(@customerId, @timeZone, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
+ TimeZone=@timeZone";
 
     }
 }

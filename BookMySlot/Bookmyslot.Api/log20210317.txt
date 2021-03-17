@@ -1141,3 +1141,5 @@ Starting Bookmyslot web host { Version: "1.0.0", Level: Debug, UtcTimestamp: 03/
    at NSwag.AspNetCore.Middlewares.RedirectToIndexMiddleware.Invoke(HttpContext context)
    at NSwag.AspNetCore.Middlewares.OpenApiDocumentMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware.<Invoke>g__Awaited|6_0(ExceptionHandlerMiddleware middleware, HttpContext context, Task task)
+Http Response ResponseLog { CorrelationId: "08a8b9e0-1234-a914-5947-fea55485aba3", RequestId: "c36f8544-7966-4823-aa5e-931e36df85b1", StatusCode: 500, CompressedBody: "HQAAAB+LCAAAAAAAAApTio5R8swrSS3KS8xRCE4tKkstUnAtKsovilGKVQIApHQvcB0AAAA=", ResponseTime: 00:04:13.0298351 } { Version: "1.0.0", Level: Debug, UtcTimestamp: 03/17/2021 12:12:49, RequestId: ["c36f8544-7966-4823-aa5e-931e36df85b1"] } 
+  
