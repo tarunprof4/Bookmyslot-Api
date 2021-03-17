@@ -5,6 +5,11 @@ namespace Bookmyslot.Api.Customers.Repositories.Queries
 
     public class CustomerTableQueries
     {
+
+        public const string RegisterCustomerQuery = @"INSERT INTO" + " " + TableNameConstants.RegisterCustomer + " " + @"(UniqueId, FirstName, LastName, UserName, Email, Provider, PhotoUrl, CreatedDateUtc)
+VALUES(@UniqueId, @FirstName, @LastName, @UserName, @Email, @Provider, @PhotoUrl, @CreatedDateUtc); ";
+
+
         public const string UpdateProfileSettingQuery = @"UPDATE" + " " + TableNameConstants.RegisterCustomer + " " + @"SET 
  FirstName = @FirstName,  LastName = @LastName, Gender=@Gender, ModifiedDateUtc =@ModifiedDateUtc
  WHERE UniqueId=@customerId";

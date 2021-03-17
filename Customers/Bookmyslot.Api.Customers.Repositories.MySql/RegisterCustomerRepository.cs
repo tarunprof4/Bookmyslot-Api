@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.Api.Customers.Repositories.Queries;
 using Dapper;
 using System.Data;
 using System.Threading.Tasks;
@@ -19,15 +20,30 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
         }
+    
         public async Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
         {
             var registerCustomerEntity = EntityFactory.EntityFactory.CreateRegisterCustomerEntity(registerCustomerModel);
+            var sql = CustomerTableQueries.RegisterCustomerQuery;
+            var parameters = new
+            {
+                UniqueId = registerCustomerEntity.UniqueId,
+                FirstName = registerCustomerEntity.FirstName,
+                LastName = registerCustomerEntity.LastName,
+                UserName = registerCustomerEntity.UserName,
+                Email = registerCustomerEntity.Email,
+                Provider = registerCustomerEntity.Provider,
+                PhotoUrl = registerCustomerEntity.PhotoUrl,
+                CreatedDateUtc = registerCustomerEntity.CreatedDateUtc
+            };
 
-            var parameters = new { customerEntity = registerCustomerEntity };
-            await this.dbInterceptor.GetQueryResults("CreateCustomer", parameters, () => this.connection.InsertAsync<string, RegisterCustomerEntity>(registerCustomerEntity));
+
+            await this.dbInterceptor.GetQueryResults("RegisterCustomer", parameters, () => this.connection.QueryAsync<RegisterCustomerEntity>(sql, parameters));
 
             return new Response<string>() { Result = registerCustomerModel.Email };
         }
+
+
 
     }
 }
