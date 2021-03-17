@@ -2,11 +2,11 @@
 {
     public class TableNameConstants
     {
-        public const string RegisterCustomer = "RegisterCustomer";
-        public const string Slot = "Slot";
-        public const string CancelledSlot = "CancelledSlot";
+        public const string RegisterCustomer = "bookmyslot.registercustomer";
+        public const string Slot = "bookmyslot.slot";
+        public const string CancelledSlot = "bookmyslot.cancelledslot";
         public const string Cache = "Cache";
 
-        public const string CustomerSettings = "CustomerSettings";
+        public const string CustomerSettings = "bookmyslot.customersettings";
     }
 }

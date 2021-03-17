@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common.Database;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -17,7 +18,7 @@ namespace Bookmyslot.Api.Injections
         private static void DatabaseInjections(IServiceCollection services, Dictionary<string, string> appConfigurations)
         {
             services.AddSingleton<IDbInterceptor, DbInterceptor>();
-            services.AddTransient<IDbConnection>((sp) => new SqlConnection(appConfigurations[AppSettingKeysConstants.BookMySlotDatabase]));
+            services.AddTransient<IDbConnection>((sp) => new MySqlConnection(appConfigurations[AppSettingKeysConstants.BookMySlotDatabase]));
         }
     }
 }
