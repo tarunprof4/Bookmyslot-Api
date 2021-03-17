@@ -2,7 +2,7 @@
 {
     public class DatabaseConstants
     {
-        public const string BookmyslotDatabase = "bookmyslot";
+        public const string BookmyslotDatabase = "bookmyslot.";
 
         public const string CacheTable = "Cache";
 
