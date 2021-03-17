@@ -28,7 +28,7 @@ VALUES(@UniqueId, @FirstName, @LastName, @UserName, @Email, @Provider, @PhotoUrl
 
 
         public const string InsertOrUpdateCustomerSettingsQuery = @"INSERT INTO" + " " + TableNameConstants.CustomerSettings + " " + @"(CustomerId, TimeZone,  ModifiedDateUtc) VALUES(@customerId, @timeZone, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
- TimeZone=@timeZone";
+ TimeZone=@timeZone,  ModifiedDateUtc = @ModifiedDateUtc";
 
     }
 }
