@@ -9,7 +9,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
     public class SlotEntity
     {
         [Key]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Title { get; set; }
         public string CreatedBy { get; set; }
 

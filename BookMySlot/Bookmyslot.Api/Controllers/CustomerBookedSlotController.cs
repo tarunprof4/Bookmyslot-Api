@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -116,7 +115,7 @@ namespace Bookmyslot.Api.Controllers
             foreach (var bookSlotModel in bookSlotModels)
             {
                 bookSlotModel.BookedSlotModelInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookSlotModel.SlotModel));
-                bookSlotModel.SlotModel.Id = Guid.Empty;
+                bookSlotModel.SlotModel.Id = string.Empty;
                 bookSlotModel.SlotModel.BookedBy = string.Empty;
                 bookSlotModel.SlotModel.CreatedBy = string.Empty;
 
@@ -128,7 +127,7 @@ namespace Bookmyslot.Api.Controllers
         {
             foreach (var cancelledSlotInformationModel in cancelledSlotInformationModels)
             {
-                cancelledSlotInformationModel.CancelledSlotModel.Id = Guid.Empty;
+                cancelledSlotInformationModel.CancelledSlotModel.Id = string.Empty;
                 cancelledSlotInformationModel.CancelledSlotModel.CreatedBy = string.Empty;
                 cancelledSlotInformationModel.CancelledSlotModel.CancelledBy = string.Empty;
                 cancelledSlotInformationModel.CancelledSlotModel.BookedBy = string.Empty;

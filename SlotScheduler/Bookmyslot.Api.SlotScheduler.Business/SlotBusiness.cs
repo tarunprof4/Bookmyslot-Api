@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             slotModel.Title = slotModel.Title.Trim();
             slotModel.BookedBy = string.Empty;
         }
-        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel, string createdBy)
+        public async Task<Response<string>> CreateSlot(SlotModel slotModel, string createdBy)
         {
             slotModel.CreatedBy = createdBy;
 
@@ -41,12 +41,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             }
 
             else
-                return Response<Guid>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+                return Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
         }
 
-        public async Task<Response<bool>> CancelSlot(Guid slotId, string deletedBy)
+        public async Task<Response<bool>> CancelSlot(string slotId, string deletedBy)
         {
-            if (slotId == Guid.Empty)
+            if (string.IsNullOrWhiteSpace(slotId))
             {
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
             }
@@ -92,9 +92,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             };
         }
 
-        public async Task<Response<SlotModel>> GetSlot(Guid slotId)
+        public async Task<Response<SlotModel>> GetSlot(string slotId)
         {
-            if (slotId == Guid.Empty)
+            if (string.IsNullOrWhiteSpace(slotId))
             {
                 return Response<SlotModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
             }
@@ -103,7 +103,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         }
 
 
-        private async Task<Tuple<bool, SlotModel>> CheckIfSlotExists(Guid slotId)
+        private async Task<Tuple<bool, SlotModel>> CheckIfSlotExists(string slotId)
         {
             var slotModelResponse = await this.slotRepository.GetSlot(slotId);
             if (slotModelResponse.ResultType == ResultType.Success)

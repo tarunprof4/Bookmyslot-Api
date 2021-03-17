@@ -15,7 +15,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
     {
         private const string CustomerId = "CustomerId";
 
-        private Guid Id = Guid.NewGuid();
+        private readonly string Id = Guid.NewGuid().ToString();
         private const string Title = "Title";
         private const string CreatedBy = "CreatedBy";
         private const string BookedBy = "BookedBy";

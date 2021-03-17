@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
     public class CancelledSlotModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         
         public string Title { get; set; }
 

@@ -12,7 +12,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
         {
             return new SlotEntity()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Title = slotModel.Title,
                 CreatedBy = slotModel.CreatedBy,
                 BookedBy = slotModel.BookedBy,

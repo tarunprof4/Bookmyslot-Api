@@ -7,7 +7,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
     public class SlotModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         
         public string Title { get; set; }
 

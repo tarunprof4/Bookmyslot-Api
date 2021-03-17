@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
     {
         private const string CustomerId = "CustomerId";
 
-        private Guid Id = Guid.NewGuid();
+        private readonly string Id = Guid.NewGuid().ToString();
         private const string Title = "Title";
         private const string CreatedBy = "CreatedBy";
         private const string BookedBy = "BookedBy";
@@ -82,12 +82,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         public async Task CreateSlot_ValidSlotModel_ReturnsSuccessResponse()
         {
             SlotModel slotModel = DefaultSlotModel();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<Guid>>>())).Returns(Task.FromResult(slotModel.Id));
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>())).Returns(Task.FromResult(slotModel.Id));
 
             var slotModelResponse = await slotRepository.CreateSlot(slotModel);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<Guid>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>()), Times.Once);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             SlotEntity slotEntity = null;
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SlotEntity>>>())).Returns(Task.FromResult(slotEntity));
 
-            var slotModelResponse = await slotRepository.GetSlot(Guid.NewGuid());
+            var slotModelResponse = await slotRepository.GetSlot(Guid.NewGuid().ToString());
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SlotEntity>>>()), Times.Once);
@@ -123,7 +123,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SlotEntity>>>())).Returns(Task.FromResult(slotEntity));
 
-            var slotModelResponse = await slotRepository.GetSlot(Guid.NewGuid());
+            var slotModelResponse = await slotRepository.GetSlot(Guid.NewGuid().ToString());
             var slotModel = slotModelResponse.Result;
             Assert.AreEqual(slotModel.Id, Id);
             Assert.AreEqual(slotModel.Title, Title);

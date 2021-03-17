@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
 
 
-        public async Task<Response<Guid>> CreateSlot(SlotModel slotModel)
+        public async Task<Response<string>> CreateSlot(SlotModel slotModel)
         {
             var slotEntity = EntityFactory.EntityFactory.CreateSlotEntity(slotModel);
 
@@ -58,10 +58,10 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             await this.dbInterceptor.GetQueryResults("CreateSlot", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
             
-            return new Response<Guid>() { Result = slotEntity.Id };
+            return new Response<string>() { Result = slotEntity.Id };
         }
 
-        public async Task<Response<bool>> DeleteSlot(Guid slotId)
+        public async Task<Response<bool>> DeleteSlot(string slotId)
         {
             var sql = SlotTableQueries.DeleteSlotQuery;
             var parameters = new {
@@ -74,7 +74,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return new Response<bool>() { Result = true };
         }
 
-        public async Task<Response<SlotModel>> GetSlot(Guid slotId)
+        public async Task<Response<SlotModel>> GetSlot(string slotId)
         {
             var sql = SlotTableQueries.GetSlotQuery;
             var parameters = new { Id = slotId };
@@ -87,7 +87,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
      
 
-        public async Task<Response<bool>> UpdateSlot(Guid slotId, string bookedBy)
+        public async Task<Response<bool>> UpdateSlot(string slotId, string bookedBy)
         {
             var sql = SlotTableQueries.UpdateSlotQuery;
             var parameters = new

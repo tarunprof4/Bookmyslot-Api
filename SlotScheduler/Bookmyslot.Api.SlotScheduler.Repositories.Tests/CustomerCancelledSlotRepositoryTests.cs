@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
     {
         private const string CustomerId = "CustomerId";
 
-        private Guid Id = Guid.NewGuid();
+        private readonly string Id = Guid.NewGuid().ToString();
         private const string Title = "Title";
         private const string CreatedBy = "CreatedBy";
         private const string CancelledBy = "CancelledBy";
@@ -43,12 +43,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         [Test]
         public async Task CreateCustomerCancelledSlot_NoRecordsFound_ReturnsEmptyResponse()
         {
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<Guid>>>())).Returns(Task.FromResult(Guid.NewGuid()));
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>())).Returns(Task.FromResult(Guid.NewGuid().ToString()));
 
             var cancelledSlotModelsResponse = await customerCancelledSlotRepository.CreateCustomerCancelledSlot(new CancelledSlotModel());
 
             Assert.AreEqual(cancelledSlotModelsResponse.ResultType, ResultType.Success);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<Guid>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<string>>>()), Times.Once);
         }
 
         [Test]
