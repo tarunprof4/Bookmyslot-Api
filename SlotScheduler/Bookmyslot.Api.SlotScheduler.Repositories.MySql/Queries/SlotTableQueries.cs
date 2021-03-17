@@ -6,14 +6,30 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
     public class SlotTableQueries
     {
 
-        public const string CreateCancelledSlotQuery = @"INSERT INTO" + " " + TableNameConstants.CancelledSlot + " " +@"(Id, Title, CreatedBy, CancelledBy, BookedBy, TimeZone, SlotDate, SlotDateUtc, SlotStartTime, SlotEndTime, CreatedDateUtc)
+        public const string CreateSlotQuery = @"INSERT INTO" + " " + TableNameConstants.CancelledSlot + " " +
+            @"(Id, Title, CreatedBy, TimeZone, SlotDate, SlotDateUtc, SlotStartTime, SlotEndTime, CreatedDateUtc, IsDeleted)
+ VALUES(@Id, @Title, @CreatedBy, @TimeZone, @SlotDate, @SlotDateUtc, @SlotStartTime, @SlotEndTime, @CreatedDateUtc, @IsDeleted); ";
+
+        public const string GetSlotQuery = @"SELECT * FROM" + " " + TableNameConstants.Slot + " " + @"where Id = @Id";
+
+
+
+
+        public const string UpdateSlotQuery = @"UPDATE" + " " + TableNameConstants.Slot + " " + @"SET  
+ BookedBy = @BookedBy, ModifiedDateUtc= @ModifiedDateUtc WHERE Id=@Id";
+
+        public const string DeleteSlotQuery = @"UPDATE" + " " + TableNameConstants.Slot + " " + @"SET  
+ IsDeleted = @IsDeleted, ModifiedDateUtc= @ModifiedDateUtc WHERE Id=@Id";
+
+
+        public const string CreateCancelledSlotQuery = @"INSERT INTO" + " " + TableNameConstants.CancelledSlot + " " + @"(Id, Title, CreatedBy, CancelledBy, BookedBy, TimeZone, SlotDate, SlotDateUtc, SlotStartTime, SlotEndTime, CreatedDateUtc)
  VALUES(@Id, @Title, @CreatedBy, @CancelledBy, @BookedBy, @TimeZone, @SlotDate, @SlotDateUtc, @SlotStartTime, @SlotEndTime, @CreatedDateUtc); ";
 
 
 
         public const string GetAllSlotsQuery = @"SELECT * FROM" + " " + TableNameConstants.Slot + " " + "order by SlotDateUtc OFFSET @PageNumber ROWS FETCH Next @PageSize ROWS ONLY";
 
-   
+
 
         public const string GetDistinctCustomersNearestSlotFromTodayQuery = @"select CreatedBy from(
 SELECT id, title, CreatedBy, SlotStartTime, SlotEndTime, IsDeleted, ModifiedDateUtc, TimeZone, SlotDateUtc,
