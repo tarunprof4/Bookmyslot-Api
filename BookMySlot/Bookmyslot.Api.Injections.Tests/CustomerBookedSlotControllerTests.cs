@@ -27,8 +27,6 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-
-            var env = serviceProvider.GetService<AppConfiguration>();
             var customerBookedSlotBusiness = serviceProvider.GetService<ICustomerBookedSlotBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
             var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
