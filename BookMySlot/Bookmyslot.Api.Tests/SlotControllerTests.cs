@@ -209,12 +209,13 @@ namespace Bookmyslot.Api.Tests
             return slotviewModel;
         }
 
-        private NodaTimeZoneLocationConfiguration DefaultNodaTimeLocationConfiguration()
+        private NodaTimeZoneLocationConfigurationSingleton DefaultNodaTimeLocationConfiguration()
         {
             Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
             zoneWithCountryId.Add(ValidTimeZone, ValidTimeZoneCountry);
             var countries = zoneWithCountryId.Values.Distinct().ToList();
-            return new NodaTimeZoneLocationConfiguration(zoneWithCountryId, countries);
+            NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
+            return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
         }
 
 

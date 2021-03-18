@@ -5,6 +5,7 @@ using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Injections;
+using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -111,6 +112,8 @@ namespace Bookmyslot.Api
 
             InitializeSerilog(serviceProvider);
 
+            BootStrapApp(serviceProvider);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -151,7 +154,13 @@ namespace Bookmyslot.Api
             return appConfigurations;
         }
 
-       
+        private static void BootStrapApp(IServiceProvider serviceProvider)
+        {
+            var nodaTimeZoneLocationBusiness = serviceProvider.GetService<INodaTimeZoneLocationBusiness>();
+            nodaTimeZoneLocationBusiness.CreateNodaTimeZoneLocationInformation();
+        }
+
+
         private static void InitializeSerilog(IServiceProvider serviceProvider)
         {
 

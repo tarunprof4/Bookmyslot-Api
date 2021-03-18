@@ -5,6 +5,8 @@ namespace Bookmyslot.Api.NodaTime.Interfaces
 {
     public interface INodaTimeZoneLocationBusiness
     {
-        NodaTimeZoneLocationConfiguration GetNodaTimeZoneLocationInformation();
+        NodaTimeZoneLocationConfigurationSingleton GetNodaTimeZoneLocationInformation();
+
+        void CreateNodaTimeZoneLocationInformation();
     }
 }

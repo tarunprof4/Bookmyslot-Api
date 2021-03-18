@@ -8,7 +8,7 @@ namespace Bookmyslot.Api.NodaTime.Business
 {
     public class TzdbNodaTimeZoneLocationBusiness : INodaTimeZoneLocationBusiness
     {
-        public NodaTimeZoneLocationConfiguration GetNodaTimeZoneLocationInformation()
+        public void CreateNodaTimeZoneLocationInformation()
         {
             Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
 
@@ -18,8 +18,12 @@ namespace Bookmyslot.Api.NodaTime.Business
             }
             var countries = zoneWithCountryId.Values.Distinct().ToList();
 
+            NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
+        }
 
-            return new NodaTimeZoneLocationConfiguration(zoneWithCountryId, countries);
+        public NodaTimeZoneLocationConfigurationSingleton GetNodaTimeZoneLocationInformation()
+        {
+            return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
         }
     }
 }

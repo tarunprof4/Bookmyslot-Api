@@ -117,12 +117,13 @@ namespace Bookmyslot.Api.Tests
             customerSettingsBusinessMock.Verify((m => m.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())), Times.Once());
         }
 
-        private NodaTimeZoneLocationConfiguration DefaultNodaTimeLocationConfiguration()
+        private NodaTimeZoneLocationConfigurationSingleton DefaultNodaTimeLocationConfiguration()
         {
             Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
             zoneWithCountryId.Add(ValidTimeZone, ValidTimeZoneCountry);
             var countries = zoneWithCountryId.Values.Distinct().ToList();
-            return new NodaTimeZoneLocationConfiguration(zoneWithCountryId, countries);
+            NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
+            return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
         }
     }
 }
