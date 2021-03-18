@@ -1,5 +1,4 @@
-﻿using Dapper;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookmyslot.Api.Search.Repositories.Enitites

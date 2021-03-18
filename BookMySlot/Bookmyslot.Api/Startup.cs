@@ -35,11 +35,12 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appConfiguration = new AppConfiguration(Configuration);
+            services.AddSingleton(appConfiguration);
             var authenticationConfiguration = new AuthenticationConfiguration(Configuration);
             services.AddSingleton(authenticationConfiguration);
-          
-            Dictionary<string, string> appConfigurations = GetAppConfigurations();
-            Injections(services, appConfigurations);
+            
+            Injections(services, appConfiguration);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -89,14 +90,14 @@ namespace Bookmyslot.Api
             });
         }
 
-        private  void Injections(IServiceCollection services, Dictionary<string, string> appConfigurations)
+        private  void Injections(IServiceCollection services, AppConfiguration appConfiguration)
         {
             services.AddHttpContextAccessor();
 
             AppConfigurationInjection.LoadInjections(services, Configuration);
             AuthenticationInjection.LoadInjections(services);
-            CacheInjection.LoadInjections(services, appConfigurations);
-            DataBaseInjection.LoadInjections(services, appConfigurations);
+            CacheInjection.LoadInjections(services, appConfiguration);
+            DataBaseInjection.LoadInjections(services, appConfiguration);
             CommonInjection.LoadInjections(services);
             CustomerInjection.LoadInjections(services);
             SearchInjection.LoadInjections(services);

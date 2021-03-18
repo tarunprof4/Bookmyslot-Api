@@ -11,7 +11,11 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
 
         private readonly string elasticSearchUrl;
 
+        private readonly string databaseConnectionString;
+
         private readonly string readDatabaseConnectionString;
+
+        private readonly string cacheDatabaseConnectionString;
 
         public AppConfiguration(IConfiguration configuration)
         {
@@ -21,7 +25,11 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
 
             this.elasticSearchUrl = configuration.GetSection(AppSettingKeysConstants.ElasticSearchUrl).Value;
 
-            this.readDatabaseConnectionString = configuration.GetSection(AppSettingKeysConstants.ConnectionStrings).GetSection(AppSettingKeysConstants.BookMySlotReadDatabase).Value;
+
+            var connectionStringSettings = configuration.GetSection(AppSettingKeysConstants.ConnectionStrings);
+            this.databaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BookMySlotDatabase).Value;
+            this.readDatabaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BookMySlotReadDatabase).Value;
+            this.cacheDatabaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.CacheDatabase).Value;
         }
 
         public string AppVersion => this.appVersion;
@@ -30,6 +38,10 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
 
         public string ElasticSearchUrl => this.elasticSearchUrl;
 
+        public string DatabaseConnectionString => this.databaseConnectionString;
+
         public string ReadDatabaseConnectionString => this.readDatabaseConnectionString;
+
+        public string CacheDatabaseConnectionString => this.cacheDatabaseConnectionString;
     }
 }

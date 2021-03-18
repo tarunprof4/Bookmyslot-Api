@@ -18,8 +18,6 @@ namespace Bookmyslot.Api.Injections
             services.AddSingleton(cacheConfiguration);
             var emailConfiguration = new EmailConfiguration(configuration);
             services.AddSingleton(emailConfiguration);
-            var appConfiguration = new AppConfiguration(configuration);
-            services.AddSingleton(appConfiguration);
             var googleAuthenticationConfiguration = new GoogleAuthenticationConfiguration(configuration);
             services.AddSingleton(googleAuthenticationConfiguration);
             var facebookAuthenticationConfiguration = new FacebookAuthenticationConfiguration(configuration);
