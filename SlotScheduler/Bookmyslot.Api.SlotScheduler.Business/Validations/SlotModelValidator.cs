@@ -11,7 +11,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
     {
         public SlotModelValidator()
         {
-            RuleFor(x => x.SlotZonedDate).Cascade(CascadeMode.Stop).Must(isSlotDateValid).WithMessage(AppBusinessMessagesConstants.InValidSlotDate).Must(isSlotDateOnDayLightSavingDay).WithMessage(AppBusinessMessagesConstants.DayLightSavinngDateNotAllowed);
+            RuleFor(x => x.SlotZonedDate).Cascade(CascadeMode.Stop).Must(isSlotDateValid).WithMessage(AppBusinessMessagesConstants.InValidSlotDate).Must(slotNotAllowedOnDayLightSavingDay).WithMessage(AppBusinessMessagesConstants.DayLightSavinngDateNotAllowed);
             RuleFor(x => x).Cascade(CascadeMode.Stop).Must(isSlotEndTimeValid).WithMessage(AppBusinessMessagesConstants.SlotEndTimeInvalid);
             RuleFor(x => x.SlotDuration).Cascade(CascadeMode.Stop).Must(isSlotDurationValid).WithMessage(AppBusinessMessagesConstants.SlotDurationInvalid);
         }
@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
         }
 
 
-        private bool isSlotDateOnDayLightSavingDay(ZonedDateTime slotZonedDate)
+        private bool slotNotAllowedOnDayLightSavingDay(ZonedDateTime slotZonedDate)
         {
             var isDayLightSavingDay = slotZonedDate.IsDaylightSavingTime();
             if (isDayLightSavingDay)
