@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Location.Business;
-using Bookmyslot.Api.Location.Interfaces;
+﻿using Bookmyslot.Api.NodaTime.Business;
+using Bookmyslot.Api.NodaTime.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections
 {
-    public class LocationInjection
+    public class NodaTimeInjection
     {
         public static void LoadInjections(IServiceCollection services)
         {

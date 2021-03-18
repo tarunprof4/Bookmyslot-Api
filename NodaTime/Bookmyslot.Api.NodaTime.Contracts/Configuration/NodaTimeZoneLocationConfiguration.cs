@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bookmyslot.Api.Location.Contracts.Configuration
+namespace Bookmyslot.Api.NodaTime.Contracts.Configuration
 {
     public class NodaTimeZoneLocationConfiguration
     {

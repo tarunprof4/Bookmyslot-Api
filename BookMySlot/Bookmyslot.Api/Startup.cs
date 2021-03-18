@@ -103,7 +103,7 @@ namespace Bookmyslot.Api
             SearchInjection.LoadInjections(services);
             SlotSchedulerInjection.LoadInjections(services);
             HttpFactoryInjections.LoadInjections(services);
-            LocationInjection.LoadInjections(services);
+            NodaTimeInjection.LoadInjections(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

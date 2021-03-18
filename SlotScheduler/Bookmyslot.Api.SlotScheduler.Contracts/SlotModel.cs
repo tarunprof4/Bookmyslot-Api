@@ -1,5 +1,4 @@
-﻿
-using NodaTime;
+﻿using NodaTime;
 using System;
 using System.Text.Json.Serialization;
 

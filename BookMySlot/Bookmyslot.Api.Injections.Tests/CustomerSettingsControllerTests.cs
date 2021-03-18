@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
-using Bookmyslot.Api.Location.Interfaces;
+using Bookmyslot.Api.NodaTime.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

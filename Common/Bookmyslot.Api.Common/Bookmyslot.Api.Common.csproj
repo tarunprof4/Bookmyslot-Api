@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NodaTime\Bookmyslot.Api.NodaTime.Contracts\Bookmyslot.Api.NodaTime.Contracts.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Common.Contracts\Bookmyslot.Api.Common.Contracts.csproj" />
-    <ProjectReference Include="..\Bookmyslot.Api.Common.NodaTime\Bookmyslot.Api.Common.NodaTime.csproj" />
   </ItemGroup>
 
 </Project>

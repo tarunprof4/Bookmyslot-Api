@@ -105,8 +105,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Location.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Location.Business", "Location\Bookmyslot.Api.Location.Business\Bookmyslot.Api.Location.Business.csproj", "{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Common.NodaTime", "Common\Bookmyslot.Api.Common.NodaTime\Bookmyslot.Api.Common.NodaTime.csproj", "{61BC68EC-8B63-44C7-A00F-E53391C78FB6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Tests", "BookMySlot\Bookmyslot.Api.Tests\Bookmyslot.Api.Tests.csproj", "{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Customers.ViewModels", "Customers\Bookmyslot.Api.Customers.ViewModels\Bookmyslot.Api.Customers.ViewModels.csproj", "{D24651F0-F765-4F31-A624-616C97D5BA39}"
@@ -115,9 +113,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Common.ViewM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.SlotScheduler.ViewModels", "SlotScheduler\Bookmyslot.Api.SlotScheduler.ViewModels\Bookmyslot.Api.SlotScheduler.ViewModels.csproj", "{8755D11C-8420-4EDF-B283-943EA6B2FE5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Customers.Repositories.MySql", "Customers\Bookmyslot.Api.Customers.Repositories.MySql\Bookmyslot.Api.Customers.Repositories.MySql.csproj", "{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Customers.Repositories.MySql", "Customers\Bookmyslot.Api.Customers.Repositories.MySql\Bookmyslot.Api.Customers.Repositories.MySql.csproj", "{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.SlotScheduler.Repositories.MySql", "SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories.MySql\Bookmyslot.Api.SlotScheduler.Repositories.MySql.csproj", "{B1239B62-0EE9-450B-BF82-1F08C6AB430F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.SlotScheduler.Repositories.MySql", "SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories.MySql\Bookmyslot.Api.SlotScheduler.Repositories.MySql.csproj", "{B1239B62-0EE9-450B-BF82-1F08C6AB430F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NodaTime", "NodaTime", "{52155095-B52C-4C1F-95AB-BF183B6A0FAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.NodaTime.Contracts", "NodaTime\Bookmyslot.Api.NodaTime.Contracts\Bookmyslot.Api.NodaTime.Contracts.csproj", "{D76913A1-71DD-4FEF-AC45-2010134936A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.NodaTime.Business", "NodaTime\Bookmyslot.Api.NodaTime.Business\Bookmyslot.Api.NodaTime.Business.csproj", "{99A2580C-15CF-4576-8629-67F24107E441}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -273,10 +277,6 @@ Global
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{61BC68EC-8B63-44C7-A00F-E53391C78FB6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -301,6 +301,14 @@ Global
 		{B1239B62-0EE9-450B-BF82-1F08C6AB430F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1239B62-0EE9-450B-BF82-1F08C6AB430F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1239B62-0EE9-450B-BF82-1F08C6AB430F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D76913A1-71DD-4FEF-AC45-2010134936A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D76913A1-71DD-4FEF-AC45-2010134936A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D76913A1-71DD-4FEF-AC45-2010134936A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D76913A1-71DD-4FEF-AC45-2010134936A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99A2580C-15CF-4576-8629-67F24107E441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99A2580C-15CF-4576-8629-67F24107E441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99A2580C-15CF-4576-8629-67F24107E441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99A2580C-15CF-4576-8629-67F24107E441}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -349,13 +357,14 @@ Global
 		{870122E8-C941-4C20-8B57-C8B96267250A} = {862ED9A0-B7E1-44EE-A3A6-7DD4DF897E57}
 		{B57AA492-624B-450D-9E5B-F3EAACBE5C97} = {5F9167B0-5484-4A43-9B84-36CD91E18EF7}
 		{6F38AD5D-1B41-4EF1-B6E3-A153F9AF497F} = {5F9167B0-5484-4A43-9B84-36CD91E18EF7}
-		{61BC68EC-8B63-44C7-A00F-E53391C78FB6} = {32F67FBB-22DF-46DC-89F3-84121457B5D7}
 		{443A3B0E-235F-4CEC-8F31-C16D7BB59F87} = {E49C57E8-84BA-4EBC-9295-D327F1FC9CA9}
 		{D24651F0-F765-4F31-A624-616C97D5BA39} = {CE9B1978-0B2F-483D-8FD9-48D7043D1606}
 		{39D2D2C7-502B-40A6-8171-67D2AEFD4FEF} = {32F67FBB-22DF-46DC-89F3-84121457B5D7}
 		{8755D11C-8420-4EDF-B283-943EA6B2FE5E} = {2D1A08CB-8508-4BF0-9E71-551355EA19DF}
 		{29BF5B5C-E1B0-40B1-BF7D-3481F0839CBA} = {CE9B1978-0B2F-483D-8FD9-48D7043D1606}
 		{B1239B62-0EE9-450B-BF82-1F08C6AB430F} = {2D1A08CB-8508-4BF0-9E71-551355EA19DF}
+		{D76913A1-71DD-4FEF-AC45-2010134936A0} = {52155095-B52C-4C1F-95AB-BF183B6A0FAD}
+		{99A2580C-15CF-4576-8629-67F24107E441} = {52155095-B52C-4C1F-95AB-BF183B6A0FAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}

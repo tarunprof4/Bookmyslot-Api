@@ -19,7 +19,7 @@
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Email\Bookmyslot.Api.Common.Email.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Business\Bookmyslot.Api.Customers.Business.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Repositories.MySql\Bookmyslot.Api.Customers.Repositories.MySql.csproj" />
-    <ProjectReference Include="..\..\Location\Bookmyslot.Api.Location.Business\Bookmyslot.Api.Location.Business.csproj" />
+    <ProjectReference Include="..\..\NodaTime\Bookmyslot.Api.NodaTime.Business\Bookmyslot.Api.NodaTime.Business.csproj" />
     <ProjectReference Include="..\..\Search\Bookmyslot.Api.Search.Business\Bookmyslot.Api.Search.Business.csproj" />
     <ProjectReference Include="..\..\Search\Bookmyslot.Api.Search.Repositories\Bookmyslot.Api.Search.Repositories.csproj" />
     <ProjectReference Include="..\..\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\Bookmyslot.Api.SlotScheduler.Business.csproj" />

@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.ExtensionMethods;
-using Bookmyslot.Api.Location.Interfaces;
+using Bookmyslot.Api.NodaTime.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
 

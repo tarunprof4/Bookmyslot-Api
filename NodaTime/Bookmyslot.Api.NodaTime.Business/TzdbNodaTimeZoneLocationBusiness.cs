@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Location.Contracts.Configuration;
-using Bookmyslot.Api.Location.Interfaces;
+﻿using Bookmyslot.Api.NodaTime.Contracts.Configuration;
+using Bookmyslot.Api.NodaTime.Interfaces;
 using NodaTime.TimeZones;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bookmyslot.Api.Location.Business
+namespace Bookmyslot.Api.NodaTime.Business
 {
     public class TzdbNodaTimeZoneLocationBusiness : INodaTimeZoneLocationBusiness
     {

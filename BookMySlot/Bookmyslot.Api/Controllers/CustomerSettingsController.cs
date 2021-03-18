@@ -4,7 +4,7 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Customers.ViewModels.Validations;
-using Bookmyslot.Api.Location.Interfaces;
+using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
