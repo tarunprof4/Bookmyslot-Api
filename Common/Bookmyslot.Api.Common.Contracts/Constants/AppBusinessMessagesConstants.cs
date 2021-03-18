@@ -35,6 +35,7 @@
         public const string TimeZoneRequired = "time zone is required";
         public const string SlotDateRequired = "slot date is required";
         public const string InValidSlotDate = "invaild slot date";
+        public const string DayLightSavinngDateNotAllowed = "slots on day light saving day are not allowed to avoid issues";
         public const string SlotStartDateInvalid = "slot start date cannot be less than todays date";
         public const string SlotEndTimeInvalid = "slot end time  cannot be less than slot start time";
         public const string SlotDurationInvalid = "slot duration  cannot be less than 20 mins";

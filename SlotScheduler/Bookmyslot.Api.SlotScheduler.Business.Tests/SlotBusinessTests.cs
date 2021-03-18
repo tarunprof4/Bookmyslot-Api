@@ -5,6 +5,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Moq;
+using NodaTime;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -84,6 +85,27 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.IsNull(slotModelResponse.Result);
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotDurationInvalid));
+
+
+            slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Never());
+        }
+
+
+        [Test]
+        public async Task CreateSlot_DayLightSavingSlotNotAllowed_ReturnsSlotValidationResponse()
+        {
+            var slotModel = CreateDayLightSavingDaySlotModel();
+            
+            Response<string> slotModelResponseMock = new Response<string>() { Result = slotModel.Id };
+            slotRepositoryMock.Setup(a => a.CreateSlot(slotModel)).Returns(Task.FromResult(slotModelResponseMock));
+
+            var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel, slotModel.CreatedBy);
+
+            Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
+            Assert.IsNull(slotModelResponse.Result);
+            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.DayLightSavinngDateNotAllowed));
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
             Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotDurationInvalid));
 
@@ -199,6 +221,17 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var slotModel = new SlotModel();
             slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(InValidSlotDate, TimeZoneConstants.IndianTimezone);
+            slotModel.SlotStartTime = new TimeSpan(23, 0, 0);
+            return slotModel;
+        }
+
+        private SlotModel CreateDayLightSavingDaySlotModel()
+        {
+            var slotModel = new SlotModel();
+            var localDate = new LocalDateTime(2030, 03, 31, 1, 10, 0);
+            var london = DateTimeZoneProviders.Tzdb[TimeZoneConstants.LondonTimezone];
+            
+            slotModel.SlotZonedDate = london.AtLeniently(localDate);
             slotModel.SlotStartTime = new TimeSpan(23, 0, 0);
             return slotModel;
         }
