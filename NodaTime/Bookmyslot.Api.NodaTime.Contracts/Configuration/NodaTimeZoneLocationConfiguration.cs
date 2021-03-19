@@ -11,16 +11,16 @@ namespace Bookmyslot.Api.NodaTime.Contracts.Configuration
         private static readonly object padlock = new object();
 
         public ReadOnlyDictionary<string, string> ZoneWithCountryId { get; }
-        public ReadOnlyCollection<string> Countries { get; }
+        public ReadOnlyDictionary<string, string> Countries { get; }
 
-        private NodaTimeZoneLocationConfigurationSingleton(Dictionary<string, string> zoneWithCountryId, List<string> countries)
+        private NodaTimeZoneLocationConfigurationSingleton(Dictionary<string, string> zoneWithCountryId, Dictionary<string, string> countries)
         {
             this.ZoneWithCountryId = new ReadOnlyDictionary<string, string>(zoneWithCountryId);
-            this.Countries = new ReadOnlyCollection<string>(countries);
+            this.Countries = new ReadOnlyDictionary<string, string>(countries);
 
         }
 
-        public static NodaTimeZoneLocationConfigurationSingleton CreateInstance(Dictionary<string, string> zoneWithCountryId, List<string> countries)
+        public static NodaTimeZoneLocationConfigurationSingleton CreateInstance(Dictionary<string, string> zoneWithCountryId, Dictionary<string, string> countries)
         {
             if (instance == null)
             {

@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             {
                 SanitizeSlotModel(slotModel);
                 var createSlotTask = slotRepository.CreateSlot(slotModel);
-                var lastLastestSlotTask = slotRepository.CreateSlot(slotModel);
+                var lastLastestSlotTask = customerLastBookedSlotBusiness.SaveCustomerLatestSlot(CreateCustomerLastBookedSlotModel(slotModel));
 
                 await Task.WhenAll(createSlotTask, lastLastestSlotTask);
                 return createSlotTask.Result;
@@ -49,6 +49,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             else
                 return Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
         }
+
+      
 
         public async Task<Response<bool>> CancelSlot(string slotId, string deletedBy)
         {
@@ -92,6 +94,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 CreatedBy = slotModel.CreatedBy,
                 CancelledBy = cancelledBy,
                 BookedBy = slotModel.BookedBy,
+                Country = slotModel.Country,
                 SlotZonedDate = slotModel.SlotZonedDate,
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime
@@ -121,6 +124,19 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
         {
             return await this.slotRepository.GetAllSlots(pageParameterModel);
+        }
+
+        private CustomerLastBookedSlotModel CreateCustomerLastBookedSlotModel(SlotModel slotModel)
+        {
+            return new CustomerLastBookedSlotModel()
+            {
+                CreatedBy = slotModel.CreatedBy,
+                Title = slotModel.Title,
+                Country = slotModel.Country,
+                SlotZonedDate = slotModel.SlotZonedDate,
+                SlotStartTime = slotModel.SlotStartTime,
+                SlotEndTime = slotModel.SlotEndTime
+            };
         }
     }
 }

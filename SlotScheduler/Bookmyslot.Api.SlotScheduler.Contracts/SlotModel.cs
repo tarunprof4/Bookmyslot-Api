@@ -14,6 +14,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         
         public string BookedBy { get; set; }
 
+        public string Country { get; set; }
+
         public ZonedDateTime SlotZonedDate { get; set; }
 
         [JsonConverter(typeof(JsonTimeSpanConverter))]

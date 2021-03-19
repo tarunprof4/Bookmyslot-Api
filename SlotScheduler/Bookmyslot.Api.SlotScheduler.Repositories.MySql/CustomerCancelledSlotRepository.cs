@@ -34,6 +34,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
                 CreatedBy = cancelledSlotEntity.CreatedBy,
                 CancelledBy = cancelledSlotEntity.CancelledBy,
                 BookedBy = cancelledSlotEntity.BookedBy,
+                Country = cancelledSlotEntity.Country,
                 TimeZone = cancelledSlotEntity.TimeZone,
                 SlotDate = cancelledSlotEntity.SlotDate,
                 SlotDateUtc = cancelledSlotEntity.SlotDateUtc,

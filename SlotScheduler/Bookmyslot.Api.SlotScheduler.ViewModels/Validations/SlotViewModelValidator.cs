@@ -14,6 +14,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
         {
             this.nodaTimeZoneLocationBusiness = nodaTimeZoneLocationBusiness;
             RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.SlotTitleRequired);
+            RuleFor(x => x.Country).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.CountryRequired).Must(isCountryValid).WithMessage(AppBusinessMessagesConstants.InValidCountry);
             RuleFor(x => x.TimeZone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TimeZoneRequired).Must(isTimeZoneValid).WithMessage(AppBusinessMessagesConstants.InValidTimeZone);
             RuleFor(x => x.SlotDate).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.SlotDateRequired).Must(isSlotDateValid).WithMessage(AppBusinessMessagesConstants.InValidSlotDate);
         }
@@ -29,10 +30,22 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
         }
 
 
-        private bool isTimeZoneValid(string timeZone)
+        private bool isTimeZoneValid(string country)
         {
             var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
-            if (nodaTimeZoneLocationConfiguration.ZoneWithCountryId.ContainsKey(timeZone))
+            if (nodaTimeZoneLocationConfiguration.ZoneWithCountryId.ContainsKey(country))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        private bool isCountryValid(string country)
+        {
+            var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
+            if (nodaTimeZoneLocationConfiguration.Countries.ContainsKey(country))
             {
                 return true;
             }

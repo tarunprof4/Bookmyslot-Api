@@ -25,10 +25,12 @@ namespace Bookmyslot.Api.Tests
         private const string CustomerId = "CustomerId";
         private const string InValidSlotKey = "InValidSlotKey";
         private const string ValidSlotTitle = "SlotTitle";
+        private const string InValidCountry = "Incountry";
         private const string InValidTimeZone = "InValidTimeZone";
         private const string InValidSlotDate = "31-31-2000";
         private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
-        private const string ValidTimeZoneCountry = "India";
+        private const string ValidCountry = CountryConstants.India;
+        
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationDatePattern);
         private const string ValidSlotKey= "ValidSlotKey";
 
@@ -47,6 +49,7 @@ namespace Bookmyslot.Api.Tests
             nodaTimeZoneLocationBusinessMock = new Mock<INodaTimeZoneLocationBusiness>();
             slotController = new SlotController(slotBusinessMock.Object, keyEncryptorMock.Object, currentUserMock.Object, nodaTimeZoneLocationBusinessMock.Object);
 
+            nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
             Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
@@ -74,6 +77,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotTitleRequired));
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CountryRequired));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.TimeZoneRequired));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotDateRequired));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
@@ -83,13 +87,12 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task CreateSlot_InValidSlotViewModel_ReturnsValidationResponse()
         {
-            this.nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
-
             var postResponse = await slotController.Post(DefaultInValidSlotViewModel());
 
             var objectResult = postResponse as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidCountry));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidTimeZone));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
@@ -102,7 +105,6 @@ namespace Bookmyslot.Api.Tests
         public async Task CreateSlot_ValidSlotViewModel_ReturnsSuccessResponse()
         {
             var guid = Guid.NewGuid().ToString();
-            this.nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
             Response<string> slotBusinessMockResponse = new Response<string>() { Result = guid };
             slotBusinessMock.Setup(a => a.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
 
@@ -195,6 +197,7 @@ namespace Bookmyslot.Api.Tests
         private SlotViewModel DefaultInValidSlotViewModel()
         {
             var slotviewModel = new SlotViewModel();
+            slotviewModel.Country = InValidCountry;
             slotviewModel.TimeZone = InValidTimeZone;
             slotviewModel.SlotDate = InValidSlotDate;
             return slotviewModel;
@@ -203,6 +206,7 @@ namespace Bookmyslot.Api.Tests
         private SlotViewModel DefaultValidSlotViewModel()
         {
             var slotviewModel = new SlotViewModel();
+            slotviewModel.Country = ValidCountry;
             slotviewModel.Title = ValidSlotTitle;
             slotviewModel.TimeZone = ValidTimeZone;
             slotviewModel.SlotDate = ValidSlotDate;
@@ -212,8 +216,9 @@ namespace Bookmyslot.Api.Tests
         private NodaTimeZoneLocationConfigurationSingleton DefaultNodaTimeLocationConfiguration()
         {
             Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
-            zoneWithCountryId.Add(ValidTimeZone, ValidTimeZoneCountry);
-            var countries = zoneWithCountryId.Values.Distinct().ToList();
+            zoneWithCountryId.Add(ValidTimeZone, ValidCountry);
+            var countries = zoneWithCountryId.Values.Distinct().ToDictionary(x => x, x => x);
+
             NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
             return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
         }

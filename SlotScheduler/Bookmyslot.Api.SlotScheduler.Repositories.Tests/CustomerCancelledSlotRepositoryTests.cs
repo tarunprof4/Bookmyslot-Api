@@ -21,6 +21,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         private const string CreatedBy = "CreatedBy";
         private const string CancelledBy = "CancelledBy";
         private const string BookedBy = "BookedBy";
+        private const string Country = "Country";
         private const string TimeZone = TimeZoneConstants.IndianTimezone;
         private const string SlotDate = "03-22-2021";
         private readonly DateTime SlotDateUtc = DateTime.UtcNow;
@@ -131,6 +132,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             cancelledSlotEntity.CreatedBy = CreatedBy;
             cancelledSlotEntity.CancelledBy = CancelledBy;
             cancelledSlotEntity.BookedBy = BookedBy;
+            cancelledSlotEntity.Country = Country;
             cancelledSlotEntity.TimeZone = TimeZone;
             cancelledSlotEntity.SlotDate = SlotDate;
             cancelledSlotEntity.SlotDateUtc = SlotDateUtc;
@@ -145,6 +147,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             cancelledSlotEntity.CreatedBy = CreatedBy;
             cancelledSlotEntity.CancelledBy = CancelledBy;
             cancelledSlotEntity.BookedBy = BookedBy;
+            cancelledSlotEntity.Country = Country;
             cancelledSlotEntity.TimeZone = TimeZone;
             cancelledSlotEntity.SlotDate = SlotDate;
             cancelledSlotEntity.SlotDateUtc = SlotDateUtc;

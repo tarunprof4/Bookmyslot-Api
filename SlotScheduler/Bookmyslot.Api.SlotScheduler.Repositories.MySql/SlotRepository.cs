@@ -46,6 +46,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
                 Id = slotEntity.Id,
                 Title = slotEntity.Title,
                 CreatedBy = slotEntity.CreatedBy,
+                Country = slotEntity.Country,
                 TimeZone = slotEntity.TimeZone,
                 SlotDate = slotEntity.SlotDate,
                 SlotDateUtc = slotEntity.SlotDateUtc,

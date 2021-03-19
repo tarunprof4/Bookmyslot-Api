@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.NodaTime.Business
             {
                 zoneWithCountryId.Add(zoneLocation.ZoneId, zoneLocation.CountryName);
             }
-            var countries = zoneWithCountryId.Values.Distinct().ToList();
+            var countries = zoneWithCountryId.Values.Distinct().ToDictionary(x => x, x => x);
 
             NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
         }

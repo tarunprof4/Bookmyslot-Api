@@ -32,6 +32,7 @@
 
         public const string SlotTitleRequired = "slot title is required";
         public const string SlotDetailsMissing = "slot details missing";
+        public const string CountryRequired = "country is required";
         public const string TimeZoneRequired = "time zone is required";
         public const string SlotDateRequired = "slot date is required";
         public const string InValidSlotDate = "invaild slot date";
@@ -77,6 +78,7 @@
         public const string TokenProviderRequired = "token provider is required";
         public const string InValidTokenProvider = "invalid token provider";
 
+        public const string InValidCountry = "invaild country";
         public const string InValidTimeZone = "invaild timeZone";
 
 

@@ -121,7 +121,7 @@ namespace Bookmyslot.Api.Tests
         {
             Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
             zoneWithCountryId.Add(ValidTimeZone, ValidTimeZoneCountry);
-            var countries = zoneWithCountryId.Values.Distinct().ToList();
+            var countries = zoneWithCountryId.Values.Distinct().ToDictionary(x=>x, x=>x);
             NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
             return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
         }

@@ -10,6 +10,10 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
         [Required]
         public string Title { get; set; }
 
+        [DefaultValue("india")]
+        [Required]
+        public string Country { get; set; }
+
         [DefaultValue("Asia/Kolkata")]
         [Required]
         public string TimeZone { get; set; }
