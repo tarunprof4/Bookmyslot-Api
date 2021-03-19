@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         private const string CancelledBy = "CancelledBy";
         private const string BookedBy = "BookedBy";
         private const string TimeZone = TimeZoneConstants.IndianTimezone;
-        private const string SlotDate = "Mar 22,2021";
+        private const string SlotDate = "03-22-2021";
         private readonly DateTime SlotDateUtc = DateTime.UtcNow;
         private readonly TimeSpan SlotStartTime = new TimeSpan(1, 1, 1);
         private readonly TimeSpan SlotEndTime = new TimeSpan(2, 2, 2);

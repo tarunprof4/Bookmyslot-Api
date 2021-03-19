@@ -17,11 +17,11 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         }
 
 
-        [TestCase("Jan 01,2000", TimeZoneConstants.IndianTimezone)]
-        [TestCase("Mar 31,2021", TimeZoneConstants.LondonTimezone)]
+        [TestCase("01-01-2000", TimeZoneConstants.IndianTimezone)]
+        [TestCase("03-31-2021", TimeZoneConstants.LondonTimezone)]
         public void ConvertDateStringToZonedDateTime_PassedTimeZone_ReturnsRespectiveZonedDateTime(string dateString, string timeZone)
         {
-            var zonedDateTime = NodaTimeHelper.ConvertDateStringToZonedDateTime(dateString, DateTimeConstants.ApplicationOutputDatePattern, new TimeSpan(), timeZone);
+            var zonedDateTime = NodaTimeHelper.ConvertDateStringToZonedDateTime(dateString, DateTimeConstants.ApplicationDatePattern, new TimeSpan(), timeZone);
 
             Assert.AreEqual(zonedDateTime.Zone.Id, timeZone);
             Assert.AreEqual(zonedDateTime.Date, zonedDateTime.Date);
@@ -37,7 +37,7 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         [TestCase("12-31-2020", TimeZoneConstants.LondonTimezone)]
         public void ConvertLocalDateTimeToZonedDateTime_PassedTimeZone_ReturnsRespectiveZonedDateTime(string dateString, string timeZone)
         {
-            var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, DateTimeConstants.ApplicationInputDatePattern, new TimeSpan());
+            var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, DateTimeConstants.ApplicationDatePattern, new TimeSpan());
             var zonedDateTime = NodaTimeHelper.ConvertLocalDateTimeToZonedDateTime(localDateTime, timeZone);
 
             Assert.AreEqual(zonedDateTime.Zone.Id, timeZone);
@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         [TestCase("12-12-2000", TimeZoneConstants.IndianTimezone, 18, 30, 0)]
         public void ConvertZonedDateTimeToUtcDateTime_PassIndiaTimeZone_ReturnsUtcZonedDateTime(string dateString, string timeZone, int utcHour, int utcMinute, int utcSecond)
         {
-            var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, DateTimeConstants.ApplicationInputDatePattern,new TimeSpan());
+            var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, DateTimeConstants.ApplicationDatePattern,new TimeSpan());
             var indiaZonedDateTime = NodaTimeHelper.ConvertLocalDateTimeToZonedDateTime(localDateTime, timeZone);
             var utcDateTime = NodaTimeHelper.ConvertZonedDateTimeToUtcDateTime(indiaZonedDateTime);
 
@@ -80,9 +80,9 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         public void FormatLocalDate_PassedLocal_ReturnsFormattedLocalDate()
         {
             var localDate = new LocalDate(2000, 1, 1);
-            var formattedDate = NodaTimeHelper.FormatLocalDate(localDate, DateTimeConstants.ApplicationOutputDatePattern);
+            var formattedDate = NodaTimeHelper.FormatLocalDate(localDate, DateTimeConstants.ApplicationDatePattern);
 
-            Assert.AreEqual("Jan 01,2000", formattedDate);
+            Assert.AreEqual("01-01-2000", formattedDate);
         }
 
 

@@ -17,7 +17,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
                 CreatedBy = slotModel.CreatedBy,
                 BookedBy = slotModel.BookedBy,
                 TimeZone = slotModel.SlotZonedDate.Zone.Id,
-                SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotZonedDate.Date, DateTimeConstants.ApplicationOutputDatePattern),
+                SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotZonedDate.Date, DateTimeConstants.ApplicationDatePattern),
                 SlotDateUtc = NodaTimeHelper.ConvertZonedDateTimeToUtcDateTime(slotModel.SlotZonedDate),
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime,
@@ -52,7 +52,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
                 BookedBy = cancelledSlotModel.BookedBy,
                 TimeZone = cancelledSlotModel.SlotZonedDate.Zone.Id,
                 SlotDateUtc = NodaTimeHelper.ConvertZonedDateTimeToUtcDateTime(cancelledSlotModel.SlotZonedDate),
-                SlotDate = NodaTimeHelper.FormatLocalDate(cancelledSlotModel.SlotZonedDate.Date, DateTimeConstants.ApplicationOutputDatePattern),
+                SlotDate = NodaTimeHelper.FormatLocalDate(cancelledSlotModel.SlotZonedDate.Date, DateTimeConstants.ApplicationDatePattern),
                 SlotStartTime = cancelledSlotModel.SlotStartTime,
                 SlotEndTime = cancelledSlotModel.SlotEndTime,
                 CreatedDateUtc = DateTime.UtcNow

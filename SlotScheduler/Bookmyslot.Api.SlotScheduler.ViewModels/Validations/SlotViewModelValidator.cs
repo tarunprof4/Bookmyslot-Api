@@ -43,7 +43,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
 
         private bool isSlotDateValid(string slotDate)
         {
-            return slotDate.isDateValid(DateTimeConstants.ApplicationInputDatePattern);
+            return slotDate.isDateValid(DateTimeConstants.ApplicationDatePattern);
         }
 
     }

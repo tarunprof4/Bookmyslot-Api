@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.Tests
         private const string InValidTimeZone = "InValidTimeZone";
         private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
         private const string ValidTimeZoneCountry = "India";
-        private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationInputDatePattern);
+        private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationDatePattern);
 
         private CustomerSettingsController customerSettingsController;
         private Mock<ICustomerSettingsBusiness> customerSettingsBusinessMock;

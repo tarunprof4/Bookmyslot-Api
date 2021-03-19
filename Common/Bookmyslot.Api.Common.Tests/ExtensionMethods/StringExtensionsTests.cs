@@ -19,7 +19,7 @@ namespace Bookmyslot.Api.Common.Tests.ExtensionMethods
         [TestCase("11-13-2000")]
         public void IsDateValid_ValidDateToCheck_ReturnsTrueResponse(string dateString)
         {
-            var isDateValid = dateString.isDateValid(DateTimeConstants.ApplicationInputDatePattern);
+            var isDateValid = dateString.isDateValid(DateTimeConstants.ApplicationDatePattern);
             Assert.IsTrue(isDateValid);
         }
 
@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.Common.Tests.ExtensionMethods
         [TestCase("13-12-2000")]
         public void IsDateValid_InValidDateToCheck_ReturnsFalseResponse(string dateString)
         {
-            var isDateValid = dateString.isDateValid(DateTimeConstants.ApplicationInputDatePattern);
+            var isDateValid = dateString.isDateValid(DateTimeConstants.ApplicationDatePattern);
             Assert.IsFalse(isDateValid);
         }
 
