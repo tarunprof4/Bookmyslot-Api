@@ -1,3 +1,4 @@
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Moq;
@@ -9,8 +10,8 @@ namespace Bookmyslot.Api.Customers.Business.Tests
     public class CustomerSettingsBusinessTests
     {
         private const string CUSTOMERID = "customerid";
-        private const string ValidTimeZone = "Asia/Kolkata";
-        private const string ValidTimeZoneCountry = "India";
+        private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
+        private const string ValidTimeZoneCountry = CountryConstants.India;
         private const string InvalidTimeZone = "InvalidTimeZone";
 
         private Mock<ICustomerSettingsRepository> customerSettingsRepositoryMock;

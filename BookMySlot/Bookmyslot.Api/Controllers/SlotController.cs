@@ -124,7 +124,7 @@ namespace Bookmyslot.Api.Controllers
         {
             var slotModel = new SlotModel();
             slotModel.Title = slotViewModel.Title;
-            
+            slotModel.Country = slotViewModel.Country;
             var localDate = NodaTimeHelper.ConvertDateStringToLocalDateTime(slotViewModel.SlotDate, DateTimeConstants.ApplicationDatePattern, slotViewModel.SlotStartTime);
             slotModel.SlotZonedDate = NodaTimeHelper.ConvertLocalDateTimeToZonedDateTime(localDate, slotViewModel.TimeZone);
             slotModel.SlotStartTime = slotViewModel.SlotStartTime;

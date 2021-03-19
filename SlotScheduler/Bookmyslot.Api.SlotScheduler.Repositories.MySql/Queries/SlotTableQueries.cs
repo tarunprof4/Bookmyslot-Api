@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
 
         public const string GetSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + @"where CreatedBy = @CreatedBy";
 
-        public const string GetCustomerLastSharedSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.CustomerLastSharedSlotTable + " " + @"where Id = @Id";
+        public const string GetCustomerLastSharedSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.CustomerLastSharedSlotTable + " " + @"where CreatedBy = @CreatedBy";
 
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -10,15 +11,15 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
         [Required]
         public string Title { get; set; }
 
-        [DefaultValue("india")]
+        [DefaultValue(CountryConstants.India)]
         [Required]
         public string Country { get; set; }
 
-        [DefaultValue("Asia/Kolkata")]
+        [DefaultValue(TimeZoneConstants.IndianTimezone)]
         [Required]
         public string TimeZone { get; set; }
 
-        [DefaultValue("13-3-2021")]
+        [DefaultValue("03-10-2021")]
         [Required]
         public string SlotDate { get; set; }
 

@@ -2,6 +2,6 @@
 {
     public class CountryConstants
     {
-        public const string India = "india";
+        public const string India = "India";
     }
 }

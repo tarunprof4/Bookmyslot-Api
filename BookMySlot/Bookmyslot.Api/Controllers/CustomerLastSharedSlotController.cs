@@ -34,6 +34,8 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet()]
+        [Route("api/v1/CustomerLastSharedSlot")]
+        [ActionName("GetLatestSharedSlot")]
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
