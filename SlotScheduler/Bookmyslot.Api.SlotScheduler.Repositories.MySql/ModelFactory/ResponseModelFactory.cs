@@ -20,7 +20,18 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             return new Response<SlotModel>() { Result = customerModel };
         }
 
-      
+        internal static Response<CustomerLastBookedSlotModel> CreateCustomerLastBookedSlotModelResponse(CustomerLastBookedSlotEntity customerLastBookedSlotEntity)
+        {
+            if (customerLastBookedSlotEntity == null)
+            {
+                return Response<CustomerLastBookedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoLastSlotBooked });
+            }
+
+            var customerModel = ModelFactory.CreateSlotModel(customerLastBookedSlotEntity);
+            return new Response<CustomerLastBookedSlotModel>() { Result = customerModel };
+        }
+
+
 
         internal static Response<IEnumerable<SlotModel>> CreateSlotModelsResponse(IEnumerable<SlotEntity> slotEntities)
         {

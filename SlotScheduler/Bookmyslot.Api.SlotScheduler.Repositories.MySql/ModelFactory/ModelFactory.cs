@@ -24,6 +24,21 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             };
         }
 
+        internal static CustomerLastBookedSlotModel CreateSlotModel(CustomerLastBookedSlotEntity customerLastBookedSlotEntity)
+        {
+            return new CustomerLastBookedSlotModel()
+            {
+                CustomerId = customerLastBookedSlotEntity.CustomerId,
+                Title = customerLastBookedSlotEntity.Title,
+                Country = customerLastBookedSlotEntity.Country,
+                SlotZonedDate = NodaTimeHelper.ConvertDateStringToZonedDateTime(customerLastBookedSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, customerLastBookedSlotEntity.SlotStartTime, customerLastBookedSlotEntity.TimeZone),
+                SlotStartTime = customerLastBookedSlotEntity.SlotStartTime,
+                SlotEndTime = customerLastBookedSlotEntity.SlotEndTime,
+            };
+        }
+
+
+        
 
         internal static List<SlotModel> CreateSlotModels(IEnumerable<SlotEntity> slotEntities)
         {

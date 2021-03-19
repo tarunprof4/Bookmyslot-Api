@@ -25,21 +25,23 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
             };
         }
 
-        internal static SlotEntity UpdateSlotEntity(SlotModel slotModel)
+
+        internal static CustomerLastBookedSlotEntity CreateCustomerLastBookedSlotEntity(CustomerLastBookedSlotModel customerLastBookedSlotModel)
         {
-            var slotEntity = CreateSlotEntity(slotModel);
-            slotEntity.Id = slotModel.Id;
-            slotEntity.CreatedDateUtc = slotModel.CreatedDateUtc;
-            slotEntity.ModifiedDateUtc = DateTime.UtcNow;
-            return slotEntity;
+            return new CustomerLastBookedSlotEntity()
+            {
+                CustomerId = customerLastBookedSlotModel.CustomerId,
+                Title = customerLastBookedSlotModel.Title,
+                Country = customerLastBookedSlotModel.Country,
+                TimeZone = customerLastBookedSlotModel.SlotZonedDate.Zone.Id,
+                SlotDate = NodaTimeHelper.FormatLocalDate(customerLastBookedSlotModel.SlotZonedDate.Date, DateTimeConstants.ApplicationDatePattern),
+                SlotDateUtc = NodaTimeHelper.ConvertZonedDateTimeToUtcDateTime(customerLastBookedSlotModel.SlotZonedDate),
+                SlotStartTime = customerLastBookedSlotModel.SlotStartTime,
+                SlotEndTime = customerLastBookedSlotModel.SlotEndTime,
+                ModifiedDateUtc = DateTime.UtcNow
+            };
         }
 
-        internal static SlotEntity DeleteSlotEntity(SlotModel slotModel)
-        {
-            var slotEntity = UpdateSlotEntity(slotModel);
-            slotEntity.IsDeleted = true;
-            return slotEntity;
-        }
 
         internal static CancelledSlotEntity CreateCancelledSlotEntity(CancelledSlotModel cancelledSlotModel)
         {

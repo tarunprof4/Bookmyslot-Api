@@ -47,6 +47,8 @@
         
         public const string SlotIdDoesNotExists = "slot does not exists";
 
+        public const string NoLastSlotBooked = "customer hasnt booked any slot yet";
+
         public const string CorruptData = "Data is corrupt";
 
         public const string NoSlotsFound = "no slots found";
