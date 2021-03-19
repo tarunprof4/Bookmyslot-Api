@@ -16,8 +16,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business
     {
         private readonly ISlotRepository slotRepository;
         private readonly ICustomerCancelledSlotRepository customerCancelledSlotRepository;
-        private readonly ICustomerLastBookedSlotBusiness customerLastBookedSlotBusiness;
-        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, ICustomerLastBookedSlotBusiness customerLastBookedSlotBusiness)
+        private readonly ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness;
+        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness)
         {
             this.slotRepository = slotRepository;
             this.customerCancelledSlotRepository = customerCancelledSlotRepository;
@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             {
                 SanitizeSlotModel(slotModel);
                 var createSlotTask = slotRepository.CreateSlot(slotModel);
-                var lastLastestSlotTask = customerLastBookedSlotBusiness.SaveCustomerLatestSlot(CreateCustomerLastBookedSlotModel(slotModel));
+                var lastLastestSlotTask = customerLastBookedSlotBusiness.SaveCustomerLatestSharedSlot(CreateCustomerLastBookedSlotModel(slotModel));
 
                 await Task.WhenAll(createSlotTask, lastLastestSlotTask);
                 return createSlotTask.Result;
@@ -126,9 +126,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             return await this.slotRepository.GetAllSlots(pageParameterModel);
         }
 
-        private CustomerLastBookedSlotModel CreateCustomerLastBookedSlotModel(SlotModel slotModel)
+        private CustomerLastSharedSlotModel CreateCustomerLastBookedSlotModel(SlotModel slotModel)
         {
-            return new CustomerLastBookedSlotModel()
+            return new CustomerLastSharedSlotModel()
             {
                 CreatedBy = slotModel.CreatedBy,
                 Title = slotModel.Title,

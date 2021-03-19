@@ -12,6 +12,6 @@
         public const string CancelledSlotTable = BookmyslotDatabase + "cancelledslot";
         public const string CustomerSettingsTable = BookmyslotDatabase + "customersettings";
 
-        public const string CustomerLastBookedSlotTable = BookmyslotDatabase + "customerlastbookedslot";
+        public const string CustomerLastSharedSlotTable = BookmyslotDatabase + "customerlastsharedslot";
     }
 }

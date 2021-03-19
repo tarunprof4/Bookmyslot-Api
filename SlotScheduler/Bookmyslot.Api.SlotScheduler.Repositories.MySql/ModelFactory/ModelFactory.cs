@@ -25,16 +25,16 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
             };
         }
 
-        internal static CustomerLastBookedSlotModel CreateSlotModel(CustomerLastBookedSlotEntity customerLastBookedSlotEntity)
+        internal static CustomerLastSharedSlotModel CreateCustomerLastSharedSlotModel(CustomerLastSharedSlotEntity customerLastSharedSlotEntity)
         {
-            return new CustomerLastBookedSlotModel()
+            return new CustomerLastSharedSlotModel()
             {
-                CreatedBy = customerLastBookedSlotEntity.CreatedBy,
-                Title = customerLastBookedSlotEntity.Title,
-                Country = customerLastBookedSlotEntity.Country,
-                SlotZonedDate = NodaTimeHelper.ConvertDateStringToZonedDateTime(customerLastBookedSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, customerLastBookedSlotEntity.SlotStartTime, customerLastBookedSlotEntity.TimeZone),
-                SlotStartTime = customerLastBookedSlotEntity.SlotStartTime,
-                SlotEndTime = customerLastBookedSlotEntity.SlotEndTime,
+                CreatedBy = customerLastSharedSlotEntity.CreatedBy,
+                Title = customerLastSharedSlotEntity.Title,
+                Country = customerLastSharedSlotEntity.Country,
+                SlotZonedDate = NodaTimeHelper.ConvertDateStringToZonedDateTime(customerLastSharedSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, customerLastSharedSlotEntity.SlotStartTime, customerLastSharedSlotEntity.TimeZone),
+                SlotStartTime = customerLastSharedSlotEntity.SlotStartTime,
+                SlotEndTime = customerLastSharedSlotEntity.SlotEndTime,
             };
         }
 

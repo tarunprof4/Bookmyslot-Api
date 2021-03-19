@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.Injections
             services.AddTransient<ICustomerBookedSlotBusiness, CustomerBookedSlotBusiness>();
             services.AddTransient<ICustomerSlotBusiness, CustomerSlotBusiness>();
             services.AddTransient<IResendSlotInformationBusiness, ResendSlotInformationBusiness>();
-            services.AddTransient<ICustomerLastBookedSlotBusiness, CustomerLastBookedSlotBusiness>();
+            services.AddTransient<ICustomerLastSharedSlotBusiness, CustomerLastSharedSlotBusiness>();
         }
 
 
@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Injections
             services.AddTransient<ICustomerBookedSlotRepository, CustomerBookedSlotRepository>();
             services.AddTransient<ICustomerCancelledSlotRepository, CustomerCancelledSlotRepository>();
             services.AddTransient<ICustomerSlotRepository, CustomerSlotRepository>();
-            services.AddTransient<ICustomerLastBookedSlotRepository, CustomerLastBookedSlotRepository>();
+            services.AddTransient<ICustomerLastSharedSlotRepository, CustomerLastSharedSlotRepository>();
         }
     }
 }

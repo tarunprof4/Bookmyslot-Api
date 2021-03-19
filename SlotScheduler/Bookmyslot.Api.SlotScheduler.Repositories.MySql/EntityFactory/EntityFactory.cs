@@ -27,18 +27,18 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
         }
 
 
-        internal static CustomerLastBookedSlotEntity CreateCustomerLastBookedSlotEntity(CustomerLastBookedSlotModel customerLastBookedSlotModel)
+        internal static CustomerLastSharedSlotEntity CreateCustomerLastSharedSlotEntity(CustomerLastSharedSlotModel customerLastSharedSlotModel)
         {
-            return new CustomerLastBookedSlotEntity()
+            return new CustomerLastSharedSlotEntity()
             {
-                CreatedBy = customerLastBookedSlotModel.CreatedBy,
-                Title = customerLastBookedSlotModel.Title,
-                Country = customerLastBookedSlotModel.Country,
-                TimeZone = customerLastBookedSlotModel.SlotZonedDate.Zone.Id,
-                SlotDate = NodaTimeHelper.FormatLocalDate(customerLastBookedSlotModel.SlotZonedDate.Date, DateTimeConstants.ApplicationDatePattern),
-                SlotDateUtc = NodaTimeHelper.ConvertZonedDateTimeToUtcDateTime(customerLastBookedSlotModel.SlotZonedDate),
-                SlotStartTime = customerLastBookedSlotModel.SlotStartTime,
-                SlotEndTime = customerLastBookedSlotModel.SlotEndTime,
+                CreatedBy = customerLastSharedSlotModel.CreatedBy,
+                Title = customerLastSharedSlotModel.Title,
+                Country = customerLastSharedSlotModel.Country,
+                TimeZone = customerLastSharedSlotModel.SlotZonedDate.Zone.Id,
+                SlotDate = NodaTimeHelper.FormatLocalDate(customerLastSharedSlotModel.SlotZonedDate.Date, DateTimeConstants.ApplicationDatePattern),
+                SlotDateUtc = NodaTimeHelper.ConvertZonedDateTimeToUtcDateTime(customerLastSharedSlotModel.SlotZonedDate),
+                SlotStartTime = customerLastSharedSlotModel.SlotStartTime,
+                SlotEndTime = customerLastSharedSlotModel.SlotEndTime,
                 ModifiedDateUtc = DateTime.UtcNow
             };
         }

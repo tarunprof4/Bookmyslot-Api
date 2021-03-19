@@ -10,7 +10,7 @@ using System;
 
 namespace Bookmyslot.Api.Injections.Tests
 {
-    public class CustomerLastBookedSlotControllerTests
+    public class CustomerLastSharedSlotControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -26,12 +26,12 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var customerLastBookedSlotBusiness = serviceProvider.GetService<ICustomerLastBookedSlotBusiness>();
+            var customerLastSharedSlotBusiness = serviceProvider.GetService<ICustomerLastSharedSlotBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
 
-            var controller = new CustomerLastBookedSlotController(customerLastBookedSlotBusiness, currentUser);
+            var controller = new CustomerLastSharedSlotController(customerLastSharedSlotBusiness, currentUser);
 
-            Assert.IsNotNull(customerLastBookedSlotBusiness);
+            Assert.IsNotNull(customerLastSharedSlotBusiness);
             Assert.IsNotNull(controller);
         }
     }

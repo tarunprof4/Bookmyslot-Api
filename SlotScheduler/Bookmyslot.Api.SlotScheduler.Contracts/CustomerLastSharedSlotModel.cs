@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
-    public class CustomerLastBookedSlotModel
+    public class CustomerLastSharedSlotModel
     {
         public string CreatedBy { get; set; }
 

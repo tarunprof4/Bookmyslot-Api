@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 {
 
-    [Table(DatabaseConstants.CustomerLastBookedSlotTable)]
-    public class CustomerLastBookedSlotEntity
+    [Table(DatabaseConstants.CustomerLastSharedSlotTable)]
+    public class CustomerLastSharedSlotEntity
     {
         public string CreatedBy { get; set; }
 

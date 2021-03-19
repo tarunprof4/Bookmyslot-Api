@@ -12,19 +12,19 @@ namespace Bookmyslot.Api.Controllers
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
-    public class CustomerLastBookedSlotController : BaseApiController
+    public class CustomerLastSharedSlotController : BaseApiController
     {
-        private readonly ICustomerLastBookedSlotBusiness customerLastBookedSlotBusiness;
+        private readonly ICustomerLastSharedSlotBusiness customerLastSharedSlotBusiness;
         private readonly ICurrentUser currentUser;
 
-        public CustomerLastBookedSlotController(ICustomerLastBookedSlotBusiness customerLastBookedSlotBusiness, ICurrentUser currentUser)
+        public CustomerLastSharedSlotController(ICustomerLastSharedSlotBusiness customerLastSharedSlotBusiness, ICurrentUser currentUser)
         {
-            this.customerLastBookedSlotBusiness = customerLastBookedSlotBusiness;
+            this.customerLastSharedSlotBusiness = customerLastSharedSlotBusiness;
             this.currentUser = currentUser;
         }
 
         /// <summary>
-        /// Gets customer lastes slot
+        /// Gets customer latest shared slot
         /// </summary>
         /// <returns>returns customer latest slot</returns>
         /// <response code="200">Returns customer latest slot information</response>
@@ -33,13 +33,12 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/CustomerLastBookedSlot/GetCustomerLastSlot")]
         [HttpGet()]
-        public async Task<IActionResult> GetCustomerLastSlot()
+        public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result;
-            var customerLastSlotResponse = await this.customerLastBookedSlotBusiness.GetCustomerLatestSlot(customerId);
+            var customerLastSlotResponse = await this.customerLastSharedSlotBusiness.GetCustomerLatestSharedSlot(customerId);
             return this.CreateGetHttpResponse(customerLastSlotResponse);
         }
 

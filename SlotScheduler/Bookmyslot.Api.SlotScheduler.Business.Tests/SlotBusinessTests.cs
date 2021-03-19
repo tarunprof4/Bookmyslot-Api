@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private SlotBusiness slotBusiness;
         private Mock<ISlotRepository> slotRepositoryMock;
         private Mock<ICustomerCancelledSlotRepository> customerCancelledSlotRepositoryMock;
-        private Mock<ICustomerLastBookedSlotBusiness> customerLastBookedSlotBusinessMock;
+        private Mock<ICustomerLastSharedSlotBusiness> customerLastBookedSlotBusinessMock;
         
 
         [SetUp]
@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             slotRepositoryMock = new Mock<ISlotRepository>();
             customerCancelledSlotRepositoryMock = new Mock<ICustomerCancelledSlotRepository>();
-            customerLastBookedSlotBusinessMock = new Mock<ICustomerLastBookedSlotBusiness>();
+            customerLastBookedSlotBusinessMock = new Mock<ICustomerLastSharedSlotBusiness>();
             slotBusiness = new SlotBusiness(slotRepositoryMock.Object, customerCancelledSlotRepositoryMock.Object, customerLastBookedSlotBusinessMock.Object);
         }
 
@@ -74,7 +74,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(slotModelResponseMock.Result, SlotId);
 
             slotRepositoryMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>())), Times.Once());
-            customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSlot(It.IsAny<CustomerLastBookedSlotModel>())), Times.Once());
+            customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSharedSlot(It.IsAny<CustomerLastSharedSlotModel>())), Times.Once());
         }
 
 
@@ -95,7 +95,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
             slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Never());
-            customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSlot(It.IsAny<CustomerLastBookedSlotModel>())), Times.Never());
+            customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSharedSlot(It.IsAny<CustomerLastSharedSlotModel>())), Times.Never());
         }
 
 
@@ -117,7 +117,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
             slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Never());
-            customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSlot(It.IsAny<CustomerLastBookedSlotModel>())), Times.Never());
+            customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSharedSlot(It.IsAny<CustomerLastSharedSlotModel>())), Times.Never());
         }
 
 

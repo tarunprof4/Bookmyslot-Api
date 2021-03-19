@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 {
-    public class CustomerLastBookedSlotRepositoryTests
+    public class CustomerLastSharedSlotRepositoryTests
     {
         private const string CustomerId = "CustomerId";
         private const string Country = "Country";
@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         private readonly DateTime CreatedDateUtc = DateTime.UtcNow;
         private readonly DateTime ModifiedDateUtc = DateTime.UtcNow;
 
-        private CustomerLastBookedSlotRepository customerLastBookedSlotRepository;
+        private CustomerLastSharedSlotRepository customerLastSharedSlotRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
 
@@ -37,28 +37,28 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         {
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            customerLastBookedSlotRepository = new CustomerLastBookedSlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
+            customerLastSharedSlotRepository = new CustomerLastSharedSlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
         }
 
         [Test]
         public async Task GetCustomerLatestSlot_NoRecordFound_ReturnsEmptyResponse()
         {
-            CustomerLastBookedSlotEntity customerLastBookedSlotEntity = null;
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastBookedSlotEntity>>>())).Returns(Task.FromResult(customerLastBookedSlotEntity));
+            CustomerLastSharedSlotEntity customerLastBookedSlotEntity = null;
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastSharedSlotEntity>>>())).Returns(Task.FromResult(customerLastBookedSlotEntity));
 
-            var customerLastBookedSlotResponse = await customerLastBookedSlotRepository.GetCustomerLatestSlot(CustomerId);
+            var customerLastBookedSlotResponse = await customerLastSharedSlotRepository.GetCustomerLatestSharedSlot(CustomerId);
 
             Assert.AreEqual(customerLastBookedSlotResponse.ResultType, ResultType.Empty);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastBookedSlotEntity>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastSharedSlotEntity>>>()), Times.Once);
         }
 
         [Test]
         public async Task GetCustomerLatestSlot_HasRecord_ReturnsSuccessResponse()
         {
-            CustomerLastBookedSlotEntity customerLastBookedSlotEntity = DefaultCreateCustomerLastBookedSlotEntity();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastBookedSlotEntity>>>())).Returns(Task.FromResult(customerLastBookedSlotEntity));
+            CustomerLastSharedSlotEntity customerLastBookedSlotEntity = DefaultCreateCustomerLastBookedSlotEntity();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastSharedSlotEntity>>>())).Returns(Task.FromResult(customerLastBookedSlotEntity));
 
-            var customerLastBookedSlotResponse = await customerLastBookedSlotRepository.GetCustomerLatestSlot(CustomerId);
+            var customerLastBookedSlotResponse = await customerLastSharedSlotRepository.GetCustomerLatestSharedSlot(CustomerId);
             var customerLastBookedSlot = customerLastBookedSlotResponse.Result;
 
             Assert.AreEqual(customerLastBookedSlotResponse.ResultType, ResultType.Success);
@@ -68,7 +68,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             Assert.AreEqual(customerLastBookedSlot.SlotZonedDate.Zone.Id, TimeZone);
             Assert.AreEqual(customerLastBookedSlot.SlotStartTime, SlotStartTime);
             Assert.AreEqual(customerLastBookedSlot.SlotEndTime, SlotEndTime);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastBookedSlotEntity>>>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastSharedSlotEntity>>>()), Times.Once);
         }
 
 
@@ -77,10 +77,10 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         [Test]
         public async Task SaveCustomerLatestSlot_ValidSaveCustomerLatestSlotModel_ReturnsSuccessResponse()
         {
-            CustomerLastBookedSlotModel customerLastBookedSlotModel = DefaultCreateCustomerLastBookedSlotModel();
+            CustomerLastSharedSlotModel customerLastBookedSlotModel = DefaultCreateCustomerLastBookedSlotModel();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
-            var customerLastBookedSlotResponse = await customerLastBookedSlotRepository.SaveCustomerLatestSlot(customerLastBookedSlotModel);
+            var customerLastBookedSlotResponse = await customerLastSharedSlotRepository.SaveCustomerLatestSharedSlot(customerLastBookedSlotModel);
 
             Assert.AreEqual(customerLastBookedSlotResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
@@ -88,9 +88,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
 
 
-        private CustomerLastBookedSlotEntity DefaultCreateCustomerLastBookedSlotEntity()
+        private CustomerLastSharedSlotEntity DefaultCreateCustomerLastBookedSlotEntity()
         {
-            var customerLastBookedSlotEntity = new CustomerLastBookedSlotEntity();
+            var customerLastBookedSlotEntity = new CustomerLastSharedSlotEntity();
 
             customerLastBookedSlotEntity.CreatedBy = CustomerId;
             customerLastBookedSlotEntity.Title = Title;
@@ -105,9 +105,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             return customerLastBookedSlotEntity;
         }
 
-        private CustomerLastBookedSlotModel DefaultCreateCustomerLastBookedSlotModel()
+        private CustomerLastSharedSlotModel DefaultCreateCustomerLastBookedSlotModel()
         {
-            var customerLastBookedSlotModel = new CustomerLastBookedSlotModel();
+            var customerLastBookedSlotModel = new CustomerLastSharedSlotModel();
             return customerLastBookedSlotModel;
         }
 
