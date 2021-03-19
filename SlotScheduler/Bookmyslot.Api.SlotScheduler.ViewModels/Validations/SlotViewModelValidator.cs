@@ -30,10 +30,10 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
         }
 
 
-        private bool isTimeZoneValid(string country)
+        private bool isTimeZoneValid(string timeZone)
         {
             var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
-            if (nodaTimeZoneLocationConfiguration.ZoneWithCountryId.ContainsKey(country))
+            if (nodaTimeZoneLocationConfiguration.ZoneWithCountryId.ContainsKey(timeZone))
             {
                 return true;
             }

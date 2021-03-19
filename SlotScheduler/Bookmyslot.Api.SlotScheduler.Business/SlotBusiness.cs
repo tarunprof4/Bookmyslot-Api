@@ -40,9 +40,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             {
                 SanitizeSlotModel(slotModel);
                 var createSlotTask = slotRepository.CreateSlot(slotModel);
-                var lastLastestSlotTask = customerLastBookedSlotBusiness.SaveCustomerLatestSharedSlot(CreateCustomerLastBookedSlotModel(slotModel));
+                var latestSharedSlotTask = customerLastBookedSlotBusiness.SaveCustomerLatestSharedSlot(CreateCustomerLastBookedSlotModel(slotModel));
 
-                await Task.WhenAll(createSlotTask, lastLastestSlotTask);
+                await Task.WhenAll(createSlotTask, latestSharedSlotTask);
                 return createSlotTask.Result;
             }
 
