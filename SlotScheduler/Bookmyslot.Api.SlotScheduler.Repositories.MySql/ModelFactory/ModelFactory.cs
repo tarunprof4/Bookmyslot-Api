@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
         {
             return new CustomerLastBookedSlotModel()
             {
-                CustomerId = customerLastBookedSlotEntity.CustomerId,
+                CreatedBy = customerLastBookedSlotEntity.CreatedBy,
                 Title = customerLastBookedSlotEntity.Title,
                 Country = customerLastBookedSlotEntity.Country,
                 SlotZonedDate = NodaTimeHelper.ConvertDateStringToZonedDateTime(customerLastBookedSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, customerLastBookedSlotEntity.SlotStartTime, customerLastBookedSlotEntity.TimeZone),

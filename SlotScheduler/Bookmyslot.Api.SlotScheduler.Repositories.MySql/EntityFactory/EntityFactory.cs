@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.EntityFactory
         {
             return new CustomerLastBookedSlotEntity()
             {
-                CustomerId = customerLastBookedSlotModel.CustomerId,
+                CreatedBy = customerLastBookedSlotModel.CreatedBy,
                 Title = customerLastBookedSlotModel.Title,
                 Country = customerLastBookedSlotModel.Country,
                 TimeZone = customerLastBookedSlotModel.SlotZonedDate.Zone.Id,

@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             var customerLastBookedSlot = customerLastBookedSlotResponse.Result;
 
             Assert.AreEqual(customerLastBookedSlotResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(customerLastBookedSlot.CustomerId, CustomerId);
+            Assert.AreEqual(customerLastBookedSlot.CreatedBy, CustomerId);
             Assert.AreEqual(customerLastBookedSlot.Title, Title);
             Assert.AreEqual(customerLastBookedSlot.Country, Country);
             Assert.AreEqual(customerLastBookedSlot.SlotZonedDate.Zone.Id, TimeZone);
@@ -92,7 +92,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         {
             var customerLastBookedSlotEntity = new CustomerLastBookedSlotEntity();
 
-            customerLastBookedSlotEntity.CustomerId = CustomerId;
+            customerLastBookedSlotEntity.CreatedBy = CustomerId;
             customerLastBookedSlotEntity.Title = Title;
             customerLastBookedSlotEntity.Country = Country;
             customerLastBookedSlotEntity.TimeZone = TimeZone;

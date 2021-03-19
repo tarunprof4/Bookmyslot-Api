@@ -8,7 +8,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
     [Table(DatabaseConstants.CustomerLastBookedSlotTable)]
     public class CustomerLastBookedSlotEntity
     {
-        public string CustomerId { get; set; }
+        public string CreatedBy { get; set; }
 
         public string Title { get; set; }
         public string Country { get; set; }

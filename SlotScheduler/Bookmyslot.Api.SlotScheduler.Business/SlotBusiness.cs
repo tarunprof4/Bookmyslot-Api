@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Business.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business
     {
         private readonly ISlotRepository slotRepository;
         private readonly ICustomerCancelledSlotRepository customerCancelledSlotRepository;
-
-        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository)
+        private readonly ICustomerLastBookedSlotBusiness customerLastBookedSlotBusiness;
+        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, ICustomerLastBookedSlotBusiness customerLastBookedSlotBusiness)
         {
             this.slotRepository = slotRepository;
             this.customerCancelledSlotRepository = customerCancelledSlotRepository;
+            this.customerLastBookedSlotBusiness = customerLastBookedSlotBusiness;
         }
 
         private void SanitizeSlotModel(SlotModel slotModel)
@@ -37,7 +39,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             if (results.IsValid)
             {
                 SanitizeSlotModel(slotModel);
-                return await slotRepository.CreateSlot(slotModel);
+                var createSlotTask = slotRepository.CreateSlot(slotModel);
+                var lastLastestSlotTask = slotRepository.CreateSlot(slotModel);
+
+                await Task.WhenAll(createSlotTask, lastLastestSlotTask);
+                return createSlotTask.Result;
             }
 
             else
