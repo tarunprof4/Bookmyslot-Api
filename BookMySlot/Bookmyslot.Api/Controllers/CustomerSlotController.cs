@@ -104,6 +104,7 @@ namespace Bookmyslot.Api.Controllers
         /// Gets customer slots
         /// </summary>
         /// <param name="pageParameterViewModel">pageParameterModel</param>
+        /// <param name="customerInfo">customerInfo</param>
         /// <returns>returns slot model</returns>
         /// <response code="200">Returns customer slot information</response>
         /// <response code="404">no slots found</response>

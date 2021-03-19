@@ -15,6 +15,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using NodaTime;
+using NodaTime.Serialization.JsonNet;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using Serilog;
@@ -40,7 +43,7 @@ namespace Bookmyslot.Api
             services.AddSingleton(appConfiguration);
             var authenticationConfiguration = new AuthenticationConfiguration(Configuration);
             services.AddSingleton(authenticationConfiguration);
-            
+
             Injections(services, appConfiguration);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -54,7 +57,11 @@ namespace Bookmyslot.Api
 
             RegisterFilters(services);
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+                s.SerializerSettings.DateParseHandling = DateParseHandling.None;
+            });
 
             SwaggerDocumentation(services);
 
@@ -91,7 +98,7 @@ namespace Bookmyslot.Api
             });
         }
 
-        private  void Injections(IServiceCollection services, AppConfiguration appConfiguration)
+        private void Injections(IServiceCollection services, AppConfiguration appConfiguration)
         {
             services.AddHttpContextAccessor();
 
@@ -118,7 +125,7 @@ namespace Bookmyslot.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseRequestResponseLogging();
 
             app.UseHttpsRedirection();
