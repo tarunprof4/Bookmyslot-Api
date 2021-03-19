@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
 	   VALUES(@CreatedBy, @Title, @Country, @TimeZone,@SlotDate,@SlotDateUtc,@SlotStartTime, @SlotEndTime, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
  Title=@Title, Country = @Country, TimeZone = @TimeZone, SlotDate = @SlotDate, SlotDateUtc = @SlotDateUtc, SlotStartTime = @SlotStartTime, SlotEndTime = @SlotEndTime, ModifiedDateUtc = @ModifiedDateUtc ";
 
-        public const string GetSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + @"where CreatedBy = @CreatedBy";
+        public const string GetSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + @"where IsDeleted=@IsDeleted and Id=@Id";
 
         public const string GetCustomerLastSharedSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.CustomerLastSharedSlotTable + " " + @"where CreatedBy = @CreatedBy";
 
@@ -29,13 +29,8 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
  IsDeleted = @IsDeleted, ModifiedDateUtc= @ModifiedDateUtc WHERE Id=@Id";
 
 
-        public const string CreateCancelledSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.CancelledSlotTable + " " + @"(Id, Title, CreatedBy, CancelledBy, BookedBy, TimeZone, SlotDate, SlotDateUtc, SlotStartTime, SlotEndTime, CreatedDateUtc)
- VALUES(@Id, @Title, @CreatedBy, @CancelledBy, @BookedBy, @TimeZone, @SlotDate, @SlotDateUtc, @SlotStartTime, @SlotEndTime, @CreatedDateUtc); ";
-
-
-
-        public const string GetAllSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + "order by SlotDateUtc OFFSET @PageNumber ROWS FETCH Next @PageSize ROWS ONLY";
-
+        public const string CreateCancelledSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.CancelledSlotTable + " " + @"(Id, Title, CreatedBy, CancelledBy, BookedBy, TimeZone, SlotDate, SlotDateUtc, SlotStartTime, SlotEndTime,Country, CreatedDateUtc)
+ VALUES(@Id, @Title, @CreatedBy, @CancelledBy, @BookedBy, @TimeZone, @SlotDate, @SlotDateUtc, @SlotStartTime, @SlotEndTime, @Country, @CreatedDateUtc); ";
 
 
         public const string GetDistinctCustomersNearestSlotFromTodayQuery = @"select CreatedBy from(

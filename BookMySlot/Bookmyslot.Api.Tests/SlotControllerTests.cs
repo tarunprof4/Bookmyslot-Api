@@ -2,6 +2,7 @@ using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.NodaTime.Contracts.Configuration;
 using Bookmyslot.Api.NodaTime.Interfaces;
@@ -222,7 +223,6 @@ namespace Bookmyslot.Api.Tests
             NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
             return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
         }
-
 
 
     }

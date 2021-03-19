@@ -24,17 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             this.dbInterceptor = dbInterceptor;
         }
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
-        {
-            var parameters = new { PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
-            var sql = SlotTableQueries.GetAllSlotsQuery;
-
-            var slotEntities = await this.dbInterceptor.GetQueryResults("GetAllSlots", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));
-
-            return ResponseModelFactory.CreateSlotModelsResponse(slotEntities);
-        }
-
-
+     
 
         public async Task<Response<string>> CreateSlot(SlotModel slotModel)
         {
@@ -78,7 +68,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<SlotModel>> GetSlot(string slotId)
         {
             var sql = SlotTableQueries.GetSlotQuery;
-            var parameters = new { Id = slotId };
+            var parameters = new { Id = slotId, IsDeleted = false };
 
             var slotEntity = await this.dbInterceptor.GetQueryResults("GetSlot", parameters, () => this.connection.QueryFirstOrDefaultAsync<SlotEntity>(sql, parameters));
 

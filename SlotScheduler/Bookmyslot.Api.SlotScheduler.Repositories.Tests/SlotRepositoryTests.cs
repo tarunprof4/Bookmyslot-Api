@@ -41,42 +41,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             slotRepository = new SlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
         }
 
-        [Test]
-        public async Task GetAllSlots_NoRecordsFound_ReturnsEmptyResponse()
-        {
-            IEnumerable<SlotEntity> slotEntities = new List<SlotEntity>();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(slotEntities));
-
-            var slotModelsResponse = await slotRepository.GetAllSlots(DefaultPageParameterModel());
-
-            Assert.AreEqual(slotModelsResponse.ResultType, ResultType.Empty);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>()), Times.Once);
-        }
-
-        [Test]
-        public async Task GetAllSlots_HasRecord_ReturnsSuccessResponse()
-        {
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>())).Returns(Task.FromResult(DefaultCreateSlotEntities()));
-
-            var slotModelsResponse = await slotRepository.GetAllSlots(DefaultPageParameterModel());
-
-            foreach (var slotModel in slotModelsResponse.Result)
-            {
-                Assert.AreEqual(slotModel.Id, Id);
-                Assert.AreEqual(slotModel.Title, Title);
-                Assert.AreEqual(slotModel.CreatedBy, CreatedBy);
-                Assert.AreEqual(slotModel.BookedBy, BookedBy);
-                Assert.AreEqual(slotModel.SlotZonedDate.Zone.Id, TimeZone);
-                Assert.AreEqual(slotModel.SlotStartTime, SlotStartTime);
-                Assert.AreEqual(slotModel.SlotEndTime, SlotEndTime);
-                Assert.AreEqual(slotModel.CreatedDateUtc, CreatedDateUtc);
-            }
-            Assert.AreEqual(slotModelsResponse.ResultType, ResultType.Success);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SlotEntity>>>>()), Times.Once);
-        }
-
-
       
+
+       
 
         [Test]
         public async Task CreateSlot_ValidSlotModel_ReturnsSuccessResponse()

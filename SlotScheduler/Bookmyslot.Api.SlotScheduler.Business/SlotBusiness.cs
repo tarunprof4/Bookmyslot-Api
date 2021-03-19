@@ -121,10 +121,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             return new Tuple<bool, SlotModel>(false, slotModelResponse.Result);
         }
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel)
-        {
-            return await this.slotRepository.GetAllSlots(pageParameterModel);
-        }
+     
 
         private CustomerLastSharedSlotModel CreateCustomerLastBookedSlotModel(SlotModel slotModel)
         {

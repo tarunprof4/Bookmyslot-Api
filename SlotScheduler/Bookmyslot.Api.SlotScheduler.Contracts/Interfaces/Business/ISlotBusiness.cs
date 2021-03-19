@@ -8,8 +8,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
     {
         Task<Response<SlotModel>> GetSlot(string slotId);
 
-        Task<Response<IEnumerable<SlotModel>>> GetAllSlots(PageParameterModel pageParameterModel);
-
         Task<Response<string>> CreateSlot(SlotModel slot, string createdBy);
         Task<Response<bool>> CancelSlot(string slotId, string deletedBy);
     }
