@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Tests
         private const string CustomerId = "CustomerId";
         private const string InValidTimeZone = "InValidTimeZone";
         private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
-        private const string ValidTimeZoneCountry = "India";
+        private const string ValidTimeZoneCountry = CountryConstants.India;
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationDatePattern);
 
         private CustomerSettingsController customerSettingsController;

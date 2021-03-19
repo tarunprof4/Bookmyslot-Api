@@ -109,7 +109,7 @@ namespace Bookmyslot.Api.Tests
             slotBusinessMock.Setup(a => a.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
 
             var postResponse = await slotController.Post(DefaultValidSlotViewModel());
-
+            
             var objectResult = postResponse as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             Assert.AreEqual(objectResult.Value, guid);
