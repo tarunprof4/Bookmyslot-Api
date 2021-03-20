@@ -3,7 +3,5 @@
     public class SlotMeetingViewModel : BaseSlotSchedulerViewModel
     {
 
-        public string MeetingLink { get; set; }
-
     }
 }

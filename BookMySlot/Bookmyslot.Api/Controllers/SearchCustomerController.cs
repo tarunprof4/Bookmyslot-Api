@@ -1,4 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Cache.Contracts;
+using Bookmyslot.Api.Cache.Contracts.Constants.cs;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
@@ -6,6 +10,7 @@ using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,18 +24,18 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    [Authorize]
+    
     public class SearchCustomerController : BaseApiController
     {
         private readonly ISearchCustomerBusiness searchCustomerBusiness;
+        private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
+        private readonly CacheConfiguration cacheConfiguration;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SearchCustomerController"/> class. 
-        /// </summary>
-        /// <param name="searchCustomerBusiness">search customer Business</param>
-        public SearchCustomerController(ISearchCustomerBusiness searchCustomerBusiness)
+        public SearchCustomerController(ISearchCustomerBusiness searchCustomerBusiness, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, CacheConfiguration cacheConfiguration)
         {
             this.searchCustomerBusiness = searchCustomerBusiness;
+            this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
+            this.cacheConfiguration = cacheConfiguration;
         }
 
 
@@ -57,8 +62,22 @@ namespace Bookmyslot.Api.Controllers
                 var validationResponse = Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidSearchKey });
                 return this.CreateGetHttpResponse(validationResponse);
             }
-            var customerResponse = await searchCustomerBusiness.SearchCustomers(searchKey);
+
+            var cacheModel = CreateCacheModel(searchKey);
+
+            var customerResponse = await
+                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(cacheModel,
+                  () => this.searchCustomerBusiness.SearchCustomers(searchKey));
+
             return this.CreateGetHttpResponse(customerResponse);
+        }
+
+        private CacheModel CreateCacheModel(string searchKey)
+        {
+            var cacheModel = new CacheModel();
+            cacheModel.Key = string.Format(CacheConstants.CustomerSearchKey, searchKey);
+            cacheModel.ExpiryTime = TimeSpan.FromSeconds(this.cacheConfiguration.HomePageInSeconds);
+            return cacheModel;
         }
     }
 }

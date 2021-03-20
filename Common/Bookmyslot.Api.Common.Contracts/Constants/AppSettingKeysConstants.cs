@@ -43,6 +43,7 @@
 
         public const string CacheSettings = "CacheSettings";
         public const string CacheHomePageInSeconds = "HomePageInSeconds";
+        public const string CacheSearchCustomerInSeconds = "SearchCustomerInSeconds";
 
         public const string FacebookAuthenticationSettings = "FacebookAuthenticationSettings";
         public const string FacebookTokenValidationUrl = "TokenValidationUrl";

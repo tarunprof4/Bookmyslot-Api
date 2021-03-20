@@ -13,5 +13,7 @@
         public const string CustomerSettingsTable = BookmyslotDatabase + "customersettings";
 
         public const string CustomerLastSharedSlotTable = BookmyslotDatabase + "customerlastsharedslot";
+
+        public const string SearchTable = BookmyslotDatabase + "search";
     }
 }

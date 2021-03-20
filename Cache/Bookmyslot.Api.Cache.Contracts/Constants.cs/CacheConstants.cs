@@ -2,7 +2,9 @@
 {
     public class CacheConstants
     {
+
         public const string GetDistinctCustomersNearestSlotFromTodayCacheKey = "GetDistinctCustomersNearestSlotFromToday-{0}";
         public const string CustomerInfomationCacheKey = "GetCustomerInformation-{0}";
+        public const string CustomerSearchKey = "CustomerSearch-{0}";
     }
 }
