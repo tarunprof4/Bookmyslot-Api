@@ -6,7 +6,7 @@ namespace Bookmyslot.Api.Customers.Emails
     {
         public const string Templates = "Templates";
         public const string TemplateCustomerRegistationWelcomeEmail = "CustomerRegistationWelcomeEmail.html";
-        public const string TemplateResendSlotMeetingInformation = "ResendSlotMeetingInformation.html";
+        public const string TemplateSlotMeetingInformation = "SlotMeetingInformation.html";
         public const string TemplateSlotCancelledNotification = "SlotCancelledNotification.html";
         public const string TemplateSlotScheduledNotification = "SlotScheduledNotification.html";
 
@@ -20,8 +20,8 @@ namespace Bookmyslot.Api.Customers.Emails
         public const string SlotCancelledEmailTemplateKey = "SlotCancelledEmailTemplateKey";
         public const string SlotCancelledEmailSubject = AppBusinessMessagesConstants.ApplicationName + " - " + "Slot Cancelled Notification";
 
-        public const string ResendSlotInformationEmailTemplateKey = "ResendSlotInformationTemplateKey";
-        public const string ResendSlotInformationEmailSubject = AppBusinessMessagesConstants.ApplicationName + " - " + "Slot Meeting Details";
+        public const string SlotMeetingInformationEmailTemplateKey = "SlotMeetingInformationTemplateKey";
+        public const string SlotMeetingInformationEmailSubject = AppBusinessMessagesConstants.ApplicationName + " - " + "Slot Meeting Details";
 
 
     }

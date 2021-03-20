@@ -17,7 +17,7 @@
     <None Update="Templates\CustomerRegistationWelcomeEmail.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\ResendSlotMeetingInformation.html">
+    <None Update="Templates\SlotMeetingInformation.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Templates\SlotCancelledNotification.html">

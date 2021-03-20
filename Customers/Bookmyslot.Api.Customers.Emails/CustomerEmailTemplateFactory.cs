@@ -56,18 +56,18 @@ namespace Bookmyslot.Api.Customers.Emails
             return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
         }
 
-        public static EmailModel ResendSlotMeetingInformationTemplate(SlotModel slotModel, string meetingLink, CustomerModel resendTo)
+        public static EmailModel SlotMeetingInformationTemplate(SlotModel slotModel, string meetingLink, CustomerModel resendTo)
         {
-            var resendSlotMeetingViewModel =  CreateResendSlotMeetingViewModel(slotModel, meetingLink);
-            if (!Engine.Razor.IsTemplateCached(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel)))
+            var slotMeetingViewModel =  CreateSlotMeetingViewModel(slotModel, meetingLink);
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(CustomerModel)))
             {
-                var resendSlotInformationTemplateBody = GetTemplateBody(TemplateConstants.TemplateResendSlotMeetingInformation);
-                var compiledMessageBody = Engine.Razor.RunCompile(resendSlotInformationTemplateBody, TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(ResendSlotMeetingViewModel), resendSlotMeetingViewModel);
-                return CreateEmailModel(resendTo, TemplateConstants.ResendSlotInformationEmailSubject, compiledMessageBody);
+                var slotInformationTemplateBody = GetTemplateBody(TemplateConstants.TemplateSlotMeetingInformation);
+                var compiledMessageBody = Engine.Razor.RunCompile(slotInformationTemplateBody, TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(SlotMeetingViewModel), slotMeetingViewModel);
+                return CreateEmailModel(resendTo, TemplateConstants.SlotMeetingInformationEmailSubject, compiledMessageBody);
             }
 
-            var messageBody = Engine.Razor.Run(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(ResendSlotMeetingViewModel), resendSlotMeetingViewModel);
-            return CreateEmailModel(resendTo, TemplateConstants.ResendSlotInformationEmailSubject, messageBody);
+            var messageBody = Engine.Razor.Run(TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(SlotMeetingViewModel), slotMeetingViewModel);
+            return CreateEmailModel(resendTo, TemplateConstants.SlotMeetingInformationEmailSubject, messageBody);
         }
 
 
@@ -102,9 +102,9 @@ namespace Bookmyslot.Api.Customers.Emails
                 return TemplateBodyConstants.SlotCancelledTemplateBody;
             }
 
-            else if (templateName == TemplateConstants.TemplateResendSlotMeetingInformation)
+            else if (templateName == TemplateConstants.TemplateSlotMeetingInformation)
             {
-                return TemplateBodyConstants.ResendSlotInformationTemplateBody;
+                return TemplateBodyConstants.SlotMeetingInformationTemplateBody;
             }
 
 
@@ -161,19 +161,19 @@ namespace Bookmyslot.Api.Customers.Emails
             return slotSchedulerCancelledViewModel;
         }
 
-        private static ResendSlotMeetingViewModel CreateResendSlotMeetingViewModel(SlotModel slotModel, string meetingLink)
+        private static SlotMeetingViewModel CreateSlotMeetingViewModel(SlotModel slotModel, string meetingLink)
         {
-            var resendSlotMeetingViewModel = new ResendSlotMeetingViewModel();
-            resendSlotMeetingViewModel.Title = slotModel.Title;
-            resendSlotMeetingViewModel.Country = slotModel.Country;
-            resendSlotMeetingViewModel.TimeZone = slotModel.SlotStartZonedDateTime.Zone.Id;
-            resendSlotMeetingViewModel.SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
-            resendSlotMeetingViewModel.StartTime = slotModel.SlotStartTime.ToString();
-            resendSlotMeetingViewModel.EndTime = slotModel.SlotEndTime.ToString();
-            resendSlotMeetingViewModel.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
-            resendSlotMeetingViewModel.MeetingLink = meetingLink;
+            var slotMeetingViewModel = new SlotMeetingViewModel();
+            slotMeetingViewModel.Title = slotModel.Title;
+            slotMeetingViewModel.Country = slotModel.Country;
+            slotMeetingViewModel.TimeZone = slotModel.SlotStartZonedDateTime.Zone.Id;
+            slotMeetingViewModel.SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
+            slotMeetingViewModel.StartTime = slotModel.SlotStartTime.ToString();
+            slotMeetingViewModel.EndTime = slotModel.SlotEndTime.ToString();
+            slotMeetingViewModel.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
+            slotMeetingViewModel.MeetingLink = meetingLink;
 
-            return resendSlotMeetingViewModel;
+            return slotMeetingViewModel;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Bookmyslot.Api.Customers.Emails.RegressionTests
         private const string Title = "Title";
         private const string CreatedBy = "CreatedBy";
         private const string Country = "Country";
-        private const string deletedBy = "deletedBy";
+        private const string MeetingLink = "https://meet.jit.si/ssdsdsdsdsd";
         private readonly DateTime ValidSlotDate = DateTime.UtcNow.AddDays(2);
         private readonly DateTime InValidSlotDate = DateTime.UtcNow.AddDays(-2);
         private readonly TimeSpan ValidSlotStartTime = new TimeSpan(0, 0, 0);
@@ -67,6 +67,16 @@ namespace Bookmyslot.Api.Customers.Emails.RegressionTests
         public async Task SlotCancelledEmailTemplate()
         {
             var emailModel = CustomerEmailTemplateFactory.SlotCancelledEmailTemplate(CreateValidSlotModel(), DefaultValidCreateCustomerModel());
+            var response = await emailClient.SendEmail(emailModel);
+
+            Assert.AreEqual(response.Result, true);
+        }
+
+
+        [Test]
+        public async Task SlotMeetingInformationTemplate()
+        {
+            var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(CreateValidSlotModel(), MeetingLink, DefaultValidCreateCustomerModel());
             var response = await emailClient.SendEmail(emailModel);
 
             Assert.AreEqual(response.Result, true);

@@ -140,7 +140,7 @@
 
 
 
-        public const string ResendSlotInformationTemplateBody = "Hello @Model.FirstName, welcome to RazorEngine!";
+        public const string SlotMeetingInformationTemplateBody = "Hello @Model.FirstName, welcome to RazorEngine!";
 
 
     }

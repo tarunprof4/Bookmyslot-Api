@@ -3,7 +3,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 
 namespace Bookmyslot.Api.Customers.Emails.ViewModels
 {
-    public class ResendSlotMeetingViewModel
+    public class SlotMeetingViewModel
     {
         public string Title { get; set; }
         public string Country { get; set; }
