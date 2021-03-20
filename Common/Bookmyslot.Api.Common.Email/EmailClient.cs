@@ -20,7 +20,6 @@ namespace Bookmyslot.Api.Common.Email
         private readonly SmtpClient smtpClient;
         private readonly string fromEmailAddress;
         private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly EmailConfiguration emailConfiguration;
 
         public EmailClient(IHttpContextAccessor httpContextAccessor, EmailConfiguration emailConfiguration)
         {

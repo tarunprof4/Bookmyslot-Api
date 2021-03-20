@@ -24,6 +24,7 @@ namespace Bookmyslot.Api.Customers.Business
             {
                 SanitizeCustomerModel(registerCustomerModel);
                 return await registerCustomerRepository.RegisterCustomer(registerCustomerModel);
+                
             }
 
             return new Response<string>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdExists } };

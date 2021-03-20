@@ -24,17 +24,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
         public async Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo)
         {
-            var pendingTimeForSlotMeeting = NodaTimeHelper.GetCurrentUtcZonedDateTime() - slotModel.SlotStartZonedDateTime;
-            if (pendingTimeForSlotMeeting.TotalDays <= SlotConstants.MinimumDaysForSlotMeetingLink)
-            {
-                var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);
-                var resendToCustomerModel = customerModelsResponse.Result;
+            var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);
+            var resendToCustomerModel = customerModelsResponse.Result;
 
-                var emailModel = CustomerEmailTemplateFactory.ResendSlotMeetingInformationTemplate(slotModel, resendToCustomerModel);
-                return await this.emailInteraction.SendEmail(emailModel);
-            }
-
-            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.MinimumDaysForSlotMeetingLink });
+            var emailModel = CustomerEmailTemplateFactory.ResendSlotMeetingInformationTemplate(slotModel, resendToCustomerModel);
+            return await this.emailInteraction.SendEmail(emailModel);
         }
 
     }

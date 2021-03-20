@@ -12,8 +12,6 @@ namespace Bookmyslot.Api.Customers.Emails
 {
     public static class CustomerEmailTemplateFactory
     {
-        
-
         public static EmailModel GetCustomerRegistrationWelcomeEmailTemplate(CustomerModel newCustomerModel)
         {
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(CustomerModel)))
