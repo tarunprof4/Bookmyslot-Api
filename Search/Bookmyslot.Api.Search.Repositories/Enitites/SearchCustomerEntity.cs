@@ -9,7 +9,7 @@ namespace Bookmyslot.Api.Search.Repositories.Enitites
     {
         [Key]
 
-        public string UniqueId { get; set; }
+        public string Id { get; set; }
 
         public string UserName { get; set; }
 

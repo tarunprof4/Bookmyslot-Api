@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
                 return Response<string>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
             }
 
-            return new Response<string>() { Result = registerCustomerEntity.UniqueId };
+            return new Response<string>() { Result = registerCustomerEntity.Id };
         }
 
         internal static Response<CustomerSettingsModel> CreateCustomerSettingsModelResponse(CustomerSettingsEntity customerSettingsEntity)

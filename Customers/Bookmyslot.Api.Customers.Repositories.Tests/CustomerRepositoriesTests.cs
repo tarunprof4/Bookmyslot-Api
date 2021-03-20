@@ -150,7 +150,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
         private RegisterCustomerEntity DefaultCreateRegisterCustomerEntity()
         {
             var registerCustomerEntity = new RegisterCustomerEntity();
-            registerCustomerEntity.UniqueId = Id;
+            registerCustomerEntity.Id = Id;
             registerCustomerEntity.FirstName = FIRSTNAME;
             registerCustomerEntity.LastName = LASTNAME;
             registerCustomerEntity.Email = EMAIL;

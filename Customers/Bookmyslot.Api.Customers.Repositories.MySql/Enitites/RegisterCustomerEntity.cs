@@ -9,7 +9,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
     public class RegisterCustomerEntity
     {
         [Key]
-        public string UniqueId { get; set; }
+        public string Id { get; set; }
 
 
         public string FirstName { get; set; }

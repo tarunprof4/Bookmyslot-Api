@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             var sql = CustomerTableQueries.RegisterCustomerQuery;
             var parameters = new
             {
-                UniqueId = registerCustomerEntity.UniqueId,
+                Id = registerCustomerEntity.Id,
                 FirstName = registerCustomerEntity.FirstName,
                 LastName = registerCustomerEntity.LastName,
                 UserName = registerCustomerEntity.UserName,
