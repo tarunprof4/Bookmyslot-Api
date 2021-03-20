@@ -9,6 +9,10 @@
             width: 100%;
         }
 
+        th {
+            background-color: red;
+        }
+
         td, th {
             border: 1px solid #dddddd;
             text-align: left;
@@ -23,24 +27,26 @@
 </head>
 <body>
     <div>
-        Hi @Model.CustomerModel.FirstName @Model.CustomerModel.LastName  has cancelled below booked slot
+        Hi @Model.CancelledBy has cancelled your below booked slot
     </div>
     <table>
         <tr>
-            <th>Slot Title</th>
-            <th>Slot Date</th>
-            <th>Slot Timezone</th>
-            <th>Slot Start Time</th>
-            <th>Slot End Time</th>
-            <th>Slot Duration</th>
+            <th>Title</th>
+            <th>Country</th>
+            <th>Timezone</th>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Duration</th>
         </tr>
         <tr>
-            <td>@Model.SlotModel.Title</td>
-            <td>@Model.SlotModel.SlotDate</td>
-            <td>@Model.SlotModel.TimeZone</td>
-            <td>@Model.SlotModel.SlotStartTime</td>
-            <td>@Model.SlotModel.SlotEndTime</td>
-            <td>@Model.SlotModel.SlotDuration</td>
+            <td>@Model.Title</td>
+            <td>@Model.Country</td>
+            <td>@Model.TimeZone</td>
+            <td>@Model.SlotDate</td>
+            <td>@Model.StartTime</td>
+            <td>@Model.EndTime</td>
+            <td>@Model.Duration</td>
         </tr>
     </table>
 
