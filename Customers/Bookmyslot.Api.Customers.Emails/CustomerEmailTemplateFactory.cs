@@ -7,6 +7,8 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Bookmyslot.Api.Customers.Emails
 {
@@ -78,46 +80,46 @@ namespace Bookmyslot.Api.Customers.Emails
         }
 
 
-        //private static string GetTemplateBody(string templateName)
-        //{
-        //    var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        //    var templatesFolder = Path.Join(directory, TemplateConstants.Templates);
-        //    var templatePath = Path.Join(templatesFolder, templateName);
-
-        //    var content = string.Empty;
-        //    using (var streamReader = new StreamReader(templatePath))
-        //    {
-        //        content = streamReader.ReadToEnd();
-        //    }
-
-        //    return content;
-        //}
-
-     
-
         private static string GetTemplateBody(string templateName)
         {
-            if (templateName == TemplateConstants.TemplateCustomerRegistationWelcomeEmailNotification)
-                return TemplateBodyConstants.CustomerRegistrationWelcomeEmailTemplateBody;
+            var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var templatesFolder = Path.Join(directory, TemplateConstants.Templates);
+            var templatePath = Path.Join(templatesFolder, templateName);
 
-            else if (templateName == TemplateConstants.TemplateSlotScheduledNotification)
+            var content = string.Empty;
+            using (var streamReader = new StreamReader(templatePath))
             {
-                return TemplateBodyConstants.SlotScheduledTemplateBody;
+                content = streamReader.ReadToEnd();
             }
 
-            else if (templateName == TemplateConstants.TemplateSlotCancelledNotification)
-            {
-                return TemplateBodyConstants.SlotCancelledTemplateBody;
-            }
-
-            else if (templateName == TemplateConstants.TemplateSlotMeetingInformationNotification)
-            {
-                return TemplateBodyConstants.SlotMeetingInformationTemplateBody;
-            }
-
-
-            return "";
+            return content;
         }
+
+
+
+        //private static string GetTemplateBody(string templateName)
+        //{
+        //    if (templateName == TemplateConstants.TemplateCustomerRegistationWelcomeEmailNotification)
+        //        return TemplateBodyConstants.CustomerRegistrationWelcomeEmailTemplateBody;
+
+        //    else if (templateName == TemplateConstants.TemplateSlotScheduledNotification)
+        //    {
+        //        return TemplateBodyConstants.SlotScheduledTemplateBody;
+        //    }
+
+        //    else if (templateName == TemplateConstants.TemplateSlotCancelledNotification)
+        //    {
+        //        return TemplateBodyConstants.SlotCancelledTemplateBody;
+        //    }
+
+        //    else if (templateName == TemplateConstants.TemplateSlotMeetingInformationNotification)
+        //    {
+        //        return TemplateBodyConstants.SlotMeetingInformationTemplateBody;
+        //    }
+
+
+        //    return "";
+        //}
 
 
 

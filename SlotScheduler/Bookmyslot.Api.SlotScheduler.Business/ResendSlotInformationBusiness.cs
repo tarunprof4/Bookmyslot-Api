@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);
             var resendToCustomerModel = customerModelsResponse.Result;
 
-            var emailModel = CustomerEmailTemplateFactory.ResendSlotMeetingInformationTemplate(slotModel, resendToCustomerModel);
+            var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(slotModel, "", resendToCustomerModel);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 

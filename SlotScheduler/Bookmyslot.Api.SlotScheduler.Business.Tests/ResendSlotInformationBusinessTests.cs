@@ -51,17 +51,17 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         //}
 
 
-        [Test]
-        public async Task ResendSlotMeetingInformation_SlotMeetingTimeNotLessThanMinimumTime_ReturnsValidationResponse()
-        {
-            var slotModel = CreateValidSlotModel();
-            slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
+        //[Test]
+        //public async Task ResendSlotMeetingInformation_SlotMeetingTimeNotLessThanMinimumTime_ReturnsValidationResponse()
+        //{
+        //    var slotModel = CreateValidSlotModel();
+        //    slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
 
-            var slotModelResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, string.Empty);
+        //    var slotModelResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, string.Empty);
 
-            Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.MinimumDaysForSlotMeetingLink);
-        }
+        //    Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
+        //    Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.MinimumDaysForSlotMeetingLink);
+        //}
 
 
 
