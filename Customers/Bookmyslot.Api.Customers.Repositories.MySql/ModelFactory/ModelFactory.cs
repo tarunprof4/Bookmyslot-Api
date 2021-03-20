@@ -44,6 +44,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
         {
             return new CustomerSettingsModel()
             {
+                Country = customerSettingsEntity.Country,
                 TimeZone = customerSettingsEntity.TimeZone,
             };
         }

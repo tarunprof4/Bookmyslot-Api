@@ -12,9 +12,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
 
 
         public const string InsertOrUpdateCustomerLastSharedSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.CustomerLastSharedSlotTable + " " +
-        @"(CreatedBy, Title, Country, TimeZone, SlotDate, SlotStartDateTimeUtc, SlotStartTime , SlotEndTime, ModifiedDateUtc) 
-	   VALUES(@CreatedBy, @Title, @Country, @TimeZone,@SlotDate,@SlotStartDateTimeUtc,@SlotStartTime, @SlotEndTime, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
- Title=@Title, Country = @Country, TimeZone = @TimeZone, SlotDate = @SlotDate, SlotStartDateTimeUtc = @SlotStartDateTimeUtc, SlotStartTime = @SlotStartTime, SlotEndTime = @SlotEndTime, ModifiedDateUtc = @ModifiedDateUtc ";
+        @"(CreatedBy, Title, Country, TimeZone, SlotDate, SlotStartDateTimeUtc, SlotEndDateTimeUtc, SlotStartTime , SlotEndTime, ModifiedDateUtc) 
+	   VALUES(@CreatedBy, @Title, @Country, @TimeZone,@SlotDate,@SlotStartDateTimeUtc,@SlotEndDateTimeUtc,  @SlotStartTime, @SlotEndTime, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
+ Title=@Title, Country = @Country, TimeZone = @TimeZone, SlotDate = @SlotDate, SlotStartDateTimeUtc = @SlotStartDateTimeUtc, SlotEndDateTimeUtc = @SlotEndDateTimeUtc, SlotStartTime = @SlotStartTime, SlotEndTime = @SlotEndTime, ModifiedDateUtc = @ModifiedDateUtc ";
 
         public const string GetSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + @"where IsDeleted=@IsDeleted and Id=@Id";
 

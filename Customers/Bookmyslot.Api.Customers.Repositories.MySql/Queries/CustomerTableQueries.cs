@@ -24,11 +24,11 @@ VALUES(@UniqueId, @FirstName, @LastName, @UserName, @Email, @Provider, @PhotoUrl
 
         public const string GetProfileSettingsByCustomerIdQuery = @"select Email, FirstName, LastName, Gender from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where UniqueId=@customerId";
 
-        public const string GetCustomerSettingsQuery = @"select timeZone from" + " " + DatabaseConstants.CustomerSettingsTable + " " + "where CustomerId=@customerId";
+        public const string GetCustomerSettingsQuery = @"select * from" + " " + DatabaseConstants.CustomerSettingsTable + " " + "where CustomerId=@customerId";
 
 
-        public const string InsertOrUpdateCustomerSettingsQuery = @"INSERT INTO" + " " + DatabaseConstants.CustomerSettingsTable + " " + @"(CustomerId, TimeZone,  ModifiedDateUtc) VALUES(@customerId, @timeZone, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
- TimeZone=@timeZone,  ModifiedDateUtc = @ModifiedDateUtc";
+        public const string InsertOrUpdateCustomerSettingsQuery = @"INSERT INTO" + " " + DatabaseConstants.CustomerSettingsTable + " " + @"(CustomerId,Country, TimeZone,  ModifiedDateUtc) VALUES(@customerId, @Country, @timeZone, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
+ Country=@Country, TimeZone=@timeZone,  ModifiedDateUtc = @ModifiedDateUtc";
 
     }
 }

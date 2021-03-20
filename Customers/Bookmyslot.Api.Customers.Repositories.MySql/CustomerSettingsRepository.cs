@@ -39,6 +39,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             var parameters = new
             {
                 customerId = customerId,
+                Country = customerSettingsModel.Country,
                 timeZone = customerSettingsModel.TimeZone,
                 ModifiedDateUtc = DateTime.UtcNow
             };

@@ -12,6 +12,7 @@ namespace Bookmyslot.Api.Customers.ViewModels.Validations
         public CustomerSettingsViewModelValidator(INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness)
         {
             this.nodaTimeZoneLocationBusiness = nodaTimeZoneLocationBusiness;
+            RuleFor(x => x.Country).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.CountryRequired).Must(isCountryValid).WithMessage(AppBusinessMessagesConstants.InValidCountry);
             RuleFor(x => x.TimeZone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TimeZoneRequired).Must(isTimeZoneValid).WithMessage(AppBusinessMessagesConstants.InValidTimeZone);
         }
 
@@ -25,6 +26,16 @@ namespace Bookmyslot.Api.Customers.ViewModels.Validations
             return true;
         }
 
+        private bool isCountryValid(string country)
+        {
+            var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
+            if (nodaTimeZoneLocationConfiguration.Countries.ContainsKey(country))
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         private bool isTimeZoneValid(string timeZone)
         {

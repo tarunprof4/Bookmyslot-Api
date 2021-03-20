@@ -91,7 +91,7 @@ namespace Bookmyslot.Api.Controllers
 
         private CustomerSettingsModel CreateCustomerSettingsViewModel(CustomerSettingsViewModel customerSettingsViewModel)
         {
-            return new CustomerSettingsModel() { TimeZone = customerSettingsViewModel.TimeZone };
+            return new CustomerSettingsModel() { Country = customerSettingsViewModel.Country, TimeZone = customerSettingsViewModel.TimeZone };
         }
     }
 }
