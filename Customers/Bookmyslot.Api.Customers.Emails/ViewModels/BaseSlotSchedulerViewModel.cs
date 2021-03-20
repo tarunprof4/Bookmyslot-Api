@@ -1,12 +1,4 @@
-﻿
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.SlotScheduler.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Customers.Emails.ViewModels
+﻿namespace Bookmyslot.Api.Customers.Emails.ViewModels
 {
     public class BaseSlotSchedulerViewModel
     {

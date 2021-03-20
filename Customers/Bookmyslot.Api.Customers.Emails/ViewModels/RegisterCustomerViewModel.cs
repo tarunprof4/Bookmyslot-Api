@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Customers.Emails.ViewModels
+﻿namespace Bookmyslot.Api.Customers.Emails.ViewModels
 {
     public class RegisterCustomerViewModel
     {

@@ -7,8 +7,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 
 namespace Bookmyslot.Api.Customers.Emails
 {

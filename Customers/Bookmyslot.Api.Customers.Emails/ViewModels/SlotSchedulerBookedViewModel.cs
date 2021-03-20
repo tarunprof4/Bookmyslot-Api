@@ -1,7 +1,4 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts;
-
-namespace Bookmyslot.Api.Customers.Emails.ViewModels
+﻿namespace Bookmyslot.Api.Customers.Emails.ViewModels
 {
     public class SlotSchedulerBookedViewModel : BaseSlotSchedulerViewModel
     {

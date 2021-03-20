@@ -3,7 +3,6 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Email;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts;
-using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Microsoft.AspNetCore.Http;
