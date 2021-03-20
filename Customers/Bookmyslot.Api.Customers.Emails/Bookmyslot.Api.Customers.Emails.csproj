@@ -14,10 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Templates\CustomerRegistationWelcomeEmail.html">
+    <None Update="Templates\CustomerRegistationWelcomeEmailNotification.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\SlotMeetingInformation.html">
+    <None Update="Templates\SlotMeetingInformationNotification.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Templates\SlotCancelledNotification.html">

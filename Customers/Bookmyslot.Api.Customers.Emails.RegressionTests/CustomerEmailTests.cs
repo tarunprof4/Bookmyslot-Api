@@ -56,7 +56,7 @@ namespace Bookmyslot.Api.Customers.Emails.RegressionTests
         [Test]
         public async Task SlotScheduledEmailTemplate()
         {
-            var emailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(CreateValidSlotModel(), DefaultValidCreateCustomerModel());
+            var emailModel = CustomerEmailTemplateFactory.SlotBookedEmailTemplate(CreateValidSlotModel(), DefaultValidCreateCustomerModel());
             var response = await emailClient.SendEmail(emailModel);
 
             Assert.AreEqual(response.Result, true);
