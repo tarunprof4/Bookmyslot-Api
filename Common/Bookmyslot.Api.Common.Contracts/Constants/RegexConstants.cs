@@ -1,6 +1,6 @@
-﻿namespace Bookmyslot.Api.Common.Contracts
+﻿namespace Bookmyslot.Api.Common.Contracts.Constants
 {
-    public class Regexes
+    public class RegexConstants
     {
         public const string Name = @"^[a-zA-Z\s]+$";
         public const string Email = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";

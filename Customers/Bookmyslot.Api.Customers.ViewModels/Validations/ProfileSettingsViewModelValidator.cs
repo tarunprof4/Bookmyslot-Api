@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using FluentValidation;
 using FluentValidation.Results;
 using System.Text.RegularExpressions;
@@ -29,12 +28,12 @@ namespace Bookmyslot.Api.Customers.ViewModels.Validations
 
         private bool isNameValid(string name)
         {
-            return Regex.IsMatch(name, Regexes.Name);
+            return Regex.IsMatch(name, RegexConstants.Name);
         }
 
         private bool areAlphabets(string name)
         {
-            return Regex.IsMatch(name, Regexes.Alphabets);
+            return Regex.IsMatch(name, RegexConstants.Alphabets);
         }
     }
 }
