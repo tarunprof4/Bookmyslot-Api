@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.Customers.Emails
 
         public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, CustomerModel bookedBy)
         {
-            var slotSchedulerBookedByViewModel =  CreateSlotSchedulerBookedViewModel(slotModel, bookedBy);
+            var slotSchedulerBookedByViewModel = CreateSlotSchedulerBookedViewModel(slotModel, bookedBy);
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(SlotSchedulerBookedViewModel)))
             {
                 var slotScheduledTemplateBody = GetTemplateBody(TemplateConstants.TemplateSlotScheduledNotification);
@@ -56,20 +56,21 @@ namespace Bookmyslot.Api.Customers.Emails
             return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
         }
 
-        public static EmailModel ResendSlotMeetingInformationTemplate(SlotModel slotModel, CustomerModel resendTo)
+        public static EmailModel ResendSlotMeetingInformationTemplate(SlotModel slotModel, string meetingLink, CustomerModel resendTo)
         {
+            var resendSlotMeetingViewModel =  CreateResendSlotMeetingViewModel(slotModel, meetingLink);
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel)))
             {
                 var resendSlotInformationTemplateBody = GetTemplateBody(TemplateConstants.TemplateResendSlotMeetingInformation);
-                var compiledMessageBody = Engine.Razor.RunCompile(resendSlotInformationTemplateBody, TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel), resendTo);
+                var compiledMessageBody = Engine.Razor.RunCompile(resendSlotInformationTemplateBody, TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(ResendSlotMeetingViewModel), resendSlotMeetingViewModel);
                 return CreateEmailModel(resendTo, TemplateConstants.ResendSlotInformationEmailSubject, compiledMessageBody);
             }
 
-            var messageBody = Engine.Razor.Run(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(CustomerModel), resendTo);
+            var messageBody = Engine.Razor.Run(TemplateConstants.ResendSlotInformationEmailTemplateKey, typeof(ResendSlotMeetingViewModel), resendSlotMeetingViewModel);
             return CreateEmailModel(resendTo, TemplateConstants.ResendSlotInformationEmailSubject, messageBody);
         }
 
-      
+
         //private static string GetTemplateBody(string templateName)
         //{
         //    var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -88,10 +89,10 @@ namespace Bookmyslot.Api.Customers.Emails
 
         private static string GetTemplateBody(string templateName)
         {
-            if(templateName == TemplateConstants.TemplateCustomerRegistationWelcomeEmail)
-            return TemplateBodyConstants.CustomerRegistrationWelcomeEmailTemplateBody;
+            if (templateName == TemplateConstants.TemplateCustomerRegistationWelcomeEmail)
+                return TemplateBodyConstants.CustomerRegistrationWelcomeEmailTemplateBody;
 
-            else if(templateName == TemplateConstants.TemplateSlotScheduledNotification)
+            else if (templateName == TemplateConstants.TemplateSlotScheduledNotification)
             {
                 return TemplateBodyConstants.SlotScheduledTemplateBody;
             }
@@ -101,7 +102,12 @@ namespace Bookmyslot.Api.Customers.Emails
                 return TemplateBodyConstants.SlotCancelledTemplateBody;
             }
 
-            
+            else if (templateName == TemplateConstants.TemplateResendSlotMeetingInformation)
+            {
+                return TemplateBodyConstants.ResendSlotInformationTemplateBody;
+            }
+
+
             return "";
         }
 
@@ -153,6 +159,21 @@ namespace Bookmyslot.Api.Customers.Emails
             slotSchedulerCancelledViewModel.CancelledBy = string.Format("{0} {1}", cancelledBy.FirstName, cancelledBy.LastName);
 
             return slotSchedulerCancelledViewModel;
+        }
+
+        private static ResendSlotMeetingViewModel CreateResendSlotMeetingViewModel(SlotModel slotModel, string meetingLink)
+        {
+            var resendSlotMeetingViewModel = new ResendSlotMeetingViewModel();
+            resendSlotMeetingViewModel.Title = slotModel.Title;
+            resendSlotMeetingViewModel.Country = slotModel.Country;
+            resendSlotMeetingViewModel.TimeZone = slotModel.SlotStartZonedDateTime.Zone.Id;
+            resendSlotMeetingViewModel.SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
+            resendSlotMeetingViewModel.StartTime = slotModel.SlotStartTime.ToString();
+            resendSlotMeetingViewModel.EndTime = slotModel.SlotEndTime.ToString();
+            resendSlotMeetingViewModel.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
+            resendSlotMeetingViewModel.MeetingLink = meetingLink;
+
+            return resendSlotMeetingViewModel;
         }
     }
 }

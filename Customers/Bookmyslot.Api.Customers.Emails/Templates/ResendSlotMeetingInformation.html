@@ -1,11 +1,56 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            background-color: green;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        body {
+            font-family: Arial;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
+    <div>
+        Hi below is your meeting link for the requested slot
+    </div>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Country</th>
+            <th>Timezone</th>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Duration</th>
+            <th>MeetingLink</th>
+        </tr>
+        <tr>
+            <td>@Model.Title</td>
+            <td>@Model.Country</td>
+            <td>@Model.TimeZone</td>
+            <td>@Model.SlotDate</td>
+            <td>@Model.StartTime</td>
+            <td>@Model.EndTime</td>
+            <td>@Model.Duration</td>
+            <td>@Model.MeetingLink</td>
+        </tr>
+    </table>
 
 </body>
 </html>
