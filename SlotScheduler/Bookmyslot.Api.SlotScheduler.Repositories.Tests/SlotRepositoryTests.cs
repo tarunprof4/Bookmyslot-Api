@@ -41,9 +41,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             slotRepository = new SlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
         }
 
-      
 
-       
+
+
 
         [Test]
         public async Task CreateSlot_ValidSlotModel_ReturnsSuccessResponse()
@@ -111,7 +111,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             SlotModel slotModel = DefaultSlotModel();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
-            var slotModelResponse = await slotRepository.UpdateBookedBySlot(slotModel.Id, slotModel.BookedBy);
+            var slotModelResponse = await slotRepository.UpdateSlotBooking(slotModel.Id, slotModel.SlotMeetingLink, slotModel.BookedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelResponse.Result, true);

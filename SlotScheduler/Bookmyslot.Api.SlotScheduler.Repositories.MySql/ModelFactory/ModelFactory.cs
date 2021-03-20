@@ -21,6 +21,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 SlotStartZonedDateTime = NodaTimeHelper.ConvertDateStringToZonedDateTime(slotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, slotEntity.SlotStartTime, slotEntity.TimeZone),
                 SlotStartTime = slotEntity.SlotStartTime,
                 SlotEndTime = slotEntity.SlotEndTime,
+                SlotMeetingLink = slotEntity.SlotMeetingLink,
                 CreatedDateUtc = DateTime.SpecifyKind(slotEntity.CreatedDateUtc, DateTimeKind.Utc)
             };
         }

@@ -72,19 +72,19 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             var slotEntity = await this.dbInterceptor.GetQueryResults("GetSlot", parameters, () => this.connection.QueryFirstOrDefaultAsync<SlotEntity>(sql, parameters));
 
-            
             return ResponseModelFactory.CreateSlotModelResponse(slotEntity);
         }
 
      
 
-        public async Task<Response<bool>> UpdateBookedBySlot(string slotId, string bookedBy)
+        public async Task<Response<bool>> UpdateSlotBooking(string slotId, string slotMeetingLink, string bookedBy)
         {
             var sql = SlotTableQueries.UpdateSlotQuery;
             var parameters = new
             {
                 Id = slotId,
                 BookedBy = bookedBy,
+                SlotMeetingLink = slotMeetingLink,
                 ModifiedDateUtc = DateTime.UtcNow,
             };
             await this.dbInterceptor.GetQueryResults("UpdateSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));

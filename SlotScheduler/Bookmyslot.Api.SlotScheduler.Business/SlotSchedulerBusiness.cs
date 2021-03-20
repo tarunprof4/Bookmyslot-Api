@@ -2,7 +2,9 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,10 +19,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         }
         public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel, string bookedBy)
         {
-            slotModel.BookedBy = bookedBy;
-
-
-            if (slotModel.BookedBy == slotModel.CreatedBy)
+            
+            if (bookedBy == slotModel.CreatedBy)
             {
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot });
             }
@@ -31,7 +31,17 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleDateInvalid });
             }
 
-            return await this.slotRepository.UpdateBookedBySlot(slotModel.Id, slotModel.BookedBy);
+            slotModel.BookedBy = bookedBy;
+            slotModel.SlotMeetingLink = CreateSlotMeetingUrl();
+            return await this.slotRepository.UpdateSlotBooking(slotModel.Id, slotModel.SlotMeetingLink, slotModel.BookedBy);
+        }
+
+        private string CreateSlotMeetingUrl()
+        {
+            var uniqueId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            var meetingLinkUrl = string.Format("{0}/{1}", SlotConstants.JitsiUrl, uniqueId);
+
+            return meetingLinkUrl;
         }
     }
 }

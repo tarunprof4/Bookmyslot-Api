@@ -33,6 +33,8 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
             }
         }
 
+        public string SlotMeetingLink { get; set; }
+
         public DateTime CreatedDateUtc { get; set; }
     }
 }

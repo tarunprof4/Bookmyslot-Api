@@ -27,6 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Enitites
 
         public TimeSpan SlotEndTime { get; set; }
 
+        public string SlotMeetingLink { get; set; }
         public DateTime? ModifiedDateUtc { get; set; }
 
         public DateTime CreatedDateUtc { get; set; }

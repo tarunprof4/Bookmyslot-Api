@@ -62,11 +62,11 @@ namespace Bookmyslot.Api.Customers.Emails
             return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotMeetingInformationTemplate(SlotModel slotModel, string meetingLink, CustomerModel resendTo)
+        public static EmailModel SlotMeetingInformationTemplate(SlotModel slotModel, CustomerModel resendTo)
         {
             SlotMeetingViewModel slotMeetingViewModel = new SlotMeetingViewModel();
             PopulateSlotSchedulerViewModel(slotMeetingViewModel, slotModel);
-            slotMeetingViewModel.MeetingLink = meetingLink;
+            slotMeetingViewModel.MeetingLink = slotModel.SlotMeetingLink;
             
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(CustomerModel)))
             {

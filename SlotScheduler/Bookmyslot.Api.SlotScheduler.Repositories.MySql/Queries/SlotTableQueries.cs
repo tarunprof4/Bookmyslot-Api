@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
 
 
         public const string UpdateSlotQuery = @"UPDATE" + " " + DatabaseConstants.SlotTable + " " + @"SET  
- BookedBy = @BookedBy, ModifiedDateUtc= @ModifiedDateUtc WHERE Id=@Id";
+ BookedBy = @BookedBy, ModifiedDateUtc= @ModifiedDateUtc, SlotMeetingLink= @SlotMeetingLink WHERE Id=@Id";
 
         public const string DeleteSlotQuery = @"UPDATE" + " " + DatabaseConstants.SlotTable + " " + @"SET  
  IsDeleted = @IsDeleted, ModifiedDateUtc= @ModifiedDateUtc WHERE Id=@Id";
