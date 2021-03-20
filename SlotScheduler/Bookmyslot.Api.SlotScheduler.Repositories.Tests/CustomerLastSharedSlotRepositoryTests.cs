@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             Assert.AreEqual(customerLastBookedSlot.CreatedBy, CustomerId);
             Assert.AreEqual(customerLastBookedSlot.Title, Title);
             Assert.AreEqual(customerLastBookedSlot.Country, Country);
-            Assert.AreEqual(customerLastBookedSlot.SlotZonedDate.Zone.Id, TimeZone);
+            Assert.AreEqual(customerLastBookedSlot.SlotStartZonedDateTime.Zone.Id, TimeZone);
             Assert.AreEqual(customerLastBookedSlot.SlotStartTime, SlotStartTime);
             Assert.AreEqual(customerLastBookedSlot.SlotEndTime, SlotEndTime);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastSharedSlotEntity>>>()), Times.Once);
@@ -97,7 +97,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             customerLastBookedSlotEntity.Country = Country;
             customerLastBookedSlotEntity.TimeZone = TimeZone;
             customerLastBookedSlotEntity.SlotDate = SlotDate;
-            customerLastBookedSlotEntity.SlotDateUtc = SlotDateUtc;
+            customerLastBookedSlotEntity.SlotStartDateTimeUtc = SlotDateUtc;
             customerLastBookedSlotEntity.SlotStartTime = SlotStartTime;
             customerLastBookedSlotEntity.SlotEndTime = SlotEndTime;
             customerLastBookedSlotEntity.ModifiedDateUtc = ModifiedDateUtc;

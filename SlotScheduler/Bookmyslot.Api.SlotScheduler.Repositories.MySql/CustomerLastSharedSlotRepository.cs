@@ -34,7 +34,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
                 Country = customerLastSharedSlotEntity.Country,
                 TimeZone = customerLastSharedSlotEntity.TimeZone,
                 SlotDate = customerLastSharedSlotEntity.SlotDate,
-                SlotDateUtc = customerLastSharedSlotEntity.SlotDateUtc,
+                SlotStartDateTimeUtc = customerLastSharedSlotEntity.SlotStartDateTimeUtc,
                 SlotStartTime = customerLastSharedSlotEntity.SlotStartTime,
                 SlotEndTime = customerLastSharedSlotEntity.SlotEndTime,
                 ModifiedDateUtc = customerLastSharedSlotEntity.ModifiedDateUtc,

@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
         public async Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo)
         {
-            var pendingTimeForSlotMeeting = NodaTimeHelper.GetCurrentUtcZonedDateTime() - slotModel.SlotZonedDate;
+            var pendingTimeForSlotMeeting = NodaTimeHelper.GetCurrentUtcZonedDateTime() - slotModel.SlotStartZonedDateTime;
             if (pendingTimeForSlotMeeting.TotalDays <= SlotConstants.MinimumDaysForSlotMeetingLink)
             {
                 var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);

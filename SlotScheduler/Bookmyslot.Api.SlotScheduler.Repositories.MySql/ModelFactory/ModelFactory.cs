@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CreatedBy = slotEntity.CreatedBy,
                 BookedBy = slotEntity.BookedBy,
                 Country = slotEntity.Country,
-                SlotZonedDate = NodaTimeHelper.ConvertDateStringToZonedDateTime(slotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, slotEntity.SlotStartTime, slotEntity.TimeZone),
+                SlotStartZonedDateTime = NodaTimeHelper.ConvertDateStringToZonedDateTime(slotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, slotEntity.SlotStartTime, slotEntity.TimeZone),
                 SlotStartTime = slotEntity.SlotStartTime,
                 SlotEndTime = slotEntity.SlotEndTime,
                 CreatedDateUtc = DateTime.SpecifyKind(slotEntity.CreatedDateUtc, DateTimeKind.Utc)
@@ -32,7 +32,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CreatedBy = customerLastSharedSlotEntity.CreatedBy,
                 Title = customerLastSharedSlotEntity.Title,
                 Country = customerLastSharedSlotEntity.Country,
-                SlotZonedDate = NodaTimeHelper.ConvertDateStringToZonedDateTime(customerLastSharedSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, customerLastSharedSlotEntity.SlotStartTime, customerLastSharedSlotEntity.TimeZone),
+                SlotStartZonedDateTime = NodaTimeHelper.ConvertDateStringToZonedDateTime(customerLastSharedSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, customerLastSharedSlotEntity.SlotStartTime, customerLastSharedSlotEntity.TimeZone),
                 SlotStartTime = customerLastSharedSlotEntity.SlotStartTime,
                 SlotEndTime = customerLastSharedSlotEntity.SlotEndTime,
             };
@@ -74,7 +74,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CancelledBy = cancelledSlotEntity.CancelledBy,
                 BookedBy = cancelledSlotEntity.BookedBy,
                 Country = cancelledSlotEntity.Country,
-                SlotZonedDate = NodaTimeHelper.ConvertDateStringToZonedDateTime(cancelledSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, cancelledSlotEntity.SlotStartTime, cancelledSlotEntity.TimeZone),
+                SlotStartZonedDateTime = NodaTimeHelper.ConvertDateStringToZonedDateTime(cancelledSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, cancelledSlotEntity.SlotStartTime, cancelledSlotEntity.TimeZone),
                 SlotStartTime = cancelledSlotEntity.SlotStartTime,
                 SlotEndTime = cancelledSlotEntity.SlotEndTime,
             };

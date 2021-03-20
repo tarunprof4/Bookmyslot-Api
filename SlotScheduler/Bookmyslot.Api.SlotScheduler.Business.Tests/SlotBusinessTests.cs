@@ -207,7 +207,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var slotModel = new SlotModel();
             slotModel.Id = SlotId;
-            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDate, TimeZoneConstants.IndianTimezone);
+            slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDate, TimeZoneConstants.IndianTimezone);
             slotModel.Title = Title;
             slotModel.CreatedBy = CreatedBy;
             slotModel.SlotStartTime = ValidSlotStartTime;
@@ -227,7 +227,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private SlotModel CreateInvalidSlotModel()
         {
             var slotModel = new SlotModel();
-            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(InValidSlotDate, TimeZoneConstants.IndianTimezone);
+            slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(InValidSlotDate, TimeZoneConstants.IndianTimezone);
             slotModel.SlotStartTime = new TimeSpan(23, 0, 0);
             return slotModel;
         }
@@ -238,7 +238,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var localDate = new LocalDateTime(2030, 03, 31, 1, 10, 0);
             var london = DateTimeZoneProviders.Tzdb[TimeZoneConstants.LondonTimezone];
             
-            slotModel.SlotZonedDate = london.AtLeniently(localDate);
+            slotModel.SlotStartZonedDateTime = london.AtLeniently(localDate);
             slotModel.SlotStartTime = new TimeSpan(23, 0, 0);
             return slotModel;
         }

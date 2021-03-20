@@ -95,7 +95,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 CancelledBy = cancelledBy,
                 BookedBy = slotModel.BookedBy,
                 Country = slotModel.Country,
-                SlotZonedDate = slotModel.SlotZonedDate,
+                SlotStartZonedDateTime = slotModel.SlotStartZonedDateTime,
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime
             };
@@ -130,7 +130,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 CreatedBy = slotModel.CreatedBy,
                 Title = slotModel.Title,
                 Country = slotModel.Country,
-                SlotZonedDate = slotModel.SlotZonedDate,
+                SlotStartZonedDateTime = slotModel.SlotStartZonedDateTime,
                 SlotStartTime = slotModel.SlotStartTime,
                 SlotEndTime = slotModel.SlotEndTime
             };

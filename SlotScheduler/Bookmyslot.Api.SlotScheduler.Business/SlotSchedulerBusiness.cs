@@ -25,7 +25,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot });
             }
 
-            var pendingTimeForSlotMeeting = slotModel.SlotZonedDate - NodaTimeHelper.GetCurrentUtcZonedDateTime();
+            var pendingTimeForSlotMeeting = slotModel.SlotStartZonedDateTime - NodaTimeHelper.GetCurrentUtcZonedDateTime();
             if (pendingTimeForSlotMeeting.Milliseconds < 0)
             {
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleDateInvalid });

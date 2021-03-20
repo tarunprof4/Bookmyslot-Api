@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task ResendSlotMeetingInformation_SlotMeetingTimeNotLessThanMinimumTime_ReturnsValidationResponse()
         {
             var slotModel = CreateValidSlotModel();
-            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
+            slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
 
             var slotModelResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, string.Empty);
 
@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var slotModel = new SlotModel();
             slotModel.Id = SlotId;
-            slotModel.SlotZonedDate = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDateUtc, TimeZoneConstants.IndianTimezone);
+            slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDateUtc, TimeZoneConstants.IndianTimezone);
             slotModel.Title = Title;
             slotModel.CreatedBy = CreatedBy;
             slotModel.SlotStartTime = ValidSlotStartTime;

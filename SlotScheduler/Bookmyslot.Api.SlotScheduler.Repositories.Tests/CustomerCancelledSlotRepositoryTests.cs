@@ -78,7 +78,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
                 Assert.AreEqual(cancelledSlotModel.CreatedBy, CreatedBy);
                 Assert.AreEqual(cancelledSlotModel.CancelledBy, CancelledBy);
                 Assert.AreEqual(cancelledSlotModel.BookedBy, BookedBy);
-                Assert.AreEqual(cancelledSlotModel.SlotZonedDate.Zone.Id, TimeZone);
+                Assert.AreEqual(cancelledSlotModel.SlotStartZonedDateTime.Zone.Id, TimeZone);
                 Assert.AreEqual(cancelledSlotModel.SlotStartTime, SlotStartTime);
                 Assert.AreEqual(cancelledSlotModel.SlotEndTime, SlotEndTime);
             }
@@ -113,7 +113,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
                 Assert.AreEqual(cancelledSlotModel.CreatedBy, CreatedBy);
                 Assert.AreEqual(cancelledSlotModel.CancelledBy, CancelledBy);
                 Assert.AreEqual(cancelledSlotModel.BookedBy, BookedBy);
-                Assert.AreEqual(cancelledSlotModel.SlotZonedDate.Zone.Id, TimeZone);
+                Assert.AreEqual(cancelledSlotModel.SlotStartZonedDateTime.Zone.Id, TimeZone);
                 Assert.AreEqual(cancelledSlotModel.SlotStartTime, SlotStartTime);
                 Assert.AreEqual(cancelledSlotModel.SlotEndTime, SlotEndTime);
             }
@@ -135,7 +135,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             cancelledSlotEntity.Country = Country;
             cancelledSlotEntity.TimeZone = TimeZone;
             cancelledSlotEntity.SlotDate = SlotDate;
-            cancelledSlotEntity.SlotDateUtc = SlotDateUtc;
+            cancelledSlotEntity.SlotStartDateTimeUtc = SlotDateUtc;
             cancelledSlotEntity.SlotStartTime = SlotStartTime;
             cancelledSlotEntity.SlotEndTime = SlotEndTime;
             cancelledSlotEntity.CreatedDateUtc = CreatedDateUtc;
@@ -150,7 +150,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             cancelledSlotEntity.Country = Country;
             cancelledSlotEntity.TimeZone = TimeZone;
             cancelledSlotEntity.SlotDate = SlotDate;
-            cancelledSlotEntity.SlotDateUtc = SlotDateUtc;
+            cancelledSlotEntity.SlotStartDateTimeUtc = SlotDateUtc;
             cancelledSlotEntity.SlotStartTime = SlotStartTime;
             cancelledSlotEntity.SlotEndTime = SlotEndTime;
             cancelledSlotEntity.CreatedDateUtc = CreatedDateUtc;

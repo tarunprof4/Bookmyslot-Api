@@ -63,7 +63,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
                 Assert.AreEqual(slotModel.Title, Title);
                 Assert.AreEqual(slotModel.CreatedBy, CreatedBy);
                 Assert.AreEqual(slotModel.BookedBy, BookedBy);
-                Assert.AreEqual(slotModel.SlotZonedDate.Zone.Id, TimeZone);
+                Assert.AreEqual(slotModel.SlotStartZonedDateTime.Zone.Id, TimeZone);
                 Assert.AreEqual(slotModel.SlotStartTime, SlotStartTime);
                 Assert.AreEqual(slotModel.SlotEndTime, SlotEndTime);
                 Assert.AreEqual(slotModel.CreatedDateUtc, CreatedDateUtc);
@@ -99,7 +99,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
                 Assert.AreEqual(slotModel.Title, Title);
                 Assert.AreEqual(slotModel.CreatedBy, CreatedBy);
                 Assert.AreEqual(slotModel.BookedBy, BookedBy);
-                Assert.AreEqual(slotModel.SlotZonedDate.Zone.Id, TimeZone);
+                Assert.AreEqual(slotModel.SlotStartZonedDateTime.Zone.Id, TimeZone);
                 Assert.AreEqual(slotModel.SlotStartTime, SlotStartTime);
                 Assert.AreEqual(slotModel.SlotEndTime, SlotEndTime);
                 Assert.AreEqual(slotModel.CreatedDateUtc, CreatedDateUtc);
@@ -124,7 +124,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             slotEntity.BookedBy = BookedBy;
             slotEntity.TimeZone = TimeZone;
             slotEntity.SlotDate = SlotDate;
-            slotEntity.SlotDateUtc = SlotDateUtc;
+            slotEntity.SlotStartDateTimeUtc = SlotDateUtc;
             slotEntity.SlotStartTime = SlotStartTime;
             slotEntity.SlotEndTime = SlotEndTime;
             slotEntity.CreatedDateUtc = CreatedDateUtc;
@@ -137,7 +137,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             slotEntity.BookedBy = BookedBy;
             slotEntity.TimeZone = TimeZone;
             slotEntity.SlotDate = SlotDate;
-            slotEntity.SlotDateUtc = SlotDateUtc;
+            slotEntity.SlotStartDateTimeUtc = SlotDateUtc;
             slotEntity.SlotStartTime = SlotStartTime;
             slotEntity.SlotEndTime = SlotEndTime;
             slotEntity.CreatedDateUtc = CreatedDateUtc;
