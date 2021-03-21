@@ -15,19 +15,19 @@ namespace Bookmyslot.Api.Search.Business
         }
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey)
         {
-            var searchCustomersResponse = await this.searchCustomerRepository.GetPreProcessedSearchedCustomers(searchKey);
-            if(searchCustomersResponse.ResultType == ResultType.Success)
+            var preProcessedSearchedCustomers = await this.searchCustomerRepository.GetPreProcessedSearchedCustomers(searchKey);
+            if(preProcessedSearchedCustomers.ResultType == ResultType.Success)
             {
-                return searchCustomersResponse;
+                return preProcessedSearchedCustomers;
             }
 
-            var searchCustomerResponse =  await this.searchCustomerRepository.SearchCustomers(searchKey);
-            if (searchCustomersResponse.ResultType == ResultType.Success)
+            var searchedCustomersResponse =  await this.searchCustomerRepository.SearchCustomers(searchKey);
+            if (searchedCustomersResponse.ResultType == ResultType.Success)
             {
-                await this.searchCustomerRepository.SavePreProcessedSearchedCustomers(searchKey, searchCustomerResponse.Result);
+                await this.searchCustomerRepository.SavePreProcessedSearchedCustomers(searchKey, searchedCustomersResponse.Result);
             }
 
-            return searchCustomersResponse;
+            return searchedCustomersResponse;
         }
     }
 }
