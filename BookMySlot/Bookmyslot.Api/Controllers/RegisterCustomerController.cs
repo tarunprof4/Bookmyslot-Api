@@ -66,7 +66,6 @@ namespace Bookmyslot.Api.Controllers
             registerCustomerModel.LastName = registerCustomerViewModel.LastName;
             registerCustomerModel.Email = registerCustomerViewModel.Email;
             registerCustomerModel.Provider = registerCustomerViewModel.Provider;
-            registerCustomerModel.PhotoUrl = registerCustomerViewModel.PhotoUrl;
 
             return registerCustomerModel;
         }

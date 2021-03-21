@@ -16,7 +16,6 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
                 UserName = CreateUserName(registerCustomerModel.FirstName),
                 Email = registerCustomerModel.Email,
                 Provider = registerCustomerModel.Provider,
-                PhotoUrl = registerCustomerModel.PhotoUrl,
                 CreatedDateUtc = DateTime.UtcNow
             };
         }
