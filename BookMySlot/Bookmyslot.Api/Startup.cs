@@ -5,6 +5,7 @@ using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Injections;
+using Bookmyslot.Api.NodaTime.Contracts.Constants;
 using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NodaTime;
 using NodaTime.Serialization.JsonNet;
+using NodaTime.Text;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using Serilog;
@@ -57,15 +59,27 @@ namespace Bookmyslot.Api
 
             RegisterFilters(services);
 
-            services.AddControllers().AddNewtonsoftJson(s =>
-            {
-                s.SerializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-                s.SerializerSettings.DateParseHandling = DateParseHandling.None;
-            });
+            ConfigureNodaTimeDatePattern(services);
 
             SwaggerDocumentation(services);
 
             BadRequestConfiguration(services);
+        }
+
+        private static void ConfigureNodaTimeDatePattern(IServiceCollection services)
+        {
+            var pattern = ZonedDateTimePattern.CreateWithInvariantCulture(NodaTimeConstants.ApplicationZonedDateTimePattern, DateTimeZoneProviders.Tzdb);
+            var settings = new JsonSerializerSettings
+            {
+                DateParseHandling = DateParseHandling.None,
+                Converters = { new NodaPatternConverter<ZonedDateTime>(pattern) }
+            };
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.DateParseHandling = DateParseHandling.None;
+                s.SerializerSettings.Converters = settings.Converters;
+
+            });
         }
 
         private static void InitializeJwtAuthentication(IServiceCollection services, AuthenticationConfiguration authenticationConfiguration)

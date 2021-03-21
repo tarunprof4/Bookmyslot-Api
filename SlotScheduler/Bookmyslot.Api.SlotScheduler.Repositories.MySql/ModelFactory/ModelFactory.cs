@@ -33,6 +33,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
                 CreatedBy = customerLastSharedSlotEntity.CreatedBy,
                 Title = customerLastSharedSlotEntity.Title,
                 Country = customerLastSharedSlotEntity.Country,
+                TimeZone = customerLastSharedSlotEntity.TimeZone,
                 SlotStartZonedDateTime = NodaTimeHelper.ConvertDateStringToZonedDateTime(customerLastSharedSlotEntity.SlotDate, DateTimeConstants.ApplicationDatePattern, customerLastSharedSlotEntity.SlotStartTime, customerLastSharedSlotEntity.TimeZone),
                 SlotStartTime = customerLastSharedSlotEntity.SlotStartTime,
                 SlotEndTime = customerLastSharedSlotEntity.SlotEndTime,

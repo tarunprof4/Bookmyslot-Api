@@ -54,7 +54,7 @@ and (BookedBy  is Null or BookedBy = '')
         public const string GetCustomerSharedByBookedSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + "where IsDeleted=@IsDeleted and (BookedBy  is Not Null and BookedBy != '') and CreatedBy=@CreatedBy and SlotEndDateTimeUtc > UTC_TIMESTAMP() order by SlotStartDateTimeUtc, SlotStartTime";
 
 
-        public const string GetCustomerSharedByCompletedSlotsQuery = @"SELECT * FROM Slot" + " " + DatabaseConstants.SlotTable + " " + "IsDeleted=@IsDeleted and (BookedBy  is Not Null and BookedBy != '') and CreatedBy=@CreatedBy and SlotEndDateTimeUtc < UTC_TIMESTAMP() order by SlotStartDateTimeUtc Desc, SlotStartTime Desc";
+        public const string GetCustomerSharedByCompletedSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + "where IsDeleted=@IsDeleted and (BookedBy  is Not Null and BookedBy != '') and CreatedBy=@CreatedBy and SlotEndDateTimeUtc < UTC_TIMESTAMP() order by SlotStartDateTimeUtc Desc, SlotStartTime Desc";
 
         public const string GetCustomerSharedByCancelledSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.CancelledSlotTable + " " + "where  CancelledBy=@CancelledBy  order by SlotStartDateTimeUtc Desc, SlotStartTime Desc";
 
