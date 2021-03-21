@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Cache.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Controllers;
@@ -32,8 +33,10 @@ namespace Bookmyslot.Api.Injections.Tests
             var distributedInMemoryCacheBuisness = serviceProvider.GetService<IDistributedInMemoryCacheBuisness>();
             var hash = serviceProvider.GetService<IHashing>();
             var cacheConfiguration = serviceProvider.GetService<CacheConfiguration>();
+            var currentUser = serviceProvider.GetService<ICurrentUser>();
 
-            var controller = new CustomerSlotController(customerSlotBusiness, keyEncryptor, distributedInMemoryCacheBuisness, hash, cacheConfiguration);
+
+            var controller = new CustomerSlotController(customerSlotBusiness, keyEncryptor, distributedInMemoryCacheBuisness, hash, cacheConfiguration, currentUser);
 
             Assert.IsNotNull(customerSlotBusiness);
             Assert.IsNotNull(keyEncryptor);

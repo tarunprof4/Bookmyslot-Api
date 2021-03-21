@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Cache.Contracts;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
@@ -6,12 +7,14 @@ using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.ViewModels;
 using Bookmyslot.Api.Controllers;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Moq;
+using NodaTime;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -23,6 +26,9 @@ namespace Bookmyslot.Api.Tests
     public class CustomerSlotControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string FirstName = "FirstName";
+        private const string LastName = "LastName";
+        private const string BioHeadLine = "BioHeadLine";
         private const int ValidPaseSize = 10;
         private const int InValidPaseSize = 0;
         private const int InValidPageNumber = -1;
@@ -33,6 +39,7 @@ namespace Bookmyslot.Api.Tests
         private Mock<IKeyEncryptor> keyEncryptorMock;
         private Mock<IDistributedInMemoryCacheBuisness> distributedInMemoryCacheBuisnessMock;
         private Mock<IHashing> hashingMock;
+        private Mock<ICurrentUser> currentUserMock;
         private CacheConfiguration cacheConfiguration;
 
 
@@ -43,10 +50,14 @@ namespace Bookmyslot.Api.Tests
             keyEncryptorMock = new Mock<IKeyEncryptor>();
             distributedInMemoryCacheBuisnessMock = new Mock<IDistributedInMemoryCacheBuisness>();
             hashingMock = new Mock<IHashing>();
+            currentUserMock = new Mock<ICurrentUser>();
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             cacheConfiguration = new CacheConfiguration(configuration);
             customerBookedSlotController = new CustomerSlotController(customerSlotBusinessMock.Object, keyEncryptorMock.Object,
-                distributedInMemoryCacheBuisnessMock.Object, hashingMock.Object, cacheConfiguration);
+                distributedInMemoryCacheBuisnessMock.Object, hashingMock.Object, cacheConfiguration, currentUserMock.Object);
+
+            Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
+            currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
         [Test]
@@ -123,7 +134,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.PaginationSettingsMissing));
-            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Never());
+            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
         }
 
@@ -137,7 +148,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
-            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Never());
+            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
         }
 
@@ -151,7 +162,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageNumber));
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
-            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Never());
+            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
         }
 
@@ -159,15 +170,30 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerAvailableSlots_ValidPageParameterModel_ReturnsSuccessResponse()
         {
-            Response<BookSlotModel> customerSlotBusinessMockResponse = new Response<BookSlotModel>() { Result = new BookSlotModel() {  SlotModelsInforamtion = new List<BmsKeyValuePair<SlotModel, string>>() { new BmsKeyValuePair<SlotModel, string>(new SlotModel(), "Slot") } } };
-            customerSlotBusinessMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())).Returns(Task.FromResult(customerSlotBusinessMockResponse));
+            Response<BookAvailableSlotModel> customerSlotBusinessMockResponse = new Response<BookAvailableSlotModel>() { Result = CreateDefaultValidBookAvailableSlotModel() };
+            customerSlotBusinessMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(customerSlotBusinessMockResponse));
 
             var response = await customerBookedSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
-            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
-            keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Once());
+            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.AtLeastOnce());
+        }
+
+        private BookAvailableSlotModel CreateDefaultValidBookAvailableSlotModel()
+        {
+            var bookAvailableSlotModel = new BookAvailableSlotModel();
+            bookAvailableSlotModel.CreatedByCustomerModel = new CustomerModel()
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                BioHeadLine = BioHeadLine
+            };
+            bookAvailableSlotModel.AvailableSlotModels = new List<KeyValuePair<SlotModel, ZonedDateTime>>();
+            bookAvailableSlotModel.AvailableSlotModels.Add(new KeyValuePair<SlotModel, ZonedDateTime>(new SlotModel(), new ZonedDateTime()));
+
+            return bookAvailableSlotModel;
         }
 
         private PageParameterViewModel DefaultInValidPageParameterViewModel()

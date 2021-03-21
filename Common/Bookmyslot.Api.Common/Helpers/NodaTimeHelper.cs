@@ -37,6 +37,13 @@ namespace Bookmyslot.Api.Common.Helpers
             return utcZoneTime;
         }
 
+        public static ZonedDateTime ConvertZonedDateTimeToZonedDateTime(ZonedDateTime sourceZonedDateTime, string timeZone)
+        {
+            var destinationTimeZone = DateTimeZoneProviders.Tzdb[timeZone];
+            var destinationZonedDateTime = sourceZonedDateTime.WithZone(destinationTimeZone);
+            return destinationZonedDateTime;
+        }
+
         public static ZonedDateTime ConvertUtcDateTimeToZonedDateTime(DateTime utcDateTime, string timeZone)
         {
             var nodaUtcTime = Instant.FromDateTimeUtc(utcDateTime);

@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Cache.Contracts;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
@@ -8,12 +9,14 @@ using Bookmyslot.Api.Common.ViewModels;
 using Bookmyslot.Api.Common.ViewModels.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,15 +36,17 @@ namespace Bookmyslot.Api.Controllers
         private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
         private readonly IHashing md5Hash;
         private readonly CacheConfiguration cacheConfiguration;
+        private readonly ICurrentUser currentUser;
 
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash, CacheConfiguration cacheConfiguration)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.keyEncryptor = keyEncryptor;
             this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
             this.md5Hash = md5Hash;
             this.cacheConfiguration = cacheConfiguration;
+            this.currentUser = currentUser;
         }
 
         /// <summary>
@@ -125,16 +130,17 @@ namespace Bookmyslot.Api.Controllers
 
             if (results.IsValid)
             {
+                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                var customerId = currentUserResponse.Result;
+
                 var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
-                var bookSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerInfo);
-                if (bookSlotModelResponse.ResultType == ResultType.Success)
-                {
-                    HideUncessaryDetailsForGetCustomerAvailableSlots(bookSlotModelResponse.Result);
-                }
-                return this.CreateGetHttpResponse(bookSlotModelResponse);
+                var bookAvailableSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerId, customerInfo);
+
+                var bookAvailableSlotViewModelResponse = CreateBookAvailableSlotViewModel(bookAvailableSlotModelResponse);
+                return this.CreateGetHttpResponse(bookAvailableSlotViewModelResponse);
             }
 
-            var validationResponse = Response<BookSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Response<BookAvailableSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreateGetHttpResponse(validationResponse);
         }
 
@@ -147,13 +153,33 @@ namespace Bookmyslot.Api.Controllers
         }
 
 
-        private void HideUncessaryDetailsForGetCustomerAvailableSlots(BookSlotModel bookSlotModel)
+        private Response<BookAvailableSlotViewModel> CreateBookAvailableSlotViewModel(Response<BookAvailableSlotModel> bookAvailableSlotModelResponse)
         {
-            foreach (var slotModel in bookSlotModel.SlotModelsInforamtion)
+            if (bookAvailableSlotModelResponse.ResultType == ResultType.Success)
             {
-                slotModel.Value = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(slotModel));
-                slotModel.Key.CreatedBy = string.Empty;
+                var bookAvailableSlotModel = bookAvailableSlotModelResponse.Result;
+                var bookAvailableSlotViewModel = new BookAvailableSlotViewModel
+                {
+                    FirstName = bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
+                    LastName = bookAvailableSlotModel.CreatedByCustomerModel.LastName,
+                    BioHeadLine = bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine,
+                    BookAvailableSlotModels = new List<Tuple<SlotModel, ZonedDateTime, string>>()
+                };
+
+                foreach (var availableSlotModel in bookAvailableSlotModel.AvailableSlotModels)
+                {
+                    var information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(availableSlotModel));
+                    bookAvailableSlotViewModel.BookAvailableSlotModels.Add(new Tuple<SlotModel, ZonedDateTime, string>(availableSlotModel.Key, availableSlotModel.Value, information));
+                }
+
+                return new Response<BookAvailableSlotViewModel>() { Result = bookAvailableSlotViewModel };
             }
+
+            return new Response<BookAvailableSlotViewModel>()
+            {
+                ResultType = bookAvailableSlotModelResponse.ResultType,
+                Messages = bookAvailableSlotModelResponse.Messages
+            };
         }
 
         private PageParameterModel CreatePageParameterModel(PageParameterViewModel pageParameterViewModel)
