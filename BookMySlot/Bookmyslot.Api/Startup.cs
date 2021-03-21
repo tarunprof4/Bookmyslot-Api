@@ -71,14 +71,12 @@ namespace Bookmyslot.Api
             var pattern = ZonedDateTimePattern.CreateWithInvariantCulture(NodaTimeConstants.ApplicationZonedDateTimePattern, DateTimeZoneProviders.Tzdb);
             var settings = new JsonSerializerSettings
             {
-                DateParseHandling = DateParseHandling.None,
                 Converters = { new NodaPatternConverter<ZonedDateTime>(pattern) }
             };
             services.AddControllers().AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.DateParseHandling = DateParseHandling.None;
                 s.SerializerSettings.Converters = settings.Converters;
-
             });
         }
 
