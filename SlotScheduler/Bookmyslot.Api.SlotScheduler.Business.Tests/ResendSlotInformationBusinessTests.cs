@@ -1,4 +1,3 @@
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Common.Helpers;
@@ -8,8 +7,6 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 {

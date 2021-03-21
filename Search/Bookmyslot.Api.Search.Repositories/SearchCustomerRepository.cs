@@ -1,7 +1,6 @@
 ﻿
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
@@ -11,8 +10,6 @@ using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
 using Dapper;
-using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -55,14 +52,16 @@ namespace Bookmyslot.Api.Search.Repositories
             var parameters = new { SearchKey = CreateSearchKey(searchKey) };
             var sql = SearchCustomerTableQueries.GetPreProcessedSearchedCustomerQuery;
 
-            var compressedSearchedCustomers = await this.dbInterceptor.GetQueryResults("GetPreProcessedSearchedCustomers", parameters, () => this.connection.QueryFirstOrDefaultAsync<string>(sql, parameters));
+            var compressedSearchedCustomers = await this.dbInterceptor.GetQueryResults("GetPreProcessedSearchedCustomers", parameters, () => this.connection.QueryFirstOrDefaultAsync<SearchEntity>(sql, parameters));
 
-            var deCompressedSearchCustomerModels = this.compression.Decompress<List<SearchCustomerModel>>(compressedSearchedCustomers);
-            if(deCompressedSearchCustomerModels.Count == 0)
+            if(compressedSearchedCustomers != null)
             {
-                return Response<List<SearchCustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoCustomerSearchResults });
+                var deCompressedSearchCustomerModels = this.compression.Decompress<List<SearchCustomerModel>>(compressedSearchedCustomers.Value);
+                return new Response<List<SearchCustomerModel>>() { Result = deCompressedSearchCustomerModels };
             }
-            return new Response<List<SearchCustomerModel>>() { Result = deCompressedSearchCustomerModels };
+
+            return Response<List<SearchCustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoCustomerSearchResults });
+            
         }
 
 

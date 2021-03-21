@@ -1,17 +1,10 @@
-﻿using Bookmyslot.Api.Common.Database.Constants;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
 
 namespace Bookmyslot.Api.Customers.Repositories.Enitites
 {
-    [Table(DatabaseConstants.RegisterCustomerTable)]
     public class RegisterCustomerEntity
     {
-        [Key]
         public string Id { get; set; }
-
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

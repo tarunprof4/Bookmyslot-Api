@@ -52,28 +52,29 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         [Test]
         public async Task GetPreProcessedSearchedCustomers_HasNoRecords_ReturnsEmptyResponse()
         {
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<List<SearchCustomerModel>>>>())).Returns(Task.FromResult(new List<SearchCustomerModel>()));
-            compressionMock.Setup(m => m.Decompress<List<SearchCustomerModel>>(It.IsAny<string>())).Returns(new List<SearchCustomerModel>());
+            SearchEntity searchEntity = null;
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>())).Returns(Task.FromResult(searchEntity));
 
             var customerSettingsModelResponse = await searchCustomerRepository.GetPreProcessedSearchedCustomers(SearchKey);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Empty);
-            compressionMock.Verify(m => m.Compress(It.IsAny<List<SearchCustomerModel>>()), Times.Once);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
+            compressionMock.Verify(m => m.Compress(It.IsAny<List<SearchCustomerModel>>()), Times.Never);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>()), Times.Once);
         }
 
 
         [Test]
         public async Task GetPreProcessedSearchedCustomers_HasRecords_ReturnsSuccessResponse()
         {
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<List<SearchCustomerModel>>>>())).Returns(Task.FromResult(DefaultCreateSearchCustomerModels()));
+            SearchEntity searchEntity = DefaultCreateSearchEntity();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>())).Returns(Task.FromResult(searchEntity));
             compressionMock.Setup(m => m.Decompress<List<SearchCustomerModel>>(It.IsAny<string>())).Returns(DefaultCreateSearchCustomerModels());
 
             var customerSettingsModelResponse = await searchCustomerRepository.GetPreProcessedSearchedCustomers(SearchKey);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            compressionMock.Verify(m => m.Compress(It.IsAny<List<SearchCustomerModel>>()), Times.Once);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
+            compressionMock.Verify(m => m.Decompress<List<SearchCustomerModel>>(It.IsAny<string>()), Times.Once);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>()), Times.Once);
         }
 
 
@@ -92,8 +93,8 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         [Test]
         public async Task SearchCustomers_HasRecords_ReturnsSuccessResponse()
         {
-            IEnumerable<SearchCustomerEntity> searchCustomerEntities =  DefaultCreateSearchEntities();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities)));
+            IEnumerable<SearchCustomerEntity> searchCustomerEntities =  DefaultCreateSearchCustomerEntities();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
 
             var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomers(SearchKey);
 
@@ -125,7 +126,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         }
 
 
-        private IEnumerable<SearchCustomerEntity> DefaultCreateSearchEntities()
+        private IEnumerable<SearchCustomerEntity> DefaultCreateSearchCustomerEntities()
         {
             var searchCustomerEntities = new List<SearchCustomerEntity>();
             var searchCustomerEntity = new SearchCustomerEntity();
@@ -145,6 +146,14 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             searchCustomerEntities.Add(searchCustomerEntity);
 
             return searchCustomerEntities;
+        }
+
+        private SearchEntity DefaultCreateSearchEntity()
+        {
+            var searchEntity = new SearchEntity();
+            searchEntity.SearchKey = SearchKey;
+            searchEntity.Value = CompressedSearchCustomerModels(DefaultCreateSearchCustomerModels());
+            return searchEntity;
         }
 
         private string CompressedSearchCustomerModels(List<SearchCustomerModel> searchCustomerModels)
