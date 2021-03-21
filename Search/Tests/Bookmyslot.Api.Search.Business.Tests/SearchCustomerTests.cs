@@ -1,6 +1,9 @@
+using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Business.Tests
@@ -23,9 +26,13 @@ namespace Bookmyslot.Api.Search.Business.Tests
         public async Task SearchCustomers_ValidSearchKey_ReturnsSuccessResponse()
         {
             string searchKey = SearchKey;
-            var customer = await searchCustomerBusiness.SearchCustomers(searchKey);
+            Response<List<SearchCustomerModel>> slotModelResponseMock = new Response<List<SearchCustomerModel>>() { Result = new List<SearchCustomerModel>() };
+            searchCustomerRepositoryMock.Setup(a => a.GetPreProcessedSearchedCustomers(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
 
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomers(searchKey)), Times.Once());
+            var searchedCustomersResponse = await searchCustomerBusiness.SearchCustomers(searchKey);
+
+            Assert.AreEqual(searchedCustomersResponse.ResultType, ResultType.Success);
+            searchCustomerRepositoryMock.Verify((m => m.GetPreProcessedSearchedCustomers(searchKey)), Times.Once());
         }
     }
 }

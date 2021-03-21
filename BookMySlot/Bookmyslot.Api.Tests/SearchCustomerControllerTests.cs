@@ -1,12 +1,17 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Cache.Contracts;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,17 +20,22 @@ namespace Bookmyslot.Api.Tests
 
     public class SearchCustomerControllerTests
     {
-        private const string CustomerId = "CustomerId";
         private const string ValidSearchKey = "ValidSearchKey";
 
         private SearchCustomerController searchCustomerController;
         private Mock<ISearchCustomerBusiness> searchCustomerBusinessMock;
+        private Mock<IDistributedInMemoryCacheBuisness> distributedInMemoryCacheBuisnessMock;
+        private CacheConfiguration cacheConfiguration;
+
 
         [SetUp]
         public void Setup()
         {
             searchCustomerBusinessMock = new Mock<ISearchCustomerBusiness>();
-            searchCustomerController = new SearchCustomerController(searchCustomerBusinessMock.Object);
+            distributedInMemoryCacheBuisnessMock = new Mock<IDistributedInMemoryCacheBuisness>();
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            cacheConfiguration = new CacheConfiguration(configuration);
+            searchCustomerController = new SearchCustomerController(searchCustomerBusinessMock.Object, distributedInMemoryCacheBuisnessMock.Object, cacheConfiguration);
         }
 
         [TestCase("")]
@@ -38,35 +48,35 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidSearchKey));
-            searchCustomerBusinessMock.Verify((m => m.SearchCustomers(It.IsAny<string>())), Times.Never());
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>())), Times.Never());
         }
 
         [Test]
         public async Task SearchCustomer_ValidSearchKeyHasNoRecords_ReturnsEmptyResponse()
         {
-            Response<List<SearchCustomerModel>> searchCustomerBusinessMockResponse = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Empty };
-            searchCustomerBusinessMock.Setup(a => a.SearchCustomers(It.IsAny<string>())).Returns(Task.FromResult(searchCustomerBusinessMockResponse));
+            Response<List<SearchCustomerModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Empty };
+            distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
 
             var response = await searchCustomerController.Get(ValidSearchKey);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status404NotFound);
-            searchCustomerBusinessMock.Verify((m => m.SearchCustomers(It.IsAny<string>())), Times.Once());
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>())), Times.Once());
         }
 
         [Test]
         public async Task SearchCustomer_ValidSearchKeyHasRecords_ReturnsSuccessResponse()
         {
-            Response<List<SearchCustomerModel>> searchCustomerBusinessMockResponse = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Success };
-            searchCustomerBusinessMock.Setup(a => a.SearchCustomers(It.IsAny<string>())).Returns(Task.FromResult(searchCustomerBusinessMockResponse));
+            Response<List<SearchCustomerModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Success };
+            distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
 
             var response = await searchCustomerController.Get(ValidSearchKey);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
-            searchCustomerBusinessMock.Verify((m => m.SearchCustomers(It.IsAny<string>())), Times.Once());
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>())), Times.Once());
         }
      
     }

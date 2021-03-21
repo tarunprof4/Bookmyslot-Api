@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +11,7 @@ using NUnit.Framework;
 using System;
 namespace Bookmyslot.Api.Injections.Tests
 {
-    public class SearchCustomerControllerTests
+    public class CustomerSlotControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -28,14 +27,16 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var searchCustomerBusiness = serviceProvider.GetService<ISearchCustomerBusiness>();
+            var customerSlotBusiness = serviceProvider.GetService<ICustomerSlotBusiness>();
+            var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
             var distributedInMemoryCacheBuisness = serviceProvider.GetService<IDistributedInMemoryCacheBuisness>();
+            var hash = serviceProvider.GetService<IHashing>();
             var cacheConfiguration = serviceProvider.GetService<CacheConfiguration>();
 
-            var controller = new SearchCustomerController(searchCustomerBusiness, distributedInMemoryCacheBuisness, cacheConfiguration);
+            var controller = new CustomerSlotController(customerSlotBusiness, keyEncryptor, distributedInMemoryCacheBuisness, hash, cacheConfiguration);
 
-            Assert.IsNotNull(searchCustomerBusiness);
-            Assert.IsNotNull(distributedInMemoryCacheBuisness);
+            Assert.IsNotNull(customerSlotBusiness);
+            Assert.IsNotNull(keyEncryptor);
             Assert.IsNotNull(controller);
         }
     }
