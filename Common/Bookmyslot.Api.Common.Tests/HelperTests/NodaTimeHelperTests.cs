@@ -85,7 +85,22 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
             Assert.AreEqual("01-01-2000", formattedDate);
         }
 
+        [Test()]
+        public void ConvertZonedDateTimeToZonedDateTime_PassSourceZonedDateTime_ReturnsDestinationZonedDateTime()
+        {
+            var dateString = "02-02-2000";
+            var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, DateTimeConstants.ApplicationDatePattern, new TimeSpan());
+            var indiaZonedDateTime = NodaTimeHelper.ConvertLocalDateTimeToZonedDateTime(localDateTime, TimeZoneConstants.IndianTimezone);
+            var londonZonedDateTime = NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(indiaZonedDateTime, TimeZoneConstants.LondonTimezone);
 
+            Assert.AreEqual(TimeZoneConstants.LondonTimezone, londonZonedDateTime.Zone.Id);
+            Assert.AreEqual(2000, londonZonedDateTime.Year);
+            Assert.AreEqual(2, londonZonedDateTime.Month);
+            Assert.AreEqual(1, londonZonedDateTime.Day);
+        }
+
+
+        [Test()]
         public void GetCurrentUtcZonedDateTime_ReturnsUtcZonedDateTime()
         {
             var zonedDateTime = NodaTimeHelper.GetCurrentUtcZonedDateTime();

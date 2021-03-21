@@ -140,7 +140,7 @@ namespace Bookmyslot.Api.Controllers
                 return this.CreateGetHttpResponse(bookAvailableSlotViewModelResponse);
             }
 
-            var validationResponse = Response<BookAvailableSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Response<BookAvailableSlotViewModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreateGetHttpResponse(validationResponse);
         }
 
