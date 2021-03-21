@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Business.Tests
 {
-    public class SearchCustomerTests
+    public class SearchCustomerBusinessTests
     {
         private const string SearchKey = "SearchKey";
         private SearchCustomerBusiness searchCustomerBusiness;

@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Search.Contracts;
@@ -57,6 +58,10 @@ namespace Bookmyslot.Api.Search.Repositories
             var compressedSearchedCustomers = await this.dbInterceptor.GetQueryResults("GetPreProcessedSearchedCustomers", parameters, () => this.connection.QueryFirstOrDefaultAsync<string>(sql, parameters));
 
             var deCompressedSearchCustomerModels = this.compression.Decompress<List<SearchCustomerModel>>(compressedSearchedCustomers);
+            if(deCompressedSearchCustomerModels.Count == 0)
+            {
+                return Response<List<SearchCustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoCustomerSearchResults });
+            }
             return new Response<List<SearchCustomerModel>>() { Result = deCompressedSearchCustomerModels };
         }
 

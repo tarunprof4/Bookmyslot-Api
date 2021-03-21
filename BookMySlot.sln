@@ -129,7 +129,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.NodaTime.Bus
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RegressionTests", "RegressionTests", "{F6E02200-C026-4487-886B-E47240623B2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Customers.Emails.RegressionTests", "Customers\Bookmyslot.Api.Customers.Emails.RegressionTests\Bookmyslot.Api.Customers.Emails.RegressionTests.csproj", "{3E5B991E-2434-4534-878F-09A1540567EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Customers.Emails.RegressionTests", "Customers\Bookmyslot.Api.Customers.Emails.RegressionTests\Bookmyslot.Api.Customers.Emails.RegressionTests.csproj", "{3E5B991E-2434-4534-878F-09A1540567EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Search.Repositories.Tests", "Search\Tests\Bookmyslot.Api.Search.Repositories.Tests\Bookmyslot.Api.Search.Repositories.Tests.csproj", "{BC5DEC87-7B61-484C-96D8-E48B21361C32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -325,6 +327,10 @@ Global
 		{3E5B991E-2434-4534-878F-09A1540567EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E5B991E-2434-4534-878F-09A1540567EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E5B991E-2434-4534-878F-09A1540567EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5DEC87-7B61-484C-96D8-E48B21361C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC5DEC87-7B61-484C-96D8-E48B21361C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC5DEC87-7B61-484C-96D8-E48B21361C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC5DEC87-7B61-484C-96D8-E48B21361C32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -385,6 +391,7 @@ Global
 		{8D157482-1944-4780-BE27-F8514287264D} = {4782A67A-851E-4A7A-A959-93514EBB9B1E}
 		{F6E02200-C026-4487-886B-E47240623B2D} = {CE9B1978-0B2F-483D-8FD9-48D7043D1606}
 		{3E5B991E-2434-4534-878F-09A1540567EC} = {F6E02200-C026-4487-886B-E47240623B2D}
+		{BC5DEC87-7B61-484C-96D8-E48B21361C32} = {9200EED6-8784-4A9D-BB83-6F960D120F77}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}

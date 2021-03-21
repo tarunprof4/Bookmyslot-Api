@@ -98,5 +98,7 @@
 
         public const string SlotScheduleInfoMissing = "slot scheduler Info missing";
         public const string SlotScheduleInfoRequired = "slot scheduler Info required";
+
+        public const string NoCustomerSearchResults = "no customer search results found";
     }
 }
