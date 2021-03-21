@@ -109,14 +109,12 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         {
             var searchCustomerModels = new List<SearchCustomerModel>();
             var searchCustomerModel = new SearchCustomerModel();
-            searchCustomerModel.Id = Id;
             searchCustomerModel.UserName = UserName;
             searchCustomerModel.FullName = FullName;
             searchCustomerModel.PhotoUrl = PhotoUrl;
             searchCustomerModels.Add(searchCustomerModel);
 
             searchCustomerModel = new SearchCustomerModel();
-            searchCustomerModel.Id = Id;
             searchCustomerModel.UserName = UserName;
             searchCustomerModel.FullName = FullName;
             searchCustomerModel.PhotoUrl = PhotoUrl;
@@ -130,7 +128,6 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         {
             var searchCustomerEntities = new List<SearchCustomerEntity>();
             var searchCustomerEntity = new SearchCustomerEntity();
-            searchCustomerEntity.Id = Id;
             searchCustomerEntity.UserName = UserName;
             searchCustomerEntity.FirstName = FullName;
             searchCustomerEntity.LastName = FullName;
@@ -138,7 +135,6 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             searchCustomerEntities.Add(searchCustomerEntity);
 
             searchCustomerEntity = new SearchCustomerEntity();
-            searchCustomerEntity.Id = Id;
             searchCustomerEntity.UserName = UserName;
             searchCustomerEntity.FirstName = FullName;
             searchCustomerEntity.LastName = FullName;

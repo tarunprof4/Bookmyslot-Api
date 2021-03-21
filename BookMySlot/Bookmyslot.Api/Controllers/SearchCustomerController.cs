@@ -75,7 +75,7 @@ namespace Bookmyslot.Api.Controllers
         {
             var cacheModel = new CacheModel();
             cacheModel.Key = string.Format(CacheConstants.CustomerSearchKey, searchKey);
-            cacheModel.ExpiryTime = TimeSpan.FromSeconds(this.cacheConfiguration.HomePageInSeconds);
+            cacheModel.ExpiryTime = TimeSpan.FromSeconds(this.cacheConfiguration.CustomerSearchInSeconds);
             return cacheModel;
         }
     }

@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
         public const string GetPreProcessedSearchedCustomerQuery = @"select * from" + " " + DatabaseConstants.SearchTable;
 
 
-        public const string SearchCustomerQuery = @"select Id, UserName, FirstName, LastName, PhotoUrl from" + " " + DatabaseConstants.RegisterCustomerTable;
+        public const string SearchCustomerQuery = @"select  UserName, FirstName, LastName, PhotoUrl from" + " " + DatabaseConstants.RegisterCustomerTable;
 
 
     }
