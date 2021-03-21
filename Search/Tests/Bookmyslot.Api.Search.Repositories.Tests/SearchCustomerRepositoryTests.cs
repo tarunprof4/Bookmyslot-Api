@@ -83,9 +83,9 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             IEnumerable<SearchCustomerEntity> searchCustomerEntities = new List<SearchCustomerEntity>();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
 
-            var customerSettingsModelResponse = await searchCustomerRepository.SearchCustomers(SearchKey);
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomers(SearchKey);
 
-            Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Empty);
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
         }
 
@@ -95,9 +95,9 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             IEnumerable<SearchCustomerEntity> searchCustomerEntities =  DefaultCreateSearchEntities();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities)));
 
-            var customerSettingsModelResponse = await searchCustomerRepository.SearchCustomers(SearchKey);
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomers(SearchKey);
 
-            Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Empty);
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
         }
 
