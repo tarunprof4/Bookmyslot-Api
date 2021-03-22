@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,6 +60,14 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
             Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
             Assert.AreEqual(customer.Messages.First(), AppBusinessMessagesConstants.CustomerIdNotValid);
+        }
+
+        [Test]
+        public async Task GetCustomersByCustomerIds_ValidCustomerIds_CallsGetCustomersByCustomerIdsRepository()
+        {
+            var customer = await customerBusiness.GetCustomersByCustomerIds(new List<string>() { CUSTOMERID, CUSTOMERID});
+
+            customerRepositoryMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
 
     }

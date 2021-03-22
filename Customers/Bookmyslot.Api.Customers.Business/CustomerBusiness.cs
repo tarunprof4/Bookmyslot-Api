@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business
@@ -51,6 +52,7 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
         {
+            customerIds = customerIds.Distinct();
             return await this.customerRepository.GetCustomersByCustomerIds(customerIds);
         }
     }
