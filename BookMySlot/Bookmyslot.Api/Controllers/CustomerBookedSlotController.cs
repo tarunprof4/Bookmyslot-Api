@@ -128,7 +128,7 @@ namespace Bookmyslot.Api.Controllers
                 var bookedSlotModel = bookedSlotModelResponse.Result;
                 var bookedSlotViewModel = new BookedSlotViewModel
                 {
-                    ToBeBookedByCustomerCountry = bookedSlotModel.CustomerSettingsModel != null ? bookedSlotModel.CustomerSettingsModel.Country : string.Empty,
+                    BookedByCustomerCountry = bookedSlotModel.CustomerSettingsModel != null ? bookedSlotModel.CustomerSettingsModel.Country : string.Empty,
                 };
 
                 foreach (var bookedSlot in bookedSlotModel.BookedSlotModels)

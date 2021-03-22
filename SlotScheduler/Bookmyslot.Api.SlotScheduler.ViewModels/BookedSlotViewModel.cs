@@ -5,7 +5,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
 {
     public class BookedSlotViewModel
     {
-        public string ToBeBookedByCustomerCountry { get; set; }
+        public string BookedByCustomerCountry { get; set; }
 
         public List<Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel>> BookedSlotModels { get; set; }
 
