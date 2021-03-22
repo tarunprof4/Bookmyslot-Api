@@ -46,13 +46,13 @@ namespace Bookmyslot.Api.Controllers
 
             if (results.IsValid)
             {
-                var customerSlotModel = JsonConvert.DeserializeObject<BmsKeyValuePair<SlotModel, string>>(this.keyEncryptor.Decrypt(slotSchedulerViewModel.SlotModelKey));
+                var customerSlotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(slotSchedulerViewModel.SlotModelKey));
 
                 if (customerSlotModel != null)
                 {
                     var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
                     var customerId = currentUserResponse.Result;
-                    var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel.Key, customerId);
+                    var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel, customerId);
                     return this.CreatePostHttpResponse(slotScheduleResponse);
                 }
 

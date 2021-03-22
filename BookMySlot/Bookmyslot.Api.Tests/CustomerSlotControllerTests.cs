@@ -190,15 +190,17 @@ namespace Bookmyslot.Api.Tests
                 LastName = LastName,
                 BioHeadLine = BioHeadLine
             };
-            bookAvailableSlotModel.AvailableSlotModels = new List<KeyValuePair<SlotModel, ZonedDateTime>>();
-            bookAvailableSlotModel.AvailableSlotModels.Add(new KeyValuePair<SlotModel, ZonedDateTime>(new SlotModel(), new ZonedDateTime()));
+
+            bookAvailableSlotModel.CustomerSettingsModel = new CustomerSettingsModel() { TimeZone = TimeZoneConstants.IndianTimezone };
+            bookAvailableSlotModel.AvailableSlotModels = new List<SlotInforamtionInCustomerTimeZoneModel>();
+            bookAvailableSlotModel.AvailableSlotModels.Add(new SlotInforamtionInCustomerTimeZoneModel() { SlotModel = new SlotModel(), CustomerSlotZonedDateTime = new ZonedDateTime() });
 
             return bookAvailableSlotModel;
         }
 
         private PageParameterViewModel DefaultInValidPageParameterViewModel()
         {
-            return new PageParameterViewModel() { PageNumber= InValidPageNumber, PageSize =  InValidPaseSize };
+            return new PageParameterViewModel() { PageNumber = InValidPageNumber, PageSize = InValidPaseSize };
         }
 
         private PageParameterViewModel DefaultValidPageParameterViewModel()

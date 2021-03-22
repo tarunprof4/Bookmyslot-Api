@@ -64,41 +64,33 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 var customerSettingsResponse = this.customerSettingsRepository.GetCustomerSettings(customerId);
                 await Task.WhenAll(customerModelResponse, customerSettingsResponse);
 
-                string customerTimeZone = GetCustomerTimeZoneFromCustomerSettings(customerSettingsResponse.Result);
-                return CreateBookAvailableSlotModel(allCustomerSlots, customerModelResponse, customerTimeZone);
+                return CreateBookAvailableSlotModel(allCustomerSlots, customerModelResponse.Result, customerSettingsResponse.Result);
             }
 
             return Response<BookAvailableSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound }); ;
         }
 
-        private static Response<BookAvailableSlotModel> CreateBookAvailableSlotModel(IEnumerable<SlotModel> allCustomerSlots, Task<Response<CustomerModel>> customerModelResponse, string customerTimeZone)
+        private static Response<BookAvailableSlotModel> CreateBookAvailableSlotModel(IEnumerable<SlotModel> allCustomerSlots, Response<CustomerModel> customerModel, Response<CustomerSettingsModel> customerSettingsModel)
         {
             var bookAvailableSlotModel = new BookAvailableSlotModel
             {
-                CreatedByCustomerModel = customerModelResponse.Result.Result,
-                AvailableSlotModels = new List<KeyValuePair<SlotModel, ZonedDateTime>>()
+                CreatedByCustomerModel = customerModel.Result,
+                CustomerSettingsModel = customerSettingsModel.Result,
+                AvailableSlotModels = new List<SlotInforamtionInCustomerTimeZoneModel>()
             };
 
             foreach (var allCustomerSlot in allCustomerSlots)
             {
-                ZonedDateTime customerZonedDateTime = string.IsNullOrEmpty(customerTimeZone) ?
+                ZonedDateTime customerZonedDateTime = customerSettingsModel.ResultType != ResultType.Success ?
                     new ZonedDateTime() :
-                    NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(allCustomerSlot.SlotStartZonedDateTime, customerTimeZone);
+                    NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(allCustomerSlot.SlotStartZonedDateTime, bookAvailableSlotModel.CustomerSettingsModel.TimeZone);
 
-                bookAvailableSlotModel.AvailableSlotModels.Add(new KeyValuePair<SlotModel, ZonedDateTime>(allCustomerSlot, customerZonedDateTime));
+                bookAvailableSlotModel.AvailableSlotModels.Add(new SlotInforamtionInCustomerTimeZoneModel() { SlotModel = allCustomerSlot, CustomerSlotZonedDateTime = customerZonedDateTime });
             }
 
             return Response<BookAvailableSlotModel>.Success(bookAvailableSlotModel);
         }
 
-        private string GetCustomerTimeZoneFromCustomerSettings(Response<CustomerSettingsModel> customerSettingsModel)
-        {
-            if (customerSettingsModel.ResultType == ResultType.Success)
-            {
-                return customerSettingsModel.Result.TimeZone;
-            }
 
-            return string.Empty;
-        }
     }
 }

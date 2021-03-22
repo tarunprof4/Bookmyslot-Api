@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -160,16 +159,23 @@ namespace Bookmyslot.Api.Controllers
                 var bookAvailableSlotModel = bookAvailableSlotModelResponse.Result;
                 var bookAvailableSlotViewModel = new BookAvailableSlotViewModel
                 {
-                    FirstName = bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
-                    LastName = bookAvailableSlotModel.CreatedByCustomerModel.LastName,
-                    BioHeadLine = bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine,
-                    BookAvailableSlotModels = new List<Tuple<SlotModel, ZonedDateTime, string>>()
+                    CreatedFirstName = bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
+                    CreatedByLastName = bookAvailableSlotModel.CreatedByCustomerModel.LastName,
+                    CreatedByBioHeadLine = bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine,
+                    ToBeBookedByCountry = bookAvailableSlotModelResponse.ResultType == ResultType.Success ? bookAvailableSlotModel.CustomerSettingsModel.Country : string.Empty,
+                    BookAvailableSlotModels = new List<SlotInformationInCustomerTimeZoneViewModel>()
                 };
 
                 foreach (var availableSlotModel in bookAvailableSlotModel.AvailableSlotModels)
                 {
-                    var information = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(availableSlotModel));
-                    bookAvailableSlotViewModel.BookAvailableSlotModels.Add(new Tuple<SlotModel, ZonedDateTime, string>(availableSlotModel.Key, availableSlotModel.Value, information));
+                    var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(availableSlotModel.SlotModel));
+                    bookAvailableSlotViewModel.BookAvailableSlotModels.Add(new SlotInformationInCustomerTimeZoneViewModel()
+                    {
+                        Title = availableSlotModel.SlotModel.Title,
+                        SlotStartZonedDateTime = availableSlotModel.SlotModel.SlotStartZonedDateTime,
+                        CustomerSlotStartZonedDateTime = availableSlotModel.CustomerSlotZonedDateTime,
+                        SlotInformation = slotInformation
+                    });
                 }
 
                 return new Response<BookAvailableSlotViewModel>() { Result = bookAvailableSlotViewModel };

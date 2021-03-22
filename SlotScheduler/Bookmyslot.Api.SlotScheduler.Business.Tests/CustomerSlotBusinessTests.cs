@@ -87,7 +87,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Success);
             Assert.NotNull(customerSlotModelResponse.Result.AvailableSlotModels);
-            Assert.AreEqual(customerSlotModelResponse.Result.AvailableSlotModels[0].Key.CreatedBy, CreatedBy1);
+            Assert.AreEqual(customerSlotModelResponse.Result.AvailableSlotModels[0].SlotModel.CreatedBy, CreatedBy1);
             Assert.NotNull(customerSlotModelResponse.Result.CreatedByCustomerModel);
             customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Once());
