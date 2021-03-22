@@ -10,6 +10,4 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
 
         public List<SlotInformationInCustomerTimeZoneViewModel> BookAvailableSlotModels { get; set; }
     }
-
-    
 }

@@ -144,11 +144,10 @@ namespace Bookmyslot.Api.Controllers
                         SlotDuration = slotModel.SlotDuration,
                         SlotStartZonedDateTime = slotModel.SlotStartZonedDateTime,
                         SlotMeetingLink = slotModel.SlotMeetingLink,
-                        SlotInformation = slotInformation,
                         CustomerSlotStartZonedDateTime = bookedSlot.Value.CustomerSlotZonedDateTime,
-
+                        SlotInformation = slotInformation,
                     };
-                    bookedSlotViewModel.BookedSlotModels.Add(new Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel, string>(createdByCustomerViewModel, slotInformationInCustomerTimeZoneViewModel, slotInformation));
+                    bookedSlotViewModel.BookedSlotModels.Add(new Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel>(createdByCustomerViewModel, slotInformationInCustomerTimeZoneViewModel));
                 }
 
                 return new Response<BookedSlotViewModel>() { Result = bookedSlotViewModel };
