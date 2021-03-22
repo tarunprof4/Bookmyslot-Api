@@ -9,6 +9,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using NodaTime;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,6 +19,9 @@ namespace Bookmyslot.Api.Tests
     public class CustomerBookedSlotControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string FirstName = "FirstName";
+        private const string LastName = "LastName";
+        private const string BioHeadLine = "BioHeadLine";
         private const string IndianTimezone = TimeZoneConstants.IndianTimezone;
         private CustomerBookedSlotController customerBookedSlotController;
         private Mock<ICustomerBookedSlotBusiness> customerBookedSlotBusinessMock;
@@ -129,9 +133,27 @@ namespace Bookmyslot.Api.Tests
             var bookedSlotModel = new BookedSlotModel();
             bookedSlotModel.CustomerSettingsModel = new CustomerSettingsModel() { TimeZone = IndianTimezone };
             bookedSlotModel.BookedSlotModels = new List<KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>>();
-            bookedSlotModel.BookedSlotModels.Add(new KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>(new CustomerModel(), new SlotInforamtionInCustomerTimeZoneModel()));
+            bookedSlotModel.BookedSlotModels.Add(new KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>(CreateDefaultCustomerModel(), CreateDefaultSlotInforamtionInCustomerTimeZoneModel()));
 
             return bookedSlotModel;
+        }
+
+
+        private CustomerModel CreateDefaultCustomerModel()
+        {
+            var customerModel = new CustomerModel();
+            customerModel.FirstName = FirstName;
+            customerModel.LastName = LastName;
+            customerModel.BioHeadLine = BioHeadLine;
+            return customerModel;
+        }
+
+        private SlotInforamtionInCustomerTimeZoneModel CreateDefaultSlotInforamtionInCustomerTimeZoneModel()
+        {
+            var slotInforamtionInCustomerTimeZoneModel = new SlotInforamtionInCustomerTimeZoneModel();
+            slotInforamtionInCustomerTimeZoneModel.SlotModel = new SlotModel();
+            slotInforamtionInCustomerTimeZoneModel.CustomerSlotZonedDateTime = new ZonedDateTime();
+            return slotInforamtionInCustomerTimeZoneModel;
         }
 
     }

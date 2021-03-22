@@ -6,6 +6,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
     public class CustomerLastSharedSlotModel
     {
+        [JsonIgnore]
         public string CreatedBy { get; set; }
 
         public string Title { get; set; }

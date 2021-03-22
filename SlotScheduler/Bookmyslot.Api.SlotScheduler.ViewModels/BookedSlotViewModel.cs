@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.SlotScheduler.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels
@@ -8,11 +7,11 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
     {
         public string ToBeBookedByCustomerCountry { get; set; }
 
-        public List<Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>> BookedSlotModels { get; set; }
+        public List<Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel, string>> BookedSlotModels { get; set; }
 
         public BookedSlotViewModel()
         {
-            this.BookedSlotModels = new List<Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>>();
+            this.BookedSlotModels = new List<Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel, string>>();
         }
     }
 }

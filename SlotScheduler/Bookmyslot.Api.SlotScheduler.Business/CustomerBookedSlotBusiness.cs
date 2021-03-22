@@ -89,12 +89,12 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             foreach (var slotModel in customerSlotModelsResponse.Result)
             {
                 var createdByCustomerModel = customerModelsResponse.Result.First(a => a.Id == slotModel.CreatedBy);
-               
-                var slotInforamtionInCustomerTimeZoneModel = new SlotInforamtionInCustomerTimeZoneModel() { SlotModel = slotModel };
                 ZonedDateTime customerZonedDateTime = customerSettingsResponse.ResultType != ResultType.Success ?
-                  new ZonedDateTime() :
-                  NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(slotModel.SlotStartZonedDateTime, customerSettingsResponse.Result.TimeZone);
-                slotInforamtionInCustomerTimeZoneModel.CustomerSlotZonedDateTime = customerZonedDateTime;
+                   new ZonedDateTime() :
+                   NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(slotModel.SlotStartZonedDateTime, customerSettingsResponse.Result.TimeZone);
+
+                var slotInforamtionInCustomerTimeZoneModel = new SlotInforamtionInCustomerTimeZoneModel() 
+                { SlotModel = slotModel, CustomerSlotZonedDateTime = customerZonedDateTime };
 
                 bookedSlotModel.BookedSlotModels.Add(new KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>(createdByCustomerModel, slotInforamtionInCustomerTimeZoneModel));
             }
