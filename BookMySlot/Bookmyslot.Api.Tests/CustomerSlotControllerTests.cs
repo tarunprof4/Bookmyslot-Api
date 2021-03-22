@@ -168,6 +168,23 @@ namespace Bookmyslot.Api.Tests
 
 
         [Test]
+        public async Task GetCustomerAvailableSlots_ValidPageParameterModelWithoutCustomerSettings_ReturnsSuccessResponse()
+        {
+            var bookAvailableSlotModel = CreateDefaultValidBookAvailableSlotModel();
+            bookAvailableSlotModel.CustomerSettingsModel = null;
+            Response<BookAvailableSlotModel> customerSlotBusinessMockResponse = new Response<BookAvailableSlotModel>() { Result = bookAvailableSlotModel };
+            customerSlotBusinessMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(customerSlotBusinessMockResponse));
+
+            var response = await customerBookedSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
+
+            var objectResult = response as ObjectResult;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.AtLeastOnce());
+        }
+
+
+        [Test]
         public async Task GetCustomerAvailableSlots_ValidPageParameterModel_ReturnsSuccessResponse()
         {
             Response<BookAvailableSlotModel> customerSlotBusinessMockResponse = new Response<BookAvailableSlotModel>() { Result = CreateDefaultValidBookAvailableSlotModel() };

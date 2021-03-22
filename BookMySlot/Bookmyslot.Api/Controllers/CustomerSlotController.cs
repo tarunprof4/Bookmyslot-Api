@@ -159,10 +159,10 @@ namespace Bookmyslot.Api.Controllers
                 var bookAvailableSlotModel = bookAvailableSlotModelResponse.Result;
                 var bookAvailableSlotViewModel = new BookAvailableSlotViewModel
                 {
-                    CreatedFirstName = bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
-                    CreatedByLastName = bookAvailableSlotModel.CreatedByCustomerModel.LastName,
-                    CreatedByBioHeadLine = bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine,
-                    ToBeBookedByCountry = bookAvailableSlotModelResponse.ResultType == ResultType.Success ? bookAvailableSlotModel.CustomerSettingsModel.Country : string.Empty,
+                    CreatedByCustomerFirstName = bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
+                    CreatedByCustomerLastName = bookAvailableSlotModel.CreatedByCustomerModel.LastName,
+                    CreatedByCustomerBioHeadLine = bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine,
+                    ToBeBookedByCustomerCountry = bookAvailableSlotModel.CustomerSettingsModel != null ? bookAvailableSlotModel.CustomerSettingsModel.Country : string.Empty,
                     BookAvailableSlotModels = new List<SlotInformationInCustomerTimeZoneViewModel>()
                 };
 
@@ -172,6 +172,8 @@ namespace Bookmyslot.Api.Controllers
                     bookAvailableSlotViewModel.BookAvailableSlotModels.Add(new SlotInformationInCustomerTimeZoneViewModel()
                     {
                         Title = availableSlotModel.SlotModel.Title,
+                        Country = availableSlotModel.SlotModel.Country,
+                        SlotDuration = availableSlotModel.SlotModel.SlotDuration,
                         SlotStartZonedDateTime = availableSlotModel.SlotModel.SlotStartZonedDateTime,
                         CustomerSlotStartZonedDateTime = availableSlotModel.CustomerSlotZonedDateTime,
                         SlotInformation = slotInformation

@@ -4,13 +4,13 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
 {
     public class BookAvailableSlotViewModel
     {
-        public string CreatedFirstName { get; set; }
+        public string CreatedByCustomerFirstName { get; set; }
 
-        public string CreatedByLastName { get; set; }
+        public string CreatedByCustomerLastName { get; set; }
 
-        public string CreatedByBioHeadLine { get; set; }
+        public string CreatedByCustomerBioHeadLine { get; set; }
 
-        public string ToBeBookedByCountry { get; set; }
+        public string ToBeBookedByCustomerCountry { get; set; }
 
         public List<SlotInformationInCustomerTimeZoneViewModel> BookAvailableSlotModels { get; set; }
     }
