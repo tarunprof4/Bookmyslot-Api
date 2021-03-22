@@ -6,11 +6,11 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface ICustomerSharedSlotBusiness
     {
-        Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerYetToBeBookedSlots(string customerId);
+        Task<Response<SharedSlotModel>> GetCustomerYetToBeBookedSlots(string customerId);
 
-        Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerBookedSlots(string customerId);
+        Task<Response<SharedSlotModel>> GetCustomerBookedSlots(string customerId);
 
-        Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCompletedSlots(string customerId);
+        Task<Response<SharedSlotModel>> GetCustomerCompletedSlots(string customerId);
 
         Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerCancelledSlots(string customerId);
     }

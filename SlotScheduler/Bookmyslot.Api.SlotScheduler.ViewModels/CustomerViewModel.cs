@@ -8,5 +8,12 @@
 
         public string BioHeadLine { get; set; }
 
+        public CustomerViewModel(string firstName, string lastName, string bioHeadLine)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.BioHeadLine = bioHeadLine;
+        }
+
     }
 }

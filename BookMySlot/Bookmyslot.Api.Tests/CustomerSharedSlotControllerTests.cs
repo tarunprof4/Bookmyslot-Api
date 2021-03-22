@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Controllers;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerYetToBeBookedSlots_NoRecordsAvailable_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<SharedSlotModel>> customerSharedSlotBusinessMockResponse = new Response<IEnumerable<SharedSlotModel>>() { ResultType = ResultType.Empty };
+            Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { ResultType = ResultType.Empty };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerYetToBeBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
 
             var response = await customerSharedSlotController.GetCustomerYetToBeBookedSlots();
@@ -50,7 +51,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerYetToBeBookedSlots_RecordsAvailable_ReturnsSuccessResponse()
         {
-            Response<IEnumerable<SharedSlotModel>> customerSharedSlotBusinessMockResponse = new Response<IEnumerable<SharedSlotModel>>() { Result = new List<SharedSlotModel>() };
+            Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { Result = CreateDefaultSharedSlotModel() };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerYetToBeBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
 
             var response = await customerSharedSlotController.GetCustomerYetToBeBookedSlots();
@@ -64,7 +65,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerBookedSlots_NoRecordsAvailable_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<SharedSlotModel>> customerSharedSlotBusinessMockResponse = new Response<IEnumerable<SharedSlotModel>>() { ResultType = ResultType.Empty };
+            Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { ResultType = ResultType.Empty };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
 
             var response = await customerSharedSlotController.GetCustomerBookedSlots();
@@ -78,7 +79,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerBookedSlots_RecordsAvailable_ReturnsSuccessResponse()
         {
-            Response<IEnumerable<SharedSlotModel>> customerSharedSlotBusinessMockResponse = new Response<IEnumerable<SharedSlotModel>>() { Result = new List<SharedSlotModel>() };
+            Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { Result = CreateDefaultSharedSlotModel() };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
 
             var response = await customerSharedSlotController.GetCustomerBookedSlots();
@@ -93,7 +94,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerCompletedSlots_NoRecordsAvailable_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<SharedSlotModel>> customerSharedSlotBusinessMockResponse = new Response<IEnumerable<SharedSlotModel>>() { ResultType = ResultType.Empty };
+            Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { ResultType = ResultType.Empty };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
 
             var response = await customerSharedSlotController.GetCustomerCompletedSlots();
@@ -107,7 +108,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerCompletedSlots_RecordsAvailable_ReturnsSuccessResponse()
         {
-            Response<IEnumerable<SharedSlotModel>> customerSharedSlotBusinessMockResponse = new Response<IEnumerable<SharedSlotModel>>() { Result = new List<SharedSlotModel>() };
+            Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { Result = CreateDefaultSharedSlotModel() };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
 
             var response = await customerSharedSlotController.GetCustomerCompletedSlots();
@@ -145,6 +146,14 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSharedSlotBusinessMock.Verify((m => m.GetCustomerCancelledSlots(It.IsAny<string>())), Times.Once());
+        }
+
+        private SharedSlotModel CreateDefaultSharedSlotModel()
+        {
+            var sharedSlotModel = new SharedSlotModel();
+            sharedSlotModel.SharedSlotModels = new List<KeyValuePair<CustomerModel, SlotModel>>();
+
+            return sharedSlotModel;
         }
 
 

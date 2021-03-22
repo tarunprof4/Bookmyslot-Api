@@ -3,11 +3,13 @@ using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -50,11 +52,9 @@ namespace Bookmyslot.Api.Controllers
             var customerId = currentUserResponse.Result;
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots(customerId);
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
-            {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
-            }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+
+            var sharedSlotViewModel = CreateBookedSlotViewModel(customerSharedSlotModels);
+            return this.CreateGetHttpResponse(sharedSlotViewModel);
         }
 
 
@@ -77,11 +77,9 @@ namespace Bookmyslot.Api.Controllers
             var customerId = currentUserResponse.Result;
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerBookedSlots(customerId);
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
-            {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
-            }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+
+            var sharedSlotViewModel = CreateBookedSlotViewModel(customerSharedSlotModels);
+            return this.CreateGetHttpResponse(sharedSlotViewModel);
         }
 
 
@@ -105,11 +103,9 @@ namespace Bookmyslot.Api.Controllers
             var customerId = currentUserResponse.Result;
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots(customerId);
-            if (customerSharedSlotModels.ResultType == ResultType.Success)
-            {
-                HideUncessaryDetailsForGetCustomerSharedSlots(customerSharedSlotModels.Result);
-            }
-            return this.CreateGetHttpResponse(customerSharedSlotModels);
+
+            var sharedSlotViewModel = CreateBookedSlotViewModel(customerSharedSlotModels);
+            return this.CreateGetHttpResponse(sharedSlotViewModel);
         }
 
 
@@ -141,21 +137,28 @@ namespace Bookmyslot.Api.Controllers
             return this.CreateGetHttpResponse(cancelledSlotModels);
         }
 
-        private void HideUncessaryDetailsForGetCustomerSharedSlots(IEnumerable<SharedSlotModel> sharedSlotModels)
+        private Response<SharedSlotViewModel> CreateBookedSlotViewModel(Response<SharedSlotModel> sharedSlotModelResponse)
         {
-            foreach (var sharedSlotModel in sharedSlotModels)
+            if (sharedSlotModelResponse.ResultType == ResultType.Success)
             {
-                sharedSlotModel.SharedSlotModelInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(sharedSlotModel.SlotModel));
+                var sharedSlotModel = sharedSlotModelResponse.Result;
 
-                sharedSlotModel.SlotModel.Id = string.Empty;
-                sharedSlotModel.SlotModel.CreatedBy = string.Empty;
-                sharedSlotModel.SlotModel.BookedBy = string.Empty;
-
-                if (sharedSlotModel.BookedByCustomerModel != null)
+                var sharedSlotViewModel = new SharedSlotViewModel();
+                foreach (var sharedSlot in sharedSlotModel.SharedSlotModels)
                 {
-                    sharedSlotModel.BookedByCustomerModel.Id = string.Empty;
+                    var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(sharedSlot.Value));
+                    var bookedByCustomerViewModel = sharedSlot.Key != null ? new CustomerViewModel(sharedSlot.Key.FirstName, sharedSlot.Key.LastName, sharedSlot.Key.BioHeadLine) : null;
+                    sharedSlotViewModel.SharedSlotModels.Add(new Tuple<CustomerViewModel, SlotModel, string>(bookedByCustomerViewModel, sharedSlot.Value, slotInformation));
                 }
+
+                return new Response<SharedSlotViewModel>() { Result = sharedSlotViewModel };
             }
+
+            return new Response<SharedSlotViewModel>()
+            {
+                ResultType = sharedSlotModelResponse.ResultType,
+                Messages = sharedSlotModelResponse.Messages
+            };
         }
 
 

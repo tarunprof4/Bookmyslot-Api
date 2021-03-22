@@ -129,20 +129,12 @@ namespace Bookmyslot.Api.Controllers
                 var bookedSlotViewModel = new BookedSlotViewModel
                 {
                     ToBeBookedByCustomerCountry = bookedSlotModel.CustomerSettingsModel != null ? bookedSlotModel.CustomerSettingsModel.Country : string.Empty,
-                    BookedSlotModels = new List<Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>>()
                 };
-
-
 
                 foreach (var bookedSlot in bookedSlotModel.BookedSlotModels)
                 {
                     var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
-                    var createdByCustomerViewModel = new CustomerViewModel()
-                    {
-                        FirstName = bookedSlot.Key.FirstName,
-                        LastName = bookedSlot.Key.LastName,
-                        BioHeadLine = bookedSlot.Key.BioHeadLine,
-                    };
+                    var createdByCustomerViewModel = new CustomerViewModel(bookedSlot.Key.FirstName, bookedSlot.Key.LastName, bookedSlot.Key.BioHeadLine);
 
                     bookedSlotViewModel.BookedSlotModels.Add(new Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>(createdByCustomerViewModel, bookedSlot.Value, slotInformation));
                 }

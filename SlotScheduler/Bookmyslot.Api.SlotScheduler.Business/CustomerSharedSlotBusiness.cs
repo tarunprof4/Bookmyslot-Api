@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,22 +21,23 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
         }
 
 
-        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerYetToBeBookedSlots(string customerId)
+        public async Task<Response<SharedSlotModel>> GetCustomerYetToBeBookedSlots(string customerId)
         {
             var customerSlotModelsResponse = await this.customerSharedSlotRepository.GetCustomerYetToBeBookedSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)
             {
-                var sharedSlotModels = new List<SharedSlotModel>();
+                var sharedSlotModel = new SharedSlotModel();
+                sharedSlotModel.SharedSlotModels = new List<KeyValuePair<CustomerModel, SlotModel>>();
                 foreach (var slotModel in customerSlotModelsResponse.Result)
                 {
-                    sharedSlotModels.Add(new SharedSlotModel() { SlotModel = slotModel });
+                    sharedSlotModel.SharedSlotModels.Add(new KeyValuePair<CustomerModel, SlotModel>(null, slotModel));
                 }
 
-                return new Response<IEnumerable<SharedSlotModel>>() { Result = sharedSlotModels };
+                return new Response<SharedSlotModel>() { Result = sharedSlotModel };
             }
 
-            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Response<SharedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
 
@@ -44,9 +46,9 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             return await this.customerCancelledSlotRepository.GetCustomerSharedCancelledSlots(customerId);
         }
 
-        
 
-        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerBookedSlots(string customerId)
+
+        public async Task<Response<SharedSlotModel>> GetCustomerBookedSlots(string customerId)
         {
             var customerSlotModelsResponse = await this.customerSharedSlotRepository.GetCustomerBookedSlots(customerId);
 
@@ -55,12 +57,12 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerBookedOrCompletedSlots(customerSlotModelsResponse);
             }
 
-            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Response<SharedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
-        
 
-        public async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerCompletedSlots(string customerId)
+
+        public async Task<Response<SharedSlotModel>> GetCustomerCompletedSlots(string customerId)
         {
             var customerSlotModelsResponse = await this.customerSharedSlotRepository.GetCustomerCompletedSlots(customerId);
 
@@ -69,26 +71,24 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerBookedOrCompletedSlots(customerSlotModelsResponse);
             }
 
-            return Response<IEnumerable<SharedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Response<SharedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
 
-        private async Task<Response<IEnumerable<SharedSlotModel>>> GetCustomerBookedOrCompletedSlots(Response<IEnumerable<SlotModel>> customerSlotModelsResponse)
+        private async Task<Response<SharedSlotModel>> GetCustomerBookedOrCompletedSlots(Response<IEnumerable<SlotModel>> customerSlotModelsResponse)
         {
             var customerIds = customerSlotModelsResponse.Result.Select(a => a.BookedBy);
             var customerModelsResponse = await this.customerBusiness.GetCustomersByCustomerIds(customerIds);
 
-            var sharedSlotModels = new List<SharedSlotModel>();
+            var sharedSlotModel = new SharedSlotModel();
+            sharedSlotModel.SharedSlotModels = new List<KeyValuePair<CustomerModel, SlotModel>>();
             foreach (var slotModel in customerSlotModelsResponse.Result)
             {
-                var sharedSlotModel = new SharedSlotModel();
-                sharedSlotModel.SlotModel = slotModel;
-                sharedSlotModel.BookedByCustomerModel = customerModelsResponse.Result.First(a => a.Id == slotModel.BookedBy);
-
-                sharedSlotModels.Add(sharedSlotModel);
+                var bookedByCustomerModel = customerModelsResponse.Result.First(a => a.Id == slotModel.BookedBy);
+                sharedSlotModel.SharedSlotModels.Add(new KeyValuePair<CustomerModel, SlotModel>(bookedByCustomerModel, slotModel));
             }
 
-            return new Response<IEnumerable<SharedSlotModel>>() { Result = sharedSlotModels };
+            return new Response<SharedSlotModel>() { Result = sharedSlotModel };
         }
     }
 }

@@ -9,5 +9,10 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
         public string ToBeBookedByCustomerCountry { get; set; }
 
         public List<Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>> BookedSlotModels { get; set; }
+
+        public BookedSlotViewModel()
+        {
+            this.BookedSlotModels = new List<Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>>();
+        }
     }
 }

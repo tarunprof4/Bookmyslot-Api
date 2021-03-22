@@ -159,12 +159,8 @@ namespace Bookmyslot.Api.Controllers
                 var bookAvailableSlotModel = bookAvailableSlotModelResponse.Result;
                 var bookAvailableSlotViewModel = new BookAvailableSlotViewModel
                 {
-                    CreatedByCustomerViewModel = new CustomerViewModel()
-                    {
-                        FirstName = bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
-                        LastName = bookAvailableSlotModel.CreatedByCustomerModel.LastName,
-                        BioHeadLine = bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine,
-                    },
+                    CreatedByCustomerViewModel = new CustomerViewModel(bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
+                    bookAvailableSlotModel.CreatedByCustomerModel.LastName, bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine),
                     ToBeBookedByCustomerCountry = bookAvailableSlotModel.CustomerSettingsModel != null ? bookAvailableSlotModel.CustomerSettingsModel.Country : string.Empty,
                     BookAvailableSlotModels = new List<SlotInformationInCustomerTimeZoneViewModel>()
                 };

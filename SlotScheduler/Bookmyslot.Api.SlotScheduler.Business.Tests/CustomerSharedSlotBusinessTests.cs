@@ -47,7 +47,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots(CustomerId);
 
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().SlotModel);
+            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Value);
             customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerYetToBeBookedSlots(It.IsAny<string>())), Times.Once());
         }
 
@@ -80,8 +80,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerBookedSlots(CustomerId);
 
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().SlotModel);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().BookedByCustomerModel);
+            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Value);
+            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Key);
             customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
@@ -144,8 +144,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots(CustomerId);
 
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().SlotModel);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().BookedByCustomerModel);
+            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Value);
+            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Key);
             customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
