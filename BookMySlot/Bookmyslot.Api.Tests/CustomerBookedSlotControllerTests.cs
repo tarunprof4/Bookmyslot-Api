@@ -1,7 +1,9 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,7 @@ namespace Bookmyslot.Api.Tests
     public class CustomerBookedSlotControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string IndianTimezone = TimeZoneConstants.IndianTimezone;
         private CustomerBookedSlotController customerBookedSlotController;
         private Mock<ICustomerBookedSlotBusiness> customerBookedSlotBusinessMock;
         private Mock<IKeyEncryptor> keyEncryptorMock;
@@ -36,7 +39,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerBookedSlots_NoRecordsAvailable_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<BookedSlotModel>> customerBookedSlotBusinessMockResponse = new Response<IEnumerable<BookedSlotModel>>() { ResultType = ResultType.Empty };
+            Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { ResultType = ResultType.Empty };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
 
             var response = await customerBookedSlotController.GetCustomerBookedSlots();
@@ -50,7 +53,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerBookedSlots_RecordsAvailable_ReturnsSuccessResponse()
         {
-            Response<IEnumerable<BookedSlotModel>> customerBookedSlotBusinessMockResponse = new Response<IEnumerable<BookedSlotModel>>() { Result = new List<BookedSlotModel>() };
+            Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { Result = CreateDefaultBookedSlotModel() };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
 
             var response = await customerBookedSlotController.GetCustomerBookedSlots();
@@ -66,7 +69,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerCompletedSlots_NoRecordsAvailable_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<BookedSlotModel>> customerBookedSlotBusinessMockResponse = new Response<IEnumerable<BookedSlotModel>>() { ResultType = ResultType.Empty };
+            Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { ResultType = ResultType.Empty };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
 
             var response = await customerBookedSlotController.GetCustomerCompletedSlots();
@@ -80,7 +83,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerCompletedSlots_RecordsAvailable_ReturnsSuccessResponse()
         {
-            Response<IEnumerable<BookedSlotModel>> customerBookedSlotBusinessMockResponse = new Response<IEnumerable<BookedSlotModel>>() { Result = new List<BookedSlotModel>() };
+            Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { Result = CreateDefaultBookedSlotModel() };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
 
             var response = await customerBookedSlotController.GetCustomerCompletedSlots();
@@ -119,6 +122,16 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerBookedSlotBusinessMock.Verify((m => m.GetCustomerCancelledSlots(It.IsAny<string>())), Times.Once());
+        }
+
+        private BookedSlotModel CreateDefaultBookedSlotModel()
+        {
+            var bookedSlotModel = new BookedSlotModel();
+            bookedSlotModel.CustomerSettingsModel = new CustomerSettingsModel() { TimeZone = IndianTimezone };
+            bookedSlotModel.BookedSlotModels = new List<KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>>();
+            bookedSlotModel.BookedSlotModels.Add(new KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>(new CustomerModel(), new SlotInforamtionInCustomerTimeZoneModel()));
+
+            return bookedSlotModel;
         }
 
     }

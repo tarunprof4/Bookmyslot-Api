@@ -3,11 +3,13 @@ using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -49,11 +51,8 @@ namespace Bookmyslot.Api.Controllers
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(customerId);
-            if (customerBookedSlotModels.ResultType == ResultType.Success)
-            {
-                HideUncessaryDetailsForGetCustomerBookedSlots(customerBookedSlotModels.Result);
-            }
-            return this.CreateGetHttpResponse(customerBookedSlotModels);
+            var customerBookedViewModelResponse = CreateBookedSlotViewModel(customerBookedSlotModels);
+            return this.CreateGetHttpResponse(customerBookedViewModelResponse);
         }
 
 
@@ -75,11 +74,8 @@ namespace Bookmyslot.Api.Controllers
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(customerId);
-            if (customerBookedSlotModels.ResultType == ResultType.Success)
-            {
-                HideUncessaryDetailsForGetCustomerBookedSlots(customerBookedSlotModels.Result);
-            }
-            return this.CreateGetHttpResponse(customerBookedSlotModels);
+            var customerBookedViewModelResponse = CreateBookedSlotViewModel(customerBookedSlotModels);
+            return this.CreateGetHttpResponse(customerBookedViewModelResponse);
         }
 
 
@@ -110,18 +106,6 @@ namespace Bookmyslot.Api.Controllers
             return this.CreateGetHttpResponse(customercancelledSlotInformationModels);
         }
 
-        private void HideUncessaryDetailsForGetCustomerBookedSlots(IEnumerable<BookedSlotModel> bookSlotModels)
-        {
-            foreach (var bookSlotModel in bookSlotModels)
-            {
-                bookSlotModel.BookedSlotModelInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookSlotModel.SlotModel));
-                bookSlotModel.SlotModel.Id = string.Empty;
-                bookSlotModel.SlotModel.BookedBy = string.Empty;
-                bookSlotModel.SlotModel.CreatedBy = string.Empty;
-
-                bookSlotModel.CreatedByCustomerModel.Id = string.Empty;
-            }
-        }
 
         private void HideUncessaryDetailsForGetCustomerCancelledSlots(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels)
         {
@@ -134,6 +118,43 @@ namespace Bookmyslot.Api.Controllers
 
                 cancelledSlotInformationModel.CancelledByCustomerModel.Id = string.Empty;
             }
+        }
+
+
+        private Response<BookedSlotViewModel> CreateBookedSlotViewModel(Response<BookedSlotModel> bookedSlotModelResponse)
+        {
+            if (bookedSlotModelResponse.ResultType == ResultType.Success)
+            {
+                var bookedSlotModel = bookedSlotModelResponse.Result;
+                var bookedSlotViewModel = new BookedSlotViewModel
+                {
+                    ToBeBookedByCustomerCountry = bookedSlotModel.CustomerSettingsModel != null ? bookedSlotModel.CustomerSettingsModel.Country : string.Empty,
+                    BookedSlotModels = new List<Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>>()
+                };
+
+
+
+                foreach (var bookedSlot in bookedSlotModel.BookedSlotModels)
+                {
+                    var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
+                    var createdByCustomerViewModel = new CustomerViewModel()
+                    {
+                        FirstName = bookedSlot.Key.FirstName,
+                        LastName = bookedSlot.Key.LastName,
+                        BioHeadLine = bookedSlot.Key.BioHeadLine,
+                    };
+
+                    bookedSlotViewModel.BookedSlotModels.Add(new Tuple<CustomerViewModel, SlotInforamtionInCustomerTimeZoneModel, string>(createdByCustomerViewModel, bookedSlot.Value, slotInformation));
+                }
+
+                return new Response<BookedSlotViewModel>() { Result = bookedSlotViewModel };
+            }
+
+            return new Response<BookedSlotViewModel>()
+            {
+                ResultType = bookedSlotModelResponse.ResultType,
+                Messages = bookedSlotModelResponse.Messages
+            };
         }
     }
 }

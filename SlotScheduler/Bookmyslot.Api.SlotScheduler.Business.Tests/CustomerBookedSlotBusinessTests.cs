@@ -1,4 +1,5 @@
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -24,11 +25,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private const string CancelledBy1 = "CancelledBy1";
         private const string CancelledBy2 = "CancelledBy2";
         private const string CancelledBy3 = "CancelledBy3";
+        private const string IndiaTimeZone = TimeZoneConstants.IndianTimezone;
 
         private CustomerBookedSlotBusiness customerBookedSlotBusiness;
         private Mock<ICustomerBookedSlotRepository> customerBookedSlotRepositoryMock;
         private Mock<ICustomerCancelledSlotRepository> customerCancelledSlotRepositoryMock;
         private Mock<ICustomerBusiness> customerBusinessMock;
+        private Mock<ICustomerSettingsRepository> customerSettingsRepositoryMock;
 
 
         [SetUp]
@@ -37,12 +40,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerBookedSlotRepositoryMock = new Mock<ICustomerBookedSlotRepository>();
             customerCancelledSlotRepositoryMock = new Mock<ICustomerCancelledSlotRepository>();
             customerBusinessMock = new Mock<ICustomerBusiness>();
-            customerBookedSlotBusiness = new CustomerBookedSlotBusiness(customerBookedSlotRepositoryMock.Object, customerCancelledSlotRepositoryMock.Object, customerBusinessMock.Object);
+            customerSettingsRepositoryMock = new Mock<ICustomerSettingsRepository>();
+            customerBookedSlotBusiness = new CustomerBookedSlotBusiness(customerBookedSlotRepositoryMock.Object, customerCancelledSlotRepositoryMock.Object, customerBusinessMock.Object, customerSettingsRepositoryMock.Object);
         }
 
-
         [Test]
-        public async Task GetCustomerBookedSlots_ValidCustomer_ReturnsCustomerSharedSlotModelSuccessResponse()
+        public async Task GetCustomerBookedSlots_WithoutCustomerSettings_ReturnsSuccessResponse()
         {
             var slotModels = GetValidSlotModels();
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
@@ -50,15 +53,46 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
+            Response<CustomerSettingsModel> customerSettingModelResponseMock = new Response<CustomerSettingsModel>() { ResultType = ResultType.Empty };
+            customerSettingsRepositoryMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingModelResponseMock));
 
-            var customerSharedSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(CustomerId);
 
-            Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().SlotModel);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().CreatedByCustomerModel);
+            var customerBookedSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(CustomerId);
+
+            Assert.AreEqual(customerBookedSlotModelResponse.ResultType, ResultType.Success);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Key);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Value.SlotModel);
+            Assert.IsNull(customerBookedSlotModelResponse.Result.CustomerSettingsModel);
             customerBookedSlotRepositoryMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
+            customerSettingsRepositoryMock.Verify((m => m.GetCustomerSettings(It.IsAny<string>())), Times.Once());
         }
+
+        [Test]
+        public async Task GetCustomerBookedSlots_WithCustomerSettings_ReturnsSuccessResponse()
+        {
+            var slotModels = GetValidSlotModels();
+            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            customerBookedSlotRepositoryMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
+            customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
+                .Returns(Task.FromResult(customerModelsMock));
+            Response<CustomerSettingsModel> customerSettingModelResponseMock = new Response<CustomerSettingsModel>() { Result = new CustomerSettingsModel() { TimeZone = IndiaTimeZone } };
+            customerSettingsRepositoryMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingModelResponseMock));
+
+
+            var customerBookedSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(CustomerId);
+
+            Assert.AreEqual(customerBookedSlotModelResponse.ResultType, ResultType.Success);
+            Assert.AreEqual(customerBookedSlotModelResponse.Result.CustomerSettingsModel.TimeZone, IndiaTimeZone);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Key);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Value.SlotModel);
+            customerBookedSlotRepositoryMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
+            customerSettingsRepositoryMock.Verify((m => m.GetCustomerSettings(It.IsAny<string>())), Times.Once());
+        }
+
+
 
 
         [Test]
@@ -74,10 +108,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Never());
         }
 
-
-
         [Test]
-        public async Task GetCustomerCompletedSlots_ValidCustomer_ReturnsCustomerSharedSlotModelSuccessResponse()
+        public async Task GetCustomerCompletedSlots_WithoutCustomerSettings_ReturnsSuccessResponse()
         {
             var slotModels = GetValidSlotModels();
             Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
@@ -85,15 +117,46 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
+            Response<CustomerSettingsModel> customerSettingModelResponseMock = new Response<CustomerSettingsModel>() { ResultType = ResultType.Empty };
+            customerSettingsRepositoryMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingModelResponseMock));
 
-            var customerSharedSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(CustomerId);
+            var customerBookedSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(CustomerId);
 
-            Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().SlotModel);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.First().CreatedByCustomerModel);
+            Assert.AreEqual(customerBookedSlotModelResponse.ResultType, ResultType.Success);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Key);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Value.SlotModel);
+            Assert.IsNull(customerBookedSlotModelResponse.Result.CustomerSettingsModel);
             customerBookedSlotRepositoryMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
+            customerSettingsRepositoryMock.Verify((m => m.GetCustomerSettings(It.IsAny<string>())), Times.Once());
         }
+
+
+
+        [Test]
+        public async Task GetCustomerCompletedSlots_WithCustomerSettings_ReturnsSuccessResponse()
+        {
+            var slotModels = GetValidSlotModels();
+            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            customerBookedSlotRepositoryMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
+            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByCustomerId(CreatedBy1), GetValidCustomerModelByCustomerId(CreatedBy2), GetValidCustomerModelByCustomerId(CreatedBy3) } };
+            customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
+                .Returns(Task.FromResult(customerModelsMock));
+            Response<CustomerSettingsModel> customerSettingModelResponseMock = new Response<CustomerSettingsModel>() { Result = new CustomerSettingsModel() { TimeZone = IndiaTimeZone } };
+            customerSettingsRepositoryMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingModelResponseMock));
+
+            var customerBookedSlotModelResponse = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(CustomerId);
+
+            Assert.AreEqual(customerBookedSlotModelResponse.ResultType, ResultType.Success);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Key);
+            Assert.NotNull(customerBookedSlotModelResponse.Result.BookedSlotModels.First().Value.SlotModel);
+            Assert.AreEqual(customerBookedSlotModelResponse.Result.CustomerSettingsModel.TimeZone, IndiaTimeZone);
+            customerBookedSlotRepositoryMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
+            customerSettingsRepositoryMock.Verify((m => m.GetCustomerSettings(It.IsAny<string>())), Times.Once());
+        }
+
+
 
 
         [Test]

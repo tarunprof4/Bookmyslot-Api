@@ -18,6 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private const string CreatedBy1 = "CreatedBy1";
         private const string CreatedBy2 = "CreatedBy2";
         private const string CreatedBy3 = "CreatedBy3";
+        private const string IndiaTimeZone = TimeZoneConstants.IndianTimezone;
         private CustomerSlotBusiness customerSlotBusiness;
         private Mock<ICustomerSlotRepository> customerSlotRepositoryMock;
         private Mock<ICustomerBusiness> customerBusinessMock;
@@ -72,7 +73,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
         [Test]
-        public async Task GetCustomerAvailableSlots_ValidInput_ReturnsCustomerSlotModelSuccessResponse()
+        public async Task GetCustomerAvailableSlots_ValidInputWithCustomerSettings_ReturnsCustomerSlotModelSuccessResponse()
         {
             var pageParameterModel = GetValidPageParameterModel();
             var slotModels = GetValidSlotModels();
@@ -80,7 +81,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerSlotRepositoryMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
             Response<CustomerModel> customerModelResponseMock = new Response<CustomerModel>() { Result = GetValidCustomerModelByCustomerId(CreatedBy1) };
             customerBusinessMock.Setup(a => a.GetCustomerById(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponseMock));
-            Response<CustomerSettingsModel> customerSettingModelResponseMock = new Response<CustomerSettingsModel>() { Result = new CustomerSettingsModel() { TimeZone = TimeZoneConstants.IndianTimezone } };
+            Response<CustomerSettingsModel> customerSettingModelResponseMock = new Response<CustomerSettingsModel>() { Result = new CustomerSettingsModel() { TimeZone = IndiaTimeZone } };
             customerSettingsRepositoryMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingModelResponseMock));
 
             var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, CreatedBy1, CreatedBy2);
@@ -88,6 +89,31 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Success);
             Assert.NotNull(customerSlotModelResponse.Result.AvailableSlotModels);
             Assert.AreEqual(customerSlotModelResponse.Result.AvailableSlotModels[0].SlotModel.CreatedBy, CreatedBy1);
+            Assert.AreEqual(customerSlotModelResponse.Result.CustomerSettingsModel.TimeZone, IndiaTimeZone);
+            Assert.NotNull(customerSlotModelResponse.Result.CreatedByCustomerModel);
+            customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
+            customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Once());
+            customerSettingsRepositoryMock.Verify((m => m.GetCustomerSettings(It.IsAny<string>())), Times.Once());
+        }
+
+        [Test]
+        public async Task GetCustomerAvailableSlots_ValidInputWithoutCustomerSettings_ReturnsSuccessResponse()
+        {
+            var pageParameterModel = GetValidPageParameterModel();
+            var slotModels = GetValidSlotModels();
+            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            customerSlotRepositoryMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
+            Response<CustomerModel> customerModelResponseMock = new Response<CustomerModel>() { Result = GetValidCustomerModelByCustomerId(CreatedBy1) };
+            customerBusinessMock.Setup(a => a.GetCustomerById(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponseMock));
+            Response<CustomerSettingsModel> customerSettingModelResponseMock = new Response<CustomerSettingsModel>() { ResultType = ResultType.Empty };
+            customerSettingsRepositoryMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingModelResponseMock));
+
+            var customerSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, CreatedBy1, CreatedBy2);
+
+            Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Success);
+            Assert.NotNull(customerSlotModelResponse.Result.AvailableSlotModels);
+            Assert.AreEqual(customerSlotModelResponse.Result.AvailableSlotModels[0].SlotModel.CreatedBy, CreatedBy1);
+            Assert.IsNull(customerSlotModelResponse.Result.CustomerSettingsModel);
             Assert.NotNull(customerSlotModelResponse.Result.CreatedByCustomerModel);
             customerSlotRepositoryMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Once());
@@ -95,7 +121,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         }
 
 
-        
+
 
         [Test]
         public async Task GetCustomerAvailableSlots_CustomerIdMissing_ReturnsValidationResponse()

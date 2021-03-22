@@ -1,6 +1,9 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using NodaTime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +15,14 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
         private readonly ICustomerBookedSlotRepository customerBookedSlotRepository;
         private readonly ICustomerCancelledSlotRepository customerCancelledSlotRepository;
         private readonly ICustomerBusiness customerBusiness;
-        public CustomerBookedSlotBusiness(ICustomerBookedSlotRepository customerBookedSlotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, ICustomerBusiness customerBusiness)
+        private readonly ICustomerSettingsRepository customerSettingsRepository;
+        public CustomerBookedSlotBusiness(ICustomerBookedSlotRepository customerBookedSlotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, 
+            ICustomerBusiness customerBusiness, ICustomerSettingsRepository customerSettingsRepository)
         {
             this.customerBookedSlotRepository = customerBookedSlotRepository;
             this.customerCancelledSlotRepository = customerCancelledSlotRepository;
             this.customerBusiness = customerBusiness;
+            this.customerSettingsRepository = customerSettingsRepository;
         }
 
         public async Task<Response<IEnumerable<CancelledSlotInformationModel>>> GetCustomerCancelledSlots(string customerId)
@@ -44,46 +50,56 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             return Response<IEnumerable<CancelledSlotInformationModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
-        public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerBookedSlots(string customerId)
+        public async Task<Response<BookedSlotModel>> GetCustomerBookedSlots(string customerId)
         {
             var customerSlotModelsResponse = await this.customerBookedSlotRepository.GetCustomerBookedSlots(customerId);
 
             if (customerSlotModelsResponse.ResultType == ResultType.Success)
             {
-                return await GetCustomerSlots(customerSlotModelsResponse);
+                return await GetCustomerSlots(customerSlotModelsResponse, customerId);
             }
 
-            return Response<IEnumerable<BookedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Response<BookedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
-        public async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerCompletedSlots(string customerId)
+        public async Task<Response<BookedSlotModel>> GetCustomerCompletedSlots(string customerId)
         {
             var customerSlotModelsResponse = await this.customerBookedSlotRepository.GetCustomerCompletedSlots(customerId);
-
+            
             if (customerSlotModelsResponse.ResultType == ResultType.Success)
             {
-                return await GetCustomerSlots(customerSlotModelsResponse);
+                return await GetCustomerSlots(customerSlotModelsResponse, customerId);
             }
 
-            return Response<IEnumerable<BookedSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Response<BookedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
-        private async Task<Response<IEnumerable<BookedSlotModel>>> GetCustomerSlots(Response<IEnumerable<SlotModel>> customerSlotModelsResponse)
+        private async Task<Response<BookedSlotModel>> GetCustomerSlots(Response<IEnumerable<SlotModel>> customerSlotModelsResponse, string customerId)
         {
             var customerIds = customerSlotModelsResponse.Result.Select(a => a.CreatedBy);
-            var customerModelsResponse = await this.customerBusiness.GetCustomersByCustomerIds(customerIds);
+            var customerModelsResponseTask =  this.customerBusiness.GetCustomersByCustomerIds(customerIds);
+            var customerSettingsResponseTask = this.customerSettingsRepository.GetCustomerSettings(customerId);
+            await Task.WhenAll(customerModelsResponseTask, customerSettingsResponseTask);
+            var customerModelsResponse = customerModelsResponseTask.Result;
+            var customerSettingsResponse = customerSettingsResponseTask.Result;
 
-            var BookedSlotModels = new List<BookedSlotModel>();
+            var bookedSlotModel = new BookedSlotModel();
+            bookedSlotModel.BookedSlotModels = new List<KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>>();
+            bookedSlotModel.CustomerSettingsModel = customerSettingsResponse.Result;
             foreach (var slotModel in customerSlotModelsResponse.Result)
             {
-                var bookedSlotModel = new BookedSlotModel();
-                bookedSlotModel.SlotModel = slotModel;
-                bookedSlotModel.CreatedByCustomerModel = customerModelsResponse.Result.First(a => a.Id == slotModel.CreatedBy);
+                var createdByCustomerModel = customerModelsResponse.Result.First(a => a.Id == slotModel.CreatedBy);
+               
+                var slotInforamtionInCustomerTimeZoneModel = new SlotInforamtionInCustomerTimeZoneModel() { SlotModel = slotModel };
+                ZonedDateTime customerZonedDateTime = customerSettingsResponse.ResultType != ResultType.Success ?
+                  new ZonedDateTime() :
+                  NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(slotModel.SlotStartZonedDateTime, customerSettingsResponse.Result.TimeZone);
+                slotInforamtionInCustomerTimeZoneModel.CustomerSlotZonedDateTime = customerZonedDateTime;
 
-                BookedSlotModels.Add(bookedSlotModel);
+                bookedSlotModel.BookedSlotModels.Add(new KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>(createdByCustomerModel, slotInforamtionInCustomerTimeZoneModel));
             }
 
-            return new Response<IEnumerable<BookedSlotModel>>() { Result = BookedSlotModels };
+            return new Response<BookedSlotModel>() { Result = bookedSlotModel };
         }
     }
 }

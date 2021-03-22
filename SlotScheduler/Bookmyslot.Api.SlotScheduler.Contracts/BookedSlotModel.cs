@@ -1,12 +1,12 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
+using System.Collections.Generic;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
     public class BookedSlotModel
     {
-        public CustomerModel CreatedByCustomerModel { get; set; }
-        public SlotModel SlotModel { get; set; }
+        public List<KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>> BookedSlotModels { get; set; }
 
-        public string BookedSlotModelInformation { get; set; }
+        public CustomerSettingsModel CustomerSettingsModel { get; set; }
     }
 }
