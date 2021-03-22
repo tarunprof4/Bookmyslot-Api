@@ -16,7 +16,8 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
                 UserName = CreateUserName(registerCustomerModel.FirstName),
                 Email = registerCustomerModel.Email,
                 Provider = registerCustomerModel.Provider,
-                CreatedDateUtc = DateTime.UtcNow
+                CreatedDateUtc = DateTime.UtcNow,
+                IsVerified = registerCustomerModel.IsVerified,
             };
         }
 

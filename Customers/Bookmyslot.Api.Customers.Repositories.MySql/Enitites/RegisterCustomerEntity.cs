@@ -24,5 +24,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
         public string PhotoUrl { get; set; }
 
         public DateTime CreatedDateUtc { get; set; }
+
+        public bool IsVerified { get; set; }
     }
 }

@@ -9,5 +9,7 @@
         public string LastName { get; set; }
 
         public string BioHeadLine { get; set; }
+
+        public bool IsVerified { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
                 FirstName = registerCustomerEntity.FirstName,
                 LastName = registerCustomerEntity.LastName,
                 BioHeadLine = registerCustomerEntity.BioHeadLine,
+                IsVerified = registerCustomerEntity.IsVerified
             };
         }
 
