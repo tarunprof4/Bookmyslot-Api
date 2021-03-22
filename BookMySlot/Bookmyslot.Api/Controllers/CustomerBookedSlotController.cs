@@ -136,14 +136,17 @@ namespace Bookmyslot.Api.Controllers
                     var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
                     var createdByCustomerViewModel = new CustomerViewModel(bookedSlot.Key.FirstName, bookedSlot.Key.LastName, bookedSlot.Key.BioHeadLine);
 
+                    var slotModel = bookedSlot.Value.SlotModel;
                     var slotInformationInCustomerTimeZoneViewModel = new SlotInformationInCustomerTimeZoneViewModel()
                     {
-                        Title = bookedSlot.Value.SlotModel.Title,
-                        Country = bookedSlot.Value.SlotModel.Country,
-                        SlotDuration = bookedSlot.Value.SlotModel.SlotDuration,
-                        SlotStartZonedDateTime = bookedSlot.Value.SlotModel.SlotStartZonedDateTime,
+                        Title = slotModel.Title,
+                        Country = slotModel.Country,
+                        SlotDuration = slotModel.SlotDuration,
+                        SlotStartZonedDateTime = slotModel.SlotStartZonedDateTime,
+                        SlotMeetingLink = slotModel.SlotMeetingLink,
+                        SlotInformation = slotInformation,
                         CustomerSlotStartZonedDateTime = bookedSlot.Value.CustomerSlotZonedDateTime,
-                        SlotInformation = slotInformation
+
                     };
                     bookedSlotViewModel.BookedSlotModels.Add(new Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel, string>(createdByCustomerViewModel, slotInformationInCustomerTimeZoneViewModel, slotInformation));
                 }

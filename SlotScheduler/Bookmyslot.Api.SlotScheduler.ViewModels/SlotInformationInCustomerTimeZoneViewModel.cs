@@ -15,6 +15,8 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
 
         public ZonedDateTime CustomerSlotStartZonedDateTime { get; set; }
 
+        public string SlotMeetingLink { get; set; }
+
         public string SlotInformation { get; set; }
     }
 }
