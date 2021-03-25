@@ -4,6 +4,7 @@ using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Azure.Repositories.Constants;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Database.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ namespace Bookmyslot.Api.Azure.Repositories
     {
         private readonly string blobConnectionString;
         private readonly IHashing md5Hash;
+        private readonly IDbInterceptor dbInterceptor;
 
-        public BlobRepository(IHashing md5Hash)
+        public BlobRepository(IHashing md5Hash, IDbInterceptor dbInterceptor)
         {
-            this.md5Hash = md5Hash;
             this.blobConnectionString = "";
+            this.md5Hash = md5Hash;
+            this.dbInterceptor = dbInterceptor;
         }
         public async Task<Response<string>> SaveProfilePicture(IFormFile file, string customerId)
         {
@@ -34,10 +37,11 @@ namespace Bookmyslot.Api.Azure.Repositories
 
             using (var stream = file.OpenReadStream())
             {
-               var response = await blobClient.UploadAsync(stream, blobHttpHeaders);
+                var parameters = new { CustomerId = customerId };
+                await this.dbInterceptor.GetQueryResults("SaveProfilePicture", parameters, () => blobClient.UploadAsync(stream, blobHttpHeaders));
             }
 
-            return new Response<string>() { Result = "" };
+            return new Response<string>() { Result = blobClient.Uri.AbsoluteUri};
         }
 
 

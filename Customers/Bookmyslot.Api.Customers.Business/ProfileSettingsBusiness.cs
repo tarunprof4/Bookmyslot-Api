@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Azure.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
@@ -64,8 +63,7 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
         {
-            return await this.blobRepository.SaveProfilePicture();
-            
+            return await this.blobRepository.SaveProfilePicture(file, customerId);
         }
 
       
