@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
 {
-    
+
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]

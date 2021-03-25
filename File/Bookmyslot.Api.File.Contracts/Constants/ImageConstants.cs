@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.File.Contracts.Constants
+﻿namespace Bookmyslot.Api.File.Contracts.Constants
 {
     public class ImageConstants
     {

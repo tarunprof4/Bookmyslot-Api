@@ -4,22 +4,22 @@ using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Azure.Repositories.Constants;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Azure.Repositories
 {
     public class BlobRepository : IBlobRepository
     {
-        private readonly string blobConnectionString;
+        private readonly string blobStorageConnectionString;
         private readonly IHashing md5Hash;
         private readonly IDbInterceptor dbInterceptor;
 
-        public BlobRepository(IHashing md5Hash, IDbInterceptor dbInterceptor)
+        public BlobRepository(IHashing md5Hash, IDbInterceptor dbInterceptor, AppConfiguration appConfiguration)
         {
-            this.blobConnectionString = "";
+            this.blobStorageConnectionString = appConfiguration.BlobStorageConnectionString;
             this.md5Hash = md5Hash;
             this.dbInterceptor = dbInterceptor;
         }
@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Azure.Repositories
         {
             var containerName = BlobConstants.UploadProfilePictureContainer;
             var blobName = GenerateProfilePictureBlobName(customerId);
-            BlobContainerClient container = new BlobContainerClient(this.blobConnectionString, containerName);
+            BlobContainerClient container = new BlobContainerClient(this.blobStorageConnectionString, containerName);
             BlobClient blobClient = container.GetBlobClient(blobName);
             BlobHttpHeaders blobHttpHeaders = new BlobHttpHeaders
             {

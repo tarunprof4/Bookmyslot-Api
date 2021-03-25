@@ -17,6 +17,8 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
 
         private readonly string cacheDatabaseConnectionString;
 
+        private readonly string blobStorageConnectionString;
+
         public AppConfiguration(IConfiguration configuration)
         {
             this.appVersion = configuration.GetSection(AppSettingKeysConstants.AppVersion).Value;
@@ -30,6 +32,7 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
             this.databaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BookMySlotDatabase).Value;
             this.readDatabaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BookMySlotReadDatabase).Value;
             this.cacheDatabaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.CacheDatabase).Value;
+            this.blobStorageConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BlobStroage).Value;
         }
 
         public string AppVersion => this.appVersion;
@@ -43,5 +46,9 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
         public string ReadDatabaseConnectionString => this.readDatabaseConnectionString;
 
         public string CacheDatabaseConnectionString => this.cacheDatabaseConnectionString;
+
+        public string BlobStorageConnectionString => this.blobStorageConnectionString;
+
+        
     }
 }

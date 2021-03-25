@@ -1,7 +1,6 @@
 ﻿using Bookmyslot.Api.File.Contracts.Configuration;
 using Bookmyslot.Api.File.Contracts.Constants;
 using Bookmyslot.Api.File.Contracts.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.File.Business

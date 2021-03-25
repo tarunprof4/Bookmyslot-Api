@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.Api.Azure.Repositories.Constants
+﻿namespace Bookmyslot.Api.Azure.Repositories.Constants
 {
     public class BlobConstants
     {

@@ -3,16 +3,10 @@ using Bookmyslot.Api.File.Contracts.Constants;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Bookmyslot.Api.File.ViewModels.Validations
 {
- 
+
     public class UpdateProfilePictureViewModelValidator : AbstractValidator<UpdateProfilePictureViewModel>
     {
         private readonly IFileConfigurationBusiness fileConfigurationBusiness;
