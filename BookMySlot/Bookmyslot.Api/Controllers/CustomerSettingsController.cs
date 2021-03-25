@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var customerId = currentUserResponse.Result.Id;
 
             var customerSettingsResponse = await this.customerSettingsBusiness.GetCustomerSettings(customerId);
             return this.CreateGetHttpResponse(customerSettingsResponse);
@@ -81,7 +81,7 @@ namespace Bookmyslot.Api.Controllers
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result;
+                var customerId = currentUserResponse.Result.Id;
                 var customerSettingsResponse = await this.customerSettingsBusiness.UpdateCustomerSettings(customerId, CreateCustomerSettingsViewModel(customerSettingsViewModel));
                 return this.CreatePutHttpResponse(customerSettingsResponse);
             }

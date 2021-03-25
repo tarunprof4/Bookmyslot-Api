@@ -23,10 +23,10 @@ namespace Bookmyslot.Api.Azure.Repositories
             this.md5Hash = md5Hash;
             this.dbInterceptor = dbInterceptor;
         }
-        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
+        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
         {
             var containerName = BlobConstants.UploadProfilePictureContainer;
-            var blobName = GenerateProfilePictureBlobName(customerId);
+            var blobName = GenerateProfilePictureBlobName(customerId, firstName);
             BlobContainerClient container = new BlobContainerClient(this.blobStorageConnectionString, containerName);
             BlobClient blobClient = container.GetBlobClient(blobName);
             BlobHttpHeaders blobHttpHeaders = new BlobHttpHeaders
@@ -45,10 +45,11 @@ namespace Bookmyslot.Api.Azure.Repositories
         }
 
 
-        private string GenerateProfilePictureBlobName(string customerId)
+        private string GenerateProfilePictureBlobName(string customerId, string firstName)
         {
             var hashCustomerId = this.md5Hash.Create(customerId);
-            return hashCustomerId;
+            var blobName = string.Format("{0}{1}", hashCustomerId, firstName);
+            return blobName;
         }
     }
 }

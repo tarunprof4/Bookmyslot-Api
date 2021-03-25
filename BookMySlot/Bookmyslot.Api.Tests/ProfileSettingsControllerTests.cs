@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
@@ -44,7 +45,7 @@ namespace Bookmyslot.Api.Tests
             fileConfigurationBusinessMock = new Mock<IFileConfigurationBusiness>();
             profileSettingsController = new ProfileSettingsController(profileSettingsBusinessMock.Object, currentUserMock.Object, fileConfigurationBusinessMock.Object);
 
-            Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
+            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = ValidFirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -139,7 +140,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.FileMissing));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Never());
+            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
         }
 
 
@@ -149,7 +150,7 @@ namespace Bookmyslot.Api.Tests
         {
             fileConfigurationBusinessMock.Setup(a => a.GetImageConfigurationInformation()).Returns(DefaultImageConfigurationSingleton());
             Response<string> profileSettingsBusinessMockResponse = new Response<string>() { Result = "Uri" };
-            profileSettingsBusinessMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
+            profileSettingsBusinessMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             IFormFile file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file")), 0, 0, "Data", "dummy.txt");
 
@@ -159,7 +160,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Never());
+            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
         }
 
 

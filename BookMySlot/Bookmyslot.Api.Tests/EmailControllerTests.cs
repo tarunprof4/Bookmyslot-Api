@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
@@ -19,6 +20,7 @@ namespace Bookmyslot.Api.Tests
     public class EmailControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string FirstName = "FirstName";
         private const string InValidResendSlotModel = "InValidResendSlotModel";
         private const string ValidResendSlotModel = "ValidResendSlotModel";
 
@@ -35,7 +37,7 @@ namespace Bookmyslot.Api.Tests
             currentUserMock = new Mock<ICurrentUser>();
             emailController = new EmailController(keyEncryptorMock.Object, resendSlotInformationBusinessMock.Object, currentUserMock.Object);
 
-            Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
+            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
@@ -21,6 +22,7 @@ namespace Bookmyslot.Api.Tests
     public class CustomerSettingsControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string FirstName = "FirstName";
         private const string InValidCountry = "InValidCountry";
         private const string InValidTimeZone = "InValidTimeZone";
         private const string ValidCountry = CountryConstants.India;
@@ -41,7 +43,7 @@ namespace Bookmyslot.Api.Tests
             nodaTimeZoneLocationBusinessMock = new Mock<INodaTimeZoneLocationBusiness>();
             customerSettingsController = new CustomerSettingsController(customerSettingsBusinessMock.Object, currentUserMock.Object, nodaTimeZoneLocationBusinessMock.Object);
 
-            Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
+            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
             nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
         }

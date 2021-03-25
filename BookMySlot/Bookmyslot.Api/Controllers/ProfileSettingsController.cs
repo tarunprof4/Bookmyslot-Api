@@ -66,7 +66,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var customerId = currentUserResponse.Result.Id;
 
             var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByCustomerId(customerId);
             return this.CreateGetHttpResponse(customerResponse);
@@ -99,7 +99,8 @@ namespace Bookmyslot.Api.Controllers
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result;
+                var customerId = currentUserResponse.Result.Id;
+                
                 var customerResponse = await this.profileSettingsBusiness.UpdateProfileSettings(CreateProfileSettingsModel(profileSettingsViewModel), customerId);
                 return this.CreatePutHttpResponse(customerResponse);
             }
@@ -134,9 +135,9 @@ namespace Bookmyslot.Api.Controllers
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result;
-
-                var profileUpdateResponse = await this.profileSettingsBusiness.UpdateProfilePicture(file, customerId);
+                var customerId = currentUserResponse.Result.Id;
+                var firstName = currentUserResponse.Result.FirstName;
+                var profileUpdateResponse = await this.profileSettingsBusiness.UpdateProfilePicture(file, customerId, firstName);
                 return this.CreatePutHttpResponse(profileUpdateResponse);
             }
 

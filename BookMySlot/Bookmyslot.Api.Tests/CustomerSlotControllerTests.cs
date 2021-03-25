@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
@@ -56,7 +57,7 @@ namespace Bookmyslot.Api.Tests
             customerBookedSlotController = new CustomerSlotController(customerSlotBusinessMock.Object, keyEncryptorMock.Object,
                 distributedInMemoryCacheBuisnessMock.Object, hashingMock.Object, cacheConfiguration, currentUserMock.Object);
 
-            Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
+            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

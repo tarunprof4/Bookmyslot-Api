@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Common.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,5 +13,7 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
         Task<Response<CustomerModel>> GetCustomerById(string customerId);
 
         Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds);
+
+        Task<Response<CustomerAuthModel>> GetCustomerAuthModelByEmail(string email);
     }
 }

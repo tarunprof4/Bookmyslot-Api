@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
@@ -14,6 +15,7 @@ namespace Bookmyslot.Api.Tests
     public class CustomerControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string FirstName = "FirstName";
         private CustomerController customerController;
         private Mock<ICustomerBusiness> customerBusinessMock;
         private Mock<ICurrentUser> currentUserMock;
@@ -25,7 +27,7 @@ namespace Bookmyslot.Api.Tests
             currentUserMock = new Mock<ICurrentUser>();
             customerController = new CustomerController(customerBusinessMock.Object, currentUserMock.Object);
 
-            Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
+            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

@@ -49,7 +49,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerYetToBeBookedSlots()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var customerId = currentUserResponse.Result.Id;
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots(customerId);
 
@@ -74,7 +74,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerBookedSlots()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var customerId = currentUserResponse.Result.Id;
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerBookedSlots(customerId);
 
@@ -100,7 +100,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCompletedSlots()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var customerId = currentUserResponse.Result.Id;
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots(customerId);
 
@@ -127,7 +127,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCancelledSlots()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result;
+            var customerId = currentUserResponse.Result.Id;
 
             var cancelledSlotModels = await this.customerSharedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (cancelledSlotModels.ResultType == ResultType.Success)

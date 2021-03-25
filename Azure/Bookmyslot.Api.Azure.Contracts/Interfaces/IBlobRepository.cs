@@ -6,6 +6,6 @@ namespace Bookmyslot.Api.Azure.Contracts.Interfaces
 {
     public interface IBlobRepository
     {
-        Task<Response<string>> UpdateProfilePicture(IFormFile file, string blobName);
+        Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName);
     }
 }

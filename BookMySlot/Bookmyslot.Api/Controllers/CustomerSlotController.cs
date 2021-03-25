@@ -130,7 +130,7 @@ namespace Bookmyslot.Api.Controllers
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result;
+                var customerId = currentUserResponse.Result.Id;
 
                 var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
                 var bookAvailableSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerId, customerInfo);

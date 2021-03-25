@@ -5,7 +5,7 @@ namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface ICurrentUser
     {
-        Task<Response<string>> GetCurrentUserFromCache();
+        Task<Response<CustomerAuthModel>> GetCurrentUserFromCache();
 
         Task SetCurrentUserInCache(string email);
     }

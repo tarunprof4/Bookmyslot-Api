@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Authentication.Common;
+using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
@@ -38,6 +39,8 @@ namespace Bookmyslot.Api.Customers.Business
             return await customerRepository.GetCustomerIdByEmail(email);
         }
 
+
+      
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
             if (string.IsNullOrWhiteSpace(customerId))
@@ -55,5 +58,27 @@ namespace Bookmyslot.Api.Customers.Business
             customerIds = customerIds.Distinct();
             return await this.customerRepository.GetCustomersByCustomerIds(customerIds);
         }
+
+        public async Task<Response<CustomerAuthModel>> GetCustomerAuthModelByEmail(string email)
+        {
+            var customerModelResponse = await this.customerRepository.GetCustomerByEmail(email);
+            if(customerModelResponse.ResultType == ResultType.Success)
+            {
+                return new Response<CustomerAuthModel>() { Result = CreateCustomerAuthModel(customerModelResponse.Result)};
+            }
+
+            return Response<CustomerAuthModel>.ValidationError(customerModelResponse.Messages);
+
+        }
+
+        private CustomerAuthModel CreateCustomerAuthModel(CustomerModel customerModel)
+        {
+            return new CustomerAuthModel()
+            {
+                Id = customerModel.Id,
+                FirstName = customerModel.FirstName
+            };
+        }
+
     }
 }

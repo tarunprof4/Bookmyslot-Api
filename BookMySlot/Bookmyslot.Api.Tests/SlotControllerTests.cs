@@ -1,3 +1,4 @@
+using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
@@ -23,6 +24,7 @@ namespace Bookmyslot.Api.Tests
     public class SlotControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string FirstName = "FirstName";
         private const string InValidSlotKey = "InValidSlotKey";
         private const string ValidSlotTitle = "SlotTitle";
         private const string InValidCountry = "Incountry";
@@ -50,7 +52,7 @@ namespace Bookmyslot.Api.Tests
             slotController = new SlotController(slotBusinessMock.Object, keyEncryptorMock.Object, currentUserMock.Object, nodaTimeZoneLocationBusinessMock.Object);
 
             nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
-            Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
+            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

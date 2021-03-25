@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Azure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Injections
 {

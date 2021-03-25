@@ -61,9 +61,9 @@ namespace Bookmyslot.Api.Customers.Business
             return await profileSettingsRepository.GetProfileSettingsByCustomerId(customerId);
         }
 
-        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
+        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
         {
-            return await this.blobRepository.UpdateProfilePicture(file, customerId);
+            return await this.blobRepository.UpdateProfilePicture(file, customerId, firstName);
         }
 
       
