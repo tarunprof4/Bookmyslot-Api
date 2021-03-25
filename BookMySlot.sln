@@ -149,6 +149,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A33A79AC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.File.BusinessTests", "File\Tests\Bookmyslot.Api.File.BusinessTests\Bookmyslot.Api.File.BusinessTests.csproj", "{18EE4776-3202-4692-A6A1-64FC9BD78F0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.File.ViewModels", "File\Bookmyslot.Api.File.ViewModels\Bookmyslot.Api.File.ViewModels.csproj", "{B8C1FBC8-A7A2-4D44-9FB2-9E7CA3F59D99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -367,6 +369,10 @@ Global
 		{18EE4776-3202-4692-A6A1-64FC9BD78F0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18EE4776-3202-4692-A6A1-64FC9BD78F0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18EE4776-3202-4692-A6A1-64FC9BD78F0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8C1FBC8-A7A2-4D44-9FB2-9E7CA3F59D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C1FBC8-A7A2-4D44-9FB2-9E7CA3F59D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C1FBC8-A7A2-4D44-9FB2-9E7CA3F59D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C1FBC8-A7A2-4D44-9FB2-9E7CA3F59D99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -434,6 +440,7 @@ Global
 		{0EF8DBC6-AF02-440E-8828-4BD12E2CB74D} = {14BA1D7E-64E3-4A69-9CA3-EE5AD8FB145C}
 		{A33A79AC-B436-4725-B9C4-04560CA3BFAD} = {22F4E493-8232-4D1B-967D-7F91DF366BFC}
 		{18EE4776-3202-4692-A6A1-64FC9BD78F0B} = {A33A79AC-B436-4725-B9C4-04560CA3BFAD}
+		{B8C1FBC8-A7A2-4D44-9FB2-9E7CA3F59D99} = {22F4E493-8232-4D1B-967D-7F91DF366BFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}
