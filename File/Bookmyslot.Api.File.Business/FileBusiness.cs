@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.File.Contracts.Configuration;
 using Bookmyslot.Api.File.Contracts.Constants;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,7 @@ namespace Bookmyslot.Api.File.Business
             return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.ImageSizeTooLong });
         }
 
-        private Response<bool> ValidateImageExtension(IFormFile formFile, Contracts.Configuration.ImageConfigurationSingleton imageConfiguration)
+        private Response<bool> ValidateImageExtension(IFormFile formFile, ImageConfigurationSingleton imageConfiguration)
         {
             var ext = Path.GetExtension(formFile.FileName).ToLowerInvariant();
             if (string.IsNullOrEmpty(ext) || !imageConfiguration.ExtensionSignatures.ContainsKey(ext))
