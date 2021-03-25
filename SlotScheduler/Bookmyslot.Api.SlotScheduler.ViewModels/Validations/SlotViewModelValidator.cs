@@ -30,27 +30,16 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
         }
 
 
-        private bool isTimeZoneValid(string timeZone)
-        {
-            var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
-            if (nodaTimeZoneLocationConfiguration.ZoneWithCountryId.ContainsKey(timeZone))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-
         private bool isCountryValid(string country)
         {
             var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
-            if (nodaTimeZoneLocationConfiguration.Countries.ContainsKey(country))
-            {
-                return true;
-            }
+            return nodaTimeZoneLocationConfiguration.IsCountryValid(country);
+        }
 
-            return false;
+        private bool isTimeZoneValid(string timeZone)
+        {
+            var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
+            return nodaTimeZoneLocationConfiguration.IsTimeZoneValid(timeZone);
         }
 
 

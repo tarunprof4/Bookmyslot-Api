@@ -29,23 +29,13 @@ namespace Bookmyslot.Api.Customers.ViewModels.Validations
         private bool isCountryValid(string country)
         {
             var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
-            if (nodaTimeZoneLocationConfiguration.Countries.ContainsKey(country))
-            {
-                return true;
-            }
-
-            return false;
+            return nodaTimeZoneLocationConfiguration.IsCountryValid(country);
         }
 
         private bool isTimeZoneValid(string timeZone)
         {
             var nodaTimeZoneLocationConfiguration = this.nodaTimeZoneLocationBusiness.GetNodaTimeZoneLocationInformation();
-            if (nodaTimeZoneLocationConfiguration.ZoneWithCountryId.ContainsKey(timeZone))
-            {
-                return true;
-            }
-
-            return false;
+            return nodaTimeZoneLocationConfiguration.IsTimeZoneValid(timeZone);
         }
     }
 }
