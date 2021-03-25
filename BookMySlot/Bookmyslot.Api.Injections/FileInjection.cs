@@ -13,7 +13,6 @@ namespace Bookmyslot.Api.Injections
         private static void FileBusinessInjections(IServiceCollection services)
         {
             services.AddSingleton<IFileConfigurationBusiness, FileConfigurationBusiness>();
-            services.AddTransient<IFileBusiness, FileBusiness>();
         }
     }
 }

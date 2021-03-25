@@ -126,6 +126,7 @@ namespace Bookmyslot.Api
             HttpFactoryInjections.LoadInjections(services);
             NodaTimeInjection.LoadInjections(services);
             FileInjection.LoadInjections(services);
+            AzureInjection.LoadInjections(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

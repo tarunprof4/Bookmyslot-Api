@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.File.ViewModels.Validations
         public UpdateProfilePictureViewModelValidator(IFileConfigurationBusiness fileConfigurationBusiness)
         {
             this.fileConfigurationBusiness = fileConfigurationBusiness;
-            RuleFor(x => x.ImageFile).Cascade(CascadeMode.Stop).Must(isFileNull).WithMessage(AppBusinessMessagesConstants.FileMissing).
+            RuleFor(x => x.ImageFile).Cascade(CascadeMode.Stop).Must(isFileNotNull).WithMessage(AppBusinessMessagesConstants.FileMissing).
                 Must(isFileSizeValid).WithMessage(AppBusinessMessagesConstants.ImageSizeTooLong).
                 Must(isImageExtensionValid).WithMessage(AppBusinessMessagesConstants.InvalidImageExtension).
                 Must(isImageExtensionSignatureValid).WithMessage(AppBusinessMessagesConstants.InvalidImageExtensionSignature); 
@@ -21,9 +21,9 @@ namespace Bookmyslot.Api.File.ViewModels.Validations
 
 
 
-        private bool isFileNull(IFormFile file)
+        private bool isFileNotNull(IFormFile file)
         {
-            if (file == null)
+            if (file != null)
             {
                 return true;
             }

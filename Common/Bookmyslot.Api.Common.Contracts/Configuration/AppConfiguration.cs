@@ -32,7 +32,7 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
             this.databaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BookMySlotDatabase).Value;
             this.readDatabaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BookMySlotReadDatabase).Value;
             this.cacheDatabaseConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.CacheDatabase).Value;
-            this.blobStorageConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BlobStroage).Value;
+            this.blobStorageConnectionString = connectionStringSettings.GetSection(AppSettingKeysConstants.BlobStorage).Value;
         }
 
         public string AppVersion => this.appVersion;

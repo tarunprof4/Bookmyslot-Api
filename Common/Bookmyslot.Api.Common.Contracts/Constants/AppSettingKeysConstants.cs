@@ -8,7 +8,7 @@
         public const string BookMySlotDatabase = "BookmyslotDatabase";
         public const string BookMySlotReadDatabase = "BookmyslotReadDatabase";
         public const string CacheDatabase = "CacheDatabase";
-        public const string BlobStroage = "BlobStorage";
+        public const string BlobStorage = "BlobStorage";
 
 
         public const string EmailSettings = "EmailSettings";

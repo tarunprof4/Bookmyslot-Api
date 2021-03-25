@@ -36,6 +36,7 @@ namespace Bookmyslot.Api.Controllers
         /// </summary>
         /// <param name="profileSettingsBusiness">profileSettings Business</param>
         /// <param name="currentUser">currentUser</param>
+        /// <param name="fileConfigurationBusiness">fileConfigurationBusiness</param>
 
         public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser, IFileConfigurationBusiness fileConfigurationBusiness)
         {
@@ -115,7 +116,7 @@ namespace Bookmyslot.Api.Controllers
         /// <returns>success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
-        /// <response code="404">no customer found</response>
+        /// <response code="401">unauthorized user</response>
         /// <response code="500">internal server error</response>
         // PUT api/<CustomerController>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
