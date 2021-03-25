@@ -63,11 +63,15 @@ namespace Bookmyslot.Api.File.Contracts.Configuration
 
         public bool isImageExtensionSignatureValid(IFormFile file)
         {
-            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
-            var isSignatureValid = isFileExtensionSignatures(this.ExtensionSignatures, file, ext);
-            if (isSignatureValid)
+            if (isImageExtensionValid(file))
             {
-                return true;
+                var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+                var isSignatureValid = isFileExtensionSignatures(this.ExtensionSignatures, file, ext);
+                if (isSignatureValid)
+                {
+                    return true;
+                }
+
             }
 
             return false;
