@@ -5,12 +5,16 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.Api.File.Contracts.Configuration;
+using Bookmyslot.Api.File.Contracts.Constants;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
@@ -87,7 +91,7 @@ namespace Bookmyslot.Api.Tests
             profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Never());
         }
 
-      
+
 
 
 
@@ -123,39 +127,42 @@ namespace Bookmyslot.Api.Tests
         }
 
 
-        //[Test]
-        //public async Task UpdateProfilePicture_InValidProfilePicture_ReturnsValidationResponse()
-        //{
-        //    Response<bool> fileBusinessMockResponse = new Response<bool>() { ResultType = ResultType.ValidationError };
-        //    fileConfigurationBusinessMock.Setup(a => a.IsImageValid(It.IsAny<IFormFile>())).Returns(fileBusinessMockResponse);
+        [Test]
+        public async Task UpdateProfilePicture_EmptyFile_ReturnsValidationResponse()
+        {
+            fileConfigurationBusinessMock.Setup(a => a.GetImageConfigurationInformation()).Returns(DefaultImageConfigurationSingleton());
 
-        //    var response = await profileSettingsController.UpdateProfilePicture(null);
+            var response = await profileSettingsController.UpdateProfilePicture(null);
 
-        //    var objectResult = response as ObjectResult;
-        //    Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-        //    fileConfigurationBusinessMock.Verify((m => m.IsImageValid(It.IsAny<IFormFile>())), Times.Once());
-        //    currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-        //    profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Never());
-        //}
+            var objectResult = response as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.FileMissing));
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Never());
+        }
 
 
 
-        //[Test]
-        //public async Task UpdateProfilePicture_ValidProfilePicture_ReturnsSuccessResponse()
-        //{
-        //    Response<bool> fileBusinessMockResponse = new Response<bool>() { Result = true };
-        //    fileConfigurationBusinessMock.Setup(a => a.IsImageValid(It.IsAny<IFormFile>())).Returns(fileBusinessMockResponse);
-        //    Response<string> profileSettingsBusinessMockResponse = new Response<string>() { Result = "Uri" };
-        //    profileSettingsBusinessMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
+        [Test]
+        public async Task UpdateProfilePicture_InValidProfilePicture_ReturnsValidationResponse()
+        {
+            fileConfigurationBusinessMock.Setup(a => a.GetImageConfigurationInformation()).Returns(DefaultImageConfigurationSingleton());
+            Response<string> profileSettingsBusinessMockResponse = new Response<string>() { Result = "Uri" };
+            profileSettingsBusinessMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
-        //    var response = await profileSettingsController.UploadProfilePicture(null);
+            IFormFile file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file")), 0, 0, "Data", "dummy.txt");
 
-        //    var objectResult = response as ObjectResult;
-        //    Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
-        //    fileConfigurationBusinessMock.Verify((m => m.IsImageValid(It.IsAny<IFormFile>())), Times.Once());
-        //    currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
-        //    profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Once());
-        //}
+            var response = await profileSettingsController.UpdateProfilePicture(file);
+
+            var objectResult = response as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Never());
+        }
+
+
 
 
         private ProfileSettingsViewModel DefaultValidProfileSettingViewModel()
@@ -176,6 +183,62 @@ namespace Bookmyslot.Api.Tests
                 LastName = InValidLastName,
                 Gender = InValidGender
             };
+        }
+
+
+        private ImageConfigurationSingleton DefaultImageConfigurationSingleton()
+        {
+            Dictionary<string, string> imageExtensions = CreateImageExtensions();
+            Dictionary<string, List<byte[]>> imageExtensionsSignatures = CreateImageExtensionSignatures();
+
+            ImageConfigurationSingleton.CreateInstance(imageExtensions, imageExtensionsSignatures);
+            return ImageConfigurationSingleton.GetInstance();
+        }
+
+
+
+        private Dictionary<string, string> CreateImageExtensions()
+        {
+            var extensions = new Dictionary<string, string>();
+            extensions.Add(ImageConstants.Jpeg, ImageConstants.Jpeg);
+            extensions.Add(ImageConstants.Jpg, ImageConstants.Jpg);
+            extensions.Add(ImageConstants.Png, ImageConstants.Png);
+            extensions.Add(ImageConstants.Gif, ImageConstants.Gif);
+            return extensions;
+        }
+
+        private Dictionary<string, List<byte[]>> CreateImageExtensionSignatures()
+        {
+            Dictionary<string, List<byte[]>> fileExtensionSignatures = new Dictionary<string, List<byte[]>>
+{
+    { ImageConstants.Jpeg, new List<byte[]>
+        {
+            new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
+            new byte[] { 0xFF, 0xD8, 0xFF, 0xE2 },
+            new byte[] { 0xFF, 0xD8, 0xFF, 0xE3 },
+        }
+    },
+    { ImageConstants.Jpg, new List<byte[]>
+        {
+            new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 },
+            new byte[] { 0xFF, 0xD8, 0xFF, 0xE1 },
+            new byte[] { 0xFF, 0xD8, 0xFF, 0xE8 },
+        }
+    },
+      { ImageConstants.Gif, new List<byte[]>
+        {
+            new byte[] { 0x47, 0x49, 0x46, 0x38 },
+        }
+    },
+
+      { ImageConstants.Png, new List<byte[]>
+        {
+            new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A },
+        }
+    },
+};
+
+            return fileExtensionSignatures;
         }
 
     }
