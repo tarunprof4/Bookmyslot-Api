@@ -10,5 +10,7 @@ namespace Bookmyslot.Api.File.Contracts.Constants
         public const string Jpg = ".jpg";
         public const string Png = ".png";
         public const string Gif = ".gif";
+
+        public const long MaxImageSize = 3145728;
     }
 }

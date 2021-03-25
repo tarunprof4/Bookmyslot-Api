@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Contracts\Bookmyslot.Api.Common.Contracts.csproj" />
   </ItemGroup>
 
