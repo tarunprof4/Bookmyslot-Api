@@ -27,6 +27,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICurrentUser currentUser;
         private readonly IFileBusiness fileBusiness;
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileSettingsController"/> class. 
         /// </summary>

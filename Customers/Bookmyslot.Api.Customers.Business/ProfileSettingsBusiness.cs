@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Azure.Contracts.Interfaces;
+using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
@@ -13,12 +14,13 @@ namespace Bookmyslot.Api.Customers.Business
     {
         private readonly IProfileSettingsRepository profileSettingsRepository;
         private readonly ICustomerRepository customerRepository;
-        private readonly IHashing md5Hash;
-        public ProfileSettingsBusiness(IProfileSettingsRepository profileSettingsRepository, ICustomerRepository customerRepository, IHashing md5Hash)
+        private readonly IBlobRepository blobRepository;
+        
+        public ProfileSettingsBusiness(IProfileSettingsRepository profileSettingsRepository, ICustomerRepository customerRepository, IBlobRepository blobRepository)
         {
             this.profileSettingsRepository = profileSettingsRepository;
             this.customerRepository = customerRepository;
-            this.md5Hash = md5Hash;
+            this.blobRepository = blobRepository;
         }
 
         public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
@@ -60,18 +62,13 @@ namespace Bookmyslot.Api.Customers.Business
             return await profileSettingsRepository.GetProfileSettingsByCustomerId(customerId);
         }
 
-        public Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
+        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
         {
-            var blobName = GenerateBlobName(customerId, "fir");
-            throw new System.NotImplementedException();
+            return await this.blobRepository.SaveProfilePicture();
+            
         }
 
-        private string GenerateBlobName(string customerId, string firstName)
-        {
-            var hashCustomerId = this.md5Hash.Create(customerId);
-            var blobName = string.Format("{0}{1}", hashCustomerId, firstName);
-            return blobName;
-        }
+      
     }
 
 }

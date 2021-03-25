@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Azure.Contracts\Bookmyslot.Api.Azure.Contracts.csproj" />
   </ItemGroup>
 
