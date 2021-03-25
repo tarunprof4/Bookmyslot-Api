@@ -1,3 +1,4 @@
+using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
@@ -21,13 +22,16 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         private ProfileSettingsBusiness profileSettingsBusiness;
         private Mock<IProfileSettingsRepository> profileSettingRepositoryMock;
         private Mock<ICustomerRepository> customerRepositoryMock;
+        private Mock<IBlobRepository> blobRepositoryMock;
 
         [SetUp]
         public void SetUp()
         {
             profileSettingRepositoryMock = new Mock<IProfileSettingsRepository>();
             customerRepositoryMock = new Mock<ICustomerRepository>();
-            profileSettingsBusiness = new ProfileSettingsBusiness(profileSettingRepositoryMock.Object, customerRepositoryMock.Object);
+            blobRepositoryMock = new Mock<IBlobRepository>();
+            profileSettingsBusiness = new ProfileSettingsBusiness(profileSettingRepositoryMock.Object, 
+                customerRepositoryMock.Object, blobRepositoryMock.Object);
         }
 
         [TestCase("")]

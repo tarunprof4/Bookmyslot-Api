@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Azure.Repositories
             this.md5Hash = md5Hash;
             this.dbInterceptor = dbInterceptor;
         }
-        public async Task<Response<string>> SaveProfilePicture(IFormFile file, string customerId)
+        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
         {
             var containerName = BlobConstants.UploadProfilePictureContainer;
             var blobName = GenerateProfilePictureBlobName(customerId);

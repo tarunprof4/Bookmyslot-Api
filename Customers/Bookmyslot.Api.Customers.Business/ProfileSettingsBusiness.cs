@@ -63,7 +63,7 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
         {
-            return await this.blobRepository.SaveProfilePicture(file, customerId);
+            return await this.blobRepository.UpdateProfilePicture(file, customerId);
         }
 
       
