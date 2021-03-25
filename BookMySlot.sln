@@ -143,6 +143,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.File.Contrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.File.Business", "File\Bookmyslot.Api.File.Business\Bookmyslot.Api.File.Business.csproj", "{96AC7BCC-62D6-4E5F-B147-25733E10323B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Azure.Contracts", "Azure\Bookmyslot.Api.Azure.Contracts\Bookmyslot.Api.Azure.Contracts.csproj", "{0EF8DBC6-AF02-440E-8828-4BD12E2CB74D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -353,6 +355,10 @@ Global
 		{96AC7BCC-62D6-4E5F-B147-25733E10323B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96AC7BCC-62D6-4E5F-B147-25733E10323B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96AC7BCC-62D6-4E5F-B147-25733E10323B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF8DBC6-AF02-440E-8828-4BD12E2CB74D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF8DBC6-AF02-440E-8828-4BD12E2CB74D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF8DBC6-AF02-440E-8828-4BD12E2CB74D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF8DBC6-AF02-440E-8828-4BD12E2CB74D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -417,6 +423,7 @@ Global
 		{A1D89EC3-267B-4E68-A8C8-381A429C8A42} = {14BA1D7E-64E3-4A69-9CA3-EE5AD8FB145C}
 		{06C1E7BC-861F-4B2F-93FE-067F990F56C5} = {22F4E493-8232-4D1B-967D-7F91DF366BFC}
 		{96AC7BCC-62D6-4E5F-B147-25733E10323B} = {22F4E493-8232-4D1B-967D-7F91DF366BFC}
+		{0EF8DBC6-AF02-440E-8828-4BD12E2CB74D} = {14BA1D7E-64E3-4A69-9CA3-EE5AD8FB145C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}

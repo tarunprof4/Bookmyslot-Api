@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,6 @@ namespace Bookmyslot.Api.File.Contracts.Interfaces
 {
     public interface IFileBusiness
     {
-        bool IsImageValid(IFormFile formFile, string ext);
+        Response<bool> IsImageValid(IFormFile formFile);
     }
 }

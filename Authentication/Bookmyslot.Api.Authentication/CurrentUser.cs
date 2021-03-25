@@ -4,6 +4,7 @@ using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -32,17 +33,17 @@ namespace Bookmyslot.Api.Authentication
             return email;
         }
 
-        public async Task<Response<string>> GetCurrentUserFromCache()
+        public async Task<Response<CustomerModel>> GetCurrentUserFromCache()
         {
             var email = GetEmailFromClaims();
             var cacheModel = CreateCacheModel(email);
-            var customerIdResponse =
+            var customerModelResponse =
                   await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                       cacheModel,
-                      () => this.customerBusiness.GetCustomerIdByEmail(email));
+                      () => this.customerBusiness.GetCustomerByEmail(email));
 
-            return customerIdResponse;
+            return customerModelResponse;
         }
 
         public async Task SetCurrentUserInCache(string email)

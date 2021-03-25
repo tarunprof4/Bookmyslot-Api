@@ -8,9 +8,9 @@ namespace Bookmyslot.Api.Injections
     {
         public static void LoadInjections(IServiceCollection services)
         {
-            LocationBusinessInjections(services);
+            NodaTimeBusinessInjections(services);
         }
-        private static void LocationBusinessInjections(IServiceCollection services)
+        private static void NodaTimeBusinessInjections(IServiceCollection services)
         {
             services.AddSingleton<INodaTimeZoneLocationBusiness, TzdbNodaTimeZoneLocationBusiness>();
         }

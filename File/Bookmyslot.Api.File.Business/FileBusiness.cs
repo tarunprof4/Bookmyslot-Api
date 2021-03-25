@@ -1,10 +1,13 @@
-﻿using Bookmyslot.Api.File.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.File.Contracts.Constants;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Bookmyslot.Api.File.Business
@@ -17,7 +20,7 @@ namespace Bookmyslot.Api.File.Business
             this.fileConfigurationBusiness = fileConfigurationBusiness;
         }
 
-        public bool IsImageValid(IFormFile formFile, string ext)
+        public Response<bool> IsImageValid(IFormFile formFile)
         {
             var imageConfiguration = this.fileConfigurationBusiness.GetImageConfigurationInformation();
 
@@ -26,25 +29,25 @@ namespace Bookmyslot.Api.File.Business
                 return ValidateImageExtension(formFile, imageConfiguration);
             }
 
-            return false;
+            return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.ImageSizeTooLong });
         }
 
-        private bool ValidateImageExtension(IFormFile formFile, Contracts.Configuration.ImageConfigurationSingleton imageConfiguration)
+        private Response<bool> ValidateImageExtension(IFormFile formFile, Contracts.Configuration.ImageConfigurationSingleton imageConfiguration)
         {
             var ext = Path.GetExtension(formFile.FileName).ToLowerInvariant();
             if (string.IsNullOrEmpty(ext) || !imageConfiguration.ExtensionSignatures.ContainsKey(ext))
             {
-                return false;
+                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InvalidImageExtension });
             }
 
 
             var isSignatureValid = MatchFileExtensionSignatures(imageConfiguration.ExtensionSignatures, formFile, ext);
             if (!isSignatureValid)
             {
-                return false;
+                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InvalidImageExtensionSignature });
             }
 
-            return true;
+            return new Response<bool>() { Result = true };
         }
 
         private bool MatchFileExtensionSignatures(ReadOnlyDictionary<string, List<byte[]>> fileSignatures, IFormFile formFile, string ext)

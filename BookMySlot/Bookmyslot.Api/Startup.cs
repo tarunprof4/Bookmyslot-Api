@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
+using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.Injections;
 using Bookmyslot.Api.NodaTime.Contracts.Constants;
 using Bookmyslot.Api.NodaTime.Interfaces;
@@ -124,6 +125,7 @@ namespace Bookmyslot.Api
             SlotSchedulerInjection.LoadInjections(services);
             HttpFactoryInjections.LoadInjections(services);
             NodaTimeInjection.LoadInjections(services);
+            FileInjection.LoadInjections(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
@@ -177,6 +179,9 @@ namespace Bookmyslot.Api
         {
             var nodaTimeZoneLocationBusiness = serviceProvider.GetService<INodaTimeZoneLocationBusiness>();
             nodaTimeZoneLocationBusiness.CreateNodaTimeZoneLocationInformation();
+
+            var fileConfigurationBusiness = serviceProvider.GetService<IFileConfigurationBusiness>();
+            fileConfigurationBusiness.CreateImageConfigurationInformation();
         }
 
 

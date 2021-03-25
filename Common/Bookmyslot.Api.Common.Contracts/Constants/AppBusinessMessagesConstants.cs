@@ -100,5 +100,9 @@
         public const string SlotScheduleInfoRequired = "slot scheduler Info required";
 
         public const string NoCustomerSearchResults = "no customer search results found";
+
+        public const string ImageSizeTooLong = "Image size is too long";
+        public const string InvalidImageExtension = "Image image extension";
+        public const string InvalidImageExtensionSignature = "Image image extension signature";
     }
 }

@@ -4,6 +4,7 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Customers.ViewModels.Validations;
+using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -14,25 +15,29 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
+    
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
     public class ProfileSettingsController : BaseApiController
     {
+        private const string Image = "image";
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
         private readonly ICurrentUser currentUser;
+        private readonly IFileBusiness fileBusiness;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileSettingsController"/> class. 
         /// </summary>
         /// <param name="profileSettingsBusiness">profileSettings Business</param>
         /// <param name="currentUser">currentUser</param>
-        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser)
+        /// <param name="fileBusiness">fileBusiness</param>
+        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser, IFileBusiness fileBusiness)
         {
             this.profileSettingsBusiness = profileSettingsBusiness;
             this.currentUser = currentUser;
+            this.fileBusiness = fileBusiness;
         }
 
 
@@ -51,6 +56,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [ActionName("GetProfileSettings")]
+        [Route("api/v1/ProfileSettings")]
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
@@ -78,6 +84,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
         [ActionName("UpdateProfileSettings")]
+        [Route("api/v1/ProfileSettings")]
         public async Task<IActionResult> Put([FromBody] ProfileSettingsViewModel profileSettingsViewModel)
         {
             var validator = new ProfileSettingsViewModelValidator();
@@ -94,6 +101,42 @@ namespace Bookmyslot.Api.Controllers
             return this.CreatePutHttpResponse(validationResponse);
         }
 
+
+
+        /// <summary>
+        /// Update customer profile picture
+        /// </summary>
+        /// <param name="file">formFile model</param>
+        /// <returns>success or failure bool</returns>
+        /// <response code="204">Returns success or failure bool</response>
+        /// <response code="400">validation error bad request</response>
+        /// <response code="404">no customer found</response>
+        /// <response code="500">internal server error</response>
+        // PUT api/<CustomerController>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpPut]
+        [ActionName("UpdateProfilePicture")]
+        [Route("api/v1/ProfileSettings/UploadProfilePicture")]
+        public async Task<IActionResult> UploadProfilePicture([FromForm(Name = Image)] IFormFile file)
+        {
+            var isImageValidResponse = this.fileBusiness.IsImageValid(file);
+
+            if (isImageValidResponse.ResultType == ResultType.Success)
+            {
+                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                var customerId = currentUserResponse.Result;
+
+                var profileUpdateResponse = await this.profileSettingsBusiness.UpdateProfilePicture(file, customerId);
+                return this.CreatePutHttpResponse(profileUpdateResponse);
+            }
+            
+            return this.CreatePutHttpResponse(isImageValidResponse);
+        }
+
+
         private ProfileSettingsModel CreateProfileSettingsModel(ProfileSettingsViewModel profileSettingsViewModel)
         {
             var profileSettingsModel = new ProfileSettingsModel();
@@ -102,6 +145,10 @@ namespace Bookmyslot.Api.Controllers
             profileSettingsModel.Gender = profileSettingsViewModel.Gender;
             return profileSettingsModel;
         }
+
+
+
+
 
     }
 }
