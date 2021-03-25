@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.Customers.Business
 
         public Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId)
         {
-            var blobName = GenerateBlobName(customerId, "");
+            var blobName = GenerateBlobName(customerId, "fir");
             throw new System.NotImplementedException();
         }
 

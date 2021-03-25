@@ -13,12 +13,12 @@ namespace Bookmyslot.Api.Azure.Repositories
 
         public async Task<Response<string>> SaveProfilePicture(IFormFile file, string blobName)
         {
-            var containerName = "image";
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-            BlobClient blob = container.GetBlobClient(fileName);
-            BlobHttpHeaders blobHttpHeaders = new BlobHttpHeaders();
-            blobHttpHeaders.ContentType = "image/jpeg";
-            var isMatch = MatchExtension(for, ext) ;
+            //var containerName = "image";
+            //BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            //BlobClient blob = container.GetBlobClient(fileName);
+            //BlobHttpHeaders blobHttpHeaders = new BlobHttpHeaders();
+            //blobHttpHeaders.ContentType = "image/jpeg";
+            
 
 
             using (var stream = file.OpenReadStream())

@@ -33,19 +33,6 @@ namespace Bookmyslot.Api.Authentication
             return email;
         }
 
-        public async Task<Response<CustomerModel>> GetCurrentUserFromCache()
-        {
-            var email = GetEmailFromClaims();
-            var cacheModel = CreateCacheModel(email);
-            var customerModelResponse =
-                  await
-                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
-                      cacheModel,
-                      () => this.customerBusiness.GetCustomerByEmail(email));
-
-            return customerModelResponse;
-        }
-
         public async Task SetCurrentUserInCache(string email)
         {
             var cacheModel = CreateCacheModel(email);
@@ -62,6 +49,19 @@ namespace Bookmyslot.Api.Authentication
             cacheModel.Key = string.Format(CacheConstants.CustomerInfomationCacheKey, email);
             cacheModel.ExpiryTime = TimeSpan.FromHours(authenticationConfiguration.TokenExpiryInHours);
             return cacheModel;
+        }
+
+        public async Task<Response<string>> GetCurrentUserFromCache()
+        {
+            var email = GetEmailFromClaims();
+            var cacheModel = CreateCacheModel(email);
+            var customerIdResponse =
+                  await
+                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
+                      cacheModel,
+                      () => this.customerBusiness.GetCustomerIdByEmail(email));
+
+            return customerIdResponse;
         }
     }
 }
