@@ -5,6 +5,7 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.Api.File.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -29,13 +30,15 @@ namespace Bookmyslot.Api.Tests
         private ProfileSettingsController profileSettingsController;
         private Mock<IProfileSettingsBusiness> profileSettingsBusinessMock;
         private Mock<ICurrentUser> currentUserMock;
+        private Mock<IFileBusiness> fileBusinessMock;
 
         [SetUp]
         public void Setup()
         {
             profileSettingsBusinessMock = new Mock<IProfileSettingsBusiness>();
             currentUserMock = new Mock<ICurrentUser>();
-            profileSettingsController = new ProfileSettingsController(profileSettingsBusinessMock.Object, currentUserMock.Object);
+            fileBusinessMock = new Mock<IFileBusiness>();
+            profileSettingsController = new ProfileSettingsController(profileSettingsBusinessMock.Object, currentUserMock.Object, fileBusinessMock.Object);
 
             Response<string> currentUserMockResponse = new Response<string>() { Result = CustomerId };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
@@ -117,6 +120,41 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Once());
+        }
+
+
+        [Test]
+        public async Task UpdateProfilePicture_InValidProfilePicture_ReturnsValidationResponse()
+        {
+            Response<bool> fileBusinessMockResponse = new Response<bool>() { ResultType = ResultType.ValidationError };
+            fileBusinessMock.Setup(a => a.IsImageValid(It.IsAny<IFormFile>())).Returns(fileBusinessMockResponse);
+
+            var response = await profileSettingsController.UploadProfilePicture(null);
+
+            var objectResult = response as ObjectResult;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            fileBusinessMock.Verify((m => m.IsImageValid(It.IsAny<IFormFile>())), Times.Once());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Never());
+        }
+
+
+
+        [Test]
+        public async Task UpdateProfilePicture_ValidProfilePicture_ReturnsSuccessResponse()
+        {
+            Response<bool> fileBusinessMockResponse = new Response<bool>() { Result = true };
+            fileBusinessMock.Setup(a => a.IsImageValid(It.IsAny<IFormFile>())).Returns(fileBusinessMockResponse);
+            Response<string> profileSettingsBusinessMockResponse = new Response<string>() { Result = "Uri" };
+            profileSettingsBusinessMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
+
+            var response = await profileSettingsController.UploadProfilePicture(null);
+
+            var objectResult = response as ObjectResult;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
+            fileBusinessMock.Verify((m => m.IsImageValid(It.IsAny<IFormFile>())), Times.Once());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
+            profileSettingsBusinessMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>())), Times.Once());
         }
 
 

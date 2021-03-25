@@ -22,6 +22,7 @@ namespace Bookmyslot.Api.File.Business
 
         public Response<bool> IsImageValid(IFormFile formFile)
         {
+            //if formFile == null
             var imageConfiguration = this.fileConfigurationBusiness.GetImageConfigurationInformation();
 
             if (formFile.Length > 0 && formFile.Length < ImageConstants.MaxImageSize)
