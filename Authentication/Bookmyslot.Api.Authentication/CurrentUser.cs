@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Authentication
                   await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                       cacheModel,
-                      () => this.customerBusiness.GetCurrentUserByEmail(email));
+                      () => this.customerBusiness.GetCurrentUserByEmail(email), true);
         }
 
         private CacheModel CreateCacheModel(string email)
