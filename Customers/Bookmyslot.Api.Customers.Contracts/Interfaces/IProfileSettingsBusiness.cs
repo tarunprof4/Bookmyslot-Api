@@ -11,6 +11,9 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
         Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId);
 
         Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName);
+
         
+
+
     }
 }

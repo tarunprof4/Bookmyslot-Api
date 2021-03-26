@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
@@ -83,6 +84,34 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             profileSettingRepositoryMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Never());
             Assert.AreEqual(profileSettingsResponse.ResultType, ResultType.Empty);
             Assert.IsTrue(profileSettingsResponse.Messages.Contains(AppBusinessMessagesConstants.CustomerNotFound));
+        }
+
+
+        [Test]
+        public async Task UpdateProfilePicture_InValidFile_ReturnsSuccessResponse()
+        {
+            Response<string> blobRepositoryResponseMock = new Response<string>() { ResultType = ResultType.ValidationError };
+            blobRepositoryMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(blobRepositoryResponseMock));
+
+            var profilePictureResponse = await profileSettingsBusiness.UpdateProfilePicture(null, CUSTOMERID, FIRSTNAME);
+
+            blobRepositoryMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            profileSettingRepositoryMock.Verify((m => m.UpdateProfilePicture(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+        }
+
+
+        [Test]
+        public async Task UpdateProfilePicture_ValidFile_ReturnsSuccessResponse()
+        {
+            Response<string> blobRepositoryResponseMock = new Response<string>() { ResultType = ResultType.Success };
+            blobRepositoryMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(blobRepositoryResponseMock));
+            Response<bool> profileSettingRepositoryResponseMock = new Response<bool>() { ResultType = ResultType.Success };
+            profileSettingRepositoryMock.Setup(a => a.UpdateProfilePicture(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingRepositoryResponseMock));
+
+            var profilePictureResponse = await profileSettingsBusiness.UpdateProfilePicture(null, CUSTOMERID, FIRSTNAME);
+
+            blobRepositoryMock.Verify((m => m.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            profileSettingRepositoryMock.Verify((m => m.UpdateProfilePicture(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
         }
 
 

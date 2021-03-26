@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.Customers.Business
         private readonly IProfileSettingsRepository profileSettingsRepository;
         private readonly ICustomerRepository customerRepository;
         private readonly IBlobRepository blobRepository;
-        
+
         public ProfileSettingsBusiness(IProfileSettingsRepository profileSettingsRepository, ICustomerRepository customerRepository, IBlobRepository blobRepository)
         {
             this.profileSettingsRepository = profileSettingsRepository;
@@ -63,10 +63,21 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
         {
-            return await this.blobRepository.UpdateProfilePicture(file, customerId, firstName);
+            var blobUpdateProfilePictureResponse = await this.blobRepository.UpdateProfilePicture(file, customerId, firstName);
+
+            if (blobUpdateProfilePictureResponse.ResultType == ResultType.Success)
+            {
+                var updateProfileResponse = await this.profileSettingsRepository.UpdateProfilePicture(customerId, blobUpdateProfilePictureResponse.Result);
+                if (updateProfileResponse.ResultType != ResultType.Success)
+                {
+                    return new Response<string>() { ResultType = updateProfileResponse.ResultType, Messages = updateProfileResponse.Messages };
+                }
+            }
+
+            return blobUpdateProfilePictureResponse;
         }
 
-      
+
     }
 
 }

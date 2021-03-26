@@ -14,6 +14,9 @@ VALUES(@Id, @FirstName, @LastName, @UserName, @Email, @Provider, @PhotoUrl, @Cre
  FirstName = @FirstName,  LastName = @LastName, Gender=@Gender, ModifiedDateUtc =@ModifiedDateUtc
  WHERE Id=@customerId";
 
+        public const string UpdateProfilePictureQuery = @"UPDATE" + " " + DatabaseConstants.RegisterCustomerTable + " " + @"SET 
+   PhotoUrl=@profilePictureUrl, ModifiedDateUtc =@modifiedDateUtc WHERE Id=@customerId";
+
         public const string GetCustomersByCustomerIdsQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id IN @CustomerIds";
 
         public const string GetCustomerByEmailQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Email = @Email";

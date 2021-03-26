@@ -32,6 +32,21 @@ namespace Bookmyslot.Api.Customers.Repositories
             return ResponseModelFactory.CreateProfileSettingsModelResponse(registerCustomerEntity);
         }
 
+        public async Task<Response<bool>> UpdateProfilePicture(string customerId, string profilePictureUrl)
+        {
+            var parameters = new
+            {
+                customerId = customerId,
+                profilePictureUrl = profilePictureUrl,
+                modifiedDateUtc = DateTime.UtcNow
+            };
+            var sql = CustomerTableQueries.UpdateProfilePictureQuery;
+
+            await this.dbInterceptor.GetQueryResults("UpdateProfilePicture", parameters, () => this.connection.ExecuteAsync(sql, parameters));
+
+            return new Response<bool>() { Result = true };
+        }
+
         public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
         {
             var parameters = new {customerId = customerId, FirstName = profileSettingsModel.FirstName, LastName = profileSettingsModel.LastName, 

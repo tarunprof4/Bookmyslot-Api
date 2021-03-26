@@ -76,6 +76,21 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
+
+        [Test]
+        public async Task UpdateProfilePicture_ReturnsSuccessResponse()
+        {
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
+
+            var customerSettingsModelResponse = await profileSettingsRepository.UpdateProfilePicture(CustomerId, "");
+
+            Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
+            Assert.AreEqual(true, customerSettingsModelResponse.Result);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
+        }
+
+
+
         private ProfileSettingsModel DefaultCreateProfileSettingsModel()
         {
             var profileSettingsModel = new ProfileSettingsModel();
