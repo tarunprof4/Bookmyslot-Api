@@ -1,10 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business

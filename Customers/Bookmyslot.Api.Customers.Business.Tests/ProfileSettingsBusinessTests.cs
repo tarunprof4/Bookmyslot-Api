@@ -35,16 +35,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
                 customerRepositoryMock.Object, blobRepositoryMock.Object);
         }
 
-        [TestCase("")]
-        [TestCase("   ")]
-        public async Task GetProfileSettingsByEmail_InvalidEmailId_ReturnsValidationErrorResponse(string email)
-        {
-            var profileSettingsResponse = await profileSettingsBusiness.GetProfileSettingsByCustomerId(email);
-
-            Assert.AreEqual(profileSettingsResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(profileSettingsResponse.Messages.First(), AppBusinessMessagesConstants.CustomerIdNotValid);
-            profileSettingRepositoryMock.Verify((m => m.GetProfileSettingsByCustomerId(It.IsAny<string>())), Times.Never());
-        }
+      
 
         [Test]
         public async Task GetProfileSettingsByEmail_ValidEmailId_CallsGetProfileSettingsByEmailIdRepository()
@@ -59,32 +50,11 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task UpdateProfileSettings_ValidProfileSettingsDetails_ReturnsSuccess()
         {
-            var profileSettingsModel = CreateProfileSettingsModel();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType= ResultType.Success };
-            customerRepositoryMock.Setup(a => a.GetCustomerById(CUSTOMERID)).Returns(Task.FromResult(customerModelResponse));
+            var profileSettingsResponse = await profileSettingsBusiness.UpdateProfileSettings(DefaultCreateProfileSettingsModel(), CUSTOMERID);
 
-            var profileSettingsResponse = await profileSettingsBusiness.UpdateProfileSettings(profileSettingsModel, CUSTOMERID);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Once());
             profileSettingRepositoryMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Once());
         }
 
-
-        [Test]
-        public async Task UpdateProfileSettings_CustomerDoesntExists_ReturnsCustomerNotFoundError()
-        {
-
-            var profileSettingsModel = CreateProfileSettingsModel();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Empty };
-            customerRepositoryMock.Setup(a => a.GetCustomerById(CUSTOMERID)).Returns(Task.FromResult(customerModelResponse));
-
-            var profileSettingsResponse = await profileSettingsBusiness.UpdateProfileSettings(profileSettingsModel, CUSTOMERID);
-
-            customerRepositoryMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Once());
-            profileSettingRepositoryMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Never());
-            Assert.AreEqual(profileSettingsResponse.ResultType, ResultType.Empty);
-            Assert.IsTrue(profileSettingsResponse.Messages.Contains(AppBusinessMessagesConstants.CustomerNotFound));
-        }
 
 
         [Test]
@@ -115,7 +85,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-        private ProfileSettingsModel CreateProfileSettingsModel()
+        private ProfileSettingsModel DefaultCreateProfileSettingsModel()
         {
             var profileSettingsModel = new ProfileSettingsModel();
             profileSettingsModel.FirstName = FIRSTNAME;

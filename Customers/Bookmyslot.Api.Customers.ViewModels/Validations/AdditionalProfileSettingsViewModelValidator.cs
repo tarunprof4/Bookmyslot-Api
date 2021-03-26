@@ -6,7 +6,7 @@ using FluentValidation.Results;
 
 namespace Bookmyslot.Api.Customers.ViewModels.Validations
 {
-  
+
     public class AdditionalProfileSettingsViewModelValidator : AbstractValidator<AdditionalProfileSettingsViewModel>
     {
         public AdditionalProfileSettingsViewModelValidator()

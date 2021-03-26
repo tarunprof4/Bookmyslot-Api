@@ -9,7 +9,7 @@ using NUnit.Framework;
 using System;
 namespace Bookmyslot.Api.Injections.Tests
 {
-  
+
     public class AdditionalProfileSettingsControllerTests
     {
         private IServiceProvider serviceProvider;

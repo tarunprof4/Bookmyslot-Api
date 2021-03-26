@@ -1,10 +1,8 @@
 ﻿using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business

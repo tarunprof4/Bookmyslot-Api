@@ -18,6 +18,7 @@ namespace Bookmyslot.Api.Tests
     public class AdditionalProfileSettingsControllerTests
     {
         private const string CustomerId = "CustomerId";
+        private const string ValidFirstName = "ValidFirstName";
         private const string ValidBioHeadLine = "ValidFirstName";
         private AdditionalProfileSettingsController additionalProfileSettingsController;
         private Mock<IAdditionalProfileSettingsBusiness> additionalProfileSettingsBusinessMock;

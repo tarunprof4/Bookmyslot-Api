@@ -43,15 +43,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-        [TestCase("")]
-        [TestCase("   ")]
-        public async Task GetCustomerByEmail_InvalidEmailId_ReturnsValidationErrorResponse(string email)
-        {
-            var customer = await customerBusiness.GetCustomerByEmail(email);
-
-            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(customer.Messages.First(), AppBusinessMessagesConstants.EmailIdNotValid);
-        }
+      
 
         [Test]
         public async Task GetCustomerByCustomerId_ValidCustomerId_CallsGetCustomerByCustomerIdRepository()
@@ -62,15 +54,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-        [TestCase("")]
-        [TestCase("   ")]
-        public async Task GetCustomerByCustomerId_InvalidCustomerId_ReturnsValidationErrorResponse(string customerId)
-        {
-            var customer = await customerBusiness.GetCustomerById(customerId);
-
-            Assert.AreEqual(customer.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(customer.Messages.First(), AppBusinessMessagesConstants.CustomerIdNotValid);
-        }
 
         [Test]
         public async Task GetCustomersByCustomerIds_ValidCustomerIds_CallsGetCustomersByCustomerIdsRepository()

@@ -7,9 +7,7 @@ using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Customers.Repositories.Queries;
 using Dapper;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Repositories
