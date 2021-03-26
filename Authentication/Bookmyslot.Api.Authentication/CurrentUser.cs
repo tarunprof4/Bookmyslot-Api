@@ -33,14 +33,33 @@ namespace Bookmyslot.Api.Authentication
             return email;
         }
 
+
+        public async Task<Response<CurrentUserModel>> GetCurrentUserFromCache()
+        {
+            var email = GetEmailFromClaims();
+            var cacheModel = CreateCacheModel(email);
+            var currentUserResponse = await GetCurrentUserResponse(email, cacheModel);
+
+            if (currentUserResponse.ResultType == ResultType.Success)
+            {
+                currentUserResponse.Result.Email = email;
+            }
+            return currentUserResponse;
+        }
+
+
         public async Task SetCurrentUserInCache(string email)
         {
             var cacheModel = CreateCacheModel(email);
-            var customerIdResponse =
-                  await
-                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
-                      cacheModel,
-                      () => this.customerBusiness.GetCurrentUserByEmail(email), true);
+            await GetCurrentUserResponse(email, cacheModel, true);
+        }
+
+     
+        private async Task<Response<CurrentUserModel>> GetCurrentUserResponse(string email, CacheModel cacheModel, bool refresh= false)
+        {
+            return await this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
+                                  cacheModel,
+                                  () => this.customerBusiness.GetCurrentUserByEmail(email), refresh);
         }
 
         private CacheModel CreateCacheModel(string email)
@@ -49,23 +68,6 @@ namespace Bookmyslot.Api.Authentication
             cacheModel.Key = string.Format(CacheConstants.CustomerInfomationCacheKey, email);
             cacheModel.ExpiryTime = TimeSpan.FromHours(authenticationConfiguration.TokenExpiryInHours);
             return cacheModel;
-        }
-
-        public async Task<Response<CurrentUserModel>> GetCurrentUserFromCache()
-        {
-            var email = GetEmailFromClaims();
-            var cacheModel = CreateCacheModel(email);
-            var currentUserResponse =
-                  await
-                  this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
-                      cacheModel,
-                      () => this.customerBusiness.GetCurrentUserByEmail(email));
-
-            if(currentUserResponse.ResultType == ResultType.Success)
-            {
-                currentUserResponse.Result.Email = email;
-            }
-            return currentUserResponse;
         }
     }
 }
