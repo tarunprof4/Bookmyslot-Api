@@ -32,7 +32,6 @@ namespace Bookmyslot.Api.Customers.Repositories
                 UserName = registerCustomerEntity.UserName,
                 Email = registerCustomerEntity.Email,
                 Provider = registerCustomerEntity.Provider,
-                PhotoUrl = registerCustomerEntity.PhotoUrl,
                 CreatedDateUtc = registerCustomerEntity.CreatedDateUtc,
                 IsVerified = registerCustomerEntity.IsVerified
             };

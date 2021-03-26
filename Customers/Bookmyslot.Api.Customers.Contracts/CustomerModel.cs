@@ -1,4 +1,6 @@
-﻿namespace Bookmyslot.Api.Customers.Contracts
+﻿using Newtonsoft.Json;
+
+namespace Bookmyslot.Api.Customers.Contracts
 {
     public class CustomerModel
     {
@@ -11,5 +13,14 @@
         public string BioHeadLine { get; set; }
 
         public bool IsVerified { get; set; }
+
+        public string ProfilePictureUrl { get; set; }
+
+
+        public string UserName { get; set; }
+
+        [JsonIgnore]
+        public string Email { get; set; }
+
     }
 }

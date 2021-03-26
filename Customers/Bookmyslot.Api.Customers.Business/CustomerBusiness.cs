@@ -76,7 +76,13 @@ namespace Bookmyslot.Api.Customers.Business
             return new CurrentUserModel()
             {
                 Id = customerModel.Id,
-                FirstName = customerModel.FirstName
+                FirstName = customerModel.FirstName,
+                LastName = customerModel.LastName,
+                BioHeadLine = customerModel.BioHeadLine,
+                IsVerfied = customerModel.IsVerified,
+                ProfilePictureUrl = customerModel.ProfilePictureUrl,
+                UserName = customerModel.UserName,
+                Email = customerModel.Email
             };
         }
 
