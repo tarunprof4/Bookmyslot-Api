@@ -36,13 +36,11 @@ namespace Bookmyslot.Api.Controllers
         /// </summary>
         /// <returns >customer details</returns>
         /// <response code="200">Returns customer details</response>
-        /// <response code="404">no customer found</response>
-        /// <response code="400">validation error bad request</response>
+        /// <response code="401">un authorized user</response>
         /// <response code="500">internal server error</response>
         // GET api/<CustomerController>/email
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [ActionName("GetProfileSettings")]
@@ -63,13 +61,13 @@ namespace Bookmyslot.Api.Controllers
         /// <param name="additionalProfileSettingsViewModel">profileSettings model</param>
         /// <returns>success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
+        /// <response code="401">un authorized user</response>
         /// <response code="400">validation error bad request</response>
-        /// <response code="404">no customer found</response>
         /// <response code="500">internal server error</response>
         // PUT api/<CustomerController>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
         [ActionName("UpdateProfileSettings")]
