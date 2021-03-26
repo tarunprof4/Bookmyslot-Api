@@ -24,14 +24,8 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
         {
-            var profileExists = await CheckIfProfileExists(customerId);
-            if (profileExists)
-            {
-                SanitizeProfileSettingsModel(profileSettingsModel);
-                return await this.profileSettingsRepository.UpdateProfileSettings(profileSettingsModel, customerId);
-            }
-
-            return new Response<bool>() { ResultType = ResultType.Empty, Messages = new List<string>() { AppBusinessMessagesConstants.CustomerNotFound } };
+            SanitizeProfileSettingsModel(profileSettingsModel);
+            return await this.profileSettingsRepository.UpdateProfileSettings(profileSettingsModel, customerId);
         }
 
         private void SanitizeProfileSettingsModel(ProfileSettingsModel profileSettingsModel)
@@ -40,24 +34,10 @@ namespace Bookmyslot.Api.Customers.Business
             profileSettingsModel.LastName = profileSettingsModel.LastName.Trim();
             profileSettingsModel.Gender = profileSettingsModel.Gender.Trim();
         }
-
-
-        private async Task<bool> CheckIfProfileExists(string customerId)
-        {
-            var customerModelResponse = await customerRepository.GetCustomerById(customerId);
-            if (customerModelResponse.ResultType == ResultType.Success)
-                return true;
-
-            return false;
-        }
+       
 
         public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
         {
-            if (string.IsNullOrWhiteSpace(customerId))
-            {
-                return new Response<ProfileSettingsModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.CustomerIdNotValid } };
-            }
-
             return await profileSettingsRepository.GetProfileSettingsByCustomerId(customerId);
         }
 
