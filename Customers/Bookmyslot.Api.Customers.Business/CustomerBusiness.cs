@@ -64,14 +64,14 @@ namespace Bookmyslot.Api.Customers.Business
             var customerModelResponse = await this.customerRepository.GetCustomerByEmail(email);
             if(customerModelResponse.ResultType == ResultType.Success)
             {
-                return new Response<CurrentUserModel>() { Result = CreateCustomerUserModel(customerModelResponse.Result)};
+                return new Response<CurrentUserModel>() { Result = CreateCurrentUserModel(customerModelResponse.Result)};
             }
 
             return Response<CurrentUserModel>.ValidationError(customerModelResponse.Messages);
 
         }
 
-        private CurrentUserModel CreateCustomerUserModel(CustomerModel customerModel)
+        private CurrentUserModel CreateCurrentUserModel(CustomerModel customerModel)
         {
             return new CurrentUserModel()
             {
@@ -79,7 +79,7 @@ namespace Bookmyslot.Api.Customers.Business
                 FirstName = customerModel.FirstName,
                 LastName = customerModel.LastName,
                 BioHeadLine = customerModel.BioHeadLine,
-                IsVerfied = customerModel.IsVerified,
+                IsVerified = customerModel.IsVerified,
                 ProfilePictureUrl = customerModel.ProfilePictureUrl,
                 UserName = customerModel.UserName,
                 Email = customerModel.Email

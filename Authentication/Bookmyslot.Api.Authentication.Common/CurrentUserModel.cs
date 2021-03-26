@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Authentication.Common
 
         public string BioHeadLine { get; set; }
 
-        public bool IsVerfied { get; set; }
+        public bool IsVerified { get; set; }
 
         public string ProfilePictureUrl { get; set; }
 

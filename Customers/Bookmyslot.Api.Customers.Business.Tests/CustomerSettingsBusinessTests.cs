@@ -24,6 +24,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             this.customerSettingsBusiness = new CustomerSettingsBusiness(this.customerSettingsRepositoryMock.Object);
         }
 
+
       
 
         private CustomerSettingsModel DefaultValidCustomerSettingsModel()
