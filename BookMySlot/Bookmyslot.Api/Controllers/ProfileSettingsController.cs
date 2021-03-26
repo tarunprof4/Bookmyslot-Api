@@ -4,9 +4,6 @@ using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Customers.ViewModels.Validations;
-using Bookmyslot.Api.File.Contracts.Interfaces;
-using Bookmyslot.Api.File.ViewModels;
-using Bookmyslot.Api.File.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +24,6 @@ namespace Bookmyslot.Api.Controllers
         private const string Image = "image";
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
         private readonly ICurrentUser currentUser;
-        private readonly IFileConfigurationBusiness fileConfigurationBusiness;
 
 
 
@@ -36,14 +32,11 @@ namespace Bookmyslot.Api.Controllers
         /// </summary>
         /// <param name="profileSettingsBusiness">profileSettings Business</param>
         /// <param name="currentUser">currentUser</param>
-        /// <param name="fileConfigurationBusiness">fileConfigurationBusiness</param>
 
-        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser, IFileConfigurationBusiness fileConfigurationBusiness)
+        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser)
         {
             this.profileSettingsBusiness = profileSettingsBusiness;
             this.currentUser = currentUser;
-            this.fileConfigurationBusiness = fileConfigurationBusiness;
-            
         }
 
 
@@ -108,43 +101,7 @@ namespace Bookmyslot.Api.Controllers
             return this.CreatePutHttpResponse(validationResponse);
         }
 
-
-
-        /// <summary>
-        /// Update customer profile picture
-        /// </summary>
-        /// <param name="file">formFile model</param>
-        /// <returns>success or failure bool</returns>
-        /// <response code="204">Returns success or failure bool</response>
-        /// <response code="400">validation error bad request</response>
-        /// <response code="401">unauthorized user</response>
-        /// <response code="500">internal server error</response>
-        // PUT api/<CustomerController>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut]
-        [ActionName("UpdateProfilePicture")]
-        [Route("api/v1/ProfileSettings/UpdateProfilePicture")]
-        public async Task<IActionResult> UpdateProfilePicture([FromForm(Name = Image)] IFormFile file)
-        {
-            var validator = new UpdateProfilePictureViewModelValidator(this.fileConfigurationBusiness);
-            ValidationResult results = validator.Validate(new UpdateProfilePictureViewModel(file));
-
-            if (results.IsValid)
-            {
-                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result.Id;
-                var firstName = currentUserResponse.Result.FirstName;
-                var profileUpdateResponse = await this.profileSettingsBusiness.UpdateProfilePicture(file, customerId, firstName);
-                return this.CreatePutHttpResponse(profileUpdateResponse);
-            }
-
-            var validationResponse = Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
-            return this.CreatePutHttpResponse(validationResponse);
-        }
-
+       
 
         private ProfileSettingsModel CreateProfileSettingsModel(ProfileSettingsViewModel profileSettingsViewModel)
         {

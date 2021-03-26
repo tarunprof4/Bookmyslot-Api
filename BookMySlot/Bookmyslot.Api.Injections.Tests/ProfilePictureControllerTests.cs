@@ -10,7 +10,8 @@ using NUnit.Framework;
 using System;
 namespace Bookmyslot.Api.Injections.Tests
 {
-    public class ProfileSettingsControllerTests
+
+    public class ProfilePictureControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -28,8 +29,9 @@ namespace Bookmyslot.Api.Injections.Tests
         {
             var profileSettingsBusiness = serviceProvider.GetService<IProfileSettingsBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
+            var fileConfigurationBusiness = serviceProvider.GetService<IFileConfigurationBusiness>();
 
-            var controller = new ProfileSettingsController(profileSettingsBusiness,  currentUser);
+            var controller = new ProfilePictureController(profileSettingsBusiness, currentUser, fileConfigurationBusiness);
 
             Assert.IsNotNull(profileSettingsBusiness);
             Assert.IsNotNull(controller);
