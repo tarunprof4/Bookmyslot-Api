@@ -45,15 +45,11 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetProfileSettings_ReturnsSuccessResponse()
         {
-            Response<ProfileSettingsModel> profileSettingsBusinessMockResponse = new Response<ProfileSettingsModel>() { Result = new ProfileSettingsModel() };
-            profileSettingsBusinessMock.Setup(a => a.GetProfileSettingsByCustomerId(It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
-
             var response = await profileSettingsController.Get();
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
-            profileSettingsBusinessMock.Verify((m => m.GetProfileSettingsByCustomerId(It.IsAny<string>())), Times.Once());
         }
 
 
