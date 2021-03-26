@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Authentication
             return cacheModel;
         }
 
-        public async Task<Response<CustomerAuthModel>> GetCurrentUserFromCache()
+        public async Task<Response<CurrentUserModel>> GetCurrentUserFromCache()
         {
             var email = GetEmailFromClaims();
             var cacheModel = CreateCacheModel(email);
@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.Authentication
                   await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                       cacheModel,
-                      () => this.customerBusiness.GetCustomerAuthModelByEmail(email));
+                      () => this.customerBusiness.GetCustomerUserByEmail(email));
 
             return customerIdResponse;
         }

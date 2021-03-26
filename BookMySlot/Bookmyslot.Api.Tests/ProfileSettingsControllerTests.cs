@@ -45,7 +45,7 @@ namespace Bookmyslot.Api.Tests
             fileConfigurationBusinessMock = new Mock<IFileConfigurationBusiness>();
             profileSettingsController = new ProfileSettingsController(profileSettingsBusinessMock.Object, currentUserMock.Object, fileConfigurationBusinessMock.Object);
 
-            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = ValidFirstName } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = ValidFirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

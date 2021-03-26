@@ -57,7 +57,7 @@ namespace Bookmyslot.Api.Tests
             customerBookedSlotController = new CustomerSlotController(customerSlotBusinessMock.Object, keyEncryptorMock.Object,
                 distributedInMemoryCacheBuisnessMock.Object, hashingMock.Object, cacheConfiguration, currentUserMock.Object);
 
-            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

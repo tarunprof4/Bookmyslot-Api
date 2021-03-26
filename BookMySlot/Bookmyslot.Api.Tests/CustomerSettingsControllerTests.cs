@@ -43,7 +43,7 @@ namespace Bookmyslot.Api.Tests
             nodaTimeZoneLocationBusinessMock = new Mock<INodaTimeZoneLocationBusiness>();
             customerSettingsController = new CustomerSettingsController(customerSettingsBusinessMock.Object, currentUserMock.Object, nodaTimeZoneLocationBusinessMock.Object);
 
-            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
             nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
         }

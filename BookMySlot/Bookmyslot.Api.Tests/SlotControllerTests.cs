@@ -52,7 +52,7 @@ namespace Bookmyslot.Api.Tests
             slotController = new SlotController(slotBusinessMock.Object, keyEncryptorMock.Object, currentUserMock.Object, nodaTimeZoneLocationBusinessMock.Object);
 
             nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
-            Response<CustomerAuthModel> currentUserMockResponse = new Response<CustomerAuthModel>() { Result = new CustomerAuthModel() { Id = CustomerId, FirstName = FirstName } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

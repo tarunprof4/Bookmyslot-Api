@@ -1,6 +1,6 @@
 ﻿namespace Bookmyslot.Api.Authentication.Common
 {
-    public class CustomerAuthModel
+    public class CurrentUserModel
     {
         public string Id { get; set; }
 
