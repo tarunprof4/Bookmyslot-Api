@@ -50,10 +50,9 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result.Id;
 
-            var additionProfileSettingsResponse = await this.additionalProfileSettingsBusiness.GetAdditionalProfileSettingsByCustomerId(customerId);
-            return this.CreateGetHttpResponse(additionProfileSettingsResponse);
+            var additionalProfileSettingsModel = new Response<AdditionalProfileSettingsModel>() { Result = new AdditionalProfileSettingsModel() { BioHeadLine = currentUserResponse.Result.BioHeadLine } };
+            return this.CreateGetHttpResponse(additionalProfileSettingsModel);
         }
 
 
