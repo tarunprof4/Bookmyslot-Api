@@ -59,19 +59,19 @@ namespace Bookmyslot.Api.Customers.Business
             return await this.customerRepository.GetCustomersByCustomerIds(customerIds);
         }
 
-        public async Task<Response<CurrentUserModel>> GetCustomerUserByEmail(string email)
+        public async Task<Response<CurrentUserModel>> GetCurrentUserByEmail(string email)
         {
             var customerModelResponse = await this.customerRepository.GetCustomerByEmail(email);
             if(customerModelResponse.ResultType == ResultType.Success)
             {
-                return new Response<CurrentUserModel>() { Result = CreateCustomerAuthModel(customerModelResponse.Result)};
+                return new Response<CurrentUserModel>() { Result = CreateCustomerUserModel(customerModelResponse.Result)};
             }
 
             return Response<CurrentUserModel>.ValidationError(customerModelResponse.Messages);
 
         }
 
-        private CurrentUserModel CreateCustomerAuthModel(CustomerModel customerModel)
+        private CurrentUserModel CreateCustomerUserModel(CustomerModel customerModel)
         {
             return new CurrentUserModel()
             {

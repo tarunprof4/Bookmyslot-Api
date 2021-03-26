@@ -47,25 +47,12 @@ namespace Bookmyslot.Api.NodaTime.Contracts.Configuration
 
         public bool IsCountryValid(string country)
         {
-            if (this.Countries.ContainsKey(country))
-            {
-                return true;
-            }
-
-            return false;
+            return this.Countries.ContainsKey(country);
         }
 
         public bool IsTimeZoneValid(string timeZone)
         {
-            if (this.ZoneWithCountryId.ContainsKey(timeZone))
-            {
-                return true;
-            }
-
-            return false;
+            return this.ZoneWithCountryId.ContainsKey(timeZone);
         }
-
-
     }
-
 }

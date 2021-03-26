@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.Authentication
                   await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                       cacheModel,
-                      () => this.customerBusiness.GetCustomerUserByEmail(email));
+                      () => this.customerBusiness.GetCurrentUserByEmail(email));
 
             return customerIdResponse;
         }
