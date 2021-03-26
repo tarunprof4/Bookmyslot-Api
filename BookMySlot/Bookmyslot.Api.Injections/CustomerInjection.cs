@@ -18,6 +18,7 @@ namespace Bookmyslot.Api.Injections
             services.AddTransient<IRegisterCustomerBusiness, RegisterCustomerBusiness>();
             services.AddTransient<ILoginCustomerBusiness, LoginCustomerBusiness>();
             services.AddTransient<IProfileSettingsBusiness, ProfileSettingsBusiness>();
+            services.AddTransient<IAdditionalProfileSettingsBusiness, AdditionalProfileSettingsBusiness>();
             services.AddTransient<ICustomerBusiness, CustomerBusiness>();
             services.AddTransient<ICustomerSettingsBusiness, CustomerSettingsBusiness>();
         }
@@ -27,6 +28,7 @@ namespace Bookmyslot.Api.Injections
         {
             services.AddTransient<IRegisterCustomerRepository, RegisterCustomerRepository>();
             services.AddTransient<IProfileSettingsRepository, ProfileSettingsRepository>();
+            services.AddTransient<IAdditionalProfileSettingsRepository, AdditionalProfileSettingsRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ICustomerSettingsRepository, CustomerSettingsRepository>();
         }

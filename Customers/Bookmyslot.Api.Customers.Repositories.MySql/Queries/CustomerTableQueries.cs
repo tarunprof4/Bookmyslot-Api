@@ -33,5 +33,12 @@ VALUES(@Id, @FirstName, @LastName, @UserName, @Email, @Provider, @CreatedDateUtc
         public const string InsertOrUpdateCustomerSettingsQuery = @"INSERT INTO" + " " + DatabaseConstants.CustomerSettingsTable + " " + @"(CustomerId,Country, TimeZone,  ModifiedDateUtc) VALUES(@customerId, @Country, @timeZone, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
  Country=@Country, TimeZone=@timeZone,  ModifiedDateUtc = @ModifiedDateUtc";
 
+
+        public const string GetAdditionalProfileSettingsByCustomerIdQuery = @"select BioHeadLine from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id=@customerId";
+
+
+        public const string UpdateAdditionalProfileSettingQuery = @"UPDATE" + " " + DatabaseConstants.RegisterCustomerTable + " " + @"SET 
+    BioHeadLine = @bioHeadLine,  ModifiedDateUtc =@modifiedDateUtc WHERE Id=@customerId";
+
     }
 }

@@ -34,6 +34,15 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
         }
 
 
+        internal static AdditionalProfileSettingsModel CreateAdditionalProfileSettingsModel(RegisterCustomerEntity registerCustomerEntity)
+        {
+            return new AdditionalProfileSettingsModel()
+            {
+                BioHeadLine = registerCustomerEntity.BioHeadLine
+            };
+        }
+
+
         internal static List<CustomerModel> CreateCustomerModels(IEnumerable<RegisterCustomerEntity> registerCustomerEntities)
         {
             List<CustomerModel> customerModels = new List<CustomerModel>();

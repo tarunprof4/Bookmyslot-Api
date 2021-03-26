@@ -5,6 +5,7 @@
         public const string ApplicationName = "BookMySlot";
         public const string RegisterCustomerDetailsMissing = "Customer Registration details missing";
         public const string ProfileSettingDetailsMissing = "Profile Settings details missing";
+        public const string AdditionalProfileSettingDetailsMissing = "additional profile Settings details missing";
         public const string CustomerNotFound = "Customer Doesnt Exists";
 
         public const string EmptyCache = "Empty Cache";

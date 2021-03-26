@@ -19,22 +19,14 @@ namespace Bookmyslot.Api.Controllers
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
-    public class ProfileSettingsController : BaseApiController
+    public class AdditionalProfileSettingsController : BaseApiController
     {
-        private readonly IProfileSettingsBusiness profileSettingsBusiness;
+        private readonly IAdditionalProfileSettingsBusiness additionalProfileSettingsBusiness;
         private readonly ICurrentUser currentUser;
 
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProfileSettingsController"/> class. 
-        /// </summary>
-        /// <param name="profileSettingsBusiness">profileSettings Business</param>
-        /// <param name="currentUser">currentUser</param>
-
-        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser)
+        public AdditionalProfileSettingsController(IAdditionalProfileSettingsBusiness additionalProfileSettingsBusiness, ICurrentUser currentUser)
         {
-            this.profileSettingsBusiness = profileSettingsBusiness;
+            this.additionalProfileSettingsBusiness = additionalProfileSettingsBusiness;
             this.currentUser = currentUser;
         }
 
@@ -54,14 +46,14 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [ActionName("GetProfileSettings")]
-        [Route("api/v1/ProfileSettings")]
+        [Route("api/v1/AdditionalProfileSettings")]
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result.Id;
 
-            var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByCustomerId(customerId);
-            return this.CreateGetHttpResponse(customerResponse);
+            var additionProfileSettingsResponse = await this.additionalProfileSettingsBusiness.GetAdditionalProfileSettingsByCustomerId(customerId);
+            return this.CreateGetHttpResponse(additionProfileSettingsResponse);
         }
 
 
@@ -69,7 +61,7 @@ namespace Bookmyslot.Api.Controllers
         /// <summary>
         /// Update existing customer
         /// </summary>
-        /// <param name="profileSettingsViewModel">profileSettings model</param>
+        /// <param name="additionalProfileSettingsViewModel">profileSettings model</param>
         /// <returns>success or failure bool</returns>
         /// <response code="204">Returns success or failure bool</response>
         /// <response code="400">validation error bad request</response>
@@ -82,38 +74,29 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
         [ActionName("UpdateProfileSettings")]
-        [Route("api/v1/ProfileSettings")]
-        public async Task<IActionResult> Put([FromBody] ProfileSettingsViewModel profileSettingsViewModel)
+        [Route("api/v1/AdditionalProfileSettings")]
+        public async Task<IActionResult> Put([FromBody] AdditionalProfileSettingsViewModel additionalProfileSettingsViewModel)
         {
-            var validator = new ProfileSettingsViewModelValidator();
-            ValidationResult results = validator.Validate(profileSettingsViewModel);
+            var validator = new AdditionalProfileSettingsViewModelValidator();
+            ValidationResult results = validator.Validate(additionalProfileSettingsViewModel);
 
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
                 var customerId = currentUserResponse.Result.Id;
-                
-                var customerResponse = await this.profileSettingsBusiness.UpdateProfileSettings(CreateProfileSettingsModel(profileSettingsViewModel), customerId);
+
+                var customerResponse = await this.additionalProfileSettingsBusiness.UpdateAdditionalProfileSettings(customerId, CreateAdditionalProfileSettingsModel(additionalProfileSettingsViewModel));
                 return this.CreatePutHttpResponse(customerResponse);
             }
             var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePutHttpResponse(validationResponse);
         }
 
-       
 
-        private ProfileSettingsModel CreateProfileSettingsModel(ProfileSettingsViewModel profileSettingsViewModel)
+
+        private AdditionalProfileSettingsModel CreateAdditionalProfileSettingsModel(AdditionalProfileSettingsViewModel additionalProfileSettingsViewModel)
         {
-            var profileSettingsModel = new ProfileSettingsModel();
-            profileSettingsModel.FirstName = profileSettingsViewModel.FirstName;
-            profileSettingsModel.LastName = profileSettingsViewModel.LastName;
-            profileSettingsModel.Gender = profileSettingsViewModel.Gender;
-            return profileSettingsModel;
+            return new AdditionalProfileSettingsModel() { BioHeadLine = additionalProfileSettingsViewModel.BioHeadLine };
         }
-
-
-
-
-
     }
 }

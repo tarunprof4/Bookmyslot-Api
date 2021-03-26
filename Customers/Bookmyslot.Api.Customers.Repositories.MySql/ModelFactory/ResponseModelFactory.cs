@@ -20,6 +20,18 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
             return Response<ProfileSettingsModel>.Success(customerModel);
         }
 
+        internal static Response<AdditionalProfileSettingsModel> CreateAdditionalProfileSettingsModelResponse(RegisterCustomerEntity registerCustomerEntity)
+        {
+            if (registerCustomerEntity == null)
+            {
+                return Response<AdditionalProfileSettingsModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
+            }
+
+            var additionalProfileSettingsModel = ModelFactory.CreateAdditionalProfileSettingsModel(registerCustomerEntity);
+            return Response<AdditionalProfileSettingsModel>.Success(additionalProfileSettingsModel);
+        }
+
+
 
         internal static Response<CustomerModel> CreateCustomerModelResponse(RegisterCustomerEntity registerCustomerEntity)
         {
