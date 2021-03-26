@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Authentication
                   await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                       cacheModel,
-                      () => this.customerBusiness.GetCustomerIdByEmail(email));
+                      () => this.customerBusiness.GetCurrentUserByEmail(email));
         }
 
         private CacheModel CreateCacheModel(string email)
@@ -55,13 +55,17 @@ namespace Bookmyslot.Api.Authentication
         {
             var email = GetEmailFromClaims();
             var cacheModel = CreateCacheModel(email);
-            var customerIdResponse =
+            var currentUserResponse =
                   await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                       cacheModel,
                       () => this.customerBusiness.GetCurrentUserByEmail(email));
 
-            return customerIdResponse;
+            if(currentUserResponse.ResultType == ResultType.Success)
+            {
+                currentUserResponse.Result.Email = email;
+            }
+            return currentUserResponse;
         }
     }
 }

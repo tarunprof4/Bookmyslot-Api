@@ -67,6 +67,13 @@ namespace Bookmyslot.Api.Controllers
                 var customerId = currentUserResponse.Result.Id;
                 var firstName = currentUserResponse.Result.FirstName;
                 var profileUpdateResponse = await this.profileSettingsBusiness.UpdateProfilePicture(file, customerId, firstName);
+
+                if(profileUpdateResponse.ResultType == ResultType.Success)
+                {
+                    await this.currentUser.SetCurrentUserInCache(currentUserResponse.Result.Email);
+                }
+
+
                 return this.CreatePutHttpResponse(profileUpdateResponse);
             }
 

@@ -21,14 +21,7 @@ namespace Bookmyslot.Api.Tests
     public class ProfilePictureControllerTests
     {
         private const string CustomerId = "CustomerId";
-
         private const string ValidFirstName = "ValidFirstName";
-        private const string ValidLastName = "ValidLastName";
-        private const string ValidGender = "ValidGender";
-
-        private const string InValidFirstName = "InValidFirstName12212";
-        private const string InValidLastName = "InValidLastName121212";
-        private const string InValidGender = "InValidGender232323";
 
         private ProfilePictureController profilePictureController;
         private Mock<IProfileSettingsBusiness> profileSettingsBusinessMock;
