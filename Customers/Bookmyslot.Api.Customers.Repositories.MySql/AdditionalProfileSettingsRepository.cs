@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<AdditionalProfileSettingsModel>> GetAdditionalProfileSettingsByCustomerId(string customerId)
         {
             var parameters = new { customerId = customerId };
-            var sql = CustomerQueries.GetAdditionalProfileSettingsByCustomerIdQuery;
+            var sql = RegisterCustomerTableQueries.GetAdditionalProfileSettingsByCustomerIdQuery;
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetAdditionalProfileSettings", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateAdditionalProfileSettingsModelResponse(registerCustomerEntity);
@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Customers.Repositories
                 bioHeadLine = additionalProfileSettingsModel.BioHeadLine,
                 modifiedDateUtc = DateTime.UtcNow
             };
-            var sql = CustomerQueries.UpdateAdditionalProfileSettingQuery;
+            var sql = RegisterCustomerTableQueries.UpdateAdditionalProfileSettingQuery;
 
             await this.dbInterceptor.GetQueryResults("UpdateAdditionalProfileSettings", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 

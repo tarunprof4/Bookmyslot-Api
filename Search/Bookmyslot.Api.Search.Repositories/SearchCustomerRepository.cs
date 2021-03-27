@@ -4,7 +4,7 @@ using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
-using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
+using Bookmyslot.Api.Search.Repositories.Queries;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.Search.Repositories
         public async Task<Response<SearchCustomerModel>> SearchCustomersByUserName(string userName)
         {
             var parameters = new { userName = userName };
-            var sql = SearchQueries.SearchCustomerByUserNameQuery;
+            var sql = RegisterCustomerTableQueries.SearchCustomerByUserNameQuery;
 
             var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SearchCustomersByUserName", parameters, () => this.connection.QueryFirstOrDefaultAsync<SearchCustomerEntity>(sql, parameters));
 
@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Search.Repositories
         {
             var searchName = GenerateSearchByNameKey(name).ToString();
             var parameters = new { name = searchName };
-            var sql = SearchQueries.SearchCustomerByNameQuery;
+            var sql = RegisterCustomerTableQueries.SearchCustomerByNameQuery;
 
             var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SearchCustomersByName", parameters, () => this.connection.QueryAsync<SearchCustomerEntity>(sql, parameters));
 
@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Search.Repositories
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine)
         {
             var parameters = new { bioHeadLine = bioHeadLine };
-            var sql = SearchQueries.SearchCustomerByBioHeadLineQuery;
+            var sql = RegisterCustomerTableQueries.SearchCustomerByBioHeadLineQuery;
 
             var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SearchCustomersByBioHeadLine", parameters, () => this.connection.QueryAsync<SearchCustomerEntity>(sql, parameters));
 

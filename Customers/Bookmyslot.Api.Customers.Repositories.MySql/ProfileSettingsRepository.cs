@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
         {
             var parameters = new { customerId = customerId };
-            var sql = CustomerQueries.GetProfileSettingsByCustomerIdQuery;
+            var sql = RegisterCustomerTableQueries.GetProfileSettingsByCustomerIdQuery;
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetProfileSettingsByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateProfileSettingsModelResponse(registerCustomerEntity);
@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Customers.Repositories
                 profilePictureUrl = profilePictureUrl,
                 modifiedDateUtc = DateTime.UtcNow
             };
-            var sql = CustomerQueries.UpdateProfilePictureQuery;
+            var sql = RegisterCustomerTableQueries.UpdateProfilePictureQuery;
 
             await this.dbInterceptor.GetQueryResults("UpdateProfilePicture", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         {
             var parameters = new {customerId = customerId, FirstName = profileSettingsModel.FirstName, LastName = profileSettingsModel.LastName, 
                 Gender = profileSettingsModel.Gender, ModifiedDateUtc = DateTime.UtcNow };
-            var sql = CustomerQueries.UpdateProfileSettingQuery;
+            var sql = RegisterCustomerTableQueries.UpdateProfileSettingQuery;
 
             await this.dbInterceptor.GetQueryResults("UpdateProfileSettings", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 

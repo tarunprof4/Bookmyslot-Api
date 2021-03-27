@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerBookedSlots(string customerId)
         {
             var parameters = new { IsDeleted = false, BookedBy = customerId };
-            var sql = SlotQueries.GetCustomerBookedByBookedSlotsQuery;
+            var sql = SlotTableQueries.GetCustomerBookedByBookedSlotsQuery;
 
             return await GetCustomerSlots("GetCustomerBookedSlots", sql, parameters);
         }
@@ -34,7 +34,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerCompletedSlots(string customerId)
         {
             var parameters = new { IsDeleted = false, BookedBy = customerId };
-            var sql = SlotQueries.GetCustomerBookedByCompletedSlotsQuery;
+            var sql = SlotTableQueries.GetCustomerBookedByCompletedSlotsQuery;
 
             return await GetCustomerSlots("GetCustomerCompletedSlots", sql, parameters);
         }

@@ -3,7 +3,7 @@
 namespace Bookmyslot.Api.Customers.Repositories.Queries
 {
 
-    public class CustomerQueries
+    public class RegisterCustomerTableQueries
     {
 
         public const string RegisterCustomerQuery = @"INSERT INTO" + " " + DatabaseConstants.RegisterCustomerTable + " " + @"(Id, FirstName, LastName, UserName, Email, Provider, CreatedDateUtc, IsVerified)
@@ -27,11 +27,6 @@ VALUES(@Id, @FirstName, @LastName, @UserName, @Email, @Provider, @CreatedDateUtc
 
         public const string GetProfileSettingsByCustomerIdQuery = @"select Email, FirstName, LastName, Gender from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id=@customerId";
 
-        public const string GetCustomerSettingsQuery = @"select * from" + " " + DatabaseConstants.CustomerSettingsTable + " " + "where CustomerId=@customerId";
-
-
-        public const string InsertOrUpdateCustomerSettingsQuery = @"INSERT INTO" + " " + DatabaseConstants.CustomerSettingsTable + " " + @"(CustomerId,Country, TimeZone,  ModifiedDateUtc) VALUES(@customerId, @Country, @timeZone, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
- Country=@Country, TimeZone=@timeZone,  ModifiedDateUtc = @ModifiedDateUtc";
 
 
         public const string GetAdditionalProfileSettingsByCustomerIdQuery = @"select BioHeadLine from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id=@customerId";

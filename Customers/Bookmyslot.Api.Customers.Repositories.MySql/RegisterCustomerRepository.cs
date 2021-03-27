@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
         {
             var registerCustomerEntity = EntityFactory.EntityFactory.CreateRegisterCustomerEntity(registerCustomerModel);
-            var sql = CustomerQueries.RegisterCustomerQuery;
+            var sql = RegisterCustomerTableQueries.RegisterCustomerQuery;
             var parameters = new
             {
                 Id = registerCustomerEntity.Id,

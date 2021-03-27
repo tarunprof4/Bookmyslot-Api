@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.Search.Repositories
         {
             
             var parameters = new { SearchKey = CreateSearchKey(searchType, searchKey) };
-            var sql = SearchQueries.GetPreProcessedSearchedCustomerQuery;
+            var sql = SearchTableQueries.GetPreProcessedSearchedCustomerQuery;
 
             var compressedSearchedCustomers = await this.dbInterceptor.GetQueryResults("GetPreProcessedSearchedCustomers", parameters, () => this.connection.QueryFirstOrDefaultAsync<SearchEntity>(sql, parameters));
 
@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Search.Repositories
                 Value = this.compression.Compress(response),
                 ModifiedDateUtc = DateTime.UtcNow
             };
-            var sql = SearchQueries.InsertOrUpdatePreProcessedSearchedCustomerQuery;
+            var sql = SearchTableQueries.InsertOrUpdatePreProcessedSearchedCustomerQuery;
 
             var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SavePreProcessedSearchedCustomers", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 

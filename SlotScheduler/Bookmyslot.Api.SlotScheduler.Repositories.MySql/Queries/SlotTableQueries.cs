@@ -3,23 +3,15 @@
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
 {
 
-    public class SlotQueries
+    public class SlotTableQueries
     {
 
         public const string CreateSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.SlotTable + " " +
             @"(Id, Title, CreatedBy, TimeZone, SlotDate, SlotStartDateTimeUtc,SlotEndDateTimeUtc, SlotStartTime, SlotEndTime, CreatedDateUtc, IsDeleted, Country)
  VALUES(@Id, @Title, @CreatedBy, @TimeZone, @SlotDate, @SlotStartDateTimeUtc, @SlotEndDateTimeUtc, @SlotStartTime, @SlotEndTime, @CreatedDateUtc, @IsDeleted, @Country); ";
-
-
-        public const string InsertOrUpdateCustomerLastSharedSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.CustomerLastSharedSlotTable + " " +
-        @"(CreatedBy, Title, Country, TimeZone, SlotDate, SlotStartDateTimeUtc, SlotEndDateTimeUtc, SlotStartTime , SlotEndTime, ModifiedDateUtc) 
-	   VALUES(@CreatedBy, @Title, @Country, @TimeZone,@SlotDate,@SlotStartDateTimeUtc,@SlotEndDateTimeUtc,  @SlotStartTime, @SlotEndTime, @ModifiedDateUtc) ON DUPLICATE KEY UPDATE
- Title=@Title, Country = @Country, TimeZone = @TimeZone, SlotDate = @SlotDate, SlotStartDateTimeUtc = @SlotStartDateTimeUtc, SlotEndDateTimeUtc = @SlotEndDateTimeUtc, SlotStartTime = @SlotStartTime, SlotEndTime = @SlotEndTime, ModifiedDateUtc = @ModifiedDateUtc ";
+ 
 
         public const string GetSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + @"where IsDeleted=@IsDeleted and Id=@Id";
-
-        public const string GetCustomerLastSharedSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.CustomerLastSharedSlotTable + " " + @"where CreatedBy = @CreatedBy";
-
 
 
         public const string UpdateSlotQuery = @"UPDATE" + " " + DatabaseConstants.SlotTable + " " + @"SET  
@@ -29,19 +21,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
  IsDeleted = @IsDeleted, ModifiedDateUtc= @ModifiedDateUtc WHERE Id=@Id";
 
 
-        public const string CreateCancelledSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.CancelledSlotTable + " " + @"(Id, Title, CreatedBy, CancelledBy, BookedBy, TimeZone, SlotDate, SlotStartDateTimeUtc,SlotEndDateTimeUtc, SlotStartTime, SlotEndTime,Country, CreatedDateUtc)
- VALUES(@Id, @Title, @CreatedBy, @CancelledBy, @BookedBy, @TimeZone, @SlotDate, @SlotStartDateTimeUtc,@SlotEndDateTimeUtc, @SlotStartTime, @SlotEndTime, @Country, @CreatedDateUtc); ";
-
-
         public const string GetDistinctCustomersNearestSlotFromTodayQuery = @"select CreatedBy from(
 SELECT id, title, CreatedBy, SlotStartTime, SlotEndTime, IsDeleted, ModifiedDateUtc, TimeZone, SlotStartDateTimeUtc,
 ROW_NUMBER() OVER(PARTITION BY CreatedBy ORDER BY SlotStartDateTimeUtc ASC) AS RowNumber FROM" + " " + DatabaseConstants.SlotTable + " " + @" where IsDeleted = @IsDeleted  and SlotStartDateTimeUtc >  UTC_TIMESTAMP()
 and (BookedBy  is Null or BookedBy = '')
 )  as resultSet where resultSet.RowNumber = 1 order by resultSet.Id ASC LIMIT @PageSize OFFSET @PageNumber";
-
-
-
-
 
 
         public const string GetCustomerAvailableSlotsFromTodayQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + @"where IsDeleted=@IsDeleted and CreatedBy= @CreatedBy and SlotStartDateTimeUtc > UTC_TIMESTAMP() and (BookedBy  is Null or BookedBy = '') order by SlotStartDateTimeUtc, SlotStartTime
@@ -56,15 +40,11 @@ and (BookedBy  is Null or BookedBy = '')
 
         public const string GetCustomerSharedByCompletedSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + "where IsDeleted=@IsDeleted and (BookedBy  is Not Null and BookedBy != '') and CreatedBy=@CreatedBy and SlotEndDateTimeUtc < UTC_TIMESTAMP() order by SlotStartDateTimeUtc Desc, SlotStartTime Desc";
 
-        public const string GetCustomerSharedByCancelledSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.CancelledSlotTable + " " + "where  CancelledBy=@CancelledBy  order by SlotStartDateTimeUtc Desc, SlotStartTime Desc";
 
 
         public const string GetCustomerBookedByBookedSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + "where IsDeleted=@IsDeleted and BookedBy=@BookedBy and SlotEndDateTimeUtc > UTC_TIMESTAMP() order by SlotStartDateTimeUtc, SlotStartTime";
 
 
         public const string GetCustomerBookedByCompletedSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + "where IsDeleted=@IsDeleted and BookedBy=@BookedBy and SlotEndDateTimeUtc < UTC_TIMESTAMP() order by SlotStartDateTimeUtc Desc, SlotStartTime Desc";
-
-
-        public const string GetCustomerBookedByCancelledSlotsQuery = @"SELECT * FROM" + " " + DatabaseConstants.CancelledSlotTable + " " + "where  CancelledBy=@CancelledBy  or BookedBy=@BookedBy order by SlotStartDateTimeUtc Desc, SlotStartTime Desc";
     }
 }
