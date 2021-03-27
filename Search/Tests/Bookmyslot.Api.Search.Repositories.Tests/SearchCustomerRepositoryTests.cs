@@ -1,17 +1,23 @@
+using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Repositories.Tests
 {
     public class SearchCustomerRepositoryTests
     {
         private const string SearchKey = "SearchKey";
+        private const string SearchByUserName = "@UserName";
+        private const string SearchByName = "#name";
+        private const string SearchByBioHeadLine = "bioheadline";
         private const string Id = "Id";
         private const string UserName= "UserName";
         private const string FirstName = "FirstName";
@@ -31,29 +37,80 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         }
 
 
-        //[Test]
-        //public async Task SearchCustomersByUserName_HasNoRecord_ReturnsEmptyResponse()
-        //{
-        //    IEnumerable<SearchCustomerEntity> searchCustomerEntities = new List<SearchCustomerEntity>();
-        //    dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
+        [Test]
+        public async Task SearchCustomersByUserName_HasNoRecord_ReturnsEmptyResponse()
+        {
+            SearchCustomerEntity searchCustomerEntity = null;
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchCustomerEntity>>>())).Returns(Task.FromResult(searchCustomerEntity));
 
-        //    var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByUserName(SearchKey);
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByUserName(SearchByUserName);
 
-        //    Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
-        //    dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
-        //}
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchCustomerEntity>>>()), Times.Once);
+        }
 
-        //[Test]
-        //public async Task SearchCustomersByUserName_HasRecord_ReturnsSuccessResponse()
-        //{
-        //    IEnumerable<SearchCustomerEntity> searchCustomerEntities =  DefaultCreateSearchCustomerEntities();
-        //    dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
+        [Test]
+        public async Task SearchCustomersByUserName_HasRecord_ReturnsSuccessResponse()
+        {
+            SearchCustomerEntity searchCustomerEntity = new SearchCustomerEntity();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchCustomerEntity>>>())).Returns(Task.FromResult(searchCustomerEntity));
 
-        //    var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByUserName(SearchKey);
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByUserName(SearchByUserName);
 
-        //    Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
-        //    dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
-        //}
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchCustomerEntity>>>()), Times.Once);
+        }
+
+
+
+        [Test]
+        public async Task SearchCustomersByName_HasNoRecord_ReturnsEmptyResponse()
+        {
+            IEnumerable<SearchCustomerEntity> searchCustomerEntities = new List<SearchCustomerEntity>();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
+
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName);
+
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
+        }
+
+        [Test]
+        public async Task SearchCustomersByName_HasRecord_ReturnsSuccessResponse()
+        {
+            IEnumerable<SearchCustomerEntity> searchCustomerEntities = DefaultCreateSearchCustomerEntities();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
+
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByUserName(SearchByName);
+
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
+        }
+
+
+        [Test]
+        public async Task SearchCustomersByBioHeadLine_HasNoRecord_ReturnsEmptyResponse()
+        {
+            IEnumerable<SearchCustomerEntity> searchCustomerEntities = new List<SearchCustomerEntity>();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
+
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine);
+
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
+        }
+
+        [Test]
+        public async Task SearchCustomersByBioHeadLine_HasRecord_ReturnsSuccessResponse()
+        {
+            IEnumerable<SearchCustomerEntity> searchCustomerEntities = DefaultCreateSearchCustomerEntities();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
+
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine);
+
+            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
+        }
 
 
 
