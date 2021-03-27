@@ -52,9 +52,15 @@ namespace Bookmyslot.Api.Search.Business
 
                     return searchedCustomerModelResponse;
                 }
+
+                return new Response<List<SearchCustomerModel>>()
+                { ResultType = searchByUserNameResponse.ResultType, Messages = searchByUserNameResponse.Messages };
             }
 
-            return await this.searchCustomerRepository.SearchCustomersByBioHeadLine(searchKey);
+            else
+            {
+                return await this.searchCustomerRepository.SearchCustomersByBioHeadLine(searchKey);
+            }
         }
 
 
