@@ -2,8 +2,6 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Database.Interfaces;
-using Bookmyslot.Api.Search.Contracts;
-using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
@@ -28,13 +26,29 @@ namespace Bookmyslot.Api.Search.Repositories
             this.compression = compression;
         }
 
+        public async Task<Response<T>> GetPreProcessedSearchedResponse<T>(string searchType, string searchKey)
+        {
+            
+            var parameters = new { SearchKey = CreateSearchKey(searchType, searchKey) };
+            var sql = SearchQueries.GetPreProcessedSearchedCustomerQuery;
 
-        public async Task<Response<bool>> SavePreProcessedSearchedCustomers(string searchKey, List<SearchCustomerModel> searchCustomerModels)
+            var compressedSearchedCustomers = await this.dbInterceptor.GetQueryResults("GetPreProcessedSearchedCustomers", parameters, () => this.connection.QueryFirstOrDefaultAsync<SearchEntity>(sql, parameters));
+
+            if (compressedSearchedCustomers != null)
+            {
+                var deCompressedSearchCustomerModels = this.compression.Decompress<T>(compressedSearchedCustomers.Value);
+                return new Response<T>() { Result = deCompressedSearchCustomerModels };
+            }
+
+            return Response<T>.Empty(new List<string>() { AppBusinessMessagesConstants.NoCustomerSearchResults });
+        }
+
+        public async Task<Response<bool>> SavePreProcessedSearchedResponse<T>(string searchType, string searchKey, T response)
         {
             var parameters = new
             {
-                SearchKey = CreateSearchKey(searchKey),
-                Value = this.compression.Compress(searchCustomerModels),
+                SearchKey = CreateSearchKey(searchType, searchKey),
+                Value = this.compression.Compress(response),
                 ModifiedDateUtc = DateTime.UtcNow
             };
             var sql = SearchQueries.InsertOrUpdatePreProcessedSearchedCustomerQuery;
@@ -42,31 +56,14 @@ namespace Bookmyslot.Api.Search.Repositories
             var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SavePreProcessedSearchedCustomers", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
             return new Response<bool>() { Result = true };
-
         }
 
-        public async Task<Response<List<SearchCustomerModel>>> GetPreProcessedSearchedCustomers(string searchKey)
+     
+
+        private string CreateSearchKey(string searchType, string key)
         {
-            var parameters = new { SearchKey = CreateSearchKey(searchKey) };
-            var sql = SearchQueries.GetPreProcessedSearchedCustomerQuery;
-
-            var compressedSearchedCustomers = await this.dbInterceptor.GetQueryResults("GetPreProcessedSearchedCustomers", parameters, () => this.connection.QueryFirstOrDefaultAsync<SearchEntity>(sql, parameters));
-
-            if (compressedSearchedCustomers != null)
-            {
-                var deCompressedSearchCustomerModels = this.compression.Decompress<List<SearchCustomerModel>>(compressedSearchedCustomers.Value);
-                return new Response<List<SearchCustomerModel>>() { Result = deCompressedSearchCustomerModels };
-            }
-
-            return Response<List<SearchCustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoCustomerSearchResults });
-
-        }
-
-        private string CreateSearchKey(string key)
-        {
-            var searchKey = string.Format("{0}-{1}", SearchConstants.SearchCustomer, key);
+            var searchKey = string.Format("{0}-{1}", searchType, key);
             return searchKey;
         }
-
     }
 }

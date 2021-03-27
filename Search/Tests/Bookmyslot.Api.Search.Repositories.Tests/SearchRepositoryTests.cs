@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Search.Contracts;
+using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Moq;
 using Newtonsoft.Json;
@@ -24,7 +25,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         private const string LastName = "LastName";
         private const string FullName = "FirstNameLastName";
         private const string PhotoUrl = "PhotoUrl";
-        private SearchRepository searchCustomerRepository;
+        private SearchRepository searchRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
         private Mock<ICompression> compressionMock;
@@ -35,7 +36,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
             compressionMock = new Mock<ICompression>();
-            searchCustomerRepository = new SearchRepository(dbConnectionMock.Object, dbInterceptorMock.Object, compressionMock.Object);
+            searchRepository = new SearchRepository(dbConnectionMock.Object, dbInterceptorMock.Object, compressionMock.Object);
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             compressionMock.Setup(m => m.Compress(It.IsAny<List<SearchCustomerModel>>())).Returns(CompressedSearchCustomerModels(DefaultCreateSearchCustomerModels()));
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
-            var customerSettingsModelResponse = await searchCustomerRepository.SavePreProcessedSearchedCustomers(SearchKey, DefaultCreateSearchCustomerModels());
+            var customerSettingsModelResponse = await searchRepository.SavePreProcessedSearchedResponse(SearchConstants.SearchCustomer, SearchKey, DefaultCreateSearchCustomerModels());
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
             compressionMock.Verify(m => m.Compress(It.IsAny<List<SearchCustomerModel>>()), Times.Once);
@@ -57,7 +58,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             SearchEntity searchEntity = null;
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>())).Returns(Task.FromResult(searchEntity));
 
-            var customerSettingsModelResponse = await searchCustomerRepository.GetPreProcessedSearchedCustomers(SearchKey);
+            var customerSettingsModelResponse = await searchRepository.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(SearchConstants.SearchCustomer, SearchKey);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Empty);
             compressionMock.Verify(m => m.Compress(It.IsAny<List<SearchCustomerModel>>()), Times.Never);
@@ -72,7 +73,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>())).Returns(Task.FromResult(searchEntity));
             compressionMock.Setup(m => m.Decompress<List<SearchCustomerModel>>(It.IsAny<string>())).Returns(DefaultCreateSearchCustomerModels());
 
-            var customerSettingsModelResponse = await searchCustomerRepository.GetPreProcessedSearchedCustomers(SearchKey);
+            var customerSettingsModelResponse = await searchRepository.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(SearchConstants.SearchCustomer, SearchKey);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
             compressionMock.Verify(m => m.Decompress<List<SearchCustomerModel>>(It.IsAny<string>()), Times.Once);
