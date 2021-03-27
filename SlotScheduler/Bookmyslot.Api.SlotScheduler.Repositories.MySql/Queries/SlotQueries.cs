@@ -3,7 +3,7 @@
 namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
 {
 
-    public class SlotTableQueries
+    public class SlotQueries
     {
 
         public const string CreateSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.SlotTable + " " +

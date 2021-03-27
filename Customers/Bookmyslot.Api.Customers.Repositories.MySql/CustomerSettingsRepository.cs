@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<CustomerSettingsModel>> GetCustomerSettings(string customerId)
         {
             var parameters = new { customerId = customerId };
-            var sql = CustomerTableQueries.GetCustomerSettingsQuery;
+            var sql = CustomerQueries.GetCustomerSettingsQuery;
             var customerSettingsEntity = await this.dbInterceptor.GetQueryResults("GetCustomerSettings", parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerSettingsEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateCustomerSettingsModelResponse(customerSettingsEntity);
@@ -44,7 +44,7 @@ namespace Bookmyslot.Api.Customers.Repositories
                 ModifiedDateUtc = DateTime.UtcNow
             };
 
-            var sql = CustomerTableQueries.InsertOrUpdateCustomerSettingsQuery;
+            var sql = CustomerQueries.InsertOrUpdateCustomerSettingsQuery;
 
             await this.dbInterceptor.GetQueryResults("UpdateCustomerSettings", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 

@@ -29,7 +29,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         {
             var slotEntity = EntityFactory.EntityFactory.CreateSlotEntity(slotModel);
 
-            var sql = SlotTableQueries.CreateSlotQuery;
+            var sql = SlotQueries.CreateSlotQuery;
             var parameters = new
             {
                 Id = slotEntity.Id,
@@ -54,7 +54,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<bool>> DeleteSlot(string slotId)
         {
-            var sql = SlotTableQueries.DeleteSlotQuery;
+            var sql = SlotQueries.DeleteSlotQuery;
             var parameters = new {
                 Id = slotId,
                 ModifiedDateUtc = DateTime.UtcNow,
@@ -67,7 +67,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<SlotModel>> GetSlot(string slotId)
         {
-            var sql = SlotTableQueries.GetSlotQuery;
+            var sql = SlotQueries.GetSlotQuery;
             var parameters = new { Id = slotId, IsDeleted = false };
 
             var slotEntity = await this.dbInterceptor.GetQueryResults("GetSlot", parameters, () => this.connection.QueryFirstOrDefaultAsync<SlotEntity>(sql, parameters));
@@ -79,7 +79,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<bool>> UpdateSlotBooking(string slotId, string slotMeetingLink, string bookedBy)
         {
-            var sql = SlotTableQueries.UpdateSlotQuery;
+            var sql = SlotQueries.UpdateSlotQuery;
             var parameters = new
             {
                 Id = slotId,

@@ -3,7 +3,7 @@
 namespace Bookmyslot.Api.Customers.Repositories.Queries
 {
 
-    public class CustomerTableQueries
+    public class CustomerQueries
     {
 
         public const string RegisterCustomerQuery = @"INSERT INTO" + " " + DatabaseConstants.RegisterCustomerTable + " " + @"(Id, FirstName, LastName, UserName, Email, Provider, CreatedDateUtc, IsVerified)

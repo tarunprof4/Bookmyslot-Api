@@ -21,6 +21,7 @@ namespace Bookmyslot.Api.Injections
 
         private static void SearchRepositoryInjections(IServiceCollection services)
         {
+            services.AddTransient<ISearchRepository, SearchRepository>();
             services.AddTransient<ISearchCustomerRepository, SearchCustomerRepository>();
         }
     }

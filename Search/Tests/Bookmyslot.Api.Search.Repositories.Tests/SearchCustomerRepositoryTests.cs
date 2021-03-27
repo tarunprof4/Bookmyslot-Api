@@ -1,15 +1,11 @@
-using Bookmyslot.Api.Common.Compression.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Database.Interfaces;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Repositories.Tests
 {
@@ -25,82 +21,39 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         private SearchCustomerRepository searchCustomerRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
-        private Mock<ICompression> compressionMock;
 
         [SetUp]
         public void SetUp()
         {
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            compressionMock = new Mock<ICompression>();
-            searchCustomerRepository = new SearchCustomerRepository(dbConnectionMock.Object, dbInterceptorMock.Object, compressionMock.Object);
-        }
-
-        [Test]
-        public async Task SavePreProcessedSearchedCustomers_ReturnsSuccessResponse()
-        {
-            compressionMock.Setup(m => m.Compress(It.IsAny<List<SearchCustomerModel>>())).Returns(CompressedSearchCustomerModels(DefaultCreateSearchCustomerModels()));
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
-
-            var customerSettingsModelResponse = await searchCustomerRepository.SavePreProcessedSearchedCustomers(SearchKey, DefaultCreateSearchCustomerModels());
-
-            Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            compressionMock.Verify(m => m.Compress(It.IsAny<List<SearchCustomerModel>>()), Times.Once);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
-        }
-
-        [Test]
-        public async Task GetPreProcessedSearchedCustomers_HasNoRecords_ReturnsEmptyResponse()
-        {
-            SearchEntity searchEntity = null;
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>())).Returns(Task.FromResult(searchEntity));
-
-            var customerSettingsModelResponse = await searchCustomerRepository.GetPreProcessedSearchedCustomers(SearchKey);
-
-            Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Empty);
-            compressionMock.Verify(m => m.Compress(It.IsAny<List<SearchCustomerModel>>()), Times.Never);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>()), Times.Once);
+            searchCustomerRepository = new SearchCustomerRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
         }
 
 
-        [Test]
-        public async Task GetPreProcessedSearchedCustomers_HasRecords_ReturnsSuccessResponse()
-        {
-            SearchEntity searchEntity = DefaultCreateSearchEntity();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>())).Returns(Task.FromResult(searchEntity));
-            compressionMock.Setup(m => m.Decompress<List<SearchCustomerModel>>(It.IsAny<string>())).Returns(DefaultCreateSearchCustomerModels());
+        //[Test]
+        //public async Task SearchCustomersByUserName_HasNoRecord_ReturnsEmptyResponse()
+        //{
+        //    IEnumerable<SearchCustomerEntity> searchCustomerEntities = new List<SearchCustomerEntity>();
+        //    dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
 
-            var customerSettingsModelResponse = await searchCustomerRepository.GetPreProcessedSearchedCustomers(SearchKey);
+        //    var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByUserName(SearchKey);
 
-            Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            compressionMock.Verify(m => m.Decompress<List<SearchCustomerModel>>(It.IsAny<string>()), Times.Once);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SearchEntity>>>()), Times.Once);
-        }
+        //    Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
+        //    dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
+        //}
 
+        //[Test]
+        //public async Task SearchCustomersByUserName_HasRecord_ReturnsSuccessResponse()
+        //{
+        //    IEnumerable<SearchCustomerEntity> searchCustomerEntities =  DefaultCreateSearchCustomerEntities();
+        //    dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
 
-        [Test]
-        public async Task SearchCustomers_HasNoRecords_ReturnsEmptyResponse()
-        {
-            IEnumerable<SearchCustomerEntity> searchCustomerEntities = new List<SearchCustomerEntity>();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
+        //    var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByUserName(SearchKey);
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomers(SearchKey);
-
-            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
-        }
-
-        [Test]
-        public async Task SearchCustomers_HasRecords_ReturnsSuccessResponse()
-        {
-            IEnumerable<SearchCustomerEntity> searchCustomerEntities =  DefaultCreateSearchCustomerEntities();
-            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
-
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomers(SearchKey);
-
-            Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
-            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
-        }
+        //    Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
+        //    dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
+        //}
 
 
 

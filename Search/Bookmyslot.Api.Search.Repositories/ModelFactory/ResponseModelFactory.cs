@@ -19,6 +19,17 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
 
             return new Response<List<SearchCustomerModel>>() { Result = searchCustomerModels };
         }
+
+        internal static Response<SearchCustomerModel> CreateSearchCustomerModelResponse(SearchCustomerEntity searchCustomerEntity)
+        {
+            if (searchCustomerEntity == null)
+            {
+                return Response<SearchCustomerModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
+            }
+            
+            var SearchCustomerModel = ModelFactory.CreateSearchCustomerModel(searchCustomerEntity);
+            return Response<SearchCustomerModel>.Success(SearchCustomerModel);
+        }
     }
 
 }

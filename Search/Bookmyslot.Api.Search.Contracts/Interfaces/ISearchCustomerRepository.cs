@@ -6,12 +6,8 @@ namespace Bookmyslot.Api.Search.Contracts.Interfaces
 {
     public interface ISearchCustomerRepository
     {
-        Task<Response<bool>> SavePreProcessedSearchedCustomers(string searchKey, List<SearchCustomerModel> searchCustomerModels);
-
-        Task<Response<List<SearchCustomerModel>>> GetPreProcessedSearchedCustomers(string searchKey);
-
-        Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey);
-
-        
+        Task<Response<SearchCustomerModel>> SearchCustomersByUserName(string userName);
+        Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name);
+        Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine);
     }
 }

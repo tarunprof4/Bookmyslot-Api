@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
         {
             var parameters = new { Email = email };
-            var sql = CustomerTableQueries.GetCustomerByEmailQuery;
+            var sql = CustomerQueries.GetCustomerByEmailQuery;
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateCustomerModelResponse(registerCustomerEntity);
@@ -37,7 +37,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<string>> GetCustomerIdByEmail(string email)
         {
             var parameters = new { Email = email };
-            var sql = CustomerTableQueries.GetCustomerIdByEmailQuery;
+            var sql = CustomerQueries.GetCustomerIdByEmailQuery;
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerIdByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
             return ResponseModelFactory.CreateCustomerIdResponse(registerCustomerEntity);
@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
         {
             var parameters = new { CustomerId = customerId };
-            var sql = CustomerTableQueries.GetCustomerByIdQuery;
+            var sql = CustomerQueries.GetCustomerByIdQuery;
 
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerById", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
@@ -58,7 +58,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
         {
             var parameters = new { CustomerIds = customerIds };
-            var sql = CustomerTableQueries.GetCustomersByCustomerIdsQuery;
+            var sql = CustomerQueries.GetCustomersByCustomerIdsQuery;
 
             var registerCustomerEntities = await this.dbInterceptor.GetQueryResults("GetCustomersByCustomerIds", parameters, () => this.connection.QueryAsync<RegisterCustomerEntity>(sql, parameters));
 

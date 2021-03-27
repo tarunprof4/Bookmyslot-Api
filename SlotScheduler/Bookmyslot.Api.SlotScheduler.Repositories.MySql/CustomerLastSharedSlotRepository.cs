@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         {
             var customerLastSharedSlotEntity = EntityFactory.EntityFactory.CreateCustomerLastSharedSlotEntity(customerLastSharedSlotModel);
 
-            var sql = SlotTableQueries.InsertOrUpdateCustomerLastSharedSlotQuery;
+            var sql = SlotQueries.InsertOrUpdateCustomerLastSharedSlotQuery;
             var parameters = new
             {
                 CreatedBy = customerLastSharedSlotEntity.CreatedBy,
@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
         public async Task<Response<CustomerLastSharedSlotModel>> GetCustomerLatestSharedSlot(string customerId)
         {
-            var sql = SlotTableQueries.GetCustomerLastSharedSlotQuery;
+            var sql = SlotQueries.GetCustomerLastSharedSlotQuery;
             var parameters = new { CreatedBy = customerId };
 
             var customerLastSharedSlotEntity = await this.dbInterceptor.GetQueryResults("GetSlot", parameters, () => this.connection.QueryFirstOrDefaultAsync<CustomerLastSharedSlotEntity>(sql, parameters));
