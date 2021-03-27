@@ -21,6 +21,7 @@ namespace Bookmyslot.Api.Tests
     public class SearchCustomerControllerTests
     {
         private const string ValidSearchKey = "ValidSearchKey";
+        private const string InValidSearchKey = "in";
 
         private SearchCustomerController searchCustomerController;
         private Mock<ISearchCustomerBusiness> searchCustomerBusinessMock;
@@ -48,6 +49,19 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidSearchKey));
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Never());
+        }
+
+
+        [TestCase(InValidSearchKey)]
+        public async Task SearchCustomer_InValidSearchKeyMinLength_ReturnsValidationResponse(string searchKey)
+        {
+            var response = await searchCustomerController.Get(searchKey);
+
+            var objectResult = response as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidCustomerSearchKeyMinLength));
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Never());
         }
 

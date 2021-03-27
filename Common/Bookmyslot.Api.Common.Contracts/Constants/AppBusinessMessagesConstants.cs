@@ -59,7 +59,9 @@
 
         public const string InValidSearchKey = "invalid search key";
 
-        
+        public const string InValidCustomerSearchKeyMinLength = "customer search key needs to be 3 characters at least";
+
+
         public const string FirstNameMaxLength = "Please keep first name less than 100 characters";
         public const string LastNameMaxLength = "Please keep last name less than 100 characters";
         public const string EmailMaxLength = "Please keep email less than 150 characters";

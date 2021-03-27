@@ -5,6 +5,7 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Search.Contracts;
+using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -60,6 +61,12 @@ namespace Bookmyslot.Api.Controllers
             if (string.IsNullOrWhiteSpace(searchKey))
             {
                 var validationResponse = Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidSearchKey });
+                return this.CreateGetHttpResponse(validationResponse);
+            }
+
+            if (SearchConstants.SearchCustomerMinKeyLength > searchKey.Length - 1)
+            {
+                var validationResponse = Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidCustomerSearchKeyMinLength });
                 return this.CreateGetHttpResponse(validationResponse);
             }
 
