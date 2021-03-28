@@ -39,11 +39,6 @@ namespace Bookmyslot.Api.Authentication
             var email = GetEmailFromClaims();
             var cacheModel = CreateCacheModel(email);
             var currentUserResponse = await GetCurrentUserResponse(email, cacheModel);
-
-            if (currentUserResponse.ResultType == ResultType.Success)
-            {
-                currentUserResponse.Result.Email = email;
-            }
             return currentUserResponse;
         }
 

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Bookmyslot.Api.Customers.Contracts
+﻿namespace Bookmyslot.Api.Customers.Contracts
 {
     public class CustomerModel
     {
@@ -19,7 +17,6 @@ namespace Bookmyslot.Api.Customers.Contracts
 
         public string UserName { get; set; }
 
-        [JsonIgnore]
         public string Email { get; set; }
 
     }

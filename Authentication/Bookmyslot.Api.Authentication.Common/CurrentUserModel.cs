@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Bookmyslot.Api.Authentication.Common
+﻿namespace Bookmyslot.Api.Authentication.Common
 {
     public class CurrentUserModel
     {
@@ -20,7 +18,6 @@ namespace Bookmyslot.Api.Authentication.Common
         
         public string UserName { get; set; }
 
-        [JsonIgnore]
         public string Email { get; set; }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Authentication.ViewModels;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -41,8 +42,8 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            return this.CreateGetHttpResponse(currentUserResponse);
+            var currentUserViewModelResponse = CurrentUserViewModel.CreateCurrentUserViewModel(currentUserResponse.Result);
+            return this.CreateGetHttpResponse(currentUserViewModelResponse);
         }
-
     }
 }
