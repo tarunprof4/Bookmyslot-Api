@@ -12,7 +12,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
     {
         private const string SearchKey = "SearchKey";
         private const string SearchByUserName = "@UserName";
-        private const string SearchByName = "#name";
+        private const string SearchByName = "!name";
         private const string SearchByBioHeadLine = "bioheadline";
         private SearchCustomerBusiness searchCustomerBusiness;
         private Mock<ISearchRepository> searchRepositoryMock;
@@ -37,7 +37,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             var searchedCustomersResponse = await searchCustomerBusiness.SearchCustomers(searchKey);
 
             Assert.AreEqual(searchedCustomersResponse.ResultType, ResultType.Success);
-            searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), searchKey)), Times.Once());
+            searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
         }
 
 
@@ -53,10 +53,10 @@ namespace Bookmyslot.Api.Search.Business.Tests
             var searchedCustomersResponse = await searchCustomerBusiness.SearchCustomers(searchKey);
 
             Assert.AreEqual(searchedCustomersResponse.ResultType, ResultType.Empty);
-            searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), searchKey)), Times.Once());
+            searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>())), Times.Never());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey)), Times.Never());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(It.IsAny<string>())), Times.Never());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<SearchCustomerModel>>())), Times.Never());
         }
 
@@ -73,10 +73,10 @@ namespace Bookmyslot.Api.Search.Business.Tests
             var searchedCustomersResponse = await searchCustomerBusiness.SearchCustomers(searchKey);
 
             Assert.AreEqual(searchedCustomersResponse.ResultType, ResultType.Success);
-            searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(),searchKey)), Times.Once());
+            searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>())), Times.Never());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey)), Times.Never());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(It.IsAny<string>())), Times.Never());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<SearchCustomerModel>>())), Times.Once());
         }
 
