@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Customers.Repositories
       
         public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
         {
-            var parameters = new { Email = email };
+            var parameters = new { Email = email.ToLowerInvariant() };
             var sql = RegisterCustomerTableQueries.GetCustomerByEmailQuery;
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 
@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.Customers.Repositories
 
         public async Task<Response<string>> GetCustomerIdByEmail(string email)
         {
-            var parameters = new { Email = email };
+            var parameters = new { Email = email.ToLowerInvariant() };
             var sql = RegisterCustomerTableQueries.GetCustomerIdByEmailQuery;
             var registerCustomerEntity = await this.dbInterceptor.GetQueryResults("GetCustomerIdByEmail", parameters, () => this.connection.QueryFirstOrDefaultAsync<RegisterCustomerEntity>(sql, parameters));
 

@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Search.Repositories
 
         public async Task<Response<SearchCustomerModel>> SearchCustomersByUserName(string userName)
         {
-            var parameters = new { userName = userName };
+            var parameters = new { userName = userName.ToLowerInvariant() };
             var sql = RegisterCustomerTableQueries.SearchCustomerByUserNameQuery;
 
             var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SearchCustomersByUserName", parameters, () => this.connection.QueryFirstOrDefaultAsync<SearchCustomerEntity>(sql, parameters));

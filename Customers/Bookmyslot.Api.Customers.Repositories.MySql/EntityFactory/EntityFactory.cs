@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
                 FirstName = registerCustomerModel.FirstName,
                 LastName = registerCustomerModel.LastName,
                 UserName = CreateUserName(registerCustomerModel.FirstName),
-                Email = registerCustomerModel.Email,
+                Email = registerCustomerModel.Email.ToLowerInvariant(),
                 Provider = registerCustomerModel.Provider,
                 CreatedDateUtc = DateTime.UtcNow,
                 IsVerified = registerCustomerModel.IsVerified,
@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
             var guid1 = Guid.NewGuid().ToString().Replace("-", string.Empty);
 
             var userName = string.Format("{0}{1}", firstName, guid1);
-            return userName;
+            return userName.ToLowerInvariant();
         }
     }
 }
