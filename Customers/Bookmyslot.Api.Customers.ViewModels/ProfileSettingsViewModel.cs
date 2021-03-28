@@ -25,7 +25,7 @@ namespace Bookmyslot.Api.Customers.ViewModels
         [DefaultValue("Gender")]
         public string Gender { get; set; }
 
-        public static Response<ProfileSettingsViewModel> CreateProfileSettingsViewModel(ProfileSettingsModel profileSettingsModel)
+        public static ProfileSettingsViewModel CreateProfileSettingsViewModel(ProfileSettingsModel profileSettingsModel)
         {
             var profileSettingsViewModel = new ProfileSettingsViewModel
             {
@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Customers.ViewModels
                 Gender = profileSettingsModel.Gender
             };
 
-            return new Response<ProfileSettingsViewModel>() { Result = profileSettingsViewModel };
+            return profileSettingsViewModel;
         }
     }
 }

@@ -5,6 +5,7 @@ using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Customers.ViewModels.Validations;
 using Bookmyslot.Api.NodaTime.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -57,7 +58,9 @@ namespace Bookmyslot.Api.Controllers
 
             if (customerSettingsResponse.ResultType == ResultType.Success)
             {
-                return this.CreateGetHttpResponse(CustomerSettingsViewModel.CreateCustomerSettingsViewModel(customerSettingsResponse.Result));
+                var customerSettingsViewModelResponse = new Response<CustomerSettingsViewModel>()
+                { Result = CustomerSettingsViewModel.CreateCustomerSettingsViewModel(customerSettingsResponse.Result) };
+                return this.CreateGetHttpResponse(customerSettingsViewModelResponse);
             }
 
             return this.CreateGetHttpResponse(new Response<CustomerSettingsViewModel>()

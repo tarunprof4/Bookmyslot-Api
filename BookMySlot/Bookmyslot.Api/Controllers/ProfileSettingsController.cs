@@ -63,7 +63,9 @@ namespace Bookmyslot.Api.Controllers
 
             if (profileSettingsResponse.ResultType == ResultType.Success)
             {
-                return this.CreateGetHttpResponse(ProfileSettingsViewModel.CreateProfileSettingsViewModel(profileSettingsResponse.Result));
+                var profileSettingsViewModelResponse = new Response<ProfileSettingsViewModel>()
+                { Result = ProfileSettingsViewModel.CreateProfileSettingsViewModel(profileSettingsResponse.Result) };
+                return this.CreateGetHttpResponse(profileSettingsViewModelResponse);
             }
 
             return this.CreateGetHttpResponse(new Response<ProfileSettingsViewModel>()

@@ -16,14 +16,14 @@ namespace Bookmyslot.Api.Customers.ViewModels
         [Required]
         public string TimeZone { get; set; }
 
-        public static Response<CustomerSettingsViewModel> CreateCustomerSettingsViewModel(CustomerSettingsModel customerSettingsModel)
+        public static CustomerSettingsViewModel CreateCustomerSettingsViewModel(CustomerSettingsModel customerSettingsModel)
         {
             var customerSettingsViewModel = new CustomerSettingsViewModel
             {
                 TimeZone = customerSettingsModel.TimeZone,
             };
 
-            return new Response<CustomerSettingsViewModel>() { Result = customerSettingsViewModel };
+            return customerSettingsViewModel;
         }
     }
 }
