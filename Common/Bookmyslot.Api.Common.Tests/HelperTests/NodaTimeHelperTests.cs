@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
 
 
         [TestCase(TimeZoneConstants.IndianTimezone, 19800)]
-        [TestCase(TimeZoneConstants.LondonTimezone, 0)]
+        [TestCase(TimeZoneConstants.LondonTimezone, 3600)]
         public void ConvertUtcDateTimeToZonedDateTime_PassedTimeZone_ReturnsRespectiveZonedDateTime(string timeZone, int offsetSeconds)
         {
             var utcDateTime = DateTime.UtcNow;
