@@ -45,17 +45,15 @@ namespace Bookmyslot.Api.Controllers
             var customerLastSlotResponse = await this.customerLastSharedSlotBusiness.GetCustomerLatestSharedSlot(customerId);
             if (customerLastSlotResponse.ResultType == ResultType.Success)
             {
-                return this.CreateGetHttpResponse(CustomerLastSharedSlotViewModel.CreateCurrentUserViewModel(customerLastSlotResponse.Result));
+                var customerLastSharedSlotViewModelResponse = new Response<CustomerLastSharedSlotViewModel>() 
+                { Result = CustomerLastSharedSlotViewModel.CreateCurrentUserViewModel(customerLastSlotResponse.Result) };
+                return this.CreateGetHttpResponse(customerLastSharedSlotViewModelResponse);
             }
 
             return this.CreateGetHttpResponse(new Response<CustomerLastSharedSlotViewModel>()
             { ResultType = customerLastSlotResponse.ResultType, Messages = customerLastSlotResponse.Messages });
         }
 
-
     }
-
-
-
 
 }

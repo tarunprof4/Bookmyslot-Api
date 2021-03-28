@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
         }
 
 
-        public static Response<CustomerLastSharedSlotViewModel> CreateCurrentUserViewModel(CustomerLastSharedSlotModel CustomerLastSharedSlotModel)
+        public static CustomerLastSharedSlotViewModel CreateCurrentUserViewModel(CustomerLastSharedSlotModel CustomerLastSharedSlotModel)
         {
             var customerLastSharedSlotViewModel = new CustomerLastSharedSlotViewModel
             {
@@ -45,7 +45,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
                 SlotEndTime = CustomerLastSharedSlotModel.SlotEndTime,
             };
 
-            return  new Response<CustomerLastSharedSlotViewModel>() { Result = customerLastSharedSlotViewModel };
+            return customerLastSharedSlotViewModel;
         }
     }
 }
