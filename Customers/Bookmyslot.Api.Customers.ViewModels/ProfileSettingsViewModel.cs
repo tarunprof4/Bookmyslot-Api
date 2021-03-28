@@ -1,4 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Customers.Contracts;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +8,8 @@ namespace Bookmyslot.Api.Customers.ViewModels
 {
     public class ProfileSettingsViewModel
     {
+        public string Email { get; set; }
+
         [Required(ErrorMessage = AppBusinessMessagesConstants.FirstNameRequired)]
         [MaxLength(AppBusinessConstants.NameMaxLength, ErrorMessage = AppBusinessMessagesConstants.FirstNameMaxLength)]
         [DefaultValue("FirstNameee")]
@@ -20,5 +24,18 @@ namespace Bookmyslot.Api.Customers.ViewModels
         [MaxLength(AppBusinessConstants.GenderMaxLength, ErrorMessage = AppBusinessMessagesConstants.GenderMaxLength)]
         [DefaultValue("Gender")]
         public string Gender { get; set; }
+
+        public static Response<ProfileSettingsViewModel> CreateProfileSettingsViewModel(ProfileSettingsModel profileSettingsModel)
+        {
+            var profileSettingsViewModel = new ProfileSettingsViewModel
+            {
+                Email = profileSettingsModel.Email,
+                FirstName = profileSettingsModel.FirstName,
+                LastName = profileSettingsModel.LastName,
+                Gender = profileSettingsModel.Gender
+            };
+
+            return new Response<ProfileSettingsViewModel>() { Result = profileSettingsViewModel };
+        }
     }
 }

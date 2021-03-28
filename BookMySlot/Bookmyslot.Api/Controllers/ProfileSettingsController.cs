@@ -59,9 +59,15 @@ namespace Bookmyslot.Api.Controllers
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result.Id;
+            var profileSettingsResponse = await this.profileSettingsBusiness.GetProfileSettingsByCustomerId(customerId);
 
-            var customerResponse = await this.profileSettingsBusiness.GetProfileSettingsByCustomerId(customerId);
-            return this.CreateGetHttpResponse(customerResponse);
+            if (profileSettingsResponse.ResultType == ResultType.Success)
+            {
+                return this.CreateGetHttpResponse(ProfileSettingsViewModel.CreateProfileSettingsViewModel(profileSettingsResponse.Result));
+            }
+
+            return this.CreateGetHttpResponse(new Response<ProfileSettingsViewModel>()
+            { ResultType = profileSettingsResponse.ResultType, Messages = profileSettingsResponse.Messages });
         }
 
 
