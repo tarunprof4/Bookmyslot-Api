@@ -6,7 +6,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 {
     public class CustomerLastSharedSlotModel
     {
-        [JsonIgnore]
         public string CreatedBy { get; set; }
 
         public string Title { get; set; }
@@ -16,13 +15,10 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
 
         public ZonedDateTime SlotStartZonedDateTime { get; set; }
 
-        [JsonConverter(typeof(JsonTimeSpanConverter))]
         public TimeSpan SlotStartTime { get; set; }
 
-        [JsonConverter(typeof(JsonTimeSpanConverter))]
         public TimeSpan SlotEndTime { get; set; }
 
-        [JsonConverter(typeof(JsonTimeSpanConverter))]
         public TimeSpan SlotDuration
         {
             get

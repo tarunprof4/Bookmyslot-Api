@@ -1,5 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +43,13 @@ namespace Bookmyslot.Api.Controllers
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result.Id;
             var customerLastSlotResponse = await this.customerLastSharedSlotBusiness.GetCustomerLatestSharedSlot(customerId);
-            return this.CreateGetHttpResponse(customerLastSlotResponse);
+            if (customerLastSlotResponse.ResultType == ResultType.Success)
+            {
+                return this.CreateGetHttpResponse(CustomerLastSharedSlotViewModel.CreateCurrentUserViewModel(customerLastSlotResponse.Result));
+            }
+
+            return this.CreateGetHttpResponse(new Response<CustomerLastSharedSlotViewModel>()
+            { ResultType = customerLastSlotResponse.ResultType, Messages = customerLastSlotResponse.Messages });
         }
 
 
@@ -49,5 +57,5 @@ namespace Bookmyslot.Api.Controllers
 
 
 
-    
+
 }

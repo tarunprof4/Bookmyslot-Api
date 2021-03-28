@@ -49,8 +49,8 @@ namespace Bookmyslot.Api.Controllers
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
 
-            var additionalProfileSettingsModel = new Response<AdditionalProfileSettingsModel>() { Result = new AdditionalProfileSettingsModel() { BioHeadLine = currentUserResponse.Result.BioHeadLine } };
-            return this.CreateGetHttpResponse(additionalProfileSettingsModel);
+            var additionalProfileSettingsViewModel = new Response<AdditionalProfileSettingsViewModel>() { Result = new AdditionalProfileSettingsViewModel(currentUserResponse.Result.BioHeadLine) };
+            return this.CreateGetHttpResponse(additionalProfileSettingsViewModel);
         }
 
 
