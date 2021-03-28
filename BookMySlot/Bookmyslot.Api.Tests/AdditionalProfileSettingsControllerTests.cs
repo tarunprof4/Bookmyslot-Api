@@ -19,7 +19,7 @@ namespace Bookmyslot.Api.Tests
     {
         private const string CustomerId = "CustomerId";
         private const string ValidFirstName = "ValidFirstName";
-        private const string ValidBioHeadLine = "ValidFirstName";
+        private const string ValidBioHeadLine = "ValidBioHeadLine";
         private AdditionalProfileSettingsController additionalProfileSettingsController;
         private Mock<IAdditionalProfileSettingsBusiness> additionalProfileSettingsBusinessMock;
         private Mock<ICurrentUser> currentUserMock;
@@ -31,7 +31,8 @@ namespace Bookmyslot.Api.Tests
             currentUserMock = new Mock<ICurrentUser>();
             additionalProfileSettingsController = new AdditionalProfileSettingsController(additionalProfileSettingsBusinessMock.Object, currentUserMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = ValidFirstName } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId,
+                FirstName = ValidFirstName, BioHeadLine = ValidBioHeadLine } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -42,6 +43,8 @@ namespace Bookmyslot.Api.Tests
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            var additionalProfileSettingsViewModel = objectResult.Value as AdditionalProfileSettingsViewModel;
+            Assert.AreEqual(additionalProfileSettingsViewModel.BioHeadLine, ValidBioHeadLine);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
         }
 

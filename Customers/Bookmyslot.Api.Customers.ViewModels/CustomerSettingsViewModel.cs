@@ -19,6 +19,7 @@ namespace Bookmyslot.Api.Customers.ViewModels
         {
             var customerSettingsViewModel = new CustomerSettingsViewModel
             {
+                Country = customerSettingsModel.Country,
                 TimeZone = customerSettingsModel.TimeZone,
             };
 

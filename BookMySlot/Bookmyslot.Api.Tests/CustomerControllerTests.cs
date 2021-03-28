@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Authentication.ViewModels;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
@@ -15,6 +16,11 @@ namespace Bookmyslot.Api.Tests
     {
         private const string CustomerId = "CustomerId";
         private const string FirstName = "FirstName";
+        private const string LastName = "LastName";
+        private const string BioHeadLine = "BioHeadLine";
+        private const string ProfilePictureUrl = "ProfilePictureUrl";
+        private const string UserName = "UserName";
+        private const bool IsVerified = true;
         private CustomerController customerController;
         private Mock<ICustomerBusiness> customerBusinessMock;
         private Mock<ICurrentUser> currentUserMock;
@@ -26,7 +32,9 @@ namespace Bookmyslot.Api.Tests
             currentUserMock = new Mock<ICurrentUser>();
             customerController = new CustomerController(customerBusinessMock.Object, currentUserMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() 
+            { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName, LastName = LastName,
+            BioHeadLine = BioHeadLine, ProfilePictureUrl = ProfilePictureUrl, UserName = UserName, IsVerified = IsVerified} };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -37,6 +45,13 @@ namespace Bookmyslot.Api.Tests
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            var currentUserViewModel = objectResult.Value as CurrentUserViewModel;
+            Assert.AreEqual(currentUserViewModel.FirstName, FirstName);
+            Assert.AreEqual(currentUserViewModel.LastName, LastName);
+            Assert.AreEqual(currentUserViewModel.BioHeadLine, BioHeadLine);
+            Assert.AreEqual(currentUserViewModel.ProfilePictureUrl, ProfilePictureUrl);
+            Assert.AreEqual(currentUserViewModel.UserName, UserName);
+            Assert.AreEqual(currentUserViewModel.IsVerified, IsVerified);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
         }
     }

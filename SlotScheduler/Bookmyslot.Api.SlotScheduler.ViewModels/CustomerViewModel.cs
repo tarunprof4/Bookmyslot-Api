@@ -6,20 +6,25 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
 {
     public class CustomerViewModel
     {
+        public string Id{ get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
         public string BioHeadLine { get; set; }
 
-      
+        public string ProfilePictureUrl { get; set; }
+
+
         public static CustomerViewModel CreateCustomerViewModel(CustomerModel customerModel)
         {
             return new CustomerViewModel()
             {
+                Id = customerModel.Id,
                 FirstName = customerModel.FirstName,
                 LastName = customerModel.LastName,
-                BioHeadLine = customerModel.BioHeadLine
+                BioHeadLine = customerModel.BioHeadLine,
+                ProfilePictureUrl = customerModel.ProfilePictureUrl
             };
         }
 
