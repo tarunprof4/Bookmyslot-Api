@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(customerLastSharedSlotViewModel.TimeZone, TimeZone);
             Assert.AreEqual(customerLastSharedSlotViewModel.SlotStartTime, SlotStartTime);
             Assert.AreEqual(customerLastSharedSlotViewModel.SlotEndTime, SlotEndTime);
-            Assert.AreEqual(customerLastSharedSlotViewModel.SlotDuration, SlotStartTime - SlotEndTime);
+            Assert.AreEqual(customerLastSharedSlotViewModel.SlotDuration, SlotEndTime - SlotStartTime);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerLastSharedSlotBusinessMock.Verify((m => m.GetCustomerLatestSharedSlot(It.IsAny<string>())), Times.Once());
         }

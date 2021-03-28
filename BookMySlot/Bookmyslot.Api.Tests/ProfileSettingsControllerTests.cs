@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetProfileSettings_ReturnsSuccessResponse()
         {
-            Response<ProfileSettingsModel> profileSettingsBusinessMockResponse = new Response<ProfileSettingsModel>() { Result = new ProfileSettingsModel() };
+            Response<ProfileSettingsModel> profileSettingsBusinessMockResponse = new Response<ProfileSettingsModel>() { Result = DefaultValidProfileSettingModel() };
             profileSettingsBusinessMock.Setup(a => a.GetProfileSettingsByCustomerId(It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             var response = await profileSettingsController.Get();
@@ -58,7 +58,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(profileSettingsViewModel.FirstName, ValidFirstName);
             Assert.AreEqual(profileSettingsViewModel.LastName, ValidLastName);
             Assert.AreEqual(profileSettingsViewModel.Gender, ValidGender);
-            Assert.AreEqual(profileSettingsViewModel.Email, ValidGender);
+            Assert.AreEqual(profileSettingsViewModel.Email, ValidEmail);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             profileSettingsBusinessMock.Verify((m => m.GetProfileSettingsByCustomerId(It.IsAny<string>())), Times.Once());
         }
