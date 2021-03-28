@@ -1,9 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts;
 using NodaTime;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels

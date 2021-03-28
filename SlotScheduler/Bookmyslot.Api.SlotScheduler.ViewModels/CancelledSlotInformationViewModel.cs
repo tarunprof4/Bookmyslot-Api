@@ -1,8 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts;
-using System;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels
 {

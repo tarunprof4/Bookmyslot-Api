@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task UpdateAdditionalProfileSettings_EmptyAdditionalProfileSettings_ReturnsValidationResponse()
         {
-            var response = await additionalProfileSettingsController.Put(new AdditionalProfileSettingsViewModel()); ;
+            var response = await additionalProfileSettingsController.Put(new AdditionalProfileSettingsViewModel(""));
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -91,9 +91,8 @@ namespace Bookmyslot.Api.Tests
 
         private AdditionalProfileSettingsViewModel DefaultValidAdditionalProfileSettingViewModel()
         {
-            return new AdditionalProfileSettingsViewModel()
+            return new AdditionalProfileSettingsViewModel(ValidBioHeadLine)
             {
-                BioHeadLine = ValidBioHeadLine
             };
         }
     }
