@@ -75,18 +75,23 @@ namespace Bookmyslot.Api.Controllers
                 var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
                 var cacheModel = CreateCacheModel(pageParameterModel);
 
-                var customerSlotModels =
-                      await
-                      this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
+                var customerSlotModels = await this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                           cacheModel,
                           () => this.customerSlotBusiness.GetDistinctCustomersNearestSlotFromToday(pageParameterModel));
 
 
                 if (customerSlotModels.ResultType == ResultType.Success)
                 {
-                    HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(customerSlotModels.Result);
+                    var customerViewModelResponse = new Response<IEnumerable<CustomerViewModel>>()
+                    { Result = CustomerViewModel.CreateCustomerViewModels(customerSlotModels.Result) };
+                    return this.CreateGetHttpResponse(customerViewModelResponse);
+
                 }
-                return this.CreateGetHttpResponse(customerSlotModels);
+                return this.CreateGetHttpResponse(new Response<IEnumerable<CustomerViewModel>>()
+                {
+                    ResultType = customerSlotModels.ResultType,
+                    Messages = customerSlotModels.Messages
+                });
             }
 
             var validationResponse = Response<CustomerSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
@@ -143,13 +148,6 @@ namespace Bookmyslot.Api.Controllers
             return this.CreateGetHttpResponse(validationResponse);
         }
 
-        private void HideUncessaryDetailsForGetDistinctCustomersNearestSlotFromToday(List<CustomerSlotModel> customerSlotModels)
-        {
-            foreach (var customerSlotModel in customerSlotModels)
-            {
-                customerSlotModel.SlotModels = new List<SlotModel>();
-            }
-        }
 
 
         private Response<BookAvailableSlotViewModel> CreateBookAvailableSlotViewModel(Response<BookAvailableSlotModel> bookAvailableSlotModelResponse)
@@ -159,8 +157,7 @@ namespace Bookmyslot.Api.Controllers
                 var bookAvailableSlotModel = bookAvailableSlotModelResponse.Result;
                 var bookAvailableSlotViewModel = new BookAvailableSlotViewModel
                 {
-                    CreatedByCustomerViewModel = new CustomerViewModel(bookAvailableSlotModel.CreatedByCustomerModel.FirstName,
-                    bookAvailableSlotModel.CreatedByCustomerModel.LastName, bookAvailableSlotModel.CreatedByCustomerModel.BioHeadLine),
+                    CreatedByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookAvailableSlotModel.CreatedByCustomerModel),
                     ToBeBookedByCustomerCountry = bookAvailableSlotModel.CustomerSettingsModel != null ? bookAvailableSlotModel.CustomerSettingsModel.Country : string.Empty,
                     BookAvailableSlotModels = new List<SlotInformationInCustomerTimeZoneViewModel>()
                 };

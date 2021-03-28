@@ -20,8 +20,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
                 var cancelledSlotInformationViewModel = new CancelledSlotInformationViewModel
                 {
                     CancelledSlotViewModel = CancelledSlotViewModel.CreateCancelledSlotViewModel(cancelledSlotInformationModel.CancelledSlotModel),
-                    CancelledByCustomerViewModel = new CustomerViewModel(cancelledSlotInformationModel.CancelledByCustomerModel.FirstName, cancelledSlotInformationModel.CancelledByCustomerModel.LastName,
-               cancelledSlotInformationModel.CancelledByCustomerModel.BioHeadLine)
+                    CancelledByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(cancelledSlotInformationModel.CancelledByCustomerModel)
                 };
                 cancelledSlotInformationViewModels.Add(cancelledSlotInformationViewModel);
             }

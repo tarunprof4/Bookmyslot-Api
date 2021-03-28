@@ -150,7 +150,7 @@ namespace Bookmyslot.Api.Controllers
                 foreach (var sharedSlot in sharedSlotModel.SharedSlotModels)
                 {
                     var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(sharedSlot.Value));
-                    var bookedByCustomerViewModel = sharedSlot.Key != null ? new CustomerViewModel(sharedSlot.Key.FirstName, sharedSlot.Key.LastName, sharedSlot.Key.BioHeadLine) : null;
+                    var bookedByCustomerViewModel = sharedSlot.Key != null ? CustomerViewModel.CreateCustomerViewModel(sharedSlot.Key) : null;
                     sharedSlotViewModel.SharedSlotModels.Add(new Tuple<CustomerViewModel, SlotModel, string>(bookedByCustomerViewModel, sharedSlot.Value, slotInformation));
                 }
 

@@ -124,7 +124,7 @@ namespace Bookmyslot.Api.Controllers
                 foreach (var bookedSlot in bookedSlotModel.BookedSlotModels)
                 {
                     var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
-                    var createdByCustomerViewModel = new CustomerViewModel(bookedSlot.Key.FirstName, bookedSlot.Key.LastName, bookedSlot.Key.BioHeadLine);
+                    var createdByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookedSlot.Key);
 
                     var slotModel = bookedSlot.Value.SlotModel;
                     var slotInformationInCustomerTimeZoneViewModel = new SlotInformationInCustomerTimeZoneViewModel()
