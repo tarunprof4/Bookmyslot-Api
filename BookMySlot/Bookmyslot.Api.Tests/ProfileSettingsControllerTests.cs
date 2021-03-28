@@ -22,6 +22,7 @@ namespace Bookmyslot.Api.Tests
         private const string ValidFirstName = "ValidFirstName";
         private const string ValidLastName = "ValidLastName";
         private const string ValidGender = "ValidGender";
+        private const string ValidEmail = "ValidEmail";
 
         private const string InValidFirstName = "InValidFirstName12212";
         private const string InValidLastName = "InValidLastName121212";
@@ -50,8 +51,14 @@ namespace Bookmyslot.Api.Tests
 
             var response = await profileSettingsController.Get();
 
+            
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            var profileSettingsViewModel = objectResult.Value as ProfileSettingsViewModel;
+            Assert.AreEqual(profileSettingsViewModel.FirstName, ValidFirstName);
+            Assert.AreEqual(profileSettingsViewModel.LastName, ValidLastName);
+            Assert.AreEqual(profileSettingsViewModel.Gender, ValidGender);
+            Assert.AreEqual(profileSettingsViewModel.Email, ValidGender);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             profileSettingsBusinessMock.Verify((m => m.GetProfileSettingsByCustomerId(It.IsAny<string>())), Times.Once());
         }
@@ -120,6 +127,16 @@ namespace Bookmyslot.Api.Tests
             profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Once());
         }
 
+        private ProfileSettingsModel DefaultValidProfileSettingModel()
+        {
+            return new ProfileSettingsModel()
+            {
+                FirstName = ValidFirstName,
+                LastName = ValidLastName,
+                Gender = ValidGender,
+                Email = ValidEmail
+            };
+        }
 
         private ProfileSettingsViewModel DefaultValidProfileSettingViewModel()
         {

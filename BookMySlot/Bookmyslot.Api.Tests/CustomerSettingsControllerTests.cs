@@ -52,13 +52,16 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerSettings_ReturnsSuccessResponse()
         {
-            Response<CustomerSettingsModel> customerSettingsMockResponse = new Response<CustomerSettingsModel>() { Result = new CustomerSettingsModel() };
+            Response<CustomerSettingsModel> customerSettingsMockResponse = new Response<CustomerSettingsModel>() { Result = DefaultCustomerSettingsModel() };
             customerSettingsBusinessMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingsMockResponse));
 
             var response = await customerSettingsController.Get();
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            var customerSettingsViewModel = objectResult.Value as CustomerSettingsViewModel;
+            Assert.AreEqual(customerSettingsViewModel.Country, ValidCountry);
+            Assert.AreEqual(customerSettingsViewModel.TimeZone, ValidTimeZone);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSettingsBusinessMock.Verify((m => m.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())), Times.Never());
         }
@@ -129,6 +132,15 @@ namespace Bookmyslot.Api.Tests
             var countries = zoneWithCountryId.Values.Distinct().ToDictionary(x=>x, x=>x);
             NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
             return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
+        }
+
+        private CustomerSettingsModel DefaultCustomerSettingsModel()
+        {
+            return new CustomerSettingsModel()
+            {
+                Country = ValidCountry,
+                TimeZone = ValidTimeZone
+            };
         }
     }
 }

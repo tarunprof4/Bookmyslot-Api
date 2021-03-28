@@ -11,6 +11,7 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ using NodaTime;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
@@ -30,12 +32,13 @@ namespace Bookmyslot.Api.Tests
         private const string FirstName = "FirstName";
         private const string LastName = "LastName";
         private const string BioHeadLine = "BioHeadLine";
+        private const string ProfilePic = "ProfilePic";
         private const int ValidPaseSize = 10;
         private const int InValidPaseSize = 0;
         private const int InValidPageNumber = -1;
         private const int ValidPageNumber = 0;
 
-        private CustomerSlotController customerBookedSlotController;
+        private CustomerSlotController customerSlotController;
         private Mock<ICustomerSlotBusiness> customerSlotBusinessMock;
         private Mock<IKeyEncryptor> keyEncryptorMock;
         private Mock<IDistributedInMemoryCacheBuisness> distributedInMemoryCacheBuisnessMock;
@@ -54,7 +57,7 @@ namespace Bookmyslot.Api.Tests
             currentUserMock = new Mock<ICurrentUser>();
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             cacheConfiguration = new CacheConfiguration(configuration);
-            customerBookedSlotController = new CustomerSlotController(customerSlotBusinessMock.Object, keyEncryptorMock.Object,
+            customerSlotController = new CustomerSlotController(customerSlotBusinessMock.Object, keyEncryptorMock.Object,
                 distributedInMemoryCacheBuisnessMock.Object, hashingMock.Object, cacheConfiguration, currentUserMock.Object);
 
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
@@ -64,7 +67,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetDistinctCustomersNearestSlotFromToday_NullPageParameterModel_ReturnsValidationResponse()
         {
-            var response = await customerBookedSlotController.GetDistinctCustomersNearestSlotFromToday(null);
+            var response = await customerSlotController.GetDistinctCustomersNearestSlotFromToday(null);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -80,7 +83,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetDistinctCustomersNearestSlotFromToday_EmptyPageParameterModel_ReturnsValidationResponse()
         {
-            var response = await customerBookedSlotController.GetDistinctCustomersNearestSlotFromToday(new PageParameterViewModel());
+            var response = await customerSlotController.GetDistinctCustomersNearestSlotFromToday(new PageParameterViewModel());
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -94,7 +97,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetDistinctCustomersNearestSlotFromToday_InValidPageParameterModel_ReturnsValidationResponse()
         {
-            var response = await customerBookedSlotController.GetDistinctCustomersNearestSlotFromToday(DefaultInValidPageParameterViewModel());
+            var response = await customerSlotController.GetDistinctCustomersNearestSlotFromToday(DefaultInValidPageParameterViewModel());
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -110,14 +113,21 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetDistinctCustomersNearestSlotFromToday_ValidPageParameterModel_ReturnsSuccessResponse()
         {
-            Response<List<CustomerSlotModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<CustomerSlotModel>>() { Result = new List<CustomerSlotModel>() };
+            Response<List<CustomerSlotModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<CustomerSlotModel>>() { Result = CreateDefaultCustomerSlotModels()};
             distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
 
-            var response = await customerBookedSlotController.GetDistinctCustomersNearestSlotFromToday(DefaultValidPageParameterViewModel());
+            var response = await customerSlotController.GetDistinctCustomersNearestSlotFromToday(DefaultValidPageParameterViewModel());
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
+            var customerViewModels = objectResult.Value as List<CustomerViewModel>;
+            customerViewModels = customerViewModels.ToList();
+            Assert.AreEqual(customerViewModels[0].FirstName, FirstName);
+            Assert.AreEqual(customerViewModels[0].LastName, LastName);
+            Assert.AreEqual(customerViewModels[0].BioHeadLine, BioHeadLine);
+            Assert.AreEqual(customerViewModels[0].ProfilePictureUrl, ProfilePic);
+            
             customerSlotBusinessMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Never());
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>(), It.IsAny<bool>())), Times.Once());
             hashingMock.Verify((m => m.Create(It.IsAny<object>())), Times.Once());
@@ -129,7 +139,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerAvailableSlots_NullPageParameterModel_ReturnsValidationResponse()
         {
-            var response = await customerBookedSlotController.GetCustomerAvailableSlots(null, CustomerId);
+            var response = await customerSlotController.GetCustomerAvailableSlots(null, CustomerId);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -143,7 +153,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerAvailableSlots_EmptyPageParameterModel_ReturnsValidationResponse()
         {
-            var response = await customerBookedSlotController.GetCustomerAvailableSlots(new PageParameterViewModel(), CustomerId);
+            var response = await customerSlotController.GetCustomerAvailableSlots(new PageParameterViewModel(), CustomerId);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -156,7 +166,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerAvailableSlots_InValidPageParameterModel_ReturnsValidationResponse()
         {
-            var response = await customerBookedSlotController.GetCustomerAvailableSlots(DefaultInValidPageParameterViewModel(), CustomerId);
+            var response = await customerSlotController.GetCustomerAvailableSlots(DefaultInValidPageParameterViewModel(), CustomerId);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -176,7 +186,7 @@ namespace Bookmyslot.Api.Tests
             Response<BookAvailableSlotModel> customerSlotBusinessMockResponse = new Response<BookAvailableSlotModel>() { Result = bookAvailableSlotModel };
             customerSlotBusinessMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(customerSlotBusinessMockResponse));
 
-            var response = await customerBookedSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
+            var response = await customerSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
@@ -191,13 +201,33 @@ namespace Bookmyslot.Api.Tests
             Response<BookAvailableSlotModel> customerSlotBusinessMockResponse = new Response<BookAvailableSlotModel>() { Result = CreateDefaultValidBookAvailableSlotModel() };
             customerSlotBusinessMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(customerSlotBusinessMockResponse));
 
-            var response = await customerBookedSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
+            var response = await customerSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             keyEncryptorMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.AtLeastOnce());
         }
+
+
+        private List<CustomerSlotModel> CreateDefaultCustomerSlotModels()
+        {
+            List<CustomerSlotModel> customerSlotModels = new List<CustomerSlotModel>();
+            var customerSlotModel = new CustomerSlotModel() { CustomerModel = CreateDefaultCustomerModel() };
+            customerSlotModels.Add(customerSlotModel);
+            return customerSlotModels;
+        }
+
+        private CustomerModel CreateDefaultCustomerModel()
+        {
+            CustomerModel customerModel = new CustomerModel();
+            customerModel.FirstName = FirstName;
+            customerModel.LastName = LastName;
+            customerModel.ProfilePictureUrl = ProfilePic;
+            customerModel.BioHeadLine = BioHeadLine;
+            return customerModel;
+        }
+
 
         private BookAvailableSlotModel CreateDefaultValidBookAvailableSlotModel()
         {
