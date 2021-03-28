@@ -45,8 +45,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
                 SlotEndTime = CustomerLastSharedSlotModel.SlotEndTime,
             };
 
-            var customerLastSharedSlotViewModelResponse = new Response<CustomerLastSharedSlotViewModel>() { Result = customerLastSharedSlotViewModel };
-            return customerLastSharedSlotViewModelResponse;
+            return  new Response<CustomerLastSharedSlotViewModel>() { Result = customerLastSharedSlotViewModel };
         }
     }
 }

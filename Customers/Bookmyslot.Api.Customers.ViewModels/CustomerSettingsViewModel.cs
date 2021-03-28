@@ -1,4 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Customers.Contracts;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,5 +15,15 @@ namespace Bookmyslot.Api.Customers.ViewModels
         [DefaultValue(TimeZoneConstants.IndianTimezone)]
         [Required]
         public string TimeZone { get; set; }
+
+        public static Response<CustomerSettingsViewModel> CreateCustomerSettingsViewModel(CustomerSettingsModel customerSettingsModel)
+        {
+            var customerSettingsViewModel = new CustomerSettingsViewModel
+            {
+                TimeZone = customerSettingsModel.TimeZone,
+            };
+
+            return new Response<CustomerSettingsViewModel>() { Result = customerSettingsViewModel };
+        }
     }
 }

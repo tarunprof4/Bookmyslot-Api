@@ -47,14 +47,21 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [ActionName("GetCustomerAdditionalInformation")]
+        [ActionName("GetCustomerSettings")]
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result.Id;
 
             var customerSettingsResponse = await this.customerSettingsBusiness.GetCustomerSettings(customerId);
-            return this.CreateGetHttpResponse(customerSettingsResponse);
+
+            if (customerSettingsResponse.ResultType == ResultType.Success)
+            {
+                return this.CreateGetHttpResponse(CustomerSettingsViewModel.CreateCustomerSettingsViewModel(customerSettingsResponse.Result));
+            }
+
+            return this.CreateGetHttpResponse(new Response<CustomerSettingsViewModel>()
+            { ResultType = customerSettingsResponse.ResultType, Messages = customerSettingsResponse.Messages });
         }
 
 
@@ -72,7 +79,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
-        [ActionName("UpdateCustomerAdditionalInformation")]
+        [ActionName("UpdateCustomerSettings")]
         public async Task<IActionResult> Put([FromBody] CustomerSettingsViewModel customerSettingsViewModel)
         {
             var validator = new CustomerSettingsViewModelValidator(this.nodaTimeZoneLocationBusiness);
