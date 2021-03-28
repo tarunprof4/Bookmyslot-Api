@@ -132,9 +132,12 @@ namespace Bookmyslot.Api.Controllers
             var cancelledSlotModels = await this.customerSharedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (cancelledSlotModels.ResultType == ResultType.Success)
             {
-                HideUncessaryDetailsForGetCustomerCancelledSlots(cancelledSlotModels.Result);
+                var cancelledSlotViewModelResponse = new Response<IEnumerable<CancelledSlotViewModel>>() { Result = CancelledSlotViewModel.CreateCancelledSlotViewModels(cancelledSlotModels.Result) };
+                return this.CreateGetHttpResponse(cancelledSlotViewModelResponse);
             }
-            return this.CreateGetHttpResponse(cancelledSlotModels);
+
+            return this.CreateGetHttpResponse(new Response<IEnumerable<CancelledSlotViewModel>>()
+            { ResultType = cancelledSlotModels.ResultType, Messages = cancelledSlotModels.Messages });
         }
 
         private Response<SharedSlotViewModel> CreateBookedSlotViewModel(Response<SharedSlotModel> sharedSlotModelResponse)
@@ -162,15 +165,6 @@ namespace Bookmyslot.Api.Controllers
         }
 
 
-        private void HideUncessaryDetailsForGetCustomerCancelledSlots(IEnumerable<CancelledSlotModel> cancelledSlotModels)
-        {
-            foreach (var cancelledSlotModel in cancelledSlotModels)
-            {
-                cancelledSlotModel.Id = string.Empty;
-                cancelledSlotModel.CreatedBy = string.Empty;
-                cancelledSlotModel.CancelledBy = string.Empty;
-                cancelledSlotModel.BookedBy = string.Empty;
-            }
-        }
+       
     }
 }
