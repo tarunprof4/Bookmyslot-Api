@@ -10,7 +10,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
  SearchKey=@SearchKey, Value=@Value,  ModifiedDateUtc = @ModifiedDateUtc";
 
 
-        public const string GetPreProcessedSearchedCustomerQuery = @"select * from" + " " + DatabaseConstants.SearchTable;
+        public const string GetPreProcessedSearchedCustomerQuery = @"select * from" + " " + DatabaseConstants.SearchTable + " " + "where SearchKey=@SearchKey";
 
 
        

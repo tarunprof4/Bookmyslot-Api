@@ -19,10 +19,8 @@ AGAINST (@name IN BOOLEAN MODE) AS score FROM" + " " + DatabaseConstants.Registe
 
 
 
-        public const string SearchCustomerByUserNameQuery = @"SELECT  firstname, lastname, PhotoUrl,UserName  MATCH (BioHeadLine) AGAINST
-    (@bioHeadLine IN NATURAL LANGUAGE MODE) AS score
-    FROM" + " " + DatabaseConstants.RegisterCustomerTable + " " + @"WHERE MATCH (BioHeadLine) AGAINST
-    (@bioHeadLine IN NATURAL LANGUAGE MODE) Limit 10;";
+        public const string SearchCustomerByUserNameQuery = @"SELECT  firstname, lastname, PhotoUrl,UserName   
+    FROM" + " " + DatabaseConstants.RegisterCustomerTable + " " + @"WHERE username =@userName;";
 
 
     }

@@ -18,6 +18,7 @@ namespace Bookmyslot.Api.Search.Business
         }
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey)
         {
+            searchKey = searchKey.ToLowerInvariant();
             var preProcessedSearchedCustomers = await this.searchRepository.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(SearchConstants.SearchCustomer, searchKey);
             if (preProcessedSearchedCustomers.ResultType == ResultType.Success)
             {
