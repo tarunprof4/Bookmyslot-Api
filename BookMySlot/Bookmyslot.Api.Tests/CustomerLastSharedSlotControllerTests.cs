@@ -22,8 +22,8 @@ namespace Bookmyslot.Api.Tests
         private const string Title = "Title";
         private const string Country = "Country";
         private const string TimeZone = "TimeZone";
-        private TimeSpan SlotStartTime = new TimeSpan(2,0,0);
-        private TimeSpan SlotEndTime = new TimeSpan(3, 0, 0);
+        private readonly TimeSpan SlotStartTime = new TimeSpan(2,0,0);
+        private readonly TimeSpan SlotEndTime = new TimeSpan(3, 0, 0);
         private CustomerLastSharedSlotController customerLastSharedSlotController;
         private Mock<ICustomerLastSharedSlotBusiness> customerLastSharedSlotBusinessMock;
         private Mock<ICurrentUser> currentUserMock;

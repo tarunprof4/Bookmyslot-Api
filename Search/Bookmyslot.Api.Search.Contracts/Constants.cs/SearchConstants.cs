@@ -8,6 +8,6 @@
 
         public const char SearchCustomerByUserNameIdentifier = '@';
 
-        public const char SearchCustomerByNameIdentifier = '#';
+        public const char SearchCustomerByNameIdentifier = '!';
     }
 }
