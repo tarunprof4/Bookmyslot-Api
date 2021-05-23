@@ -49,9 +49,6 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/test/Testing")]
         public async Task<IActionResult> Testing()
         {
-            int i = 0;
-            int j = 0;
-            int k = i/j;
             var configurations = new Dictionary<string, object>();
             configurations.Add("appConfiguration", this.appConfiguration);
             configurations.Add("authenticationConfiguration", this.authenticationConfiguration);
