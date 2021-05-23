@@ -1,13 +1,19 @@
 ﻿using Bookmyslot.Api.Common.Logging.Contracts;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Serilog;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Common.Web.Filters
 {
     public class LoggingFilter : IAsyncActionFilter
     {
+        private readonly ILoggerService loggerService;
+        public LoggingFilter(ILoggerService loggerService)
+        {
+            this.loggerService = loggerService;
+        }
+
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             //var operationName = context.ActionDescriptor.DisplayName;
@@ -15,10 +21,10 @@ namespace Bookmyslot.Api.Common.Web.Filters
             var user = "a@gmail.com";
             var actionLog = new ActionLog(operationName, user);
 
-            Log.Information("Operation Started {@action}", actionLog);
+            this.loggerService.Information("Operation Started {@action}", actionLog);
             await next();
 
-            Log.Information("Operation Ended {@action}", actionLog);
+            this.loggerService.Information("Operation Ended {@action}", actionLog);
         }
     }
 }

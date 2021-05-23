@@ -2,7 +2,9 @@
 using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Email;
 using Bookmyslot.Api.Common.Email.Interfaces;
+using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections
@@ -21,6 +23,7 @@ namespace Bookmyslot.Api.Injections
             services.AddSingleton<ICompression, GZipCompression>();
             services.AddSingleton<IKeyEncryptor, KeyEncryptor>();
             services.AddSingleton<IHashing, MD5Hash>();
+            services.AddSingleton<ILoggerService, LoggerService>();
 
             EmailInjections(services);
             LoggingInjections(services);

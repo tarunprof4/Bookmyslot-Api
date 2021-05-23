@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,11 +26,13 @@ namespace Bookmyslot.Api.Controllers
         private readonly GoogleAuthenticationConfiguration googleAuthenticationConfiguration;
         private readonly FacebookAuthenticationConfiguration facebookAuthenticationConfiguration;
 
+        private readonly ILoggerService loggerService;
+
 
 
         public TestController(AppConfiguration appConfiguration, AuthenticationConfiguration authenticationConfiguration,
             CacheConfiguration cacheConfiguration, EmailConfiguration emailConfiguration, GoogleAuthenticationConfiguration googleAuthenticationConfiguration,
-            FacebookAuthenticationConfiguration facebookAuthenticationConfiguration)
+            FacebookAuthenticationConfiguration facebookAuthenticationConfiguration, ILoggerService loggerService)
         {
             this.appConfiguration = appConfiguration;
             this.authenticationConfiguration = authenticationConfiguration;
@@ -37,6 +40,7 @@ namespace Bookmyslot.Api.Controllers
             this.emailConfiguration = emailConfiguration;
             this.googleAuthenticationConfiguration = googleAuthenticationConfiguration;
             this.facebookAuthenticationConfiguration = facebookAuthenticationConfiguration;
+            this.loggerService = loggerService;
         }
 
   
@@ -45,7 +49,9 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/test/Testing")]
         public async Task<IActionResult> Testing()
         {
-            
+            int i = 0;
+            int j = 0;
+            int k = i/j;
             var configurations = new Dictionary<string, object>();
             configurations.Add("appConfiguration", this.appConfiguration);
             configurations.Add("authenticationConfiguration", this.authenticationConfiguration);

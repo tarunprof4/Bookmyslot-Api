@@ -2,9 +2,9 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Contracts;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
-using Serilog;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -18,13 +18,15 @@ namespace Bookmyslot.Api.Web.Common
         private readonly RequestDelegate _next;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
         private readonly ICompression _compression;
+        private readonly ILoggerService loggerService;
 
 
-        public RequestResponseLoggingMiddleware(RequestDelegate next, ICompression compression)
+        public RequestResponseLoggingMiddleware(RequestDelegate next, ICompression compression, ILoggerService loggerService)
         {
             _next = next;
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
             _compression = compression;
+            this.loggerService = loggerService;
         }
 
         public async Task Invoke(HttpContext context)
@@ -38,12 +40,12 @@ namespace Bookmyslot.Api.Web.Common
 
             var requestBody = await LogRequest(context);
             var requestLog = CreateRequestLog(context, correlationId, requestId, requestBody);
-            Log.Debug("Http Request {@httpRequest}", requestLog);
+            this.loggerService.Debug("Http Request {@httpRequest}", requestLog);
 
             var compresedBody = await LogResponse(context);
             stopWatch.Stop();
             var responseLog = CreateResponseLog(context, correlationId, requestId, compresedBody, stopWatch.Elapsed);
-            Log.Debug("Http Response {@httpResponse}", responseLog);
+            this.loggerService.Debug("Http Response {@httpResponse}", responseLog);
         }
 
 

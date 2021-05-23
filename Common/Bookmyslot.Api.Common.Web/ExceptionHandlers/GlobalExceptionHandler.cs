@@ -1,9 +1,9 @@
 ﻿using Bookmyslot.Api.Common.Logging;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Serilog;
 using System.Collections.Generic;
 using System.Net;
 
@@ -11,7 +11,7 @@ namespace Bookmyslot.Api.Common.Web.ExceptionHandlers
 {
     public static class GlobalExceptionHandler
     {
-        public static void ConfigureGlobalExceptionHandler(this IApplicationBuilder app)
+        public static void ConfigureGlobalExceptionHandler(this IApplicationBuilder app, ILoggerService loggerService)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.Common.Web.ExceptionHandlers
                     {
                         var requestId = context.Request.Headers[LogConstants.RequestId];
 
-                        Log.Error(contextFeature.Error, string.Empty);
+                        loggerService.Error(contextFeature.Error, string.Empty);
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(new List<string>() { "Internal Server Error" }));
                     }
                 });

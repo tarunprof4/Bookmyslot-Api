@@ -6,8 +6,8 @@ using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Google.Apis.Auth;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,10 +17,12 @@ namespace Bookmyslot.Api.Authentication.Google
     public class GoogleTokenValidator : IGoogleTokenValidator
     {
         private readonly GoogleAuthenticationConfiguration googleAuthenticationConfiguration;
+        private readonly ILoggerService loggerService;
 
-        public GoogleTokenValidator(GoogleAuthenticationConfiguration googleAuthenticationConfiguration)
+        public GoogleTokenValidator(GoogleAuthenticationConfiguration googleAuthenticationConfiguration, ILoggerService loggerService)
         {
             this.googleAuthenticationConfiguration = googleAuthenticationConfiguration;
+            this.loggerService = loggerService;
         }
         public async Task<Response<SocialCustomerModel>> ValidateToken(string idToken)
         {
@@ -34,7 +36,7 @@ namespace Bookmyslot.Api.Authentication.Google
             }
             catch (Exception ex)
             {
-                Log.Error(ex, string.Empty);
+                this.loggerService.Error(ex, string.Empty);
                 return Response<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
             }
         }

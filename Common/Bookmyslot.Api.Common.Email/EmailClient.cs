@@ -4,8 +4,8 @@ using Bookmyslot.Api.Common.Email.Constants;
 using Bookmyslot.Api.Common.Email.Interfaces;
 using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Contracts;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -20,8 +20,9 @@ namespace Bookmyslot.Api.Common.Email
         private readonly SmtpClient smtpClient;
         private readonly string fromEmailAddress;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ILoggerService loggerService;
 
-        public EmailClient(IHttpContextAccessor httpContextAccessor, EmailConfiguration emailConfiguration)
+        public EmailClient(IHttpContextAccessor httpContextAccessor, EmailConfiguration emailConfiguration, ILoggerService loggerService)
         {
             this.smtpClient = new SmtpClient();
             this.smtpClient.UseDefaultCredentials = false;
@@ -34,6 +35,7 @@ namespace Bookmyslot.Api.Common.Email
             this.fromEmailAddress = emailConfiguration.EmailUserName;
 
             this.httpContextAccessor = httpContextAccessor;
+            this.loggerService = loggerService;
         }
 
 
@@ -49,7 +51,7 @@ namespace Bookmyslot.Api.Common.Email
             {
                 var requestId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.RequestId];
                 var emaillog = new EmailLog(requestId);
-                Log.Error(exp, "{@emaillog}", emaillog);
+                this.loggerService.Error(exp, "{@emaillog}", emaillog);
                 return Response<bool>.Error(new List<string>() { EmailConstants.SendEmailFailure });
             }
         }

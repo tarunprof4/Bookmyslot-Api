@@ -2,6 +2,7 @@ using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Logging.Enrichers;
+using Bookmyslot.Api.Common.Logging.Interfaces;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.File.Contracts.Interfaces;
@@ -146,8 +147,8 @@ namespace Bookmyslot.Api
             app.UseHttpsRedirection();
 
 
-
-            app.ConfigureGlobalExceptionHandler();
+            var loggerService = serviceProvider.GetService<ILoggerService>();
+            app.ConfigureGlobalExceptionHandler(loggerService);
 
             app.UseRouting();
             app.UseCors("MyPolicy");
@@ -192,6 +193,8 @@ namespace Bookmyslot.Api
             var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
             var appConfiguration = serviceProvider.GetService<AppConfiguration>();
 
+            
+
 
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
@@ -212,8 +215,8 @@ namespace Bookmyslot.Api
             //                       .CreateLogger();
 
 
-
-            Log.Debug("Starting Bookmyslot web host");
+            var loggerService = serviceProvider.GetService<ILoggerService>();
+            loggerService.Debug("Starting Bookmyslot web host");
         }
 
         private static void BadRequestConfiguration(IServiceCollection services)
