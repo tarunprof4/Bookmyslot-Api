@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Encryption.Interfaces;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore;
@@ -29,17 +29,17 @@ namespace Bookmyslot.Api.Injections.Tests
         public void StartupTest()
         {
             var customerSlotBusiness = serviceProvider.GetService<ICustomerSlotBusiness>();
-            var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
+            var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
             var distributedInMemoryCacheBuisness = serviceProvider.GetService<IDistributedInMemoryCacheBuisness>();
             var hash = serviceProvider.GetService<IHashing>();
             var cacheConfiguration = serviceProvider.GetService<CacheConfiguration>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
 
 
-            var controller = new CustomerSlotController(customerSlotBusiness, keyEncryptor, distributedInMemoryCacheBuisness, hash, cacheConfiguration, currentUser);
+            var controller = new CustomerSlotController(customerSlotBusiness, symmetryEncryption, distributedInMemoryCacheBuisness, hash, cacheConfiguration, currentUser);
 
             Assert.IsNotNull(customerSlotBusiness);
-            Assert.IsNotNull(keyEncryptor);
+            Assert.IsNotNull(symmetryEncryption);
             Assert.IsNotNull(controller);
         }
     }

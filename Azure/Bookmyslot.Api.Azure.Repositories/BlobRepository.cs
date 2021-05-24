@@ -2,10 +2,10 @@
 using Azure.Storage.Blobs.Models;
 using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Azure.Repositories.Constants;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Database.Interfaces;
+using Bookmyslot.Api.Common.Encryption.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 

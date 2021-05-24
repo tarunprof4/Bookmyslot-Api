@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common.Compression.Interfaces
+﻿namespace Bookmyslot.Api.Common.Encryption.Interfaces
 {
     public interface IHashing
     {

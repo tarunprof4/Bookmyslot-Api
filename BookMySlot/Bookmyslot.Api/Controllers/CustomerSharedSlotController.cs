@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Encryption.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
@@ -22,13 +22,13 @@ namespace Bookmyslot.Api.Controllers
     public class CustomerSharedSlotController : BaseApiController
     {
         private readonly ICustomerSharedSlotBusiness customerSharedSlotBusiness;
-        private readonly IKeyEncryptor keyEncryptor;
+        private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
 
-        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser)
+        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser)
         {
             this.customerSharedSlotBusiness = customerSharedSlotBusiness;
-            this.keyEncryptor = keyEncryptor;
+            this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
         }
 
@@ -149,7 +149,7 @@ namespace Bookmyslot.Api.Controllers
                 var sharedSlotViewModel = new SharedSlotViewModel();
                 foreach (var sharedSlot in sharedSlotModel.SharedSlotModels)
                 {
-                    var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(sharedSlot.Value));
+                    var slotInformation = this.symmetryEncryption.Encrypt(JsonConvert.SerializeObject(sharedSlot.Value));
                     var bookedByCustomerViewModel = sharedSlot.Key != null ? CustomerViewModel.CreateCustomerViewModel(sharedSlot.Key) : null;
                     sharedSlotViewModel.SharedSlotModels.Add(new Tuple<CustomerViewModel, SlotModel, string>(bookedByCustomerViewModel, sharedSlot.Value, slotInformation));
                 }

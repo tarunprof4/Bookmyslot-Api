@@ -2,9 +2,9 @@
 using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Encryption.Interfaces;
 using Bookmyslot.Api.Common.ViewModels;
 using Bookmyslot.Api.Common.ViewModels.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -31,17 +31,17 @@ namespace Bookmyslot.Api.Controllers
     public class CustomerSlotController : BaseApiController
     {
         private readonly ICustomerSlotBusiness customerSlotBusiness;
-        private readonly IKeyEncryptor keyEncryptor;
+        private readonly ISymmetryEncryption symmetryEncryption;
         private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
         private readonly IHashing md5Hash;
         private readonly CacheConfiguration cacheConfiguration;
         private readonly ICurrentUser currentUser;
 
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, IKeyEncryptor keyEncryptor, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, ISymmetryEncryption symmetryEncryption, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser)
         {
             this.customerSlotBusiness = customerSlotBusiness;
-            this.keyEncryptor = keyEncryptor;
+            this.symmetryEncryption = symmetryEncryption;
             this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
             this.md5Hash = md5Hash;
             this.cacheConfiguration = cacheConfiguration;
@@ -164,7 +164,7 @@ namespace Bookmyslot.Api.Controllers
 
                 foreach (var availableSlotModel in bookAvailableSlotModel.AvailableSlotModels)
                 {
-                    var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(availableSlotModel.SlotModel));
+                    var slotInformation = this.symmetryEncryption.Encrypt(JsonConvert.SerializeObject(availableSlotModel.SlotModel));
                     bookAvailableSlotViewModel.BookAvailableSlotModels.Add(new SlotInformationInCustomerTimeZoneViewModel()
                     {
                         Title = availableSlotModel.SlotModel.Title,

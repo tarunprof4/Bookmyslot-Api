@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Database\Bookmyslot.Api.Common.Database.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Encryption\Bookmyslot.Api.Common.Encryption.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Azure.Contracts\Bookmyslot.Api.Azure.Contracts.csproj" />
   </ItemGroup>
 

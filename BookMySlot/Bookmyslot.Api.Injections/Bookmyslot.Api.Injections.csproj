@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Repositories\Bookmyslot.Api.Cache.Repositories.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Email\Bookmyslot.Api.Common.Email.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Encryption\Bookmyslot.Api.Common.Encryption.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Business\Bookmyslot.Api.Customers.Business.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Repositories.MySql\Bookmyslot.Api.Customers.Repositories.MySql.csproj" />
     <ProjectReference Include="..\..\File\Bookmyslot.Api.File.Business\Bookmyslot.Api.File.Business.csproj" />
