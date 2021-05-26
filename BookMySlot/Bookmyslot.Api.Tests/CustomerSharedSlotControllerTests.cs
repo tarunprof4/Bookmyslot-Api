@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -21,16 +21,16 @@ namespace Bookmyslot.Api.Tests
         private const string FirstName = "FirstName";
         private CustomerSharedSlotController customerSharedSlotController;
         private Mock<ICustomerSharedSlotBusiness> customerSharedSlotBusinessMock;
-        private Mock<IKeyEncryptor> keyEncryptorMock;
+        private Mock<ISymmetryEncryption> symmetryEncryptionMock;
         private Mock<ICurrentUser> currentUserMock;
 
         [SetUp]
         public void Setup()
         {
             customerSharedSlotBusinessMock = new Mock<ICustomerSharedSlotBusiness>();
-            keyEncryptorMock = new Mock<IKeyEncryptor>();
+            symmetryEncryptionMock = new Mock<ISymmetryEncryption>();
             currentUserMock = new Mock<ICurrentUser>();
-            customerSharedSlotController = new CustomerSharedSlotController(customerSharedSlotBusinessMock.Object, keyEncryptorMock.Object, currentUserMock.Object);
+            customerSharedSlotController = new CustomerSharedSlotController(customerSharedSlotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object);
 
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));

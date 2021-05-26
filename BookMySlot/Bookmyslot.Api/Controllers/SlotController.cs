@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
@@ -29,14 +29,14 @@ namespace Bookmyslot.Api.Controllers
     public class SlotController : BaseApiController
     {
         private readonly ISlotBusiness slotBusiness;
-        private readonly IKeyEncryptor keyEncryptor;
+        private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
         private readonly INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness;
 
-        public SlotController(ISlotBusiness slotBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser, INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness)
+        public SlotController(ISlotBusiness slotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness)
         {
             this.slotBusiness = slotBusiness;
-            this.keyEncryptor = keyEncryptor;
+            this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
             this.nodaTimeZoneLocationBusiness = nodaTimeZoneLocationBusiness;
         }
@@ -100,7 +100,7 @@ namespace Bookmyslot.Api.Controllers
 
             if (results.IsValid)
             {
-                var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(cancelSlotViewModel.SlotKey));
+                var slotModel = JsonConvert.DeserializeObject<SlotModel>(this.symmetryEncryption.Decrypt(cancelSlotViewModel.SlotKey));
 
                 if (slotModel != null)
                 {

@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common.Logging
+﻿namespace Bookmyslot.Api.Common.Contracts.Infrastructure.Logging
 {
     public class LogConstants
     {

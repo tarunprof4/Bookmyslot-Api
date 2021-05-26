@@ -1,8 +1,8 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -25,17 +25,17 @@ namespace Bookmyslot.Api.Tests
         private const string ValidResendSlotModel = "ValidResendSlotModel";
 
         private EmailController emailController;
-        private Mock<IKeyEncryptor> keyEncryptorMock;
+        private Mock<ISymmetryEncryption> symmetryEncryptionMock;
         private Mock<IResendSlotInformationBusiness> resendSlotInformationBusinessMock;
         private Mock<ICurrentUser> currentUserMock;
 
         [SetUp]
         public void Setup()
         {
-            keyEncryptorMock = new Mock<IKeyEncryptor>();
+            symmetryEncryptionMock = new Mock<ISymmetryEncryption>();
             resendSlotInformationBusinessMock = new Mock<IResendSlotInformationBusiness>();
             currentUserMock = new Mock<ICurrentUser>();
-            emailController = new EmailController(keyEncryptorMock.Object, resendSlotInformationBusinessMock.Object, currentUserMock.Object);
+            emailController = new EmailController(symmetryEncryptionMock.Object, resendSlotInformationBusinessMock.Object, currentUserMock.Object);
 
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.ResendSlotInfoMissing));
-            keyEncryptorMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
         }
@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.ResendSlotInfoRequired));
-            keyEncryptorMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
         }
@@ -73,7 +73,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task ResendSlotMeetingInformation_InValidResendSlotInformationModel_ReturnsValidationResponse()
         {
-            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
+            symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
 
             var response = await emailController.ResendSlotMeetingInformation(new ResendSlotInformationViewModel() { ResendSlotModel = InValidResendSlotModel }); ;
 
@@ -81,7 +81,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
-            keyEncryptorMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
         }
@@ -92,7 +92,7 @@ namespace Bookmyslot.Api.Tests
         public async Task ResendSlotMeetingInformation_ValidResendSlotInformationModel_ReturnsValidationResponse()
         {
             var resendSlotInformationViewModel = new ResendSlotInformationViewModel() { ResendSlotModel = ValidResendSlotModel };
-            keyEncryptorMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(resendSlotInformationViewModel));
+            symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(resendSlotInformationViewModel));
             Response<bool> resendSlotInformationBusinessMockResponse = new Response<bool>() { Result = true };
             resendSlotInformationBusinessMock.Setup(a => a.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(resendSlotInformationBusinessMockResponse));
 
@@ -100,7 +100,7 @@ namespace Bookmyslot.Api.Tests
 
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
-            keyEncryptorMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Once());
         }

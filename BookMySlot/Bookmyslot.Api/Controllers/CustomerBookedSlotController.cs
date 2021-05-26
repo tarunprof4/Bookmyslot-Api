@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
@@ -22,13 +22,13 @@ namespace Bookmyslot.Api.Controllers
     public class CustomerBookedSlotController : BaseApiController
     {
         private readonly ICustomerBookedSlotBusiness customerBookedSlotBusiness;
-        private readonly IKeyEncryptor keyEncryptor;
+        private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
 
-        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser)
+        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser)
         {
             this.customerBookedSlotBusiness = customerBookedSlotBusiness;
-            this.keyEncryptor = keyEncryptor;
+            this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
         }
 
@@ -123,7 +123,7 @@ namespace Bookmyslot.Api.Controllers
 
                 foreach (var bookedSlot in bookedSlotModel.BookedSlotModels)
                 {
-                    var slotInformation = this.keyEncryptor.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
+                    var slotInformation = this.symmetryEncryption.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
                     var createdByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookedSlot.Key);
 
                     var slotModel = bookedSlot.Value.SlotModel;

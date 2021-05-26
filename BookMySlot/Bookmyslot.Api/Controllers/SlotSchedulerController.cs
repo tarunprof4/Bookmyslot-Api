@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
@@ -26,12 +26,12 @@ namespace Bookmyslot.Api.Controllers
     public class SlotSchedulerController : BaseApiController
     {
         private readonly ISlotSchedulerBusiness slotSchedulerBusiness;
-        private readonly IKeyEncryptor keyEncryptor;
+        private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
-        public SlotSchedulerController(ISlotSchedulerBusiness slotSchedulerBusiness, IKeyEncryptor keyEncryptor, ICurrentUser currentUser)
+        public SlotSchedulerController(ISlotSchedulerBusiness slotSchedulerBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser)
         {
             this.slotSchedulerBusiness = slotSchedulerBusiness;
-            this.keyEncryptor = keyEncryptor;
+            this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
         }
 
@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.Controllers
 
             if (results.IsValid)
             {
-                var customerSlotModel = JsonConvert.DeserializeObject<SlotModel>(this.keyEncryptor.Decrypt(slotSchedulerViewModel.SlotModelKey));
+                var customerSlotModel = JsonConvert.DeserializeObject<SlotModel>(this.symmetryEncryption.Decrypt(slotSchedulerViewModel.SlotModelKey));
 
                 if (customerSlotModel != null)
                 {

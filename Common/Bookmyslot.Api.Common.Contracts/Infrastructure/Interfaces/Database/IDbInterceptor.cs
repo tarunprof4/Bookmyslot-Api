@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.Common.Database.Interfaces
+namespace Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database
 {
     public interface IDbInterceptor
     {

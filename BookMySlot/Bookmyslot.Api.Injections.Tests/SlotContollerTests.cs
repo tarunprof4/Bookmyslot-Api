@@ -1,5 +1,5 @@
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Compression.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
@@ -29,14 +29,14 @@ namespace Bookmyslot.Api.Injections.Tests
         public void StartupTest()
         {
             var slotBusiness = serviceProvider.GetService<ISlotBusiness>();
-            var keyEncryptor = serviceProvider.GetService<IKeyEncryptor>();
+            var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
             var nodaTimeZoneLocationBusiness = serviceProvider.GetService<INodaTimeZoneLocationBusiness>();
 
-            var controller = new SlotController(slotBusiness, keyEncryptor, currentUser, nodaTimeZoneLocationBusiness);
+            var controller = new SlotController(slotBusiness, symmetryEncryption, currentUser, nodaTimeZoneLocationBusiness);
 
             Assert.IsNotNull(slotBusiness);
-            Assert.IsNotNull(keyEncryptor);
+            Assert.IsNotNull(symmetryEncryption);
             Assert.IsNotNull(controller);
         }
     }

@@ -5,7 +5,7 @@ using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Facebook.Contracts;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Logging.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Marvin.StreamExtensions;
 using System;
 using System.Collections.Generic;
