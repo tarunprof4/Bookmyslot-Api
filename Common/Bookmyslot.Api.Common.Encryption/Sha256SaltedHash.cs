@@ -24,11 +24,7 @@ namespace Bookmyslot.Api.Common.Encryption
                 var hasedBytes =  sha256.ComputeHash(Combine(messageBytes, this.salt));
                 var hashedMessage = Convert.ToBase64String(hasedBytes);
 
-                hashedMessage = hashedMessage.Replace("/", "_");
-                hashedMessage = hashedMessage.Replace("+", "-");
-                var substring = hashedMessage.Substring(0, 22);
-
-                return substring;
+                return hashedMessage.Replace("/", "_").Replace("+", "-");
             }
         }
 
