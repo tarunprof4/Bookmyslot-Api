@@ -25,8 +25,8 @@ namespace Bookmyslot.Api.Common.Database
 
         public async Task<T> GetQueryResults<T>(string operationName, object parameters, Func<Task<T>> retrieveValues)
         {
-            var requestId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.RequestId];
-            var databaseRequestLog = new DatabaseRequestLog(requestId, operationName, parameters);
+            var coorelationId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.CoorelationId];
+            var databaseRequestLog = new DatabaseRequestLog(coorelationId, operationName, parameters);
             this.loggerService.Debug("{@databaseRequestLog}", databaseRequestLog);
 
             Stopwatch stopWatch = new Stopwatch();
@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Common.Database
             stopWatch.Stop();
 
             var compresedResponseBody = compression.Compress(result);
-            var databaseResponseLog = new DatabaseResponseLog(requestId, compresedResponseBody, stopWatch.Elapsed);
+            var databaseResponseLog = new DatabaseResponseLog(coorelationId, compresedResponseBody, stopWatch.Elapsed);
             this.loggerService.Debug("{@databaseResponseLog}", databaseResponseLog);
 
             return result;

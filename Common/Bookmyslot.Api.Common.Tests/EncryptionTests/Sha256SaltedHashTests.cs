@@ -1,5 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Encryption;
+using Bookmyslot.Api.Common.Encryption.Configuration;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Bookmyslot.Api.Common.Tests.EncryptionTests
@@ -10,12 +12,15 @@ namespace Bookmyslot.Api.Common.Tests.EncryptionTests
         private Sha256SaltedHash sha256SaltedHash;
         private IRandomNumberGenerator randomNumberGenerator;
 
-
         [SetUp]
         public void Setup()
         {
             randomNumberGenerator = new RandomNumberGenerator();
-            sha256SaltedHash = new Sha256SaltedHash(randomNumberGenerator);
+
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var encryptionConfiguration = new EncryptionConfiguration(configuration);
+
+            sha256SaltedHash = new Sha256SaltedHash(randomNumberGenerator, encryptionConfiguration);
         }
 
         [TestCase("test")]

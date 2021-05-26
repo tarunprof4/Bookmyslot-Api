@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.Common.Web.ExceptionHandlers
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        var requestId = context.Request.Headers[LogConstants.RequestId];
+                        var coorelationId = context.Request.Headers[LogConstants.CoorelationId];
 
                         loggerService.Error(contextFeature.Error, string.Empty);
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(new List<string>() { "Internal Server Error" }));
