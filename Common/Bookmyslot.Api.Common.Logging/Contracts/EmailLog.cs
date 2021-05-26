@@ -2,11 +2,11 @@
 {
     public class EmailLog
     {
-        public EmailLog(string requestId)
+        public EmailLog(string coorelationId)
         {
-            this.RequestId = requestId;
+            this.CoorelationId = coorelationId;
         }
-        public string RequestId { get; set; }
+        public string CoorelationId { get; set; }
 
 
     }

@@ -49,8 +49,8 @@ namespace Bookmyslot.Api.Common.Email
             }
             catch (Exception exp)
             {
-                var requestId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.RequestId];
-                var emaillog = new EmailLog(requestId);
+                var coorelationId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.CoorelationId];
+                var emaillog = new EmailLog(coorelationId);
                 this.loggerService.Error(exp, "{@emaillog}", emaillog);
                 return Response<bool>.Error(new List<string>() { EmailConstants.SendEmailFailure });
             }

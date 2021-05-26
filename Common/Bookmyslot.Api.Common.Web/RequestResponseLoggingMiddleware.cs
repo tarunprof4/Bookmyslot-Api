@@ -34,17 +34,17 @@ namespace Bookmyslot.Api.Web.Common
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            var correlationId = context.Request.Headers[ThirdPartyConstants.CoorelationId];
-            var requestId = Guid.NewGuid().ToString();
-            context.Request.Headers.Add(LogConstants.RequestId, requestId);
+            var uiRequestId = context.Request.Headers[ThirdPartyConstants.UiRequestId];
+            var coorelationId = Guid.NewGuid().ToString();
+            context.Request.Headers.Add(LogConstants.CoorelationId, coorelationId);
 
             var requestBody = await LogRequest(context);
-            var requestLog = CreateRequestLog(context, correlationId, requestId, requestBody);
+            var requestLog = CreateRequestLog(context, uiRequestId, coorelationId, requestBody);
             this.loggerService.Debug("Http Request {@httpRequest}", requestLog);
 
             var compresedBody = await LogResponse(context);
             stopWatch.Stop();
-            var responseLog = CreateResponseLog(context, correlationId, requestId, compresedBody, stopWatch.Elapsed);
+            var responseLog = CreateResponseLog(context, uiRequestId, coorelationId, compresedBody, stopWatch.Elapsed);
             this.loggerService.Debug("Http Response {@httpResponse}", responseLog);
         }
 
@@ -101,7 +101,7 @@ namespace Bookmyslot.Api.Web.Common
             return textWriter.ToString();
         }
 
-        private RequestLog CreateRequestLog(HttpContext context, string correlationId, string requestId, string requestBody)
+        private RequestLog CreateRequestLog(HttpContext context,  string requestId, string correlationId, string requestBody)
         {
             var requestLog = new RequestLog();
             requestLog.RequestId = requestId;
@@ -118,7 +118,7 @@ namespace Bookmyslot.Api.Web.Common
             return requestLog;
         }
 
-        private ResponseLog CreateResponseLog(HttpContext context, string correlationId, string requestId, string responseCompressedBody, TimeSpan responseTime)
+        private ResponseLog CreateResponseLog(HttpContext context, string requestId, string correlationId , string responseCompressedBody, TimeSpan responseTime)
         {
             var responseLog = new ResponseLog();
             responseLog.RequestId = requestId;

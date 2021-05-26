@@ -2,7 +2,7 @@
 {
     public class LogConstants
     {
-        public const string RequestId = "Bookmyslot-RequestId";
+        public const string CoorelationId = "Bookmyslot-CoorelationId";
         public const string UserAgent = "User-Agent";
     }
 }
