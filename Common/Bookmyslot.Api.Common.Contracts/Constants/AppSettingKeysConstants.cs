@@ -51,5 +51,9 @@
         public const string FacebookTokenValidationUrl = "TokenValidationUrl";
         public const string FacebookUserInfoUrl = "UserInfoUrl";
 
+        public const string EncryptionSettings = "EncryptionSettings";
+        public const string HashSaltLength = "HashSaltLength";
+        public const string SymmetryEncryptionKeyLength = "SymmetryEncryptionKeyLength";
+        public const string SymmetryEncryptionIvLength = "SymmetryEncryptionIvLength";
     }
 }

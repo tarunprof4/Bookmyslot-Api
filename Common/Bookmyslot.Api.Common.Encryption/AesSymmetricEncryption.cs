@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.Encryption.Constants;
+using Bookmyslot.Api.Common.Encryption.Configuration;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -12,12 +12,12 @@ namespace Bookmyslot.Api.Common.Encryption
         private readonly byte[] key;
         private readonly byte[] iv;
         private readonly IRandomNumberGenerator randomNumberGenerator;
-        public AesSymmetricEncryption(IRandomNumberGenerator randomNumberGenerator)
+        public AesSymmetricEncryption(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration)
         {
             this.randomNumberGenerator = randomNumberGenerator;
-
-            this.key = this.randomNumberGenerator.GenerateRandomNumber(EncryptionConstants.KeyLength);
-            this.iv = this.randomNumberGenerator.GenerateRandomNumber(EncryptionConstants.IvLength);
+            
+            this.key = this.randomNumberGenerator.GenerateRandomNumber(encryptionConfiguration.SymmetryEncryptionKeyLength);
+            this.iv = this.randomNumberGenerator.GenerateRandomNumber(encryptionConfiguration.SymmetryEncryptionIvLength);
         }
 
         public string Encrypt(string message)

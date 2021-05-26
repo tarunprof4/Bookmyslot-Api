@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.Encryption.Constants;
+using Bookmyslot.Api.Common.Encryption.Configuration;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,10 +10,10 @@ namespace Bookmyslot.Api.Common.Encryption
     {
         private readonly IRandomNumberGenerator randomNumberGenerator;
         private readonly byte[] salt;
-        public Sha256SaltedHash(IRandomNumberGenerator randomNumberGenerator)
+        public Sha256SaltedHash(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration)
         {
             this.randomNumberGenerator = randomNumberGenerator;
-            this.salt = randomNumberGenerator.GenerateRandomNumber(EncryptionConstants.SaltLength);
+            this.salt = randomNumberGenerator.GenerateRandomNumber(encryptionConfiguration.HashSaltLength);
         }
 
         public string Create(string message)
