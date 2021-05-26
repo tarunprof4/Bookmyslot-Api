@@ -10,7 +10,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
 
         public CustomerViewModel CancelledByCustomerViewModel { get; set; }
 
-        public static IEnumerable<CancelledSlotInformationViewModel> CreateCancelledSlotInformationViewModel(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels, Func<string, string> encryptedValue)
+        public static IEnumerable<CancelledSlotInformationViewModel> CreateCancelledSlotInformationViewModel(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels, Func<string, string> encryptionFunction)
         {
             List<CancelledSlotInformationViewModel> cancelledSlotInformationViewModels = new List<CancelledSlotInformationViewModel>();
             foreach (var cancelledSlotInformationModel in cancelledSlotInformationModels)
@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
                 var cancelledSlotInformationViewModel = new CancelledSlotInformationViewModel
                 {
                     CancelledSlotViewModel = CancelledSlotViewModel.CreateCancelledSlotViewModel(cancelledSlotInformationModel.CancelledSlotModel),
-                    CancelledByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(cancelledSlotInformationModel.CancelledByCustomerModel, encryptedValue)
+                    CancelledByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(cancelledSlotInformationModel.CancelledByCustomerModel, encryptionFunction)
                 };
                 cancelledSlotInformationViewModels.Add(cancelledSlotInformationViewModel);
             }
