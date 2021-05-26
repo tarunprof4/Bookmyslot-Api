@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.Common.Compression
             var unzipped = Unzip(str);
             if (string.IsNullOrEmpty(unzipped))
             {
-                return default(T);
+                return default;
             }
 
             var result = JsonConvert.DeserializeObject<T>(unzipped);

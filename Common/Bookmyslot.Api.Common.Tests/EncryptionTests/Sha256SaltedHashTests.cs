@@ -31,6 +31,14 @@ namespace Bookmyslot.Api.Common.Tests.EncryptionTests
             var hashedMessage = this.sha256SaltedHash.Create(input);
             Assert.IsTrue(!hashedMessage.Contains("/"));
             Assert.IsTrue(!hashedMessage.Contains("+"));
+            Assert.IsNotEmpty(hashedMessage);
+        }
+
+        [Test]
+        public void InValidHashMessage_ReturnsEmptyHashedMessage()
+        {
+            var hashedMessage = this.sha256SaltedHash.Create(null);
+            Assert.AreEqual(string.Empty, hashedMessage);
         }
     }
 }
