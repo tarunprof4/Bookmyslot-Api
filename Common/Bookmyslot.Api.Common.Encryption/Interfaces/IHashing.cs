@@ -2,6 +2,6 @@
 {
     public interface IHashing
     {
-        public string Create(object value);
+        public string Create(string message);
     }
 }

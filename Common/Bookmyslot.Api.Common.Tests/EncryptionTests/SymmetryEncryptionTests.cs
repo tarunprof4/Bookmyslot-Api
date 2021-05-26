@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Encryption;
 using Bookmyslot.Api.Common.Encryption.Interfaces;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Common.Tests.EncryptionTests
 {

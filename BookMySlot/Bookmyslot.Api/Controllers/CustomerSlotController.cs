@@ -33,17 +33,17 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICustomerSlotBusiness customerSlotBusiness;
         private readonly ISymmetryEncryption symmetryEncryption;
         private readonly IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness;
-        private readonly IHashing md5Hash;
+        private readonly IHashing sha256SaltedHash;
         private readonly CacheConfiguration cacheConfiguration;
         private readonly ICurrentUser currentUser;
 
 
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, ISymmetryEncryption symmetryEncryption, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing md5Hash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, ISymmetryEncryption symmetryEncryption, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing sha256SaltedHash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.symmetryEncryption = symmetryEncryption;
             this.distributedInMemoryCacheBuisness = distributedInMemoryCacheBuisness;
-            this.md5Hash = md5Hash;
+            this.sha256SaltedHash = sha256SaltedHash;
             this.cacheConfiguration = cacheConfiguration;
             this.currentUser = currentUser;
         }
@@ -101,7 +101,7 @@ namespace Bookmyslot.Api.Controllers
         private CacheModel CreateCacheModel(PageParameterModel pageParameterModel)
         {
             var cacheModel = new CacheModel();
-            var md5HashKey = this.md5Hash.Create(pageParameterModel);
+            var md5HashKey = this.sha256SaltedHash.Create(JsonConvert.SerializeObject(pageParameterModel));
             cacheModel.Key = string.Format(CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey, md5HashKey);
 
             cacheModel.ExpiryTime = TimeSpan.FromSeconds(this.cacheConfiguration.HomePageInSeconds);

@@ -76,7 +76,7 @@ namespace Bookmyslot.Api.Tests
             customerSlotBusinessMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Never());
             symmetryEncryptionMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>(), It.IsAny<bool>())), Times.Never());
-            hashingMock.Verify((m => m.Create(It.IsAny<object>())), Times.Never());
+            hashingMock.Verify((m => m.Create(It.IsAny<string>())), Times.Never());
         }
 
 
@@ -91,7 +91,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
             customerSlotBusinessMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Never());
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>(), It.IsAny<bool>())), Times.Never());
-            hashingMock.Verify((m => m.Create(It.IsAny<object>())), Times.Never());
+            hashingMock.Verify((m => m.Create(It.IsAny<string>())), Times.Never());
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
             customerSlotBusinessMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Never());
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>(), It.IsAny<bool>())), Times.Never());
-            hashingMock.Verify((m => m.Create(It.IsAny<object>())), Times.Never());
+            hashingMock.Verify((m => m.Create(It.IsAny<string>())), Times.Never());
         }
 
 
@@ -130,7 +130,7 @@ namespace Bookmyslot.Api.Tests
             
             customerSlotBusinessMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Never());
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>(), It.IsAny<bool>())), Times.Once());
-            hashingMock.Verify((m => m.Create(It.IsAny<object>())), Times.Once());
+            hashingMock.Verify((m => m.Create(It.IsAny<string>())), Times.Once());
         }
 
 

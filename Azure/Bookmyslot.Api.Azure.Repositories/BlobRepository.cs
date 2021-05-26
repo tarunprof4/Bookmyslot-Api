@@ -14,13 +14,13 @@ namespace Bookmyslot.Api.Azure.Repositories
     public class BlobRepository : IBlobRepository
     {
         private readonly string blobStorageConnectionString;
-        private readonly IHashing md5Hash;
+        private readonly IHashing sha256SaltedHash;
         private readonly IDbInterceptor dbInterceptor;
 
-        public BlobRepository(IHashing md5Hash, IDbInterceptor dbInterceptor, AppConfiguration appConfiguration)
+        public BlobRepository(IHashing sha256SaltedHash, IDbInterceptor dbInterceptor, AppConfiguration appConfiguration)
         {
             this.blobStorageConnectionString = appConfiguration.BlobStorageConnectionString;
-            this.md5Hash = md5Hash;
+            this.sha256SaltedHash = sha256SaltedHash;
             this.dbInterceptor = dbInterceptor;
         }
         public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
@@ -47,7 +47,7 @@ namespace Bookmyslot.Api.Azure.Repositories
 
         private string GenerateProfilePictureBlobName(string customerId, string firstName)
         {
-            var hashCustomerId = this.md5Hash.Create(customerId);
+            var hashCustomerId = this.sha256SaltedHash.Create(customerId);
             var blobName = string.Format("{0}{1}", hashCustomerId, firstName);
             return blobName;
         }
