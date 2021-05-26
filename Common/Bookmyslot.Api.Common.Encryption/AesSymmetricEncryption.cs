@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Encryption.Constants;
-using Bookmyslot.Api.Common.Encryption.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
+using Bookmyslot.Api.Common.Encryption.Constants;
 using System;
 using System.IO;
 using System.Security.Cryptography;

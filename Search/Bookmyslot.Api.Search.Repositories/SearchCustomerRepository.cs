@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Database.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;

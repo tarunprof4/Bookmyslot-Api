@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common.Database.Constants
+﻿namespace Bookmyslot.Api.Common.Contracts.Infrastructure.Database.Constants
 {
     public class DatabaseConstants
     {

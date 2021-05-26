@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Logging.Contracts;
-using Bookmyslot.Api.Common.Logging.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Threading.Tasks;

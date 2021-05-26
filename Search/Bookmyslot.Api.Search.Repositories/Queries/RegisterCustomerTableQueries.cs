@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Database.Constants;
+﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Database.Constants;
 
 namespace Bookmyslot.Api.Search.Repositories.Queries
 {

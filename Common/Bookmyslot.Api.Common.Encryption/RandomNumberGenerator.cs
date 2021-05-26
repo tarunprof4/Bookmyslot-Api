@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Encryption.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using System.Security.Cryptography;
 
 namespace Bookmyslot.Api.Common.Encryption

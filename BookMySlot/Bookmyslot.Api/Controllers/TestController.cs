@@ -2,7 +2,7 @@
 using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Logging.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Mvc;
 using System;

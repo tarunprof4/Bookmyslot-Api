@@ -6,7 +6,7 @@ using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Logging.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Google.Apis.Auth;
 using System;
 using System.Collections.Generic;

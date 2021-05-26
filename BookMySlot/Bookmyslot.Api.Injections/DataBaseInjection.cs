@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Common.Database;
-using Bookmyslot.Api.Common.Database.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
 using System.Data;

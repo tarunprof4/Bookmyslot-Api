@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common.Compression.Interfaces
+﻿namespace Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression
 {
     public interface ICompression
     {

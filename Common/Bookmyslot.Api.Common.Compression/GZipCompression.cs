@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression;
 using Newtonsoft.Json;
 using System;
 using System.IO;

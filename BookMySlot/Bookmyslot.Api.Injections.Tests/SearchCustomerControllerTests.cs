@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Encryption.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Microsoft.AspNetCore;

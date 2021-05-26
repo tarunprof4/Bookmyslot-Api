@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bookmyslot.Api.Common.Logging.Interfaces
+namespace Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging
 {
     public interface ILoggerService
     {

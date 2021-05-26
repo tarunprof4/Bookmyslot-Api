@@ -1,10 +1,10 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Logging;
 using Bookmyslot.Api.Common.Email.Constants;
-using Bookmyslot.Api.Common.Email.Interfaces;
-using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Contracts;
-using Bookmyslot.Api.Common.Logging.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

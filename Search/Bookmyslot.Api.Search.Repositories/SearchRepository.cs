@@ -1,7 +1,7 @@
-﻿using Bookmyslot.Api.Common.Compression.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Database.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;

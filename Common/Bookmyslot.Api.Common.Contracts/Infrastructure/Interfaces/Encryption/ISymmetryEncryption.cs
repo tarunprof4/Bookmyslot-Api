@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common.Encryption.Interfaces
+﻿namespace Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption
 {
     public interface ISymmetryEncryption
     {

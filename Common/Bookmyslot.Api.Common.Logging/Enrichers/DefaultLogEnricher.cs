@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Logging;
 using Microsoft.AspNetCore.Http;
 using Serilog.Core;
 using Serilog.Events;

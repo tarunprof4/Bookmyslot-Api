@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Database.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;

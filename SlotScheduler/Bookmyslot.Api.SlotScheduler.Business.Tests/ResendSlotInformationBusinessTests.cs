@@ -1,5 +1,5 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Email.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;

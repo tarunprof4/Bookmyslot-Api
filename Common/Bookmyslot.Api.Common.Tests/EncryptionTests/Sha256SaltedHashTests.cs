@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Encryption;
-using Bookmyslot.Api.Common.Encryption.Interfaces;
+﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
+using Bookmyslot.Api.Common.Encryption;
 using NUnit.Framework;
 
 namespace Bookmyslot.Api.Common.Tests.EncryptionTests
 {
-  
+
     public class Sha256SaltedHashTests
     {
         private Sha256SaltedHash sha256SaltedHash;
