@@ -37,8 +37,10 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
                 foreach (var customerModel in customerModels.Result)
                 {
-                    var customerSlotModel = new CustomerSlotModel();
-                    customerSlotModel.CustomerModel = customerModel;
+                    var customerSlotModel = new CustomerSlotModel
+                    {
+                        CustomerModel = customerModel
+                    };
                     customerSlotModels.Add(customerSlotModel);
                 }
 

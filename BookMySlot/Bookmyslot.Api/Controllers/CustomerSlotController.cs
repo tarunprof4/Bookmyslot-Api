@@ -4,6 +4,7 @@ using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.ViewModels;
 using Bookmyslot.Api.Common.ViewModels.Validations;
@@ -83,7 +84,7 @@ namespace Bookmyslot.Api.Controllers
                 if (customerSlotModels.ResultType == ResultType.Success)
                 {
                     var customerViewModelResponse = new Response<IEnumerable<CustomerViewModel>>()
-                    { Result = CustomerViewModel.CreateCustomerViewModels(customerSlotModels.Result) };
+                    { Result = CustomerViewModel.CreateCustomerViewModels(customerSlotModels.Result, this.symmetryEncryption.Encrypt ) };
                     return this.CreateGetHttpResponse(customerViewModelResponse);
 
                 }
@@ -101,8 +102,8 @@ namespace Bookmyslot.Api.Controllers
         private CacheModel CreateCacheModel(PageParameterModel pageParameterModel)
         {
             var cacheModel = new CacheModel();
-            var md5HashKey = this.sha256SaltedHash.Create(JsonConvert.SerializeObject(pageParameterModel));
-            cacheModel.Key = string.Format(CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey, md5HashKey);
+            var sha256SaltedHashKey = this.sha256SaltedHash.Create(JsonConvert.SerializeObject(pageParameterModel));
+            cacheModel.Key = string.Format(CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey, sha256SaltedHashKey);
 
             cacheModel.ExpiryTime = TimeSpan.FromSeconds(this.cacheConfiguration.HomePageInSeconds);
             return cacheModel;
@@ -134,14 +135,22 @@ namespace Bookmyslot.Api.Controllers
 
             if (results.IsValid)
             {
-                var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result.Id;
+                var createdByUser = this.symmetryEncryption.Decrypt(customerInfo);
 
-                var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
-                var bookAvailableSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerId, customerInfo);
+                if (createdByUser != string.Empty)
+                {
+                    var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+                    var customerId = currentUserResponse.Result.Id;
 
-                var bookAvailableSlotViewModelResponse = CreateBookAvailableSlotViewModel(bookAvailableSlotModelResponse);
-                return this.CreateGetHttpResponse(bookAvailableSlotViewModelResponse);
+                    var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
+                    var bookAvailableSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerId, createdByUser);
+
+                    var bookAvailableSlotViewModelResponse = CreateBookAvailableSlotViewModel(bookAvailableSlotModelResponse);
+                    return this.CreateGetHttpResponse(bookAvailableSlotViewModelResponse);
+                }
+
+                var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
+                return this.CreateGetHttpResponse(validationErrorResponse);
             }
 
             var validationResponse = Response<BookAvailableSlotViewModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
@@ -157,7 +166,7 @@ namespace Bookmyslot.Api.Controllers
                 var bookAvailableSlotModel = bookAvailableSlotModelResponse.Result;
                 var bookAvailableSlotViewModel = new BookAvailableSlotViewModel
                 {
-                    CreatedByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookAvailableSlotModel.CreatedByCustomerModel),
+                    CreatedByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookAvailableSlotModel.CreatedByCustomerModel, this.symmetryEncryption.Encrypt),
                     ToBeBookedByCustomerCountry = bookAvailableSlotModel.CustomerSettingsModel != null ? bookAvailableSlotModel.CustomerSettingsModel.Country : string.Empty,
                     BookAvailableSlotModels = new List<SlotInformationInCustomerTimeZoneViewModel>()
                 };

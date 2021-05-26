@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Encryption.Configuration;
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 
 namespace Bookmyslot.Api.Common.Encryption
 {
@@ -18,13 +19,18 @@ namespace Bookmyslot.Api.Common.Encryption
 
         public string Create(string message)
         {
+            if (message == null)
+            {
+                return string.Empty;
+            }
+
             using (var sha256 = SHA256.Create())
             {
                 var messageBytes = Encoding.UTF8.GetBytes(message);
-                var hasedBytes =  sha256.ComputeHash(Combine(messageBytes, this.salt));
+                var hasedBytes = sha256.ComputeHash(Combine(messageBytes, this.salt));
                 var hashedMessage = Convert.ToBase64String(hasedBytes);
 
-                return hashedMessage.Replace("/", "_").Replace("+", "-");
+                return HttpUtility.UrlEncode(hashedMessage);
             }
         }
 
@@ -39,6 +45,6 @@ namespace Bookmyslot.Api.Common.Encryption
             return ret;
         }
 
-      
+
     }
 }

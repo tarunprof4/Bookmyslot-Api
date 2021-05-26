@@ -77,8 +77,8 @@ namespace Bookmyslot.Api.Web.Common
             }
             context.Response.Body.Seek(0, SeekOrigin.Begin);
 
-         
-           
+
+
             await responseBody.CopyToAsync(originalBodyStream);
             return compresedBody;
         }
@@ -101,32 +101,36 @@ namespace Bookmyslot.Api.Web.Common
             return textWriter.ToString();
         }
 
-        private RequestLog CreateRequestLog(HttpContext context,  string requestId, string correlationId, string requestBody)
+        private RequestLog CreateRequestLog(HttpContext context, string requestId, string correlationId, string requestBody)
         {
-            var requestLog = new RequestLog();
-            requestLog.RequestId = requestId;
-            requestLog.CorrelationId = correlationId;
-            requestLog.Schema = context.Request.Scheme;
-            requestLog.Host = context.Request.Host;
-            requestLog.Path = context.Request.Path;
-            requestLog.Method = context.Request.Method;
-            requestLog.QueryString = context.Request.QueryString;
-            requestLog.Body = requestBody;
-            requestLog.IpAddress = context.Connection.RemoteIpAddress.ToString();
-            requestLog.UserAgent = context.Request.Headers[LogConstants.UserAgent].ToString();
+            var requestLog = new RequestLog
+            {
+                RequestId = requestId,
+                CorrelationId = correlationId,
+                Schema = context.Request.Scheme,
+                Host = context.Request.Host,
+                Path = context.Request.Path,
+                Method = context.Request.Method,
+                QueryString = context.Request.QueryString,
+                Body = requestBody,
+                IpAddress = context.Connection.RemoteIpAddress.ToString(),
+                UserAgent = context.Request.Headers[LogConstants.UserAgent].ToString()
+            };
 
             return requestLog;
         }
 
-        private ResponseLog CreateResponseLog(HttpContext context, string requestId, string correlationId , string responseCompressedBody, TimeSpan responseTime)
+        private ResponseLog CreateResponseLog(HttpContext context, string requestId, string correlationId, string responseCompressedBody, TimeSpan responseTime)
         {
-            var responseLog = new ResponseLog();
-            responseLog.RequestId = requestId;
-            responseLog.CorrelationId = correlationId;
+            var responseLog = new ResponseLog
+            {
+                RequestId = requestId,
+                CorrelationId = correlationId,
 
-            responseLog.StatusCode = context.Response.StatusCode;
-            responseLog.CompressedBody = responseCompressedBody;
-            responseLog.ResponseTime = responseTime;
+                StatusCode = context.Response.StatusCode,
+                CompressedBody = responseCompressedBody,
+                ResponseTime = responseTime
+            };
             return responseLog;
         }
     }

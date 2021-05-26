@@ -102,7 +102,7 @@ namespace Bookmyslot.Api.Controllers
             if (customercancelledSlotInformationModels.ResultType == ResultType.Success)
             {
                 var cancelledSlotInformationViewModels = new Response<IEnumerable<CancelledSlotInformationViewModel>>()
-                { Result = CancelledSlotInformationViewModel.CreateCancelledSlotInformationViewModel(customercancelledSlotInformationModels.Result) };
+                { Result = CancelledSlotInformationViewModel.CreateCancelledSlotInformationViewModel(customercancelledSlotInformationModels.Result, this.symmetryEncryption.Encrypt) };
                 return this.CreateGetHttpResponse(cancelledSlotInformationViewModels);
             }
 
@@ -124,7 +124,7 @@ namespace Bookmyslot.Api.Controllers
                 foreach (var bookedSlot in bookedSlotModel.BookedSlotModels)
                 {
                     var slotInformation = this.symmetryEncryption.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
-                    var createdByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookedSlot.Key);
+                    var createdByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookedSlot.Key, this.symmetryEncryption.Encrypt);
 
                     var slotModel = bookedSlot.Value.SlotModel;
                     var slotInformationInCustomerTimeZoneViewModel = new SlotInformationInCustomerTimeZoneViewModel()

@@ -147,6 +147,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.PaginationSettingsMissing));
             customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             symmetryEncryptionMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
         }
 
 
@@ -161,6 +162,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
             customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             symmetryEncryptionMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
         }
 
         [Test]
@@ -175,8 +177,25 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidPageSize));
             customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
             symmetryEncryptionMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
         }
 
+
+        [Test]
+        public async Task GetCustomerAvailableSlots_InValidCustomerInfoEncryptedKey_ReturnsValidationResponse()
+        {
+            symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
+
+            var response = await customerSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
+
+            var objectResult = response as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
+            customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            symmetryEncryptionMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.Never());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
+        }
 
         [Test]
         public async Task GetCustomerAvailableSlots_ValidPageParameterModelWithoutCustomerSettings_ReturnsSuccessResponse()
@@ -185,6 +204,7 @@ namespace Bookmyslot.Api.Tests
             bookAvailableSlotModel.CustomerSettingsModel = null;
             Response<BookAvailableSlotModel> customerSlotBusinessMockResponse = new Response<BookAvailableSlotModel>() { Result = bookAvailableSlotModel };
             customerSlotBusinessMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(customerSlotBusinessMockResponse));
+            symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(CustomerId);
 
             var response = await customerSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
 
@@ -192,6 +212,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             customerSlotBusinessMock.Verify((m => m.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             symmetryEncryptionMock.Verify((m => m.Encrypt(It.IsAny<string>())), Times.AtLeastOnce());
+            symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
         }
 
 
@@ -200,6 +221,7 @@ namespace Bookmyslot.Api.Tests
         {
             Response<BookAvailableSlotModel> customerSlotBusinessMockResponse = new Response<BookAvailableSlotModel>() { Result = CreateDefaultValidBookAvailableSlotModel() };
             customerSlotBusinessMock.Setup(a => a.GetCustomerAvailableSlots(It.IsAny<PageParameterModel>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(customerSlotBusinessMockResponse));
+            symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(CustomerId);
 
             var response = await customerSlotController.GetCustomerAvailableSlots(DefaultValidPageParameterViewModel(), CustomerId);
 

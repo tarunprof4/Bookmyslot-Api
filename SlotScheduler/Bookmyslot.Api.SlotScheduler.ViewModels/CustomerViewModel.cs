@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels
@@ -15,12 +16,13 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
 
         public string ProfilePictureUrl { get; set; }
 
-
-        public static CustomerViewModel CreateCustomerViewModel(CustomerModel customerModel)
+       
+        public static CustomerViewModel CreateCustomerViewModel(CustomerModel customerModel, Func<string, string> encryptedValue)
         {
+            
             return new CustomerViewModel()
             {
-                Id = customerModel.Id,
+                Id = encryptedValue.Invoke(customerModel.Id),
                 FirstName = customerModel.FirstName,
                 LastName = customerModel.LastName,
                 BioHeadLine = customerModel.BioHeadLine,
@@ -28,24 +30,24 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels
             };
         }
 
-        public static IEnumerable<CustomerViewModel> CreateCustomerViewModels(IEnumerable<CustomerModel> customerModels)
+        public static IEnumerable<CustomerViewModel> CreateCustomerViewModels(IEnumerable<CustomerModel> customerModels, Func<string, string> encryptedValue)
         {
             List<CustomerViewModel> customerViewModels = new List<CustomerViewModel>();
             foreach(var customerModel in customerModels)
             {
-                customerViewModels.Add(CreateCustomerViewModel(customerModel));
+                customerViewModels.Add(CreateCustomerViewModel(customerModel, encryptedValue));
             }
 
             return customerViewModels;
         }
 
 
-        public static IEnumerable<CustomerViewModel> CreateCustomerViewModels(IEnumerable<CustomerSlotModel> customerSlotModels)
+        public static IEnumerable<CustomerViewModel> CreateCustomerViewModels(IEnumerable<CustomerSlotModel> customerSlotModels, Func<string, string> encryptedValue)
         {
             List<CustomerViewModel> customerViewModels = new List<CustomerViewModel>();
             foreach (var customerSlotModel in customerSlotModels)
             {
-                customerViewModels.Add(CreateCustomerViewModel(customerSlotModel.CustomerModel));
+                customerViewModels.Add(CreateCustomerViewModel(customerSlotModel.CustomerModel, encryptedValue));
             }
 
             return customerViewModels;
