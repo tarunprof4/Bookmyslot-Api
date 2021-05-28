@@ -15,7 +15,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors
 
 
 
-        public CancelledSlotViewModel CreateCancelledSlotViewModel(CancelledSlotModel cancelledSlotModel)
+        private CancelledSlotViewModel CreateCancelledSlotViewModel(CancelledSlotModel cancelledSlotModel)
         {
             var cancelledSlotViewModel = new CancelledSlotViewModel
             {
