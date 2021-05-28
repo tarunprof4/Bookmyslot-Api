@@ -10,11 +10,12 @@ namespace Bookmyslot.Api.Common.Encryption
     public class Sha256SaltedHash : IHashing
     {
         private readonly IRandomNumberGenerator randomNumberGenerator;
-        private readonly byte[] salt;
+        private readonly EncryptionConfiguration encryptionConfiguration;
+        private byte[] salt;
         public Sha256SaltedHash(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration)
         {
             this.randomNumberGenerator = randomNumberGenerator;
-            this.salt = randomNumberGenerator.GenerateRandomNumber(encryptionConfiguration.HashSaltLength);
+            this.encryptionConfiguration = encryptionConfiguration;
         }
 
         public string Create(string message)
@@ -26,6 +27,8 @@ namespace Bookmyslot.Api.Common.Encryption
 
             using (var sha256 = SHA256.Create())
             {
+                this.salt = randomNumberGenerator.GenerateRandomNumber(this.encryptionConfiguration.HashSaltLength);
+
                 var messageBytes = Encoding.UTF8.GetBytes(message);
                 var hasedBytes = sha256.ComputeHash(Combine(messageBytes, this.salt));
                 var hashedMessage = Convert.ToBase64String(hasedBytes);
