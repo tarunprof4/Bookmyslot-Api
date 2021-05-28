@@ -9,6 +9,7 @@ using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -41,7 +42,8 @@ namespace Bookmyslot.Api.Tests
         private Mock<ISymmetryEncryption> symmetryEncryptionMock;
         private Mock<ICurrentUser> currentUserMock;
         private Mock<INodaTimeZoneLocationBusiness> nodaTimeZoneLocationBusinessMock;
-
+        private Mock<ISlotRequestAdaptor> slotRequestAdaptorMock;
+        
         [SetUp]
         public void Setup()
         {
@@ -49,7 +51,9 @@ namespace Bookmyslot.Api.Tests
             symmetryEncryptionMock = new Mock<ISymmetryEncryption>();
             currentUserMock = new Mock<ICurrentUser>();
             nodaTimeZoneLocationBusinessMock = new Mock<INodaTimeZoneLocationBusiness>();
-            slotController = new SlotController(slotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object, nodaTimeZoneLocationBusinessMock.Object);
+            slotRequestAdaptorMock = new Mock<ISlotRequestAdaptor>();
+            slotController = new SlotController(slotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object, 
+                nodaTimeZoneLocationBusinessMock.Object, slotRequestAdaptorMock.Object);
 
             nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };

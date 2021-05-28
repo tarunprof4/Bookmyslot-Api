@@ -11,6 +11,7 @@ using Bookmyslot.Api.Common.ViewModels.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -37,9 +38,11 @@ namespace Bookmyslot.Api.Controllers
         private readonly IHashing sha256SaltedHash;
         private readonly CacheConfiguration cacheConfiguration;
         private readonly ICurrentUser currentUser;
+        private readonly ICustomerResponseAdaptor customerResponseAdaptor;
+        private readonly IAvailableSlotResponseAdaptor availableSlotResponseAdaptor;
+        
 
-
-        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, ISymmetryEncryption symmetryEncryption, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing sha256SaltedHash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser)
+        public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, ISymmetryEncryption symmetryEncryption, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing sha256SaltedHash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser, ICustomerResponseAdaptor customerResponseAdaptor, IAvailableSlotResponseAdaptor availableSlotResponseAdaptor)
         {
             this.customerSlotBusiness = customerSlotBusiness;
             this.symmetryEncryption = symmetryEncryption;
@@ -47,6 +50,8 @@ namespace Bookmyslot.Api.Controllers
             this.sha256SaltedHash = sha256SaltedHash;
             this.cacheConfiguration = cacheConfiguration;
             this.currentUser = currentUser;
+            this.customerResponseAdaptor = customerResponseAdaptor;
+            this.availableSlotResponseAdaptor = availableSlotResponseAdaptor;
         }
 
         /// <summary>
@@ -84,7 +89,7 @@ namespace Bookmyslot.Api.Controllers
                 if (customerSlotModels.ResultType == ResultType.Success)
                 {
                     var customerViewModelResponse = new Response<IEnumerable<CustomerViewModel>>()
-                    { Result = CustomerViewModel.CreateCustomerViewModels(customerSlotModels.Result, this.symmetryEncryption.Encrypt ) };
+                    { Result = this.customerResponseAdaptor.CreateCustomerViewModels(customerSlotModels.Result) };
                     return this.CreateGetHttpResponse(customerViewModelResponse);
 
                 }
@@ -145,7 +150,7 @@ namespace Bookmyslot.Api.Controllers
                     var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
                     var bookAvailableSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerId, createdByUser);
 
-                    var bookAvailableSlotViewModelResponse = CreateBookAvailableSlotViewModel(bookAvailableSlotModelResponse);
+                    var bookAvailableSlotViewModelResponse = this.availableSlotResponseAdaptor.CreateBookAvailableSlotViewModel(bookAvailableSlotModelResponse);
                     return this.CreateGetHttpResponse(bookAvailableSlotViewModelResponse);
                 }
 
@@ -155,44 +160,6 @@ namespace Bookmyslot.Api.Controllers
 
             var validationResponse = Response<BookAvailableSlotViewModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreateGetHttpResponse(validationResponse);
-        }
-
-
-
-        private Response<BookAvailableSlotViewModel> CreateBookAvailableSlotViewModel(Response<BookAvailableSlotModel> bookAvailableSlotModelResponse)
-        {
-            if (bookAvailableSlotModelResponse.ResultType == ResultType.Success)
-            {
-                var bookAvailableSlotModel = bookAvailableSlotModelResponse.Result;
-                var bookAvailableSlotViewModel = new BookAvailableSlotViewModel
-                {
-                    CreatedByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookAvailableSlotModel.CreatedByCustomerModel, this.symmetryEncryption.Encrypt),
-                    ToBeBookedByCustomerCountry = bookAvailableSlotModel.CustomerSettingsModel != null ? bookAvailableSlotModel.CustomerSettingsModel.Country : string.Empty,
-                    BookAvailableSlotModels = new List<SlotInformationInCustomerTimeZoneViewModel>()
-                };
-
-                foreach (var availableSlotModel in bookAvailableSlotModel.AvailableSlotModels)
-                {
-                    var slotInformation = this.symmetryEncryption.Encrypt(JsonConvert.SerializeObject(availableSlotModel.SlotModel));
-                    bookAvailableSlotViewModel.BookAvailableSlotModels.Add(new SlotInformationInCustomerTimeZoneViewModel()
-                    {
-                        Title = availableSlotModel.SlotModel.Title,
-                        Country = availableSlotModel.SlotModel.Country,
-                        SlotDuration = availableSlotModel.SlotModel.SlotDuration,
-                        SlotStartZonedDateTime = availableSlotModel.SlotModel.SlotStartZonedDateTime,
-                        CustomerSlotStartZonedDateTime = availableSlotModel.CustomerSlotZonedDateTime,
-                        SlotInformation = slotInformation
-                    });
-                }
-
-                return new Response<BookAvailableSlotViewModel>() { Result = bookAvailableSlotViewModel };
-            }
-
-            return new Response<BookAvailableSlotViewModel>()
-            {
-                ResultType = bookAvailableSlotModelResponse.ResultType,
-                Messages = bookAvailableSlotModelResponse.Messages
-            };
         }
 
         private PageParameterModel CreatePageParameterModel(PageParameterViewModel pageParameterViewModel)

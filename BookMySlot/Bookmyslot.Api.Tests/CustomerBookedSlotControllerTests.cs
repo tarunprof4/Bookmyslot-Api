@@ -7,6 +7,8 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -28,6 +30,10 @@ namespace Bookmyslot.Api.Tests
         private Mock<ICustomerBookedSlotBusiness> customerBookedSlotBusinessMock;
         private Mock<ISymmetryEncryption> symmetryEncryptionMock;
         private Mock<ICurrentUser> currentUserMock;
+        private Mock<ICustomerResponseAdaptor> customerResponseAdaptorMock;
+        private Mock<ICancelledSlotResponseAdaptor> cancelledSlotResponseAdaptorMock;
+        private Mock<IBookedSlotResponseAdaptor> bookedSlotResponseAdaptorMock;
+
 
         [SetUp]
         public void Setup()
@@ -35,7 +41,16 @@ namespace Bookmyslot.Api.Tests
             customerBookedSlotBusinessMock = new Mock<ICustomerBookedSlotBusiness>();
             symmetryEncryptionMock = new Mock<ISymmetryEncryption>();
             currentUserMock = new Mock<ICurrentUser>();
-            customerBookedSlotController = new CustomerBookedSlotController(customerBookedSlotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object);
+            customerResponseAdaptorMock = new Mock<ICustomerResponseAdaptor>();
+            cancelledSlotResponseAdaptorMock = new Mock<ICancelledSlotResponseAdaptor>();
+            bookedSlotResponseAdaptorMock = new Mock<IBookedSlotResponseAdaptor>();
+            customerResponseAdaptorMock = new Mock<ICustomerResponseAdaptor>();
+            cancelledSlotResponseAdaptorMock = new Mock<ICancelledSlotResponseAdaptor>();
+            bookedSlotResponseAdaptorMock = new Mock<IBookedSlotResponseAdaptor>();
+
+            customerBookedSlotController = new CustomerBookedSlotController(customerBookedSlotBusinessMock.Object, 
+                symmetryEncryptionMock.Object, currentUserMock.Object, customerResponseAdaptorMock.Object,
+                cancelledSlotResponseAdaptorMock.Object, bookedSlotResponseAdaptorMock.Object);
 
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id= CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
@@ -46,6 +61,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { ResultType = ResultType.Empty };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
+            Response<BookedSlotViewModel> bookedSlotResponseAdaptorMockResponse = new Response<BookedSlotViewModel>() { ResultType = ResultType.Empty };
+            bookedSlotResponseAdaptorMock.Setup(a => a.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())).Returns(bookedSlotResponseAdaptorMockResponse);
 
             var response = await customerBookedSlotController.GetCustomerBookedSlots();
 
@@ -53,6 +70,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status404NotFound);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerBookedSlotBusinessMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
+            bookedSlotResponseAdaptorMock.Verify((m => m.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())), Times.Once());
         }
 
         [Test]
@@ -60,6 +78,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { Result = CreateDefaultBookedSlotModel() };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
+            Response<BookedSlotViewModel> bookedSlotResponseAdaptorMockResponse = new Response<BookedSlotViewModel>() { Result = CreateDefaultBookedSlotViewModel() };
+            bookedSlotResponseAdaptorMock.Setup(a => a.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())).Returns(bookedSlotResponseAdaptorMockResponse);
 
             var response = await customerBookedSlotController.GetCustomerBookedSlots();
 
@@ -67,6 +87,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerBookedSlotBusinessMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
+            bookedSlotResponseAdaptorMock.Verify((m => m.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())), Times.Once());
         }
 
 
@@ -76,6 +97,9 @@ namespace Bookmyslot.Api.Tests
         {
             Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { ResultType = ResultType.Empty };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
+            Response<BookedSlotViewModel> bookedSlotResponseAdaptorMockResponse = new Response<BookedSlotViewModel>() { ResultType = ResultType.Empty };
+            bookedSlotResponseAdaptorMock.Setup(a => a.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())).Returns(bookedSlotResponseAdaptorMockResponse);
+
 
             var response = await customerBookedSlotController.GetCustomerCompletedSlots();
 
@@ -83,6 +107,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status404NotFound);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerBookedSlotBusinessMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
+            bookedSlotResponseAdaptorMock.Verify((m => m.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())), Times.Once());
         }
 
         [Test]
@@ -90,6 +115,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<BookedSlotModel> customerBookedSlotBusinessMockResponse = new Response<BookedSlotModel>() { Result = CreateDefaultBookedSlotModel() };
             customerBookedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerBookedSlotBusinessMockResponse));
+            Response<BookedSlotViewModel> bookedSlotResponseAdaptorMockResponse = new Response<BookedSlotViewModel>() { Result = CreateDefaultBookedSlotViewModel() };
+            bookedSlotResponseAdaptorMock.Setup(a => a.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())).Returns(bookedSlotResponseAdaptorMockResponse);
 
             var response = await customerBookedSlotController.GetCustomerCompletedSlots();
 
@@ -97,6 +124,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerBookedSlotBusinessMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
+            bookedSlotResponseAdaptorMock.Verify((m => m.CreateBookedSlotViewModel(It.IsAny<Response<BookedSlotModel>>())), Times.Once());
         }
 
 
@@ -138,6 +166,13 @@ namespace Bookmyslot.Api.Tests
 
             return bookedSlotModel;
         }
+
+        private BookedSlotViewModel CreateDefaultBookedSlotViewModel()
+        {
+            return new BookedSlotViewModel();
+        }
+
+        
 
 
         private CustomerModel CreateDefaultCustomerModel()

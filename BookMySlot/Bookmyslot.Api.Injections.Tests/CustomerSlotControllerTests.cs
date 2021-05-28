@@ -1,7 +1,10 @@
-﻿using Bookmyslot.Api.Cache.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.Search.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +13,7 @@ using NUnit.Framework;
 using System;
 namespace Bookmyslot.Api.Injections.Tests
 {
-    public class SearchCustomerControllerTests
+    public class CustomerSlotControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -26,14 +29,21 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var searchCustomerBusiness = serviceProvider.GetService<ISearchCustomerBusiness>();
+            var customerSlotBusiness = serviceProvider.GetService<ICustomerSlotBusiness>();
+            var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
             var distributedInMemoryCacheBuisness = serviceProvider.GetService<IDistributedInMemoryCacheBuisness>();
+            var hash = serviceProvider.GetService<IHashing>();
             var cacheConfiguration = serviceProvider.GetService<CacheConfiguration>();
+            var currentUser = serviceProvider.GetService<ICurrentUser>();
+            var customerResponseAdaptor = serviceProvider.GetService<ICustomerResponseAdaptor>();
+            var availableSlotResponseAdaptor = serviceProvider.GetService<IAvailableSlotResponseAdaptor>();
 
-            var controller = new SearchCustomerController(searchCustomerBusiness, distributedInMemoryCacheBuisness, cacheConfiguration);
 
-            Assert.IsNotNull(searchCustomerBusiness);
-            Assert.IsNotNull(distributedInMemoryCacheBuisness);
+            var controller = new CustomerSlotController(customerSlotBusiness, symmetryEncryption, distributedInMemoryCacheBuisness, hash, 
+                cacheConfiguration, currentUser, customerResponseAdaptor, availableSlotResponseAdaptor);
+
+            Assert.IsNotNull(customerSlotBusiness);
+            Assert.IsNotNull(symmetryEncryption);
             Assert.IsNotNull(controller);
         }
     }

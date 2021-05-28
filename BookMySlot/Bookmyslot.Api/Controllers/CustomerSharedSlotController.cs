@@ -1,15 +1,13 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,12 +22,20 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICustomerSharedSlotBusiness customerSharedSlotBusiness;
         private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
+        private readonly ICustomerResponseAdaptor customerResponseAdaptor;
+        private readonly ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor;
+        private readonly ISharedSlotResponseAdaptor sharedSlotResponseAdaptor;
+        
 
-        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser)
+
+        public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, ICustomerResponseAdaptor customerResponseAdaptor, ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor, ISharedSlotResponseAdaptor sharedSlotResponseAdaptor)
         {
             this.customerSharedSlotBusiness = customerSharedSlotBusiness;
             this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
+            this.customerResponseAdaptor = customerResponseAdaptor;
+            this.cancelledSlotResponseAdaptor = cancelledSlotResponseAdaptor;
+            this.sharedSlotResponseAdaptor = sharedSlotResponseAdaptor;
         }
 
         /// <summary>
@@ -53,7 +59,7 @@ namespace Bookmyslot.Api.Controllers
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots(customerId);
 
-            var sharedSlotViewModel = CreateBookedSlotViewModel(customerSharedSlotModels);
+            var sharedSlotViewModel = this.sharedSlotResponseAdaptor.CreateSharedSlotViewModel(customerSharedSlotModels);
             return this.CreateGetHttpResponse(sharedSlotViewModel);
         }
 
@@ -75,10 +81,8 @@ namespace Bookmyslot.Api.Controllers
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result.Id;
-
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerBookedSlots(customerId);
-
-            var sharedSlotViewModel = CreateBookedSlotViewModel(customerSharedSlotModels);
+            var sharedSlotViewModel = this.sharedSlotResponseAdaptor.CreateSharedSlotViewModel(customerSharedSlotModels);
             return this.CreateGetHttpResponse(sharedSlotViewModel);
         }
 
@@ -104,7 +108,7 @@ namespace Bookmyslot.Api.Controllers
 
             var customerSharedSlotModels = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots(customerId);
 
-            var sharedSlotViewModel = CreateBookedSlotViewModel(customerSharedSlotModels);
+            var sharedSlotViewModel = this.sharedSlotResponseAdaptor.CreateSharedSlotViewModel(customerSharedSlotModels);
             return this.CreateGetHttpResponse(sharedSlotViewModel);
         }
 
@@ -132,7 +136,7 @@ namespace Bookmyslot.Api.Controllers
             var cancelledSlotModels = await this.customerSharedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (cancelledSlotModels.ResultType == ResultType.Success)
             {
-                var cancelledSlotViewModelResponse = new Response<IEnumerable<CancelledSlotViewModel>>() { Result = CancelledSlotViewModel.CreateCancelledSlotViewModels(cancelledSlotModels.Result) };
+                var cancelledSlotViewModelResponse = new Response<IEnumerable<CancelledSlotViewModel>>() { Result = this.cancelledSlotResponseAdaptor.CreateCancelledSlotViewModels(cancelledSlotModels.Result) };
                 return this.CreateGetHttpResponse(cancelledSlotViewModelResponse);
             }
 
@@ -140,31 +144,7 @@ namespace Bookmyslot.Api.Controllers
             { ResultType = cancelledSlotModels.ResultType, Messages = cancelledSlotModels.Messages });
         }
 
-        private Response<SharedSlotViewModel> CreateBookedSlotViewModel(Response<SharedSlotModel> sharedSlotModelResponse)
-        {
-            if (sharedSlotModelResponse.ResultType == ResultType.Success)
-            {
-                var sharedSlotModel = sharedSlotModelResponse.Result;
-
-                var sharedSlotViewModel = new SharedSlotViewModel();
-                foreach (var sharedSlot in sharedSlotModel.SharedSlotModels)
-                {
-                    var slotInformation = this.symmetryEncryption.Encrypt(JsonConvert.SerializeObject(sharedSlot.Value));
-                    var bookedByCustomerViewModel = sharedSlot.Key != null ? CustomerViewModel.CreateCustomerViewModel(sharedSlot.Key, this.symmetryEncryption.Encrypt) : null;
-                    sharedSlotViewModel.SharedSlotModels.Add(new Tuple<CustomerViewModel, SlotModel, string>(bookedByCustomerViewModel, sharedSlot.Value, slotInformation));
-                }
-
-                return new Response<SharedSlotViewModel>() { Result = sharedSlotViewModel };
-            }
-
-            return new Response<SharedSlotViewModel>()
-            {
-                ResultType = sharedSlotModelResponse.ResultType,
-                Messages = sharedSlotModelResponse.Messages
-            };
-        }
-
-
+      
        
     }
 }
