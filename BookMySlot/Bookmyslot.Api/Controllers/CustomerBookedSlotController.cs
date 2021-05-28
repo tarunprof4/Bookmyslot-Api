@@ -1,15 +1,13 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,12 +22,20 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICustomerBookedSlotBusiness customerBookedSlotBusiness;
         private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
+        private readonly ICustomerResponseAdaptor customerResponseAdaptor;
+        private readonly ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor;
+        private readonly IBookedSlotResponseAdaptor bookedSlotResponseAdaptor;
+        
 
-        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser)
+
+        public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, ICustomerResponseAdaptor customerResponseAdaptor, ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor, IBookedSlotResponseAdaptor bookedSlotResponseAdaptor)
         {
             this.customerBookedSlotBusiness = customerBookedSlotBusiness;
             this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
+            this.customerResponseAdaptor = customerResponseAdaptor;
+            this.cancelledSlotResponseAdaptor = cancelledSlotResponseAdaptor;
+            this.bookedSlotResponseAdaptor = bookedSlotResponseAdaptor;
         }
 
 
@@ -51,7 +57,7 @@ namespace Bookmyslot.Api.Controllers
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result.Id;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(customerId);
-            var customerBookedViewModelResponse = CreateBookedSlotViewModel(customerBookedSlotModels);
+            var customerBookedViewModelResponse = this.bookedSlotResponseAdaptor.CreateBookedSlotViewModel(customerBookedSlotModels);
             return this.CreateGetHttpResponse(customerBookedViewModelResponse);
         }
 
@@ -74,7 +80,7 @@ namespace Bookmyslot.Api.Controllers
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var customerId = currentUserResponse.Result.Id;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(customerId);
-            var customerBookedViewModelResponse = CreateBookedSlotViewModel(customerBookedSlotModels);
+            var customerBookedViewModelResponse = this.bookedSlotResponseAdaptor.CreateBookedSlotViewModel(customerBookedSlotModels);
             return this.CreateGetHttpResponse(customerBookedViewModelResponse);
         }
 
@@ -102,52 +108,12 @@ namespace Bookmyslot.Api.Controllers
             if (customercancelledSlotInformationModels.ResultType == ResultType.Success)
             {
                 var cancelledSlotInformationViewModels = new Response<IEnumerable<CancelledSlotInformationViewModel>>()
-                { Result = CancelledSlotInformationViewModel.CreateCancelledSlotInformationViewModel(customercancelledSlotInformationModels.Result, this.symmetryEncryption.Encrypt) };
+                { Result = this.cancelledSlotResponseAdaptor.CreateCancelledSlotInformationViewModel(customercancelledSlotInformationModels.Result) };
                 return this.CreateGetHttpResponse(cancelledSlotInformationViewModels);
             }
 
             return this.CreateGetHttpResponse(new Response<IEnumerable<CancelledSlotInformationViewModel>>()
             { ResultType = customercancelledSlotInformationModels.ResultType, Messages = customercancelledSlotInformationModels.Messages });
-        }
-
-
-        private Response<BookedSlotViewModel> CreateBookedSlotViewModel(Response<BookedSlotModel> bookedSlotModelResponse)
-        {
-            if (bookedSlotModelResponse.ResultType == ResultType.Success)
-            {
-                var bookedSlotModel = bookedSlotModelResponse.Result;
-                var bookedSlotViewModel = new BookedSlotViewModel
-                {
-                    BookedByCustomerCountry = bookedSlotModel.CustomerSettingsModel != null ? bookedSlotModel.CustomerSettingsModel.Country : string.Empty,
-                };
-
-                foreach (var bookedSlot in bookedSlotModel.BookedSlotModels)
-                {
-                    var slotInformation = this.symmetryEncryption.Encrypt(JsonConvert.SerializeObject(bookedSlot.Value.SlotModel));
-                    var createdByCustomerViewModel = CustomerViewModel.CreateCustomerViewModel(bookedSlot.Key, this.symmetryEncryption.Encrypt);
-
-                    var slotModel = bookedSlot.Value.SlotModel;
-                    var slotInformationInCustomerTimeZoneViewModel = new SlotInformationInCustomerTimeZoneViewModel()
-                    {
-                        Title = slotModel.Title,
-                        Country = slotModel.Country,
-                        SlotDuration = slotModel.SlotDuration,
-                        SlotStartZonedDateTime = slotModel.SlotStartZonedDateTime,
-                        SlotMeetingLink = slotModel.SlotMeetingLink,
-                        CustomerSlotStartZonedDateTime = bookedSlot.Value.CustomerSlotZonedDateTime,
-                        SlotInformation = slotInformation,
-                    };
-                    bookedSlotViewModel.BookedSlotModels.Add(new Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel>(createdByCustomerViewModel, slotInformationInCustomerTimeZoneViewModel));
-                }
-
-                return new Response<BookedSlotViewModel>() { Result = bookedSlotViewModel };
-            }
-
-            return new Response<BookedSlotViewModel>()
-            {
-                ResultType = bookedSlotModelResponse.ResultType,
-                Messages = bookedSlotModelResponse.Messages
-            };
         }
     }
 }

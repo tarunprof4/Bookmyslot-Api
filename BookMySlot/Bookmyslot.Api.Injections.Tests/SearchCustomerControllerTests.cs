@@ -1,9 +1,7 @@
-﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Cache.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +10,7 @@ using NUnit.Framework;
 using System;
 namespace Bookmyslot.Api.Injections.Tests
 {
-    public class CustomerSlotControllerTests
+    public class SearchCustomerControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -28,18 +26,14 @@ namespace Bookmyslot.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var customerSlotBusiness = serviceProvider.GetService<ICustomerSlotBusiness>();
-            var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
+            var searchCustomerBusiness = serviceProvider.GetService<ISearchCustomerBusiness>();
             var distributedInMemoryCacheBuisness = serviceProvider.GetService<IDistributedInMemoryCacheBuisness>();
-            var hash = serviceProvider.GetService<IHashing>();
             var cacheConfiguration = serviceProvider.GetService<CacheConfiguration>();
-            var currentUser = serviceProvider.GetService<ICurrentUser>();
 
+            var controller = new SearchCustomerController(searchCustomerBusiness, distributedInMemoryCacheBuisness, cacheConfiguration);
 
-            var controller = new CustomerSlotController(customerSlotBusiness, symmetryEncryption, distributedInMemoryCacheBuisness, hash, cacheConfiguration, currentUser);
-
-            Assert.IsNotNull(customerSlotBusiness);
-            Assert.IsNotNull(symmetryEncryption);
+            Assert.IsNotNull(searchCustomerBusiness);
+            Assert.IsNotNull(distributedInMemoryCacheBuisness);
             Assert.IsNotNull(controller);
         }
     }

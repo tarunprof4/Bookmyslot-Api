@@ -2,11 +2,11 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation.Results;
@@ -32,13 +32,16 @@ namespace Bookmyslot.Api.Controllers
         private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
         private readonly INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness;
+        private readonly ISlotRequestAdaptor slotRequestAdaptor;
+        
 
-        public SlotController(ISlotBusiness slotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness)
+        public SlotController(ISlotBusiness slotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness, ISlotRequestAdaptor slotRequestAdaptor)
         {
             this.slotBusiness = slotBusiness;
             this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
             this.nodaTimeZoneLocationBusiness = nodaTimeZoneLocationBusiness;
+            this.slotRequestAdaptor = slotRequestAdaptor;
         }
 
 
@@ -67,7 +70,7 @@ namespace Bookmyslot.Api.Controllers
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
                 var customerId = currentUserResponse.Result.Id;
 
-                var slotResponse = await slotBusiness.CreateSlot(CreateSlotModel(slotViewModel), customerId);
+                var slotResponse = await slotBusiness.CreateSlot(this.slotRequestAdaptor.CreateSlotModel(slotViewModel), customerId);
                 return this.CreatePostHttpResponse(slotResponse);
             }
             var validationResponse =  Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
@@ -117,23 +120,5 @@ namespace Bookmyslot.Api.Controllers
             return this.CreatePostHttpResponse(validationResponse);
         }
 
-
-
-
-        private SlotModel CreateSlotModel(SlotViewModel slotViewModel)
-        {
-            var slotModel = new SlotModel();
-            slotModel.Title = slotViewModel.Title;
-            slotModel.Country = slotViewModel.Country;
-            var localDate = NodaTimeHelper.ConvertDateStringToLocalDateTime(slotViewModel.SlotDate, DateTimeConstants.ApplicationDatePattern, slotViewModel.SlotStartTime);
-            slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertLocalDateTimeToZonedDateTime(localDate, slotViewModel.TimeZone);
-            slotModel.SlotStartTime = slotViewModel.SlotStartTime;
-            slotModel.SlotEndTime = slotViewModel.SlotEndTime;
-            return slotModel;
-        }
-
-
-
     }
-
 }

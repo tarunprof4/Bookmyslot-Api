@@ -3,6 +3,10 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Repository;
 using Bookmyslot.Api.SlotScheduler.Repositories;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections
@@ -11,10 +15,22 @@ namespace Bookmyslot.Api.Injections
     {
         public static void LoadInjections(IServiceCollection services)
         {
+            SlotSchedulerAdaptorInjections(services);
             SlotSchedulerBusinessInjections(services);
             SlotSchedulerRepositoryInjections(services);
         }
 
+
+
+        private static void SlotSchedulerAdaptorInjections(IServiceCollection services)
+        {
+            services.AddSingleton<ISlotRequestAdaptor, SlotRequestAdaptor>();
+            services.AddSingleton<IAvailableSlotResponseAdaptor, AvailableSlotResponseAdaptor>();
+            services.AddSingleton<IBookedSlotResponseAdaptor, BookedSlotResponseAdaptor>();
+            services.AddSingleton<ICancelledSlotResponseAdaptor, CancelledSlotResponseAdaptor>();
+            services.AddSingleton<ICustomerResponseAdaptor, CustomerResponseAdaptor>();
+            services.AddSingleton<ISharedSlotResponseAdaptor, SharedSlotResponseAdaptor>();
+        }
 
         private static void SlotSchedulerBusinessInjections(IServiceCollection services)
         {

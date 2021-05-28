@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,8 +30,12 @@ namespace Bookmyslot.Api.Injections.Tests
             var customerBookedSlotBusiness = serviceProvider.GetService<ICustomerBookedSlotBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
             var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
-
-            var controller = new CustomerBookedSlotController(customerBookedSlotBusiness, symmetryEncryption, currentUser);
+            var customerResponseAdaptor = serviceProvider.GetService<ICustomerResponseAdaptor>();
+            var cancelledSlotResponseAdaptor = serviceProvider.GetService<ICancelledSlotResponseAdaptor>();
+            var bookedSlotResponseAdaptor = serviceProvider.GetService<IBookedSlotResponseAdaptor>();
+            
+            var controller = new CustomerBookedSlotController(customerBookedSlotBusiness, symmetryEncryption, currentUser,
+                customerResponseAdaptor, cancelledSlotResponseAdaptor, bookedSlotResponseAdaptor);
 
             Assert.IsNotNull(customerBookedSlotBusiness);
             Assert.IsNotNull(symmetryEncryption);

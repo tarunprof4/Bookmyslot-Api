@@ -6,6 +6,8 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -23,6 +25,9 @@ namespace Bookmyslot.Api.Tests
         private Mock<ICustomerSharedSlotBusiness> customerSharedSlotBusinessMock;
         private Mock<ISymmetryEncryption> symmetryEncryptionMock;
         private Mock<ICurrentUser> currentUserMock;
+        private Mock<ICustomerResponseAdaptor> customerResponseAdaptorMock;
+        private Mock<ICancelledSlotResponseAdaptor> cancelledSlotResponseAdaptorMock;
+        private Mock<ISharedSlotResponseAdaptor> sharedSlotResponseAdaptorMock;
 
         [SetUp]
         public void Setup()
@@ -30,7 +35,13 @@ namespace Bookmyslot.Api.Tests
             customerSharedSlotBusinessMock = new Mock<ICustomerSharedSlotBusiness>();
             symmetryEncryptionMock = new Mock<ISymmetryEncryption>();
             currentUserMock = new Mock<ICurrentUser>();
-            customerSharedSlotController = new CustomerSharedSlotController(customerSharedSlotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object);
+            customerResponseAdaptorMock = new Mock<ICustomerResponseAdaptor>();
+            cancelledSlotResponseAdaptorMock = new Mock<ICancelledSlotResponseAdaptor>();
+            sharedSlotResponseAdaptorMock = new Mock<ISharedSlotResponseAdaptor>();
+
+            customerSharedSlotController = new CustomerSharedSlotController(customerSharedSlotBusinessMock.Object,
+                symmetryEncryptionMock.Object, currentUserMock.Object, customerResponseAdaptorMock.Object,
+                cancelledSlotResponseAdaptorMock.Object, sharedSlotResponseAdaptorMock.Object);
 
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
@@ -41,6 +52,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { ResultType = ResultType.Empty };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerYetToBeBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
+            Response<SharedSlotViewModel> sharedSlotResponseAdaptorMockResponse = new Response<SharedSlotViewModel>() { ResultType = ResultType.Empty };
+            sharedSlotResponseAdaptorMock.Setup(a => a.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())).Returns(sharedSlotResponseAdaptorMockResponse);
 
             var response = await customerSharedSlotController.GetCustomerYetToBeBookedSlots();
 
@@ -48,6 +61,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status404NotFound);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSharedSlotBusinessMock.Verify((m => m.GetCustomerYetToBeBookedSlots(It.IsAny<string>())), Times.Once());
+            sharedSlotResponseAdaptorMock.Verify((m => m.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())), Times.Once());
         }
 
         [Test]
@@ -55,6 +69,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { Result = CreateDefaultSharedSlotModel() };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerYetToBeBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
+            Response<SharedSlotViewModel> sharedSlotResponseAdaptorMockResponse = new Response<SharedSlotViewModel>() { Result = CreateDefaultSharedSlotViewModel() };
+            sharedSlotResponseAdaptorMock.Setup(a => a.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())).Returns(sharedSlotResponseAdaptorMockResponse);
 
             var response = await customerSharedSlotController.GetCustomerYetToBeBookedSlots();
 
@@ -62,6 +78,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSharedSlotBusinessMock.Verify((m => m.GetCustomerYetToBeBookedSlots(It.IsAny<string>())), Times.Once());
+            sharedSlotResponseAdaptorMock.Verify((m => m.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())), Times.Once());
         }
 
         [Test]
@@ -69,6 +86,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { ResultType = ResultType.Empty };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
+            Response<SharedSlotViewModel> sharedSlotResponseAdaptorMockResponse = new Response<SharedSlotViewModel>() { ResultType = ResultType.Empty };
+            sharedSlotResponseAdaptorMock.Setup(a => a.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())).Returns(sharedSlotResponseAdaptorMockResponse);
 
             var response = await customerSharedSlotController.GetCustomerBookedSlots();
 
@@ -76,6 +95,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status404NotFound);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSharedSlotBusinessMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
+            sharedSlotResponseAdaptorMock.Verify((m => m.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())), Times.Once());
         }
 
         [Test]
@@ -83,6 +103,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { Result = CreateDefaultSharedSlotModel() };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
+            Response<SharedSlotViewModel> sharedSlotResponseAdaptorMockResponse = new Response<SharedSlotViewModel>() { Result = CreateDefaultSharedSlotViewModel() };
+            sharedSlotResponseAdaptorMock.Setup(a => a.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())).Returns(sharedSlotResponseAdaptorMockResponse);
 
             var response = await customerSharedSlotController.GetCustomerBookedSlots();
 
@@ -90,6 +112,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSharedSlotBusinessMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
+            sharedSlotResponseAdaptorMock.Verify((m => m.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())), Times.Once());
         }
 
 
@@ -98,6 +121,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { ResultType = ResultType.Empty };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
+            Response<SharedSlotViewModel> sharedSlotResponseAdaptorMockResponse = new Response<SharedSlotViewModel>() { ResultType = ResultType.Empty };
+            sharedSlotResponseAdaptorMock.Setup(a => a.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())).Returns(sharedSlotResponseAdaptorMockResponse);
 
             var response = await customerSharedSlotController.GetCustomerCompletedSlots();
 
@@ -105,6 +130,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status404NotFound);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSharedSlotBusinessMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
+            sharedSlotResponseAdaptorMock.Verify((m => m.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())), Times.Once());
         }
 
         [Test]
@@ -112,6 +138,8 @@ namespace Bookmyslot.Api.Tests
         {
             Response<SharedSlotModel> customerSharedSlotBusinessMockResponse = new Response<SharedSlotModel>() { Result = CreateDefaultSharedSlotModel() };
             customerSharedSlotBusinessMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(customerSharedSlotBusinessMockResponse));
+            Response<SharedSlotViewModel> sharedSlotResponseAdaptorMockResponse = new Response<SharedSlotViewModel>() { Result = CreateDefaultSharedSlotViewModel() };
+            sharedSlotResponseAdaptorMock.Setup(a => a.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())).Returns(sharedSlotResponseAdaptorMockResponse);
 
             var response = await customerSharedSlotController.GetCustomerCompletedSlots();
 
@@ -119,6 +147,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             customerSharedSlotBusinessMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
+            sharedSlotResponseAdaptorMock.Verify((m => m.CreateSharedSlotViewModel(It.IsAny<Response<SharedSlotModel>>())), Times.Once());
         }
 
 
@@ -156,6 +185,11 @@ namespace Bookmyslot.Api.Tests
             sharedSlotModel.SharedSlotModels = new List<KeyValuePair<CustomerModel, SlotModel>>();
 
             return sharedSlotModel;
+        }
+
+        private SharedSlotViewModel CreateDefaultSharedSlotViewModel()
+        {
+            return new SharedSlotViewModel();
         }
 
 
