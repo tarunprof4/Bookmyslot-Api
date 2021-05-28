@@ -1,36 +1,36 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
+﻿//using System;
+//using System.Security.Cryptography;
+//using System.Text;
+//using System.Web;
 
-namespace Bookmyslot.Api.Common.Encryption
-{
-    public class HmacHash
-    {
-        public (string, string) CreateHash(string message)
-        {
-            if (message == null)
-            {
-                return (string.Empty, string.Empty);
-            }
+//namespace Bookmyslot.Api.Common.Encryption
+//{
+//    public class HmacHash
+//    {
+//        public (string, string) CreateHash(string message)
+//        {
+//            if (message == null)
+//            {
+//                return (string.Empty, string.Empty);
+//            }
 
-            byte[] messageHashBytes, messageSaltBytes;
-            CreateHdmcHash(message, out messageHashBytes, out messageSaltBytes);
+//            byte[] messageHashBytes, messageSaltBytes;
+//            CreateHdmcHash(message, out messageHashBytes, out messageSaltBytes);
 
-            var hashedMessage = HttpUtility.UrlEncode(Convert.ToBase64String(messageHashBytes));
-            var saltMessage = HttpUtility.UrlEncode(Convert.ToBase64String(messageSaltBytes));
+//            var hashedMessage = HttpUtility.UrlEncode(Convert.ToBase64String(messageHashBytes));
+//            var saltMessage = HttpUtility.UrlEncode(Convert.ToBase64String(messageSaltBytes));
 
-            return (hashedMessage, saltMessage);
-        }
+//            return (hashedMessage, saltMessage);
+//        }
 
-        private void CreateHdmcHash(string message, out byte[] messageHash, out byte[] messageSalt)
-        {
-            using (var hmac = new HMACSHA256())
-            {
-                messageSalt = hmac.Key;
-                messageHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
-            }
-        }
+//        private void CreateHdmcHash(string message, out byte[] messageHash, out byte[] messageSalt)
+//        {
+//            using (var hmac = new HMACSHA256())
+//            {
+//                messageSalt = hmac.Key;
+//                messageHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
+//            }
+//        }
 
-    }
-}
+//    }
+//}
