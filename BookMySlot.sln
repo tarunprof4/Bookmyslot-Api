@@ -153,7 +153,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.File.ViewMod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Authentication.ViewModels", "Authentication\Bookmyslot.Api.Authentication.ViewModels\Bookmyslot.Api.Authentication.ViewModels.csproj", "{BF7C6886-B4AB-4463-B8C5-BDBB64EBF351}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Common.Encryption", "Common\Bookmyslot.Api.Common.Encryption\Bookmyslot.Api.Common.Encryption.csproj", "{72CAFF4F-69A1-4FDC-9BDF-E6F589D4616F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Common.Encryption", "Common\Bookmyslot.Api.Common.Encryption\Bookmyslot.Api.Common.Encryption.csproj", "{72CAFF4F-69A1-4FDC-9BDF-E6F589D4616F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.SlotScheduler.ViewModels.Tests", "SlotScheduler\Bookmyslot.Api.SlotScheduler.ViewModels.Tests\Bookmyslot.Api.SlotScheduler.ViewModels.Tests.csproj", "{1FE44750-07E4-487D-AFA0-81E1E7BEB289}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -385,6 +387,10 @@ Global
 		{72CAFF4F-69A1-4FDC-9BDF-E6F589D4616F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72CAFF4F-69A1-4FDC-9BDF-E6F589D4616F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72CAFF4F-69A1-4FDC-9BDF-E6F589D4616F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE44750-07E4-487D-AFA0-81E1E7BEB289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE44750-07E4-487D-AFA0-81E1E7BEB289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE44750-07E4-487D-AFA0-81E1E7BEB289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE44750-07E4-487D-AFA0-81E1E7BEB289}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -455,6 +461,7 @@ Global
 		{B8C1FBC8-A7A2-4D44-9FB2-9E7CA3F59D99} = {22F4E493-8232-4D1B-967D-7F91DF366BFC}
 		{BF7C6886-B4AB-4463-B8C5-BDBB64EBF351} = {862ED9A0-B7E1-44EE-A3A6-7DD4DF897E57}
 		{72CAFF4F-69A1-4FDC-9BDF-E6F589D4616F} = {32F67FBB-22DF-46DC-89F3-84121457B5D7}
+		{1FE44750-07E4-487D-AFA0-81E1E7BEB289} = {3F730722-5092-42A2-B439-D974333D0B99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}
