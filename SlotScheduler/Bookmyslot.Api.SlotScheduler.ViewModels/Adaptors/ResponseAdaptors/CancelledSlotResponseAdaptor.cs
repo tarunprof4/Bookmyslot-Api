@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors
             return cancelledSlotViewModels;
         }
 
-        public IEnumerable<CancelledSlotInformationViewModel> CreateCancelledSlotInformationViewModel(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels)
+        public IEnumerable<CancelledSlotInformationViewModel> CreateCancelledSlotInformationViewModels(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels)
         {
             List<CancelledSlotInformationViewModel> cancelledSlotInformationViewModels = new List<CancelledSlotInformationViewModel>();
             foreach (var cancelledSlotInformationModel in cancelledSlotInformationModels)
