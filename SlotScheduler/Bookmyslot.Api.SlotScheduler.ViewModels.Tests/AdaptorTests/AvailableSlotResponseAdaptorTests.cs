@@ -113,8 +113,8 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             bookAvailableSlotModel.AvailableSlotModels = new List<SlotInforamtionInCustomerTimeZoneModel>();
             bookAvailableSlotModel.AvailableSlotModels.Add(CreateDefaultSlotInformationInCustomerTimeZoneViewModel());
 
-            var emptyBookAvailableSlotModelResponse = new Response<BookAvailableSlotModel>() { Result = bookAvailableSlotModel };
-            return emptyBookAvailableSlotModelResponse;
+            var bookAvailableSlotModelResponse = new Response<BookAvailableSlotModel>() { Result = bookAvailableSlotModel };
+            return bookAvailableSlotModelResponse;
         }
 
         private SlotInforamtionInCustomerTimeZoneModel CreateDefaultSlotInformationInCustomerTimeZoneViewModel()
