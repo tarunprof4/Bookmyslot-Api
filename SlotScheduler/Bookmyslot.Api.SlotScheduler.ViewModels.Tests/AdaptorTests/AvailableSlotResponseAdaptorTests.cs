@@ -25,12 +25,10 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
         private readonly TimeSpan SlotDuration = SlotEndTime - SlotStartTime;
         private const string SlotInformation = "SlotInformation";
         private static readonly DateTime date = new DateTime(2010, 1, 1);
-        private readonly string ValidSlotDate = date.ToString(DateTimeConstants.ApplicationDatePattern);
         private static DateTime utcDate = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, DateTimeKind.Utc);
         private readonly ZonedDateTime ValidSlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(utcDate, TimeZoneConstants.IndianTimezone);
-        private const string IndiaTimeZone = TimeZoneConstants.IndianTimezone;
-
         private readonly ZonedDateTime MinZonedDateTime = new ZonedDateTime();
+
         private Mock<ISymmetryEncryption> symmetryEncryptionMock;
         private Mock<ICustomerResponseAdaptor> customerResponseAdaptorMock;
         private AvailableSlotResponseAdaptor availableSlotResponseAdaptor;
