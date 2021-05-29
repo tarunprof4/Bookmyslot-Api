@@ -6,6 +6,6 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Inte
     public interface ICancelledSlotResponseAdaptor
     {
         IEnumerable<CancelledSlotViewModel> CreateCancelledSlotViewModels(IEnumerable<CancelledSlotModel> cancelledSlotModels);
-        IEnumerable<CancelledSlotInformationViewModel> CreateCancelledSlotInformationViewModel(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels);
+        IEnumerable<CancelledSlotInformationViewModel> CreateCancelledSlotInformationViewModels(IEnumerable<CancelledSlotInformationModel> cancelledSlotInformationModels);
     }
 }

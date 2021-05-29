@@ -108,7 +108,7 @@ namespace Bookmyslot.Api.Controllers
             if (customercancelledSlotInformationModels.ResultType == ResultType.Success)
             {
                 var cancelledSlotInformationViewModels = new Response<IEnumerable<CancelledSlotInformationViewModel>>()
-                { Result = this.cancelledSlotResponseAdaptor.CreateCancelledSlotInformationViewModel(customercancelledSlotInformationModels.Result) };
+                { Result = this.cancelledSlotResponseAdaptor.CreateCancelledSlotInformationViewModels(customercancelledSlotInformationModels.Result) };
                 return this.CreateGetHttpResponse(cancelledSlotInformationViewModels);
             }
 
