@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
+﻿using Bookmyslot.Api.Customers.Domain;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain
 {

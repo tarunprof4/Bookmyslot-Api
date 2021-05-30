@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
+using Bookmyslot.Api.SlotScheduler.Domain.Constants;
 using NodaTime;
 using System;
 

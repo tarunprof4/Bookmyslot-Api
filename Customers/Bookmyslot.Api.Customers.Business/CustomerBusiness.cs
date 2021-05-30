@@ -1,6 +1,5 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using System.Collections.Generic;
 using System.Linq;

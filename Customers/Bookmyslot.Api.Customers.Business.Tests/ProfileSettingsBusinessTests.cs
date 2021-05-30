@@ -1,6 +1,5 @@
 using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Moq;

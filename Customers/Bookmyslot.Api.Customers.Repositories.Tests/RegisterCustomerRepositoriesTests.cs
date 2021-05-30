@@ -1,6 +1,5 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Customers.Contracts;
 using Moq;
 using NUnit.Framework;
 using System;

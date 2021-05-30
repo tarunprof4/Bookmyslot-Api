@@ -4,4 +4,10 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common\Bookmyslot.Api.Common.csproj" />
+    <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Domain\Bookmyslot.Api.Customers.Domain.csproj" />
+    <ProjectReference Include="..\..\NodaTime\Bookmyslot.Api.NodaTime.Contracts\Bookmyslot.Api.NodaTime.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

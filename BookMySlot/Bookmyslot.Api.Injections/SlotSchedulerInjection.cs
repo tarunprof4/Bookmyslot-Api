@@ -1,7 +1,6 @@
 ﻿using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Business;
 using Bookmyslot.Api.SlotScheduler.Business.Validations;
-using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Repository;

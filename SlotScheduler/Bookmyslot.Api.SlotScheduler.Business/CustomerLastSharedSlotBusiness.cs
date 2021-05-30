@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Repository;
 using System.Threading.Tasks;

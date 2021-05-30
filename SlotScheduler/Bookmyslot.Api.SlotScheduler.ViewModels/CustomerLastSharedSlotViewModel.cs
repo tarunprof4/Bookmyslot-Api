@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.SlotScheduler.Contracts;
-using NodaTime;
+﻿using NodaTime;
 using System;
 using System.Text.Json.Serialization;
 

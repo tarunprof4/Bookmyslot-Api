@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Customers.Contracts;
-using Bookmyslot.Api.Customers.Repositories.Enitites;
+﻿using Bookmyslot.Api.Customers.Repositories.Enitites;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
