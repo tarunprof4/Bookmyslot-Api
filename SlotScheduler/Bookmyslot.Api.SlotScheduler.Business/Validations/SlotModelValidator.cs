@@ -15,22 +15,22 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Validations
 
         private bool isSlotDateValid(SlotModel slotModel)
         {
-            return slotModel.isSlotDateValid();
+            return slotModel.IsSlotDateValid();
         }
 
         private bool slotNotAllowedOnDayLightSavingDay(SlotModel slotModel)
         {
-            return slotModel.slotNotAllowedOnDayLightSavingDay();
+            return slotModel.SlotNotAllowedOnDayLightSavingDay();
         }
 
         private bool isSlotEndTimeValid(SlotModel slotModel)
         {
-            return slotModel.isSlotEndTimeValid();
+            return slotModel.IsSlotEndTimeValid();
         }
 
         private bool isSlotDurationValid(SlotModel slotModel)
         {
-            return slotModel.isSlotDurationValid();
+            return slotModel.IsSlotDurationValid();
         }
 
     }

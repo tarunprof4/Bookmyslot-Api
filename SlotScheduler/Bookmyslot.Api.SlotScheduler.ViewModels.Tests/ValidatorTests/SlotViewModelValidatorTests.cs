@@ -24,10 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
         private const string InValidSlotDate = "31-31-2000";
         private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
         private const string ValidCountry = CountryConstants.India;
-        private const string InValidSlot = "InValidSlot";
-
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationDatePattern);
-        private const string ValidSlotKey = "ValidSlotKey";
 
 
         private IValidator<SlotViewModel> slotViewModelValidator;

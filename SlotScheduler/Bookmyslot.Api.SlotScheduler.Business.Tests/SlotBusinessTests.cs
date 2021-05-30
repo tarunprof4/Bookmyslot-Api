@@ -217,16 +217,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             return slotModel;
         }
 
-        private SlotModel CreateDayLightSavingDaySlotModel()
-        {
-            var slotModel = new SlotModel();
-            var localDate = new LocalDateTime(2030, 03, 31, 1, 10, 0);
-            var london = DateTimeZoneProviders.Tzdb[TimeZoneConstants.LondonTimezone];
-            
-            slotModel.SlotStartZonedDateTime = london.AtLeniently(localDate);
-            slotModel.SlotStartTime = new TimeSpan(23, 0, 0);
-            return slotModel;
-        }
+    
 
         private List<ValidationFailure> CreateDefaultValidationFailure()
         {
