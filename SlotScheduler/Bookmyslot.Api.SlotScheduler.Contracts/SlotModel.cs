@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using NodaTime;
 using System;
 
@@ -88,6 +89,42 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         }
 
 
+        public bool IsSlotBookedByHimself(string bookedBy)
+        {
+            if (bookedBy == this.CreatedBy)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+
+        public bool IsSlotScheduleDateValid()
+        {
+            var pendingTimeForSlotMeeting = this.SlotStartZonedDateTime - NodaTimeHelper.GetCurrentUtcZonedDateTime();
+            if (pendingTimeForSlotMeeting.Milliseconds < 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        public void ScheduleSlot(string bookedBy)
+        {
+            this.BookedBy = bookedBy;
+            this.SlotMeetingLink = CreateSlotMeetingUrl();
+        }
+
+        private string CreateSlotMeetingUrl()
+        {
+            var uniqueId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            var meetingLinkUrl = string.Format("{0}/{1}", SlotConstants.JitsiUrl, uniqueId);
+
+            return meetingLinkUrl;
+        }
 
     }
 }
