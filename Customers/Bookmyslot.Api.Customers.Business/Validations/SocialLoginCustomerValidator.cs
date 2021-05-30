@@ -27,13 +27,7 @@ namespace Bookmyslot.Api.Customers.Business.Validations
 
         private bool googleValidateIdToken(SocialCustomerLoginModel socialCustomerLoginModel)
         {
-            if(socialCustomerLoginModel.Provider == LoginConstants.ProviderGoogle)
-            {
-                var isIdTokenValid = string.IsNullOrWhiteSpace(socialCustomerLoginModel.IdToken);
-                return !isIdTokenValid;
-            }
-
-            return true;
+            return socialCustomerLoginModel.googleValidateIdToken();
         }
     }
 }
