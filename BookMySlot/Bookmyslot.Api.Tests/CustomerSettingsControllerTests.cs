@@ -6,7 +6,6 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
-using Bookmyslot.Api.NodaTime.Contracts.Configuration;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
@@ -105,14 +103,7 @@ namespace Bookmyslot.Api.Tests
             customerSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CustomerSettingsViewModel>())), Times.Once());
         }
 
-        private NodaTimeZoneLocationConfigurationSingleton DefaultNodaTimeLocationConfiguration()
-        {
-            Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
-            zoneWithCountryId.Add(ValidTimeZone, ValidTimeZoneCountry);
-            var countries = zoneWithCountryId.Values.Distinct().ToDictionary(x => x, x => x);
-            NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
-            return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
-        }
+     
 
         private CustomerSettingsModel DefaultCustomerSettingsModel()
         {

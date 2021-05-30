@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.Customers.ViewModels.Tests.ValidatorTests
         {
             nodaTimeZoneLocationBusinessMock = new Mock<INodaTimeZoneLocationBusiness>();
             nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
-            validator = new CustomerSettingsViewModelValidator(nodaTimeZoneLocationBusinessMock.);
+            validator = new CustomerSettingsViewModelValidator(nodaTimeZoneLocationBusinessMock.Object);
         }
 
 

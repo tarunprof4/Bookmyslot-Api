@@ -57,9 +57,9 @@ namespace Bookmyslot.Api.Customers.ViewModels.Tests.ValidatorTests
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(InValidFirstName));
-            Assert.IsTrue(validationErrorMessages.Contains(InValidLastName));
-            Assert.IsTrue(validationErrorMessages.Contains(InValidGender));
+            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.FirstNameInValid));
+            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.LastNameInValid));
+            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.GenderNotValid));
         }
 
         [Test]

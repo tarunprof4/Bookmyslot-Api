@@ -4,7 +4,6 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.NodaTime.Contracts.Configuration;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
@@ -18,7 +17,6 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Tests
@@ -166,7 +164,6 @@ namespace Bookmyslot.Api.Tests
 
 
 
-
         private SlotViewModel DefaultInValidSlotViewModel()
         {
             var slotviewModel = new SlotViewModel();
@@ -186,15 +183,7 @@ namespace Bookmyslot.Api.Tests
             return slotviewModel;
         }
 
-        private NodaTimeZoneLocationConfigurationSingleton DefaultNodaTimeLocationConfiguration()
-        {
-            Dictionary<string, string> zoneWithCountryId = new Dictionary<string, string>();
-            zoneWithCountryId.Add(ValidTimeZone, ValidCountry);
-            var countries = zoneWithCountryId.Values.Distinct().ToDictionary(x => x, x => x);
-
-            NodaTimeZoneLocationConfigurationSingleton.CreateInstance(zoneWithCountryId, countries);
-            return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
-        }
+     
 
 
         private static List<ValidationFailure> CreateDefaultValidationFailure()
