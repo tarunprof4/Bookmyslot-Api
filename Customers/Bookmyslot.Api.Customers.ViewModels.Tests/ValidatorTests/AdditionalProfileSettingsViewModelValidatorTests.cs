@@ -2,10 +2,7 @@
 using Bookmyslot.Api.Customers.ViewModels.Validations;
 using FluentValidation;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Bookmyslot.Api.Customers.ViewModels.Tests.ValidatorTests
 {
