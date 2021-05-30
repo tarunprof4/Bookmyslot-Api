@@ -5,8 +5,8 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
-using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,11 +30,14 @@ namespace Bookmyslot.Api.Controllers
         private readonly ISymmetryEncryption symmetryEncryption;
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
         private readonly ICurrentUser currentUser;
-        public EmailController(ISymmetryEncryption symmetryEncryption, IResendSlotInformationBusiness resendSlotInformationBusiness, ICurrentUser currentUser)
+        private readonly IValidator<ResendSlotInformationViewModel> resendSlotInformationViewModelValidator;
+        public EmailController(ISymmetryEncryption symmetryEncryption, IResendSlotInformationBusiness resendSlotInformationBusiness, 
+            ICurrentUser currentUser, IValidator<ResendSlotInformationViewModel> resendSlotInformationViewModelValidator)
         {
             this.symmetryEncryption = symmetryEncryption;
             this.resendSlotInformationBusiness = resendSlotInformationBusiness;
             this.currentUser = currentUser;
+            this.resendSlotInformationViewModelValidator = resendSlotInformationViewModelValidator;
         }
 
         //[HttpPost()]
@@ -64,8 +67,7 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> ResendSlotMeetingInformation([FromBody] ResendSlotInformationViewModel resendSlotInformationViewModel)
         {
-            var validator = new ResendSlotInformationViewModelValidator();
-            ValidationResult results = validator.Validate(resendSlotInformationViewModel);
+            ValidationResult results = this.resendSlotInformationViewModelValidator.Validate(resendSlotInformationViewModel);
 
             if (results.IsValid)
             {

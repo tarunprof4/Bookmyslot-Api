@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
-using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using FluentValidation;
 using FluentValidation.Results;

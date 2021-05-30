@@ -1,9 +1,10 @@
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,10 +33,12 @@ namespace Bookmyslot.Api.Injections.Tests
             var slotBusiness = serviceProvider.GetService<ISlotBusiness>();
             var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
-            var nodaTimeZoneLocationBusiness = serviceProvider.GetService<INodaTimeZoneLocationBusiness>();
             var slotRequestAdaptor = serviceProvider.GetService<ISlotRequestAdaptor>();
+            var slotViewModelValidator = serviceProvider.GetService<IValidator<SlotViewModel>>();
+            var cancelSlotViewModelValidator = serviceProvider.GetService<IValidator<CancelSlotViewModel>>();
 
-            var controller = new SlotController(slotBusiness, symmetryEncryption, currentUser, nodaTimeZoneLocationBusiness, slotRequestAdaptor);
+            var controller = new SlotController(slotBusiness, symmetryEncryption, currentUser, slotRequestAdaptor,
+                slotViewModelValidator, cancelSlotViewModelValidator);
 
             Assert.IsNotNull(slotBusiness);
             Assert.IsNotNull(symmetryEncryption);

@@ -3,9 +3,9 @@ using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Customers.Business.Validations;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using FluentValidation;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +20,16 @@ namespace Bookmyslot.Api.Customers.Business
         private readonly ISocialLoginTokenValidator socialLoginTokenValidator;
         private readonly IJwtTokenProvider jwtTokenProvider;
         private readonly ICurrentUser currentUser;
+        private readonly IValidator<SocialCustomerLoginModel> socialLoginCustomerValidator;
 
-        public LoginCustomerBusiness(IRegisterCustomerBusiness registerCustomerBusiness, ICustomerBusiness customerBusiness, ISocialLoginTokenValidator socialLoginTokenValidator, IJwtTokenProvider jwtTokenProvider, ICurrentUser currentUser)
+        public LoginCustomerBusiness(IRegisterCustomerBusiness registerCustomerBusiness, ICustomerBusiness customerBusiness, ISocialLoginTokenValidator socialLoginTokenValidator, IJwtTokenProvider jwtTokenProvider, ICurrentUser currentUser, IValidator<SocialCustomerLoginModel> socialLoginCustomerValidator)
         {
             this.registerCustomerBusiness = registerCustomerBusiness;
             this.customerBusiness = customerBusiness;
             this.socialLoginTokenValidator = socialLoginTokenValidator;
             this.jwtTokenProvider = jwtTokenProvider;
             this.currentUser = currentUser;
+            this.socialLoginCustomerValidator = socialLoginCustomerValidator;
         }
 
         private void SanitizeSocialCustomerLoginModel(SocialCustomerLoginModel socialCustomerLoginModel)
@@ -37,8 +39,7 @@ namespace Bookmyslot.Api.Customers.Business
 
         public async Task<Response<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel)
         {
-            var validator = new SocialLoginCustomerValidator();
-            ValidationResult results = validator.Validate(socialCustomerLoginModel);
+            ValidationResult results = this.socialLoginCustomerValidator.Validate(socialCustomerLoginModel);
 
             if (results.IsValid)
             {

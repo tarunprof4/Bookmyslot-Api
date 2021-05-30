@@ -1,10 +1,10 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.SlotScheduler.Business.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
+using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
@@ -18,11 +18,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         private readonly ISlotRepository slotRepository;
         private readonly ICustomerCancelledSlotRepository customerCancelledSlotRepository;
         private readonly ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness;
-        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness)
+        private readonly IValidator<SlotModel> slotModelValidator;
+        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness, IValidator<SlotModel> slotModelValidator)
         {
             this.slotRepository = slotRepository;
             this.customerCancelledSlotRepository = customerCancelledSlotRepository;
             this.customerLastBookedSlotBusiness = customerLastBookedSlotBusiness;
+            this.slotModelValidator = slotModelValidator;
         }
 
         private void SanitizeSlotModel(SlotModel slotModel)
@@ -34,9 +36,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             slotModel.CreatedBy = createdBy;
 
-            var validator = new SlotModelValidator();
-            ValidationResult results = validator.Validate(slotModel);
-
+            ValidationResult results = this.slotModelValidator.Validate(slotModel);
             if (results.IsValid)
             {
                 SanitizeSlotModel(slotModel);

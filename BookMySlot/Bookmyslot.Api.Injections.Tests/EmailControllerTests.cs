@@ -2,6 +2,8 @@ using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
+using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +24,7 @@ namespace Bookmyslot.Api.Injections.Tests
             serviceProvider = webHost.Services;
             var configuration = serviceProvider.GetService<IConfiguration>();
             var Startup = new Startup(configuration);
-            
+
         }
 
         [Test]
@@ -31,8 +33,9 @@ namespace Bookmyslot.Api.Injections.Tests
             var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
             var resendSlotInformationBusiness = serviceProvider.GetService<IResendSlotInformationBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
+            var resendSlotInformationViewModelValidator = serviceProvider.GetService<IValidator<ResendSlotInformationViewModel>>();
 
-            var controller = new EmailController(symmetryEncryption, resendSlotInformationBusiness, currentUser);
+            var controller = new EmailController(symmetryEncryption, resendSlotInformationBusiness, currentUser, resendSlotInformationViewModelValidator);
 
             Assert.IsNotNull(symmetryEncryption);
             Assert.IsNotNull(resendSlotInformationBusiness);

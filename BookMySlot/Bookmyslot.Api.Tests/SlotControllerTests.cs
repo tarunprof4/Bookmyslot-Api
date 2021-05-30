@@ -5,11 +5,12 @@ using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.NodaTime.Contracts.Configuration;
-using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors.Interfaces;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -33,7 +34,8 @@ namespace Bookmyslot.Api.Tests
         private const string InValidSlotDate = "31-31-2000";
         private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
         private const string ValidCountry = CountryConstants.India;
-        
+        private const string InValidSlot = "InValidSlot";
+
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationDatePattern);
         private const string ValidSlotKey= "ValidSlotKey";
 
@@ -41,68 +43,46 @@ namespace Bookmyslot.Api.Tests
         private Mock<ISlotBusiness> slotBusinessMock;
         private Mock<ISymmetryEncryption> symmetryEncryptionMock;
         private Mock<ICurrentUser> currentUserMock;
-        private Mock<INodaTimeZoneLocationBusiness> nodaTimeZoneLocationBusinessMock;
         private Mock<ISlotRequestAdaptor> slotRequestAdaptorMock;
-        
+        private Mock<IValidator<SlotViewModel>> slotViewModelValidatorMock;
+        private Mock<IValidator<CancelSlotViewModel>> cancelSlotViewModelValidatorMock;
+
         [SetUp]
         public void Setup()
         {
             slotBusinessMock = new Mock<ISlotBusiness>();
             symmetryEncryptionMock = new Mock<ISymmetryEncryption>();
             currentUserMock = new Mock<ICurrentUser>();
-            nodaTimeZoneLocationBusinessMock = new Mock<INodaTimeZoneLocationBusiness>();
             slotRequestAdaptorMock = new Mock<ISlotRequestAdaptor>();
-            slotController = new SlotController(slotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object, 
-                nodaTimeZoneLocationBusinessMock.Object, slotRequestAdaptorMock.Object);
 
-            nodaTimeZoneLocationBusinessMock.Setup(a => a.GetNodaTimeZoneLocationInformation()).Returns(DefaultNodaTimeLocationConfiguration());
+            slotViewModelValidatorMock = new Mock<IValidator<SlotViewModel>>();
+            cancelSlotViewModelValidatorMock = new Mock<IValidator<CancelSlotViewModel>>();
+            slotController = new SlotController(slotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object,
+                slotRequestAdaptorMock.Object, slotViewModelValidatorMock.Object, cancelSlotViewModelValidatorMock.Object);
+
+            
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
-        [Test]
-        public async Task CreateSlot_NullSlotViewModel_ReturnsValidationResponse()
-        {
-            var postResponse = await slotController.Post(null);
-
-            var objectResult = postResponse as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotDetailsMissing));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
-        }
-
-
-        [Test]
-        public async Task CreateSlot_EmptySlotViewModel_ReturnsValidationResponse()
-        {
-            var postResponse = await slotController.Post(DefaultEmptySlotViewModel());
-
-            var objectResult = postResponse as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotTitleRequired));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CountryRequired));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.TimeZoneRequired));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.SlotDateRequired));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
-        }
-
+      
         [Test]
         public async Task CreateSlot_InValidSlotViewModel_ReturnsValidationResponse()
         {
+            ValidationFailure validationFailure = new ValidationFailure("", InValidSlot);
+            List<ValidationFailure> validationFailures = new List<ValidationFailure>();
+            validationFailures.Add(validationFailure);
+            slotViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<SlotViewModel>())).Returns(new ValidationResult(validationFailures));
+
             var postResponse = await slotController.Post(DefaultInValidSlotViewModel());
 
             var objectResult = postResponse as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidCountry));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidTimeZone));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
+            Assert.IsTrue(validationMessages.Contains(InValidSlot));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
+            slotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<SlotViewModel>())), Times.Once());
         }
 
 
@@ -110,6 +90,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task CreateSlot_ValidSlotViewModel_ReturnsSuccessResponse()
         {
+            slotViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<SlotViewModel>())).Returns(new ValidationResult());
             var guid = Guid.NewGuid().ToString();
             Response<string> slotBusinessMockResponse = new Response<string>() { Result = guid };
             slotBusinessMock.Setup(a => a.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
@@ -121,44 +102,32 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.Value, guid);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             slotBusinessMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Once());
+            slotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<SlotViewModel>())), Times.Once());
         }
-
-
-        [Test]
-        public async Task CancelSlot_NullCancelSlotViewModel_ReturnsValidationResponse()
-        {
-            var response = await slotController.CancelSlot(null);
-
-            var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotInfoMissing));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Never());
-            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
-        }
-
-
-
-        [Test]
-        public async Task CancelSlot_EmptyCancelSlotViewModel_ReturnsValidationResponse()
-        {
-            var response = await slotController.CancelSlot(new CancelSlotViewModel());
-
-            var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CancelSlotRequired));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Never());
-            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
-        }
-
-
 
         [Test]
         public async Task CancelSlot_InValidCancelSlotViewModel_ReturnsValidationResponse()
         {
+            List<ValidationFailure> validationFailures = CreateDefaultValidationFailure();
+            cancelSlotViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<CancelSlotViewModel>())).Returns(new ValidationResult(validationFailures));
+            symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
+
+            var response = await slotController.CancelSlot(new CancelSlotViewModel() { SlotKey = InValidSlotKey });
+
+            var objectResult = response as ObjectResult;
+            var validationMessages = objectResult.Value as List<string>;
+            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.IsTrue(validationMessages.Contains(InValidSlot));
+            symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Never());
+            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            cancelSlotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CancelSlotViewModel>())), Times.Once());
+        }
+
+        [Test]
+        public async Task CancelSlot_CorruptCancelSlotViewModel_ReturnsValidationResponse()
+        {
+            cancelSlotViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<CancelSlotViewModel>())).Returns(new ValidationResult());
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(string.Empty);
 
             var response = await slotController.CancelSlot(new CancelSlotViewModel() { SlotKey = InValidSlotKey });
@@ -170,13 +139,14 @@ namespace Bookmyslot.Api.Tests
             symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            cancelSlotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CancelSlotViewModel>())), Times.Once());
         }
 
-
-
+       
         [Test]
         public async Task CancelSlot_ValidCancelSlotViewModel_ReturnsValidationResponse()
         {
+            cancelSlotViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<CancelSlotViewModel>())).Returns(new ValidationResult());
             var cancelSlotViewModel = new CancelSlotViewModel() { SlotKey = ValidSlotKey };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlotViewModel));
             Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
@@ -190,13 +160,10 @@ namespace Bookmyslot.Api.Tests
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
             slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            cancelSlotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CancelSlotViewModel>())), Times.Once());
         }
 
 
-        private SlotViewModel DefaultEmptySlotViewModel()
-        {
-            return new SlotViewModel();
-        }
 
 
 
@@ -229,6 +196,14 @@ namespace Bookmyslot.Api.Tests
             return NodaTimeZoneLocationConfigurationSingleton.GetInstance();
         }
 
+
+        private static List<ValidationFailure> CreateDefaultValidationFailure()
+        {
+            ValidationFailure validationFailure = new ValidationFailure("", InValidSlot);
+            List<ValidationFailure> validationFailures = new List<ValidationFailure>();
+            validationFailures.Add(validationFailure);
+            return validationFailures;
+        }
 
     }
 }

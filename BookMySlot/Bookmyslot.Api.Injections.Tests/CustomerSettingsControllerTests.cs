@@ -1,7 +1,8 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
-using Bookmyslot.Api.NodaTime.Interfaces;
+using Bookmyslot.Api.Customers.ViewModels;
+using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,10 +29,9 @@ namespace Bookmyslot.Api.Injections.Tests
         {
             var customerSettingsBusiness = serviceProvider.GetService<ICustomerSettingsBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
-            var nodaTimeZoneLocationBusiness = serviceProvider.GetService<INodaTimeZoneLocationBusiness>();
-            
+            var customerSettingsViewModelValidator = serviceProvider.GetService<IValidator<CustomerSettingsViewModel>>();
 
-            var controller = new CustomerSettingsController(customerSettingsBusiness,  currentUser, nodaTimeZoneLocationBusiness);
+            var controller = new CustomerSettingsController(customerSettingsBusiness, currentUser, customerSettingsViewModelValidator);
 
             Assert.IsNotNull(customerSettingsBusiness);
             Assert.IsNotNull(controller);

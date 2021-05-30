@@ -6,6 +6,8 @@ using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -23,16 +25,26 @@ namespace Bookmyslot.Api.Tests
         private AdditionalProfileSettingsController additionalProfileSettingsController;
         private Mock<IAdditionalProfileSettingsBusiness> additionalProfileSettingsBusinessMock;
         private Mock<ICurrentUser> currentUserMock;
+        private Mock<IValidator<AdditionalProfileSettingsViewModel>> additionalProfileSettingsViewModelValidatorMock;
 
         [SetUp]
         public void Setup()
         {
             additionalProfileSettingsBusinessMock = new Mock<IAdditionalProfileSettingsBusiness>();
             currentUserMock = new Mock<ICurrentUser>();
-            additionalProfileSettingsController = new AdditionalProfileSettingsController(additionalProfileSettingsBusinessMock.Object, currentUserMock.Object);
+            additionalProfileSettingsViewModelValidatorMock = new Mock<IValidator<AdditionalProfileSettingsViewModel>>();
+            additionalProfileSettingsController = new AdditionalProfileSettingsController(additionalProfileSettingsBusinessMock.Object,
+                currentUserMock.Object, additionalProfileSettingsViewModelValidatorMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId,
-                FirstName = ValidFirstName, BioHeadLine = ValidBioHeadLine } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>()
+            {
+                Result = new CurrentUserModel()
+                {
+                    Id = CustomerId,
+                    FirstName = ValidFirstName,
+                    BioHeadLine = ValidBioHeadLine
+                }
+            };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -50,8 +62,13 @@ namespace Bookmyslot.Api.Tests
 
 
         [Test]
-        public async Task UpdateAdditionalProfileSettings_NullAdditionalProfileSettings_ReturnsValidationResponse()
+        public async Task UpdateAdditionalProfileSettings_InValidAdditionalProfileSettings_ReturnsValidationResponse()
         {
+            ValidationFailure validationFailure = new ValidationFailure("", AppBusinessMessagesConstants.AdditionalProfileSettingDetailsMissing);
+            List<ValidationFailure> validationFailures = new List<ValidationFailure>();
+            validationFailures.Add(validationFailure);
+            additionalProfileSettingsViewModelValidatorMock.Setup(a => a.Validate(null)).Returns(new ValidationResult(validationFailures));
+
             var response = await additionalProfileSettingsController.Put(null);
 
             var objectResult = response as ObjectResult;
@@ -60,19 +77,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.AdditionalProfileSettingDetailsMissing));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             additionalProfileSettingsBusinessMock.Verify((m => m.UpdateAdditionalProfileSettings(It.IsAny<string>(), It.IsAny<AdditionalProfileSettingsModel>())), Times.Never());
-        }
-
-        [Test]
-        public async Task UpdateAdditionalProfileSettings_EmptyAdditionalProfileSettings_ReturnsValidationResponse()
-        {
-            var response = await additionalProfileSettingsController.Put(new AdditionalProfileSettingsViewModel(""));
-
-            var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.BioHeadLineRequired));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            additionalProfileSettingsBusinessMock.Verify((m => m.UpdateAdditionalProfileSettings(It.IsAny<string>(), It.IsAny<AdditionalProfileSettingsModel>())), Times.Never());
+            additionalProfileSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<AdditionalProfileSettingsViewModel>())), Times.Once());
         }
 
 
@@ -82,6 +87,7 @@ namespace Bookmyslot.Api.Tests
         {
             Response<bool> additionalProfileSettingsBusinessMockResponse = new Response<bool>() { Result = true };
             additionalProfileSettingsBusinessMock.Setup(a => a.UpdateAdditionalProfileSettings(It.IsAny<string>(), It.IsAny<AdditionalProfileSettingsModel>())).Returns(Task.FromResult(additionalProfileSettingsBusinessMockResponse));
+            additionalProfileSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<AdditionalProfileSettingsViewModel>())).Returns(new ValidationResult());
 
             var response = await additionalProfileSettingsController.Put(DefaultValidAdditionalProfileSettingViewModel()); ;
 
@@ -89,7 +95,12 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             additionalProfileSettingsBusinessMock.Verify((m => m.UpdateAdditionalProfileSettings(It.IsAny<string>(), It.IsAny<AdditionalProfileSettingsModel>())), Times.Once());
+            additionalProfileSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<AdditionalProfileSettingsViewModel>())), Times.Once());
         }
+
+
+
+
 
 
         private AdditionalProfileSettingsViewModel DefaultValidAdditionalProfileSettingViewModel()

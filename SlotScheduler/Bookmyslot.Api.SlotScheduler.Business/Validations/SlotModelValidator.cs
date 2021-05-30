@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using FluentValidation;
-using NodaTime;
-using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.Validations
 {
