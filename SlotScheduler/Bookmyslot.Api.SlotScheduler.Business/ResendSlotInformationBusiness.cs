@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Emails;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business

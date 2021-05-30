@@ -1,7 +1,9 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Emails.ViewModels;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.Collections.Generic;

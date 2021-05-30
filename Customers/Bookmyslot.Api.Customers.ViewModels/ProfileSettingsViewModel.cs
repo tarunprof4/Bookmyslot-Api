@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Customers.Domain;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using System.Collections.Generic;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces
 {

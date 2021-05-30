@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using System;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels

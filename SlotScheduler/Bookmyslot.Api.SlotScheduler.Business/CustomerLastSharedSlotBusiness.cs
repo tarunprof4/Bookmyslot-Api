@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Repository;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business

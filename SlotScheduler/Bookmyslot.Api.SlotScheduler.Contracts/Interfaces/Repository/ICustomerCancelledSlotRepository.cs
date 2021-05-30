@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
