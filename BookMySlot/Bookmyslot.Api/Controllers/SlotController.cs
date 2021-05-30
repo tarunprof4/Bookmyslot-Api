@@ -2,13 +2,12 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors.Interfaces;
-using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -31,17 +30,20 @@ namespace Bookmyslot.Api.Controllers
         private readonly ISlotBusiness slotBusiness;
         private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
-        private readonly INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness;
         private readonly ISlotRequestAdaptor slotRequestAdaptor;
-        
+        private readonly IValidator<SlotViewModel> slotViewModelValidator;
+        private readonly IValidator<CancelSlotViewModel> cancelSlotViewModelValidator;
 
-        public SlotController(ISlotBusiness slotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness, ISlotRequestAdaptor slotRequestAdaptor)
+        public SlotController(ISlotBusiness slotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, 
+            ISlotRequestAdaptor slotRequestAdaptor, IValidator<SlotViewModel> slotViewModelValidator,
+            IValidator<CancelSlotViewModel> cancelSlotViewModelValidator)
         {
             this.slotBusiness = slotBusiness;
             this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
-            this.nodaTimeZoneLocationBusiness = nodaTimeZoneLocationBusiness;
             this.slotRequestAdaptor = slotRequestAdaptor;
+            this.slotViewModelValidator = slotViewModelValidator;
+            this.cancelSlotViewModelValidator = cancelSlotViewModelValidator;
         }
 
 
@@ -62,8 +64,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("CreateSlot")]
         public async Task<IActionResult> Post([FromBody] SlotViewModel slotViewModel)
         {
-            var validator = new SlotViewModelValidator(this.nodaTimeZoneLocationBusiness);
-            ValidationResult results = validator.Validate(slotViewModel);
+            ValidationResult results = this.slotViewModelValidator.Validate(slotViewModel);
 
             if (results.IsValid)
             {
@@ -98,8 +99,7 @@ namespace Bookmyslot.Api.Controllers
 
         public async Task<IActionResult> CancelSlot([FromBody] CancelSlotViewModel cancelSlotViewModel)
         {
-            var validator = new CancelSlotViewModelValidator();
-            ValidationResult results = validator.Validate(cancelSlotViewModel);
+            ValidationResult results = this.cancelSlotViewModelValidator.Validate(cancelSlotViewModel);
 
             if (results.IsValid)
             {

@@ -1,11 +1,12 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -27,17 +28,21 @@ namespace Bookmyslot.Api.Tests
         private const string InValidFirstName = "InValidFirstName12212";
         private const string InValidLastName = "InValidLastName121212";
         private const string InValidGender = "InValidGender232323";
+        private const string InValidProfileSettings = "InValidProfileSettings";
 
         private ProfileSettingsController profileSettingsController;
         private Mock<IProfileSettingsBusiness> profileSettingsBusinessMock;
         private Mock<ICurrentUser> currentUserMock;
+        private Mock<IValidator<ProfileSettingsViewModel>> profileSettingsViewModelValidatorMock;
 
         [SetUp]
         public void Setup()
         {
             profileSettingsBusinessMock = new Mock<IProfileSettingsBusiness>();
             currentUserMock = new Mock<ICurrentUser>();
-            profileSettingsController = new ProfileSettingsController(profileSettingsBusinessMock.Object, currentUserMock.Object);
+            profileSettingsViewModelValidatorMock = new Mock<IValidator<ProfileSettingsViewModel>>();
+            profileSettingsController = new ProfileSettingsController(profileSettingsBusinessMock.Object, currentUserMock.Object,
+                profileSettingsViewModelValidatorMock.Object);
 
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = ValidFirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
@@ -50,7 +55,6 @@ namespace Bookmyslot.Api.Tests
             profileSettingsBusinessMock.Setup(a => a.GetProfileSettingsByCustomerId(It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             var response = await profileSettingsController.Get();
-
             
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
@@ -64,67 +68,40 @@ namespace Bookmyslot.Api.Tests
         }
 
 
-        [Test]
-        public async Task UpdateProfileSettings_NullProfileSettings_ReturnsValidationResponse()
-        {
-            var response = await profileSettingsController.Put(null);
-
-            var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.ProfileSettingDetailsMissing));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Never());
-        }
-
-        [Test]
-        public async Task UpdateProfileSettings_EmptyProfileSettings_ReturnsValidationResponse()
-        {
-            var response = await profileSettingsController.Put(new ProfileSettingsViewModel()); ;
-
-            var objectResult = response as ObjectResult;
-            var validationMessages = objectResult.Value as List<string>;
-            Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.FirstNameRequired));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.LastNameRequired));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.GenderRequired));
-            currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Never());
-        }
-
-
-
-
 
         [Test]
         public async Task UpdateProfileSettings_InValidProfileSettings_ReturnsValidationResponse()
         {
-            var response = await profileSettingsController.Put(DefaultInValidProfileSettingViewModel()); ;
+            List<ValidationFailure> validationFailures = CreateDefaultValidationFailure();
+            profileSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<ProfileSettingsViewModel>())).Returns(new ValidationResult(validationFailures));
+
+            var response = await profileSettingsController.Put(DefaultInValidProfileSettingViewModel());
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.FirstNameInValid));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.LastNameInValid));
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.GenderNotValid));
+            Assert.IsTrue(validationMessages.Contains(InValidProfileSettings));
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Never());
+            profileSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<ProfileSettingsViewModel>())), Times.Once());
         }
 
-
+    
 
         [Test]
         public async Task UpdateProfileSettings_ValidProfileSettings_ReturnsSuccessResponse()
         {
+            profileSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<ProfileSettingsViewModel>())).Returns(new ValidationResult());
             Response<bool> profileSettingsBusinessMockResponse = new Response<bool>() { Result = true };
             profileSettingsBusinessMock.Setup(a => a.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
-
+            
             var response = await profileSettingsController.Put(DefaultValidProfileSettingViewModel()); ;
 
             var objectResult = response as NoContentResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status204NoContent);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             profileSettingsBusinessMock.Verify((m => m.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())), Times.Once());
+            profileSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<ProfileSettingsViewModel>())), Times.Once());
         }
 
         private ProfileSettingsModel DefaultValidProfileSettingModel()
@@ -158,8 +135,14 @@ namespace Bookmyslot.Api.Tests
             };
         }
 
+        private static List<ValidationFailure> CreateDefaultValidationFailure()
+        {
+            ValidationFailure validationFailure = new ValidationFailure("", InValidProfileSettings);
+            List<ValidationFailure> validationFailures = new List<ValidationFailure>();
+            validationFailures.Add(validationFailure);
+            return validationFailures;
+        }
 
-     
 
 
     }

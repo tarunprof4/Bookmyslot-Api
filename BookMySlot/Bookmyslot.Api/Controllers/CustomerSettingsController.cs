@@ -3,9 +3,8 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
-using Bookmyslot.Api.Customers.ViewModels.Validations;
-using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,13 +23,14 @@ namespace Bookmyslot.Api.Controllers
     {
         private readonly ICustomerSettingsBusiness customerSettingsBusiness;
         private readonly ICurrentUser currentUser;
-        private readonly INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness;
+        private readonly IValidator<CustomerSettingsViewModel> customerSettingsViewModelValidator;
 
-        public CustomerSettingsController(ICustomerSettingsBusiness customerSettingsBusiness, ICurrentUser currentUser, INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness)
+        public CustomerSettingsController(ICustomerSettingsBusiness customerSettingsBusiness, ICurrentUser currentUser, 
+             IValidator<CustomerSettingsViewModel> customerSettingsViewModelValidator)
         {
             this.customerSettingsBusiness = customerSettingsBusiness;
             this.currentUser = currentUser;
-            this.nodaTimeZoneLocationBusiness = nodaTimeZoneLocationBusiness;
+            this.customerSettingsViewModelValidator = customerSettingsViewModelValidator;
         }
 
 
@@ -84,8 +84,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("UpdateCustomerSettings")]
         public async Task<IActionResult> Put([FromBody] CustomerSettingsViewModel customerSettingsViewModel)
         {
-            var validator = new CustomerSettingsViewModelValidator(this.nodaTimeZoneLocationBusiness);
-            ValidationResult results = validator.Validate(customerSettingsViewModel);
+            ValidationResult results = this.customerSettingsViewModelValidator.Validate(customerSettingsViewModel);
 
             if (results.IsValid)
             {

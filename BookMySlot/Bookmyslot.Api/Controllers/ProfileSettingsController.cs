@@ -3,8 +3,8 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
-using Bookmyslot.Api.Customers.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Controllers
     {
         private readonly IProfileSettingsBusiness profileSettingsBusiness;
         private readonly ICurrentUser currentUser;
-
+        private readonly IValidator<ProfileSettingsViewModel> profileSettingsViewModelValidator;
 
 
         /// <summary>
@@ -32,10 +32,11 @@ namespace Bookmyslot.Api.Controllers
         /// <param name="profileSettingsBusiness">profileSettings Business</param>
         /// <param name="currentUser">currentUser</param>
 
-        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser)
+        public ProfileSettingsController(IProfileSettingsBusiness profileSettingsBusiness, ICurrentUser currentUser, IValidator<ProfileSettingsViewModel> profileSettingsViewModelValidator)
         {
             this.profileSettingsBusiness = profileSettingsBusiness;
             this.currentUser = currentUser;
+            this.profileSettingsViewModelValidator = profileSettingsViewModelValidator;
         }
 
 
@@ -93,8 +94,7 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/ProfileSettings")]
         public async Task<IActionResult> Put([FromBody] ProfileSettingsViewModel profileSettingsViewModel)
         {
-            var validator = new ProfileSettingsViewModelValidator();
-            ValidationResult results = validator.Validate(profileSettingsViewModel);
+            ValidationResult results = this.profileSettingsViewModelValidator.Validate(profileSettingsViewModel);
 
             if (results.IsValid)
             {

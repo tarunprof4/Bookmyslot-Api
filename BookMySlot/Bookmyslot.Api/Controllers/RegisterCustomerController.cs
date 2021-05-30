@@ -2,8 +2,8 @@
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.ViewModels;
-using Bookmyslot.Api.Customers.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +19,12 @@ namespace Bookmyslot.Api.Controllers
     public class RegisterCustomerController : BaseApiController
     {
         private readonly IRegisterCustomerBusiness registerCustomerBusiness;
+        private readonly IValidator<RegisterCustomerViewModel> registerCustomerViewModelValidator;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RegisterCustomerController"/> class. 
-        /// </summary>
-        /// <param name="registerCustomerBusiness">register customer Business</param>
-        public RegisterCustomerController(IRegisterCustomerBusiness registerCustomerBusiness)
+        public RegisterCustomerController(IRegisterCustomerBusiness registerCustomerBusiness, IValidator<RegisterCustomerViewModel> registerCustomerViewModelValidator)
         {
             this.registerCustomerBusiness = registerCustomerBusiness;
+            this.registerCustomerViewModelValidator = registerCustomerViewModelValidator;
         }
 
 
@@ -46,8 +44,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("RegisterCustomer")]
         public async Task<IActionResult> Post([FromBody] RegisterCustomerViewModel registerCustomerViewModel)
         {
-            var validator = new RegisterCustomerViewModelValidator();
-            ValidationResult results = validator.Validate(registerCustomerViewModel);
+            ValidationResult results = this.registerCustomerViewModelValidator.Validate(registerCustomerViewModel);
 
             if (results.IsValid)
             {

@@ -2,6 +2,8 @@
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+using Bookmyslot.Api.SlotScheduler.ViewModels;
+using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,8 +32,10 @@ namespace Bookmyslot.Api.Injections.Tests
             var slotSchedulerBusiness = serviceProvider.GetService<ISlotSchedulerBusiness>();
             var symmetryEncryption = serviceProvider.GetService<ISymmetryEncryption>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
+            var slotSchedulerViewModelValidator = serviceProvider.GetService<IValidator<SlotSchedulerViewModel>>();
 
-            var controller = new SlotSchedulerController(slotSchedulerBusiness, symmetryEncryption, currentUser);
+
+            var controller = new SlotSchedulerController(slotSchedulerBusiness, symmetryEncryption, currentUser, slotSchedulerViewModelValidator);
 
             Assert.IsNotNull(slotSchedulerBusiness);
             Assert.IsNotNull(symmetryEncryption);

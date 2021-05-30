@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
-using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using FluentValidation;
 using FluentValidation.Results;
@@ -27,13 +26,7 @@ namespace Bookmyslot.Api.Customers.Business.Validations
 
         private bool googleValidateIdToken(SocialCustomerLoginModel socialCustomerLoginModel)
         {
-            if(socialCustomerLoginModel.Provider == LoginConstants.ProviderGoogle)
-            {
-                var isIdTokenValid = string.IsNullOrWhiteSpace(socialCustomerLoginModel.IdToken);
-                return !isIdTokenValid;
-            }
-
-            return true;
+            return socialCustomerLoginModel.googleValidateIdToken();
         }
     }
 }

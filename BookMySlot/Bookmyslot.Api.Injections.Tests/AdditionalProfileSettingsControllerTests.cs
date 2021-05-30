@@ -1,6 +1,8 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.ViewModels;
+using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,8 +30,10 @@ namespace Bookmyslot.Api.Injections.Tests
         {
             var additionalProfileSettingsBusiness = serviceProvider.GetService<IAdditionalProfileSettingsBusiness>();
             var currentUser = serviceProvider.GetService<ICurrentUser>();
+            var additionalProfileSettingsViewModelValidator = serviceProvider.GetService<IValidator<AdditionalProfileSettingsViewModel>>();
 
-            var controller = new AdditionalProfileSettingsController(additionalProfileSettingsBusiness, currentUser);
+            var controller = new AdditionalProfileSettingsController(additionalProfileSettingsBusiness, currentUser,
+                additionalProfileSettingsViewModelValidator);
 
             Assert.IsNotNull(additionalProfileSettingsBusiness);
             Assert.IsNotNull(controller);

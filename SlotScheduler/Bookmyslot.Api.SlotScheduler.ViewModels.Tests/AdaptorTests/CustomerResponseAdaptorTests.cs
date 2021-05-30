@@ -4,14 +4,12 @@ using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
 {
-   
+
 
     [TestFixture]
     public class CustomerResponseAdaptorTests

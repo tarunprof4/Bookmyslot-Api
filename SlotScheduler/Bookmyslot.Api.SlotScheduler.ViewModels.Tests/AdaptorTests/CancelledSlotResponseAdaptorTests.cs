@@ -10,7 +10,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
 {
@@ -24,7 +23,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
         private static readonly TimeSpan SlotStartTime = new TimeSpan(1, 1, 1);
         private static readonly TimeSpan SlotEndTime = new TimeSpan(2, 2, 2);
         private static readonly DateTime date = new DateTime(2010, 1, 1);
-        private static DateTime utcDate = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime utcDate = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, DateTimeKind.Utc);
         private readonly ZonedDateTime ValidSlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(utcDate, TimeZoneConstants.IndianTimezone);
         private Mock<ICustomerResponseAdaptor> customerResponseAdaptorMock;
         private CancelledSlotResponseAdaptor cancelledSlotResponseAdaptor;

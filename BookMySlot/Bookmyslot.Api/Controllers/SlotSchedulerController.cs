@@ -5,8 +5,8 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
-using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,11 +28,14 @@ namespace Bookmyslot.Api.Controllers
         private readonly ISlotSchedulerBusiness slotSchedulerBusiness;
         private readonly ISymmetryEncryption symmetryEncryption;
         private readonly ICurrentUser currentUser;
-        public SlotSchedulerController(ISlotSchedulerBusiness slotSchedulerBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser)
+        private readonly IValidator<SlotSchedulerViewModel> slotSchedulerViewModelValidator;
+        public SlotSchedulerController(ISlotSchedulerBusiness slotSchedulerBusiness, ISymmetryEncryption symmetryEncryption,
+            ICurrentUser currentUser, IValidator<SlotSchedulerViewModel> slotSchedulerViewModelValidator)
         {
             this.slotSchedulerBusiness = slotSchedulerBusiness;
             this.symmetryEncryption = symmetryEncryption;
             this.currentUser = currentUser;
+            this.slotSchedulerViewModelValidator = slotSchedulerViewModelValidator;
         }
 
 
@@ -41,8 +44,7 @@ namespace Bookmyslot.Api.Controllers
         [ActionName("ScheduleSlot")]
         public async Task<IActionResult> Post([FromBody] SlotSchedulerViewModel slotSchedulerViewModel)
         {
-            var validator = new SlotSchedulerViewModelValidator();
-            ValidationResult results = validator.Validate(slotSchedulerViewModel);
+            ValidationResult results = this.slotSchedulerViewModelValidator.Validate(slotSchedulerViewModel);
 
             if (results.IsValid)
             {

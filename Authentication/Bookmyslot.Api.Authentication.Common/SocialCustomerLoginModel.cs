@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Bookmyslot.Api.Authentication.Common.Constants;
+using System.ComponentModel;
 
 namespace Bookmyslot.Api.Authentication.Common
 {
@@ -10,5 +11,16 @@ namespace Bookmyslot.Api.Authentication.Common
 
         [DefaultValue("EAACkRCl4ZACYBAOtP5eOfbikJgrZCTlUAklZAFs6HZBNvy2BnurEktYlz5oG5RJSBEXxvf8Ej5SG6NjUkXc7oPswFljeIYOE0cIbgSZBWFFbaakTZA4CUgLKWAVhSWRTqlucZCccZCiMKNKytAz8NH0pkCavaTp0MaZAKOcdzCXvZAOH1iuDfHZCdI3njBIe1Hcv4WZAAQCPy5IkCuSwLaJCF5cQAyaq2ZA2McYkZD")]
         public string AuthToken { get; set; }
+
+        public bool googleValidateIdToken()
+        {
+            if (this.Provider == LoginConstants.ProviderGoogle)
+            {
+                var isIdTokenValid = string.IsNullOrWhiteSpace(this.IdToken);
+                return !isIdTokenValid;
+            }
+
+            return true;
+        }
     }
 }
