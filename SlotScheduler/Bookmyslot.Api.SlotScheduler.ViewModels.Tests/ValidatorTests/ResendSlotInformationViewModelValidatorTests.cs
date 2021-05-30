@@ -13,19 +13,19 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
     [TestFixture]
     public class ResendSlotInformationViewModelValidatorTests
     {
-        private IValidator<ResendSlotInformationViewModel> resendSlotInformationViewModelValidator;
+        private IValidator<ResendSlotInformationViewModel> validator;
 
         [SetUp]
         public void Setup()
         {
-            resendSlotInformationViewModelValidator = new ResendSlotInformationViewModelValidator();
+            validator = new ResendSlotInformationViewModelValidator();
         }
 
 
         [Test]
         public void ValidateResendSlotInformationViewModel_NullViewModel_ReturnValidationErrorResponse()
         {
-            var validationResult = resendSlotInformationViewModelValidator.Validate(null);
+            var validationResult = validator.Validate(null);
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
         [Test]
         public void ValidateResendSlotInformationViewModel_EmptyViewModel_ReturnValidationErrorResponse()
         {
-            var validationResult = resendSlotInformationViewModelValidator.Validate(new ResendSlotInformationViewModel());
+            var validationResult = validator.Validate(new ResendSlotInformationViewModel());
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
         [Test]
         public void ValidateResendSlotInformationViewModel_ValidViewModel_ReturnSuccessResponse()
         {
-            var validationResult = resendSlotInformationViewModelValidator.Validate(new ResendSlotInformationViewModel() { ResendSlotModel = "ResendSlotModel" });
+            var validationResult = validator.Validate(new ResendSlotInformationViewModel() { ResendSlotModel = "ResendSlotModel" });
 
             Assert.IsTrue(validationResult.IsValid);
         }

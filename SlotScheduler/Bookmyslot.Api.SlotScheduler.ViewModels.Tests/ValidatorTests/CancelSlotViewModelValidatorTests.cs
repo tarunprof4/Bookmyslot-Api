@@ -14,19 +14,19 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
     [TestFixture]
     public class CancelSlotViewModelValidatorTests
     {
-        private IValidator<CancelSlotViewModel> cancelSlotViewModelValidator;
+        private IValidator<CancelSlotViewModel> validator;
 
         [SetUp]
         public void Setup()
         {
-            cancelSlotViewModelValidator = new CancelSlotViewModelValidator();
+            validator = new CancelSlotViewModelValidator();
         }
 
 
         [Test]
         public void ValidateCancelSlotViewModel_NullViewModel_ReturnValidationErrorResponse()
         {
-            var validationResult = cancelSlotViewModelValidator.Validate(null);
+            var validationResult = validator.Validate(null);
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
@@ -37,7 +37,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
         [Test]
         public void ValidateCancelSlotViewModel_EmptyViewModel_ReturnValidationErrorResponse()
         {
-            var validationResult = cancelSlotViewModelValidator.Validate(new CancelSlotViewModel());
+            var validationResult = validator.Validate(new CancelSlotViewModel());
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
@@ -47,7 +47,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
         [Test]
         public void ValidateCancelSlotViewModel_ValidViewModel_ReturnSuccessResponse()
         {
-            var validationResult = cancelSlotViewModelValidator.Validate(new CancelSlotViewModel() { SlotKey = "SlotKey" });
+            var validationResult = validator.Validate(new CancelSlotViewModel() { SlotKey = "SlotKey" });
 
             Assert.IsTrue(validationResult.IsValid);
         }
