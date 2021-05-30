@@ -1,4 +1,5 @@
-﻿using NodaTime;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
+using NodaTime;
 using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts
@@ -32,5 +33,49 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
         public string SlotMeetingLink { get; set; }
 
         public DateTime CreatedDateUtc { get; set; }
+
+        public bool isSlotDateValid()
+        {
+            var utcZoneTime = SystemClock.Instance.GetCurrentInstant().InUtc();
+            Duration timeDifference = this.SlotStartZonedDateTime - utcZoneTime;
+            if (timeDifference.TotalHours > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool slotNotAllowedOnDayLightSavingDay()
+        {
+            var isDayLightSavingDay = this.SlotStartZonedDateTime.IsDaylightSavingTime();
+            if (isDayLightSavingDay)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        public bool isSlotEndTimeValid()
+        {
+            if (this.SlotEndTime > this.SlotStartTime)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public bool isSlotDurationValid()
+        {
+            if (this.SlotDuration.TotalMinutes >= SlotConstants.MinimumSlotDuration)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+
     }
 }
