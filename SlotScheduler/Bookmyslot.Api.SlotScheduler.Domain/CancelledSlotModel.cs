@@ -1,20 +1,26 @@
 ﻿using NodaTime;
 using System;
 
-namespace Bookmyslot.Api.SlotScheduler.Contracts
+namespace Bookmyslot.Api.SlotScheduler.Domain
 {
-    public class CustomerLastSharedSlotModel
+    public class CancelledSlotModel
     {
+        public string Id { get; set; }
+        
+        public string Title { get; set; }
+
         public string CreatedBy { get; set; }
 
-        public string Title { get; set; }
+        public string CancelledBy { get; set; }
+
+        public string BookedBy { get; set; }
+
         public string Country { get; set; }
-
-        public string TimeZone { get; set; }
-
         public ZonedDateTime SlotStartZonedDateTime { get; set; }
 
+
         public TimeSpan SlotStartTime { get; set; }
+
 
         public TimeSpan SlotEndTime { get; set; }
 
@@ -26,6 +32,6 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
             }
         }
 
-
+     
     }
 }

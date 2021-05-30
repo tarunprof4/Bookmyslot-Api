@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
 
-namespace Bookmyslot.Api.SlotScheduler.Contracts
+namespace Bookmyslot.Api.SlotScheduler.Domain
 {
     public class CancelledSlotInformationModel
     {

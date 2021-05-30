@@ -3,7 +3,7 @@ using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using NodaTime;
 using System;
 
-namespace Bookmyslot.Api.SlotScheduler.Contracts
+namespace Bookmyslot.Api.SlotScheduler.Domain
 {
     public class SlotModel
     {

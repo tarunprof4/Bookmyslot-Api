@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.SlotScheduler.Contracts.Constants
+﻿namespace Bookmyslot.Api.SlotScheduler.Domain.Constants
 {
     public class SlotConstants
     {

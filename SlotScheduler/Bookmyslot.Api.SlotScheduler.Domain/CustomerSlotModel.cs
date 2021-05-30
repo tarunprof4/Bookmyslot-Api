@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Customers.Contracts;
 using System.Collections.Generic;
 
-namespace Bookmyslot.Api.SlotScheduler.Contracts
+namespace Bookmyslot.Api.SlotScheduler.Domain
 {
     public class CustomerSlotModel
     {

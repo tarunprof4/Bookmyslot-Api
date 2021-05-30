@@ -1,6 +1,6 @@
 ﻿using NodaTime;
 
-namespace Bookmyslot.Api.SlotScheduler.Contracts
+namespace Bookmyslot.Api.SlotScheduler.Domain
 {
     public class SlotInforamtionInCustomerTimeZoneModel
     {

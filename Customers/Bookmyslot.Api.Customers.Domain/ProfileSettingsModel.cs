@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Customers.Contracts
+﻿namespace Bookmyslot.Api.Customers.Domain
 {
     public class ProfileSettingsModel
     {
