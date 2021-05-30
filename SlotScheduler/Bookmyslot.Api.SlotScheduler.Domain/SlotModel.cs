@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
 
         public DateTime CreatedDateUtc { get; set; }
 
-        public bool isSlotDateValid()
+        public bool IsSlotDateValid()
         {
             var utcZoneTime = SystemClock.Instance.GetCurrentInstant().InUtc();
             Duration timeDifference = this.SlotStartZonedDateTime - utcZoneTime;
@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
             return false;
         }
 
-        public bool slotNotAllowedOnDayLightSavingDay()
+        public bool SlotNotAllowedOnDayLightSavingDay()
         {
             var isDayLightSavingDay = this.SlotStartZonedDateTime.IsDaylightSavingTime();
             if (isDayLightSavingDay)
@@ -57,7 +57,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         }
 
 
-        public bool isSlotEndTimeValid()
+        public bool IsSlotEndTimeValid()
         {
             if (this.SlotEndTime > this.SlotStartTime)
             {
@@ -67,7 +67,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         }
 
 
-        public bool isSlotDurationValid()
+        public bool IsSlotDurationValid()
         {
             if (this.SlotDuration.TotalMinutes >= SlotConstants.MinimumSlotDuration)
             {
