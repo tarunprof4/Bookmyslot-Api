@@ -75,6 +75,18 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts
             return false;
         }
 
+        public string CancelSlot(string cancelledBy)
+        {
+            if (cancelledBy == this.BookedBy)
+            {
+                this.BookedBy = string.Empty;
+                this.SlotMeetingLink = string.Empty;
+                return SlotConstants.UpdateSlot;
+            }
+
+            return SlotConstants.DeleteSlot;
+        }
+
 
 
     }

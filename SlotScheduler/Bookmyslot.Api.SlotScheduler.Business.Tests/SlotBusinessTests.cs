@@ -125,7 +125,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task CancelSlot_CancelledByCreatedBy_ReturnsSlotDeletedSuccessfully()
         {
             var slotModel = CreateValidBookedSlotModel();
-            slotModel.CreatedBy = deletedBy;
             Response<bool> slotModelDeleteResponseMock = new Response<bool>() { Result = true };
             slotRepositoryMock.Setup(a => a.DeleteSlot(slotModel.Id)).Returns(Task.FromResult(slotModelDeleteResponseMock));
             Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { Result = slotModel };
@@ -133,7 +132,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<bool> customerCreateCancelledSlotMock = new Response<bool>() { Result = true };
             customerCancelledSlotRepositoryMock.Setup(a => a.CreateCustomerCancelledSlot(new CancelledSlotModel())).Returns(Task.FromResult(customerCreateCancelledSlotMock));
 
-            var slotModelResponse = await this.slotBusiness.CancelSlot(slotModel.Id, deletedBy);
+            var slotModelResponse = await this.slotBusiness.CancelSlot(slotModel.Id, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelDeleteResponseMock.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelDeleteResponseMock.Result, true);
@@ -147,7 +146,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
         [Test]
-        public async Task CancelSlot_CancelledByBookedBy_ReturnsSlotDeletedSuccessfully()
+        public async Task CancelSlot_CancelledByBookedBy_ReturnsSlotUpdatedSuccessfully()
         {
             var slotModel = CreateValidBookedSlotModel();
             Response<bool> slotModelDeleteResponseMock = new Response<bool>() { Result = true };
@@ -157,7 +156,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Response<bool> customerCreateCancelledSlotMock = new Response<bool>() { Result = true };
             customerCancelledSlotRepositoryMock.Setup(a => a.CreateCustomerCancelledSlot(new CancelledSlotModel())).Returns(Task.FromResult(customerCreateCancelledSlotMock));
 
-            var slotModelResponse = await this.slotBusiness.CancelSlot(slotModel.Id, deletedBy);
+            var slotModelResponse = await this.slotBusiness.CancelSlot(slotModel.Id, slotModel.BookedBy);
 
             Assert.AreEqual(slotModelDeleteResponseMock.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelDeleteResponseMock.Result, true);

@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Business.Validations;
 using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using FluentValidation.Results;
@@ -50,9 +51,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
         }
 
-      
 
-        public async Task<Response<bool>> CancelSlot(string slotId, string deletedBy)
+
+        public async Task<Response<bool>> CancelSlot(string slotId, string cancelledBy)
         {
             if (string.IsNullOrWhiteSpace(slotId))
             {
@@ -63,23 +64,14 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             if (checkSlotExistsResponse.Item1)
             {
                 var slotModel = checkSlotExistsResponse.Item2;
-                CancelledSlotModel cancelledSlotModel;
-                if (deletedBy == slotModel.CreatedBy)
-                {
-                    var cancelledBy = slotModel.CreatedBy;
-                    await this.slotRepository.DeleteSlot(slotModel.Id);
-                    cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
-                }
-                else
-                {
-                    var cancelledBy = slotModel.BookedBy;
-                    slotModel.BookedBy = string.Empty;
-                    slotModel.SlotMeetingLink = string.Empty;
-                    await this.slotRepository.UpdateSlotBooking(slotModel.Id, slotModel.SlotMeetingLink, slotModel.BookedBy);
-                    cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
-                }
+                var slotStatus = slotModel.CancelSlot(cancelledBy);
+                var cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
 
-                await this.customerCancelledSlotRepository.CreateCustomerCancelledSlot(cancelledSlotModel);
+                var cancelSlotTask = slotStatus == SlotConstants.DeleteSlot ? this.slotRepository.DeleteSlot(slotModel.Id):
+                   this.slotRepository.UpdateSlotBooking(slotModel.Id, slotModel.SlotMeetingLink, slotModel.BookedBy);
+                var createCancelledSlotTask = this.customerCancelledSlotRepository.CreateCustomerCancelledSlot(cancelledSlotModel);
+
+                await Task.WhenAll(cancelSlotTask, createCancelledSlotTask);
                 return new Response<bool>() { Result = true };
             }
 
@@ -122,7 +114,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             return new Tuple<bool, SlotModel>(false, slotModelResponse.Result);
         }
 
-     
+
 
         private CustomerLastSharedSlotModel CreateCustomerLastBookedSlotModel(SlotModel slotModel)
         {
