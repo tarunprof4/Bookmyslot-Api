@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,8 +1,9 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using NodaTime;
 using System.Collections.Generic;
 using System.Linq;

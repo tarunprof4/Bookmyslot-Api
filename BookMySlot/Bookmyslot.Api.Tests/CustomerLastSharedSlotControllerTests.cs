@@ -2,8 +2,8 @@
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Customers.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors;
 using Moq;
 using NUnit.Framework;

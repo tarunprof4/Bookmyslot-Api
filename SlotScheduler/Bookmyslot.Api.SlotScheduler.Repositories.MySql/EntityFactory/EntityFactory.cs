@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using System;
 

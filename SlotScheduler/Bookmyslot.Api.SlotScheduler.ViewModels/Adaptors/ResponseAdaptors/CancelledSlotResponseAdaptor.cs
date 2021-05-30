@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.SlotScheduler.Contracts;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using System.Collections.Generic;
 

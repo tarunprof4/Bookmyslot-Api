@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Web.Common;
 using FluentValidation;

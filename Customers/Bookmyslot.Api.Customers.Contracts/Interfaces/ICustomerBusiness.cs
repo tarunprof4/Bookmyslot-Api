@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Customers.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

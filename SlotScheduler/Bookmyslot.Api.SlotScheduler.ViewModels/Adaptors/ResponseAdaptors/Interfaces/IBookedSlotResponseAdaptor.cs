@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts;
+using Bookmyslot.Api.SlotScheduler.Domain;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces
 {
