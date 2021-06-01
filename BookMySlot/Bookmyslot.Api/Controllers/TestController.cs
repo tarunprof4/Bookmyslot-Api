@@ -3,7 +3,10 @@ using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Web.Common;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,12 +30,17 @@ namespace Bookmyslot.Api.Controllers
         private readonly FacebookAuthenticationConfiguration facebookAuthenticationConfiguration;
 
         private readonly ILoggerService loggerService;
+        private readonly IMediator mediator;
+
+        private readonly IRegisterCustomerBusiness registerCustomerBusiness;
+        
 
 
 
         public TestController(AppConfiguration appConfiguration, AuthenticationConfiguration authenticationConfiguration,
             CacheConfiguration cacheConfiguration, EmailConfiguration emailConfiguration, GoogleAuthenticationConfiguration googleAuthenticationConfiguration,
-            FacebookAuthenticationConfiguration facebookAuthenticationConfiguration, ILoggerService loggerService)
+            FacebookAuthenticationConfiguration facebookAuthenticationConfiguration, ILoggerService loggerService, IMediator mediator,
+            IRegisterCustomerBusiness registerCustomerBusiness)
         {
             this.appConfiguration = appConfiguration;
             this.authenticationConfiguration = authenticationConfiguration;
@@ -41,6 +49,8 @@ namespace Bookmyslot.Api.Controllers
             this.googleAuthenticationConfiguration = googleAuthenticationConfiguration;
             this.facebookAuthenticationConfiguration = facebookAuthenticationConfiguration;
             this.loggerService = loggerService;
+            this.mediator = mediator;
+            this.registerCustomerBusiness = registerCustomerBusiness;
         }
 
   
@@ -49,6 +59,10 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/test/Testing")]
         public async Task<IActionResult> Testing()
         {
+            var registerCustomer = CreateRegisterCustomerModel();
+            registerCustomer.RegisterCustomer();
+            await this.registerCustomerBusiness.RegisterCustomer(registerCustomer);
+
             var configurations = new Dictionary<string, object>();
             configurations.Add("appConfiguration", this.appConfiguration);
             configurations.Add("authenticationConfiguration", this.authenticationConfiguration);
@@ -63,7 +77,20 @@ namespace Bookmyslot.Api.Controllers
             return this.Ok(await Task.FromResult(configurations));
         }
 
-     
+
+        private RegisterCustomerModel CreateRegisterCustomerModel()
+        {
+            return new RegisterCustomerModel()
+            {
+                FirstName = "Fir",
+                LastName = "Fir",
+                UserName = "Fir",
+                Email = "a@gmail.com",
+                Provider = "GOOGLE"
+            };
+        }
+
+
     }
 
 

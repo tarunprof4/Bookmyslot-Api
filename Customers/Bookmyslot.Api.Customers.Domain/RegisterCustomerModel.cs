@@ -1,6 +1,9 @@
-﻿namespace Bookmyslot.Api.Customers.Domain
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Customers.Domain.Events;
+
+namespace Bookmyslot.Api.Customers.Domain
 {
-    public class RegisterCustomerModel
+    public class RegisterCustomerModel : BaseEventModel
     {
         public string Id { get; set; }
 
@@ -15,5 +18,10 @@
         public string Provider { get; set; }
 
         public bool IsVerified { get; set; }
+
+        public void RegisterCustomer()
+        {
+            Events.Add(new CustomerRegisteredDomainEvent(this));
+        }
     }
 }
