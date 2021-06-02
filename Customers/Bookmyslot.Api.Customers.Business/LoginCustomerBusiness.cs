@@ -88,6 +88,8 @@ namespace Bookmyslot.Api.Customers.Business
             }
 
             var registerCustomerModel = CreateRegisterCustomerModel(socialCustomerModel);
+            registerCustomerModel.RegisterCustomer();
+
             var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
             if (registerCustomerResponse.ResultType == ResultType.Success)
             {
@@ -105,11 +107,8 @@ namespace Bookmyslot.Api.Customers.Business
 
         private RegisterCustomerModel CreateRegisterCustomerModel(SocialCustomerModel socialCustomer)
         {
-            var registerCustomerModel =  new RegisterCustomerModel() { FirstName = socialCustomer.FirstName, LastName = socialCustomer.LastName, 
+            return  new RegisterCustomerModel() { FirstName = socialCustomer.FirstName, LastName = socialCustomer.LastName, 
                 Email = socialCustomer.Email, Provider = socialCustomer.Provider };
-            registerCustomerModel.RegisterCustomer();
-
-            return registerCustomerModel;
         }
 
 
