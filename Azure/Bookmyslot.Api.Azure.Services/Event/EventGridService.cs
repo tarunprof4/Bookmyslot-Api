@@ -35,21 +35,50 @@ namespace Bookmyslot.Api.Azure.Services.Event
         public async Task PublishEventAsync(string eventName, BaseDomainEvent baseDomainEvent)
         {
             var coorelationId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.CoorelationId];
-            var eventGridLog = new EventGridLog(coorelationId, eventName, baseDomainEvent);
-            this.loggerService.Debug("PublishEventsAsync Started {@eventGridLog}", eventGridLog);
-            
+            var eventRequestLog = new EventRequestLog(coorelationId, eventName, baseDomainEvent);
+            this.loggerService.Debug("PublishEventsAsync Started {@eventGridLog}", eventRequestLog);
+
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            
-            await this.eventGridClient.PublishEventsAsync(new Uri(GetTopicName(eventName)).Host, CreateEventGridEvent(baseDomainEvent));
-            stopWatch.Stop();
+            try
+            {
+                await this.eventGridClient.PublishEventsAsync(new Uri(GetTopicName(eventName)).Host, CreateEventGridEvent(baseDomainEvent));
+            }
 
-            this.loggerService.Debug("PublishEventsAsync Ended {@eventGridLog}", eventGridLog);
+            catch (Exception exp)
+            {
+                this.loggerService.Error(exp, "{@eventGridLog}", eventRequestLog);
+            }
+
+            finally
+            {
+                stopWatch.Stop();
+                var eventCompleteLog = new EventCompleteLog(coorelationId, stopWatch.Elapsed);
+                this.loggerService.Debug("PublishEventsAsync Completed {@eventCompleteLog}", eventCompleteLog);
+            }
+
+
+            
         }
 
 
         private string GetTopicName(string eventName)
         {
+            try
+            {
+                var mailMessage = CreateMailMessage(emailModel);
+                await this.smtpClient.SendMailAsync(mailMessage);
+                return Response<bool>.Success(true);
+            }
+            catch (Exception exp)
+            {
+                var coorelationId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.CoorelationId];
+                var emaillog = new EmailLog(coorelationId);
+                this.loggerService.Error(exp, "{@emaillog}", emaillog);
+                return Response<bool>.Error(new List<string>() { EmailConstants.SendEmailFailure });
+            }
+
+
             string topicEndpoint = azureConfiguration.BmsTopic;
             return topicEndpoint;
         }
