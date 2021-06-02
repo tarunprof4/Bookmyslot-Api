@@ -10,12 +10,12 @@ namespace Bookmyslot.Api.Injections
     {
         public static void LoadInjections(IServiceCollection services)
         {
-            AzureEventGridInjections(services);
+            AzureServicesInjections(services);
             AzureRepositoryInjections(services);
         }
 
 
-        private static void AzureEventGridInjections(IServiceCollection services)
+        private static void AzureServicesInjections(IServiceCollection services)
         {
             services.AddTransient<IEventGridService, EventGridService>();
         }
