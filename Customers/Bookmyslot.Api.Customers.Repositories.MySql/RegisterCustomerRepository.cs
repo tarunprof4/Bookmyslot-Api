@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
@@ -13,11 +14,13 @@ namespace Bookmyslot.Api.Customers.Repositories
     {
         private readonly IDbConnection connection;
         private readonly IDbInterceptor dbInterceptor;
-
-        public RegisterCustomerRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
+        private readonly IEventDispatcher eventDispatcher;
+        
+        public RegisterCustomerRepository(IDbConnection connection, IDbInterceptor dbInterceptor, IEventDispatcher eventDispatcher)
         {
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
+            this.eventDispatcher = eventDispatcher;
         }
     
         public async Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
@@ -38,11 +41,12 @@ namespace Bookmyslot.Api.Customers.Repositories
 
 
             await this.dbInterceptor.GetQueryResults("RegisterCustomer", parameters, () => this.connection.ExecuteAsync(sql, parameters));
+            await this.eventDispatcher.DispatchEvents(registerCustomerModel.Events);
+            
 
             return new Response<string>() { Result = registerCustomerModel.Email };
         }
 
-
-
+      
     }
 }

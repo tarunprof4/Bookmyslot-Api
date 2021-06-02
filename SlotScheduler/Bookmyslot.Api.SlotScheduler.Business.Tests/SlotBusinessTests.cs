@@ -8,7 +8,6 @@ using Bookmyslot.Api.SlotScheduler.Domain.Constants;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
-using NodaTime;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

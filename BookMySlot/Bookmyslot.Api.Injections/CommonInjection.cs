@@ -1,10 +1,12 @@
 ﻿using Bookmyslot.Api.Common.Compression;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Email;
 using Bookmyslot.Api.Common.Encryption;
+using Bookmyslot.Api.Common.Event;
 using Bookmyslot.Api.Common.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +24,7 @@ namespace Bookmyslot.Api.Injections
 
         private static void CommonInjections(IServiceCollection services)
         {
+            services.AddTransient<IEventDispatcher, EventDispatcher>();
             services.AddSingleton<ICompression, GZipCompression>();
             services.AddSingleton<IRandomNumberGenerator, RandomNumberGenerator>();
             services.AddSingleton<ISymmetryEncryption, AesSymmetricEncryption>();

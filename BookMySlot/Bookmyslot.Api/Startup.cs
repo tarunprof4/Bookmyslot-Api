@@ -5,11 +5,13 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
+using Bookmyslot.Api.Customers.Business.EventHandlers;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.Injections;
 using Bookmyslot.Api.NodaTime.Contracts.Constants;
 using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +45,10 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(typeof(CustomerRegisteredNotificationHandler).Assembly,
+                typeof(CustomerRegisteredNotificationHandler1).Assembly);
+
+
             var appConfiguration = new AppConfiguration(Configuration);
             services.AddSingleton(appConfiguration);
             var authenticationConfiguration = new AuthenticationConfiguration(Configuration);
