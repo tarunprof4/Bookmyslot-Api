@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.Common.Event
+namespace Bookmyslot.Api.Azure.Services.Event
 {
     public class EventGridService : IEventGridService
     {

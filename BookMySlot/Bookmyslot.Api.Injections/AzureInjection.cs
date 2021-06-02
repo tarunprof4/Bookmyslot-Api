@@ -1,8 +1,7 @@
 ﻿using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Azure.Repositories;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
+using Bookmyslot.Api.Azure.Services.Event;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
-using Bookmyslot.Api.Common.Event;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections
@@ -11,7 +10,6 @@ namespace Bookmyslot.Api.Injections
     {
         public static void LoadInjections(IServiceCollection services)
         {
-            services.AddTransient<IEventDispatcher, EventDispatcher>();
             AzureEventGridInjections(services);
             AzureRepositoryInjections(services);
         }

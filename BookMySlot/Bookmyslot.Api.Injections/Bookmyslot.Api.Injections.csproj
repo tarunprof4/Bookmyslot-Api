@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.Google\Bookmyslot.Api.Authentication.Google.csproj" />
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication\Bookmyslot.Api.Authentication.csproj" />
     <ProjectReference Include="..\..\Azure\Bookmyslot.Api.Azure.Repositories\Bookmyslot.Api.Azure.Repositories.csproj" />
+    <ProjectReference Include="..\..\Azure\Bookmyslot.Api.Azure.Services\Bookmyslot.Api.Azure.Services.csproj" />
     <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Business\Bookmyslot.Api.Cache.Business.csproj" />
     <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Repositories\Bookmyslot.Api.Cache.Repositories.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />

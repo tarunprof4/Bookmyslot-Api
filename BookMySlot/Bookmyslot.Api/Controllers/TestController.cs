@@ -62,18 +62,13 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Testing()
         {
             var registerCustomer = CreateRegisterCustomerModel();
-            registerCustomer.RegisterCustomer();
+            //registerCustomer.RegisterCustomer();
 
             BaseDomainEvent baseDomainEvent = new CustomerRegisteredDomainEvent(registerCustomer);
-            BaseDomainEvent baseDomainEvent1 = new CustomerRegisteredDomainEvent(registerCustomer);
 
             this.loggerService.Debug("Mediator1 started");
             await this.mediator.Publish(baseDomainEvent);
             this.loggerService.Debug("Mediator1 ended");
-
-            this.loggerService.Debug("Mediator2 started");
-            await this.mediator.Publish(baseDomainEvent1);
-            this.loggerService.Debug("Mediator2 ended");
 
             var configurations = new Dictionary<string, object>();
             configurations.Add("appConfiguration", this.appConfiguration);
