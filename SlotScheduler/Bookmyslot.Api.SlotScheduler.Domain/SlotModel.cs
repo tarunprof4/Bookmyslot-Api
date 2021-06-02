@@ -7,7 +7,7 @@ using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain
 {
-    public class SlotModel : BaseEventModel
+    public class SlotModel
     {
         public string Id { get; set; }
         
@@ -132,6 +132,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         {
             Events.Add(new SlotMeetingInformationRequestedEvent(this, resendTo));
         }
+
 
     }
 }

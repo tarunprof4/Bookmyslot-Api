@@ -5,5 +5,5 @@
         public const string CustomerRegisteredEvent = "CustomerRegisteredEvent";
 
         public const string SlotMeetingInformationRequestedEvent = "SlotMeetingInformationRequestedEvent";
-    }
-}
+
+        public const string SlotCancelledEvent = "SlotCancelledEvent";

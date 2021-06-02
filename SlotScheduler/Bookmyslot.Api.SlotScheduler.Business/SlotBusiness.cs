@@ -66,6 +66,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 var slotModel = checkSlotExistsResponse.Item2;
                 var slotStatus = slotModel.CancelSlot(cancelledBy);
                 var cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
+                cancelledSlotModel.SlotCancelled(cancelledBy);
 
                 var cancelSlotTask = slotStatus == SlotConstants.DeleteSlot ? this.slotRepository.DeleteSlot(slotModel.Id):
                    this.slotRepository.UpdateSlotBooking(slotModel.Id, slotModel.SlotMeetingLink, slotModel.BookedBy);

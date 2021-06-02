@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
@@ -16,10 +17,12 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     {
         private readonly IDbConnection connection;
         private readonly IDbInterceptor dbInterceptor;
-        public CustomerCancelledSlotRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
+        private readonly IEventDispatcher eventDispatcher;
+        public CustomerCancelledSlotRepository(IDbConnection connection, IDbInterceptor dbInterceptor, IEventDispatcher eventDispatcher)
         {
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
+            this.eventDispatcher = eventDispatcher;
         }
 
         public async Task<Response<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel)
@@ -46,6 +49,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
 
             await this.dbInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
+            await this.eventDispatcher.DispatchEvents(cancelledSlotModel.Events);
 
             return new Response<bool>() { Result = true };
         }

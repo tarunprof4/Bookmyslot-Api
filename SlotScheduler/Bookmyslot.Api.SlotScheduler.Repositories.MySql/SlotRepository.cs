@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
@@ -88,7 +89,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
                 ModifiedDateUtc = DateTime.UtcNow,
             };
             await this.dbInterceptor.GetQueryResults("UpdateSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
-            
+
             return new Response<bool>() { Result = true };
         }
 
