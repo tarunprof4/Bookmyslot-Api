@@ -3,5 +3,13 @@
     public class EventConstants
     {
         public const string CustomerRegisteredEvent = "CustomerRegisteredEvent";
+
+        public const string SlotMeetingInformationRequestedEvent = "SlotMeetingInformationRequestedEvent";
+
+        public const string SlotCancelledEvent = "SlotCancelledEvent";
+
+        public const string SlotScheduledEvent = "SlotScheduledEvent";
+        
+
     }
 }

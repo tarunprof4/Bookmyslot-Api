@@ -21,12 +21,8 @@ namespace Bookmyslot.Api.Tests
     {
         private const string CustomerId = "CustomerId";
         private const string FirstName = "FirstName";
-        private const string InValidCountry = "InValidCountry";
-        private const string InValidTimeZone = "InValidTimeZone";
         private const string ValidCountry = CountryConstants.India;
         private const string ValidTimeZone = TimeZoneConstants.IndianTimezone;
-        private const string ValidTimeZoneCountry = CountryConstants.India;
-
         private const string InValidCustomerSettings = "InValidCustomerSettings";
 
         private CustomerSettingsController customerSettingsController;

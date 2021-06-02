@@ -8,7 +8,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
     {
         Task<Response<SlotModel>> GetSlot(string slotId);
         Task<Response<string>> CreateSlot(SlotModel slotModel);
-        Task<Response<bool>> UpdateSlotBooking(string slotId, string slotMeetingLink, string bookedBy);
+        Task<Response<bool>> UpdateSlotBooking(SlotModel slotModel);
         Task<Response<bool>> DeleteSlot(string slotId);
     }
 }

@@ -167,7 +167,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Customers.Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.SlotScheduler.Domain.Tests", "SlotScheduler\Bookmyslot.Api.SlotScheduler.Domain.Tests\Bookmyslot.Api.SlotScheduler.Domain.Tests.csproj", "{87BAB85F-747A-476C-A159-5ECEEB508D50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.Api.Azure.Services", "Azure\Bookmyslot.Api.Azure.Services\Bookmyslot.Api.Azure.Services.csproj", "{B1FC69AE-44A7-47B9-8E41-A7F8FA2F2F6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Azure.Services", "Azure\Bookmyslot.Api.Azure.Services\Bookmyslot.Api.Azure.Services.csproj", "{B1FC69AE-44A7-47B9-8E41-A7F8FA2F2F6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

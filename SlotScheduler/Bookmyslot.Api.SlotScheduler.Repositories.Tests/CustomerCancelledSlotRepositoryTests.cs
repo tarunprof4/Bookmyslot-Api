@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
@@ -32,13 +33,16 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         private CustomerCancelledSlotRepository customerCancelledSlotRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
+        private Mock<IEventDispatcher> eventDispatcherMock;
 
         [SetUp]
         public void SetUp()
         {
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            customerCancelledSlotRepository = new CustomerCancelledSlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
+            eventDispatcherMock = new Mock<IEventDispatcher>();
+            customerCancelledSlotRepository = new CustomerCancelledSlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object,
+                eventDispatcherMock.Object);
         }
 
         [Test]

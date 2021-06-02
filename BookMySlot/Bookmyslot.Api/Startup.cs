@@ -1,6 +1,5 @@
 using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
@@ -10,6 +9,7 @@ using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.Injections;
 using Bookmyslot.Api.NodaTime.Contracts.Constants;
 using Bookmyslot.Api.NodaTime.Interfaces;
+using Bookmyslot.Api.SlotScheduler.Business.EventHandlers;
 using Bookmyslot.Api.Web.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -28,7 +28,6 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Bookmyslot.Api
@@ -46,7 +45,9 @@ namespace Bookmyslot.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(CustomerRegisteredNotificationHandler).Assembly,
-                typeof(CustomerRegisteredNotificationHandler1).Assembly);
+                typeof(SlotCancelledEventHandler).Assembly,
+                typeof(SlotMeetingInformationRequestedEventHandler).Assembly,
+                typeof(SlotMeetingInformationRequestedEventHandler).Assembly);
 
 
             var appConfiguration = new AppConfiguration(Configuration);
@@ -170,17 +171,6 @@ namespace Bookmyslot.Api
             {
                 endpoints.MapControllers();
             });
-        }
-
-        private Dictionary<string, string> GetAppConfigurations()
-        {
-            Dictionary<string, string> appConfigurations = new Dictionary<string, string>();
-            var bookMySlotConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.BookMySlotDatabase);
-            var cacheConnectionString = Configuration.GetConnectionString(AppSettingKeysConstants.CacheDatabase);
-            appConfigurations.Add(AppSettingKeysConstants.BookMySlotDatabase, bookMySlotConnectionString);
-            appConfigurations.Add(AppSettingKeysConstants.CacheDatabase, cacheConnectionString);
-
-            return appConfigurations;
         }
 
         private static void BootStrapApp(IServiceProvider serviceProvider)

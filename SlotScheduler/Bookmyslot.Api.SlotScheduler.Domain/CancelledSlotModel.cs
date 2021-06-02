@@ -1,9 +1,11 @@
-﻿using NodaTime;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.SlotScheduler.Domain.Events;
+using NodaTime;
 using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain
 {
-    public class CancelledSlotModel
+    public class CancelledSlotModel : BaseEventModel
     {
         public string Id { get; set; }
         
@@ -32,6 +34,10 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
             }
         }
 
+        public void SlotCancelled(string cancelledBy)
+        {
+            Events.Add(new SlotCancelledEvent(this, cancelledBy));
+        }
      
     }
 }

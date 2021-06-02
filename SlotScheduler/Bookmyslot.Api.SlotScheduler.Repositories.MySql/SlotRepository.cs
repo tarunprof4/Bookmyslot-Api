@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
@@ -16,11 +17,13 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
     {
         private readonly IDbConnection connection;
         private readonly IDbInterceptor dbInterceptor;
+        private readonly IEventDispatcher eventDispatcher;
 
-        public SlotRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
+        public SlotRepository(IDbConnection connection, IDbInterceptor dbInterceptor, IEventDispatcher eventDispatcher)
         {
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
+            this.eventDispatcher = eventDispatcher;
         }
 
      
@@ -77,21 +80,21 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
      
 
-        public async Task<Response<bool>> UpdateSlotBooking(string slotId, string slotMeetingLink, string bookedBy)
+        public async Task<Response<bool>> UpdateSlotBooking(SlotModel slotModel)
         {
             var sql = SlotTableQueries.UpdateSlotQuery;
             var parameters = new
             {
-                Id = slotId,
-                BookedBy = bookedBy,
-                SlotMeetingLink = slotMeetingLink,
+                Id = slotModel.Id,
+                BookedBy = slotModel.BookedBy,
+                SlotMeetingLink = slotModel.SlotMeetingLink,
                 ModifiedDateUtc = DateTime.UtcNow,
             };
             await this.dbInterceptor.GetQueryResults("UpdateSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
-            
+            await this.eventDispatcher.DispatchEvents(slotModel.Events);
+
             return new Response<bool>() { Result = true };
         }
-
       
     }
 }

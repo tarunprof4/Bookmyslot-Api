@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotScheduleDateInvalid);
-            slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<SlotModel>())), Times.Never());
         }
 
 
@@ -61,7 +61,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot);
-            slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<SlotModel>())), Times.Never());
         }
 
 
@@ -72,7 +72,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
 
-            slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<SlotModel>())), Times.Once());
         }
 
 
