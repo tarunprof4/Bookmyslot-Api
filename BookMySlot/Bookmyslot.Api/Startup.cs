@@ -45,8 +45,7 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMediatR(typeof(CustomerRegisteredNotificationHandler).Assembly,
-                typeof(CustomerRegisteredNotificationHandler1).Assembly);
+            services.AddMediatR(typeof(CustomerRegisteredNotificationHandler).Assembly);
 
 
             var appConfiguration = new AppConfiguration(Configuration);

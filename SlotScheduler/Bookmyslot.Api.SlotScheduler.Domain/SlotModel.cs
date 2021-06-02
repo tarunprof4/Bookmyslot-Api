@@ -1,11 +1,13 @@
-﻿using Bookmyslot.Api.Common.Helpers;
+﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
+using Bookmyslot.Api.SlotScheduler.Domain.Events;
 using NodaTime;
 using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain
 {
-    public class SlotModel
+    public class SlotModel : BaseEventModel
     {
         public string Id { get; set; }
         
@@ -124,6 +126,11 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
             var meetingLinkUrl = string.Format("{0}/{1}", SlotConstants.JitsiUrl, uniqueId);
 
             return meetingLinkUrl;
+        }
+
+        public void ResendSlotMeetingInformation(string resendTo)
+        {
+            Events.Add(new SlotMeetingInformationRequestedEvent(this, resendTo));
         }
 
     }

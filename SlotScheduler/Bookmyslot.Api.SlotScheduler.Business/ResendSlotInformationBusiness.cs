@@ -1,31 +1,30 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Emails;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.Api.SlotScheduler.Domain.Events;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business
 {
     public class ResendSlotInformationBusiness : IResendSlotInformationBusiness
     {
-        private readonly IEmailInteraction emailInteraction;
-        private readonly ICustomerBusiness customerBusiness;
-        public ResendSlotInformationBusiness(IEmailInteraction emailInteraction, ICustomerBusiness customerBusiness)
+        private readonly IEventDispatcher eventDispatcher;
+        public ResendSlotInformationBusiness(IEventDispatcher eventDispatcher)
         {
-            this.emailInteraction = emailInteraction;
-            this.customerBusiness = customerBusiness;
+            this.eventDispatcher = eventDispatcher;
         }
 
         public async Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo)
         {
-            var customerModelsResponse = await this.customerBusiness.GetCustomerById(resendTo);
-            var resendToCustomerModel = customerModelsResponse.Result;
+            slotModel.ResendSlotMeetingInformation(resendTo);
+            await this.eventDispatcher.DispatchEvents(slotModel.Events);
 
-            var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(slotModel, resendToCustomerModel);
-            return await this.emailInteraction.SendEmail(emailModel);
+            return new Response<bool>() { Result = true };
         }
-
     }
+
 }
