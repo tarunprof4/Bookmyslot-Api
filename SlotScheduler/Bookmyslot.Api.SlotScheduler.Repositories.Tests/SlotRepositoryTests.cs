@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
@@ -32,13 +33,15 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
         private SlotRepository slotRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
+        private Mock<IEventDispatcher> eventDispatcherMock;
 
         [SetUp]
         public void SetUp()
         {
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            slotRepository = new SlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
+            eventDispatcherMock = new Mock<IEventDispatcher>();
+            slotRepository = new SlotRepository(dbConnectionMock.Object, dbInterceptorMock.Object, eventDispatcherMock.Object);
         }
 
 
@@ -111,7 +114,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             SlotModel slotModel = DefaultSlotModel();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>())).Returns(Task.FromResult(0));
 
-            var slotModelResponse = await slotRepository.UpdateSlotBooking(slotModel.Id, slotModel.SlotMeetingLink, slotModel.BookedBy);
+            var slotModelResponse = await slotRepository.UpdateSlotBooking(slotModel);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(slotModelResponse.Result, true);
@@ -151,10 +154,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             return slotEntities;
         }
 
-        private PageParameterModel DefaultPageParameterModel()
-        {
-            return new PageParameterModel();
-        }
 
         private SlotModel DefaultSlotModel()
         {

@@ -77,7 +77,7 @@ namespace Bookmyslot.Api.Azure.Services.Event
                 Id = Guid.NewGuid().ToString(),
                 EventType = "Contoso.Items.ItemReceived",
                 Data = baseDomainEvent,
-                EventTime = DateTime.Now,
+                EventTime = DateTime.UtcNow,
                 Subject = "Door1",
                 DataVersion = "2.0"
             });

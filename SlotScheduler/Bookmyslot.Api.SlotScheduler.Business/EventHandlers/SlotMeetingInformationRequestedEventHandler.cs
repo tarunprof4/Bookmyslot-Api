@@ -2,15 +2,12 @@
 using Bookmyslot.Api.Customers.Domain.Constants;
 using Bookmyslot.Api.SlotScheduler.Domain.Events;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.EventHandlers
 {
-   
+
     public class SlotMeetingInformationRequestedEventHandler : INotificationHandler<SlotMeetingInformationRequestedEvent>
     {
         private readonly IEventGridService eventGridService;

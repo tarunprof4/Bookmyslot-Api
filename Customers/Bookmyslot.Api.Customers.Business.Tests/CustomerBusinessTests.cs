@@ -20,7 +20,6 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         private const bool IsVerified = true;
         private const string ProfilePicUrl = "ProfilePicUrl";
         private const string UserName = "UserName";
-        private const string Email = "Email";
 
         private CustomerBusiness customerBusiness;
         private Mock<ICustomerRepository> customerRepositoryMock;

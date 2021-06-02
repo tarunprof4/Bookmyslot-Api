@@ -34,7 +34,6 @@ namespace Bookmyslot.Api.Controllers
         private readonly ILoggerService loggerService;
         private readonly IMediator mediator;
 
-        private readonly IRegisterCustomerBusiness registerCustomerBusiness;
         
 
 
@@ -52,7 +51,6 @@ namespace Bookmyslot.Api.Controllers
             this.facebookAuthenticationConfiguration = facebookAuthenticationConfiguration;
             this.loggerService = loggerService;
             this.mediator = mediator;
-            this.registerCustomerBusiness = registerCustomerBusiness;
         }
 
   

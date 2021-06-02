@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             }
 
             slotModel.ScheduleSlot(bookedBy);
-            return await this.slotRepository.UpdateSlotBooking(slotModel.Id, slotModel.SlotMeetingLink, slotModel.BookedBy);
+            return await this.slotRepository.UpdateSlotBooking(slotModel);
         }
     }
 }

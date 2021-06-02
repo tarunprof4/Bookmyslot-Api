@@ -1,11 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Event;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain.Events
 {
-   
+
     public class SlotCancelledEvent : BaseDomainEvent
     {
         public CancelledSlotModel CancelledSlotModel { get; set; }

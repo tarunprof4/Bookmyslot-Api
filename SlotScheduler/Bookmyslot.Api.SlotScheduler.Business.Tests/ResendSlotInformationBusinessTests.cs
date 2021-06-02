@@ -1,4 +1,5 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
@@ -25,15 +26,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private readonly TimeSpan ValidSlotEndTime = new TimeSpan(0, SlotConstants.MinimumSlotDuration, 0);
 
         private ResendSlotInformationBusiness resendSlotInformationBusiness;
-        private Mock<IEmailInteraction> emailInteractionMock;
-        private Mock<ICustomerBusiness> customerBusinessMock;
+        private Mock<IEventDispatcher> eventDispatcherMock;
 
         [SetUp]
         public void Setup()
         {
-            emailInteractionMock = new Mock<IEmailInteraction>();
-            customerBusinessMock = new Mock<ICustomerBusiness>();
-            resendSlotInformationBusiness = new ResendSlotInformationBusiness(emailInteractionMock.Object, customerBusinessMock.Object);
+            resendSlotInformationBusiness = new ResendSlotInformationBusiness(eventDispatcherMock.Object);
         }
 
    

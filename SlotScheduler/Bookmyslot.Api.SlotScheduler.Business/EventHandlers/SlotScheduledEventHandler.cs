@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.EventHandlers
 {
-
-    public class SlotCancelledEventHandler : INotificationHandler<SlotCancelledEvent>
+    public class SlotScheduledEventHandler : INotificationHandler<SlotScheduledEvent>
     {
         private readonly IEventGridService eventGridService;
-        public SlotCancelledEventHandler(IEventGridService eventGridService)
+        public SlotScheduledEventHandler(IEventGridService eventGridService)
         {
             this.eventGridService = eventGridService;
         }
 
-        public async Task Handle(SlotCancelledEvent domainEvent, CancellationToken cancellationToken)
+        public async Task Handle(SlotScheduledEvent domainEvent, CancellationToken cancellationToken)
         {
-            await this.eventGridService.PublishEventAsync(EventConstants.SlotCancelledEvent, domainEvent);
+            await this.eventGridService.PublishEventAsync(EventConstants.SlotScheduledEvent, domainEvent);
         }
     }
 }
+
+
