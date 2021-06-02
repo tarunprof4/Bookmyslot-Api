@@ -1,4 +1,5 @@
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Domain;
 using Moq;
@@ -19,13 +20,16 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
         private RegisterCustomerRepository registerCustomerRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
+        private Mock<IEventDispatcher> eventDispatcherMock;
 
         [SetUp]
         public void SetUp()
         {
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            registerCustomerRepository = new RegisterCustomerRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
+            eventDispatcherMock = new Mock<IEventDispatcher>();
+            registerCustomerRepository = new RegisterCustomerRepository(dbConnectionMock.Object, dbInterceptorMock.Object,
+                eventDispatcherMock.Object);
         }
 
         [Test]

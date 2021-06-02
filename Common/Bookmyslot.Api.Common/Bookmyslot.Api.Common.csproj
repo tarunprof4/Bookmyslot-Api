@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Azure.EventGrid" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure\Bookmyslot.Api.Azure.Contracts\Bookmyslot.Api.Azure.Contracts.csproj" />
     <ProjectReference Include="..\..\NodaTime\Bookmyslot.Api.NodaTime.Contracts\Bookmyslot.Api.NodaTime.Contracts.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Common.Contracts\Bookmyslot.Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
   </ItemGroup>
 
 </Project>

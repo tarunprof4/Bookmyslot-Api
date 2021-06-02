@@ -1,9 +1,7 @@
 using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Event;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Event;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
@@ -50,8 +48,6 @@ namespace Bookmyslot.Api
             services.AddMediatR(typeof(CustomerRegisteredNotificationHandler).Assembly,
                 typeof(CustomerRegisteredNotificationHandler1).Assembly);
 
-            services.AddTransient<IEventDispatcher, EventDispatcher>();
-            
 
             var appConfiguration = new AppConfiguration(Configuration);
             services.AddSingleton(appConfiguration);

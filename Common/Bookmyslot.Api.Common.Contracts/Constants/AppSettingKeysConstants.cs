@@ -55,5 +55,11 @@
         public const string HashSaltLength = "HashSaltLength";
         public const string SymmetryEncryptionKeyLength = "SymmetryEncryptionKeyLength";
         public const string SymmetryEncryptionIvLength = "SymmetryEncryptionIvLength";
+
+
+        public const string AzureSettings = "AzureSettings";
+        public const string EventGridSettings = "EventGridSettings";
+        public const string BmsTopic = "BmsTopic";
+        public const string BmsTopicKey = "BmsTopicKey";
     }
 }

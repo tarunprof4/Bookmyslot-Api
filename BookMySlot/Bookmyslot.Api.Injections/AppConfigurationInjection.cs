@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Google.Configuration;
+using Bookmyslot.Api.Azure.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Encryption.Configuration;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,8 @@ namespace Bookmyslot.Api.Injections
             services.AddSingleton(googleAuthenticationConfiguration);
             var facebookAuthenticationConfiguration = new FacebookAuthenticationConfiguration(configuration);
             services.AddSingleton(facebookAuthenticationConfiguration);
+            var azureConfiguration = new AzureConfiguration(configuration);
+            services.AddSingleton(azureConfiguration);
         }
     }
 }

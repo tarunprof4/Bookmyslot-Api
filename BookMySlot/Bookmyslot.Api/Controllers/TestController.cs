@@ -2,9 +2,11 @@
 using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Event;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.Customers.Domain.Events;
 using Bookmyslot.Api.Web.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +63,17 @@ namespace Bookmyslot.Api.Controllers
         {
             var registerCustomer = CreateRegisterCustomerModel();
             registerCustomer.RegisterCustomer();
-            await this.registerCustomerBusiness.RegisterCustomer(registerCustomer);
+
+            BaseDomainEvent baseDomainEvent = new CustomerRegisteredDomainEvent(registerCustomer);
+            BaseDomainEvent baseDomainEvent1 = new CustomerRegisteredDomainEvent(registerCustomer);
+
+            this.loggerService.Debug("Mediator1 started");
+            await this.mediator.Publish(baseDomainEvent);
+            this.loggerService.Debug("Mediator1 ended");
+
+            this.loggerService.Debug("Mediator2 started");
+            await this.mediator.Publish(baseDomainEvent1);
+            this.loggerService.Debug("Mediator2 ended");
 
             var configurations = new Dictionary<string, object>();
             configurations.Add("appConfiguration", this.appConfiguration);
