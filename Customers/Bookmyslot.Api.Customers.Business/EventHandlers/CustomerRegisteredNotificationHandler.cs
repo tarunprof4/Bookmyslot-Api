@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Customers.Domain.Constants;
 using Bookmyslot.Api.Customers.Domain.Events;
 using MediatR;

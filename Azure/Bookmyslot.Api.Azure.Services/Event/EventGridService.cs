@@ -64,21 +64,6 @@ namespace Bookmyslot.Api.Azure.Services.Event
 
         private string GetTopicName(string eventName)
         {
-            try
-            {
-                var mailMessage = CreateMailMessage(emailModel);
-                await this.smtpClient.SendMailAsync(mailMessage);
-                return Response<bool>.Success(true);
-            }
-            catch (Exception exp)
-            {
-                var coorelationId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.CoorelationId];
-                var emaillog = new EmailLog(coorelationId);
-                this.loggerService.Error(exp, "{@emaillog}", emaillog);
-                return Response<bool>.Error(new List<string>() { EmailConstants.SendEmailFailure });
-            }
-
-
             string topicEndpoint = azureConfiguration.BmsTopic;
             return topicEndpoint;
         }
