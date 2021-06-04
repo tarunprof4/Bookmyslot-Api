@@ -1,27 +1,27 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Encryption.Configuration;
+using Bookmyslot.Api.Common.Encryption.Helpers;
 using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
+
 
 namespace Bookmyslot.Api.Common.Encryption
 {
-    public class AesSymmetricEncryption : ISymmetryEncryption
+    public class FlexibleAesSymmetricEncryption : ISymmetryEncryption
     {
+        //32 bit randomNumberGenerator
         private readonly byte[] key;
+        //16 bit randomNumberGenerator
         private readonly byte[] iv;
-        private readonly IRandomNumberGenerator randomNumberGenerator;
         private readonly ILoggerService loggerService;
-        public AesSymmetricEncryption(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration, ILoggerService loggerService)
+        public FlexibleAesSymmetricEncryption(EncryptionConfiguration encryptionConfiguration, ILoggerService loggerService)
         {
-            this.randomNumberGenerator = randomNumberGenerator;
             this.loggerService = loggerService;
-
-            this.key = this.randomNumberGenerator.GenerateRandomNumber(encryptionConfiguration.SymmetryEncryptionKeyLength);
-            this.iv = this.randomNumberGenerator.GenerateRandomNumber(encryptionConfiguration.SymmetryEncryptionIvLength);
+            this.key = Convert.FromBase64String(encryptionConfiguration.SymmetryEncryptionKey); 
+            this.iv = Convert.FromBase64String(encryptionConfiguration.SymmetryEncryptionIv);
         }
 
         public string Encrypt(string message)
@@ -46,13 +46,14 @@ namespace Bookmyslot.Api.Common.Encryption
 
                     var encryptedMessageBytes = memoryStream.ToArray();
                     var encryptedMessage = Convert.ToBase64String(encryptedMessageBytes);
-                    return HttpUtility.UrlEncode(encryptedMessage);
+                    
+                    return EncryptionHelper.UrlEncode(encryptedMessage);
                 }
             }
         }
-        public string Decrypt(string encryptedMessage)
+        public string Decrypt(string encodedEncryptedMessage)
         {
-            if (string.IsNullOrWhiteSpace(encryptedMessage))
+            if (string.IsNullOrWhiteSpace(encodedEncryptedMessage))
             {
                 return string.Empty;
             }
@@ -67,6 +68,7 @@ namespace Bookmyslot.Api.Common.Encryption
                     {
                         var cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
 
+                        var encryptedMessage = EncryptionHelper.UrlDecode(encodedEncryptedMessage);
                         var encryptedMessageBytes = Convert.FromBase64String(encryptedMessage);
                         cryptoStream.Write(encryptedMessageBytes, 0, encryptedMessageBytes.Length);
                         cryptoStream.FlushFinalBlock();
@@ -86,7 +88,7 @@ namespace Bookmyslot.Api.Common.Encryption
 
         }
 
-
+   
         private void SetAesDefaults(AesCryptoServiceProvider aes)
         {
             aes.Mode = CipherMode.CBC;

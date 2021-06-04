@@ -53,8 +53,8 @@
 
         public const string EncryptionSettings = "EncryptionSettings";
         public const string HashSaltLength = "HashSaltLength";
-        public const string SymmetryEncryptionKeyLength = "SymmetryEncryptionKeyLength";
-        public const string SymmetryEncryptionIvLength = "SymmetryEncryptionIvLength";
+        public const string SymmetryEncryptionKey = "SymmetryEncryptionKey";
+        public const string SymmetryEncryptionIv = "SymmetryEncryptionIv";
 
 
         public const string AzureSettings = "AzureSettings";

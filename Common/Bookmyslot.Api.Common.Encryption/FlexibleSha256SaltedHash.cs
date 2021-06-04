@@ -1,18 +1,18 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Encryption.Configuration;
+using Bookmyslot.Api.Common.Encryption.Helpers;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace Bookmyslot.Api.Common.Encryption
 {
-    public class Sha256SaltedHash : IHashing
+    public class FlexibleSha256SaltedHash : IHashing
     {
         private readonly IRandomNumberGenerator randomNumberGenerator;
         private readonly EncryptionConfiguration encryptionConfiguration;
         private byte[] salt;
-        public Sha256SaltedHash(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration)
+        public FlexibleSha256SaltedHash(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration)
         {
             this.randomNumberGenerator = randomNumberGenerator;
             this.encryptionConfiguration = encryptionConfiguration;
@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.Common.Encryption
                 var hasedBytes = sha256.ComputeHash(Combine(messageBytes, this.salt));
                 var hashedMessage = Convert.ToBase64String(hasedBytes);
 
-                return HttpUtility.UrlEncode(hashedMessage);
+                return EncryptionHelper.UrlEncode(hashedMessage);
             }
         }
 
