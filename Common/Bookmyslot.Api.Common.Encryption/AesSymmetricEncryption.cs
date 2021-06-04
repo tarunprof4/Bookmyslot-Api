@@ -46,13 +46,13 @@ namespace Bookmyslot.Api.Common.Encryption
 
                     var encryptedMessageBytes = memoryStream.ToArray();
                     var encryptedMessage = Convert.ToBase64String(encryptedMessageBytes);
-                    return HttpUtility.UrlEncode(encryptedMessage);
+                    return UrlEncode(encryptedMessage);
                 }
             }
         }
-        public string Decrypt(string encryptedMessage)
+        public string Decrypt(string encodedEncryptedMessage)
         {
-            if (string.IsNullOrWhiteSpace(encryptedMessage))
+            if (string.IsNullOrWhiteSpace(encodedEncryptedMessage))
             {
                 return string.Empty;
             }
@@ -67,6 +67,7 @@ namespace Bookmyslot.Api.Common.Encryption
                     {
                         var cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
 
+                        var encryptedMessage = this.UrlDecode(encodedEncryptedMessage);
                         var encryptedMessageBytes = Convert.FromBase64String(encryptedMessage);
                         cryptoStream.Write(encryptedMessageBytes, 0, encryptedMessageBytes.Length);
                         cryptoStream.FlushFinalBlock();
@@ -86,6 +87,15 @@ namespace Bookmyslot.Api.Common.Encryption
 
         }
 
+        private string UrlEncode(string encryptedMessage)
+        {
+            return encryptedMessage.Replace("/", "_").Replace("+", "-");
+        }
+
+        private string UrlDecode(string encodedEcryptedMesage)
+        {
+            return encodedEcryptedMesage.Replace("_", "/").Replace("-", "+");
+        }
 
         private void SetAesDefaults(AesCryptoServiceProvider aes)
         {
