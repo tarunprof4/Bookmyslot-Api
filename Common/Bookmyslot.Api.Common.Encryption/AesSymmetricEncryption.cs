@@ -1,11 +1,12 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Encryption.Configuration;
+using Bookmyslot.Api.Common.Encryption.Helpers;
 using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
+
 
 namespace Bookmyslot.Api.Common.Encryption
 {
@@ -46,7 +47,8 @@ namespace Bookmyslot.Api.Common.Encryption
 
                     var encryptedMessageBytes = memoryStream.ToArray();
                     var encryptedMessage = Convert.ToBase64String(encryptedMessageBytes);
-                    return UrlEncode(encryptedMessage);
+                    
+                    return EncryptionHelper.UrlEncode(encryptedMessage);
                 }
             }
         }
@@ -67,7 +69,7 @@ namespace Bookmyslot.Api.Common.Encryption
                     {
                         var cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
 
-                        var encryptedMessage = this.UrlDecode(encodedEncryptedMessage);
+                        var encryptedMessage = EncryptionHelper.UrlDecode(encodedEncryptedMessage);
                         var encryptedMessageBytes = Convert.FromBase64String(encryptedMessage);
                         cryptoStream.Write(encryptedMessageBytes, 0, encryptedMessageBytes.Length);
                         cryptoStream.FlushFinalBlock();
@@ -87,16 +89,7 @@ namespace Bookmyslot.Api.Common.Encryption
 
         }
 
-        private string UrlEncode(string encryptedMessage)
-        {
-            return encryptedMessage.Replace("/", "_").Replace("+", "-");
-        }
-
-        private string UrlDecode(string encodedEcryptedMesage)
-        {
-            return encodedEcryptedMesage.Replace("_", "/").Replace("-", "+");
-        }
-
+   
         private void SetAesDefaults(AesCryptoServiceProvider aes)
         {
             aes.Mode = CipherMode.CBC;

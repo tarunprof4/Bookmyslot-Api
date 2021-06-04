@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Encryption.Configuration;
+using Bookmyslot.Api.Common.Encryption.Helpers;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -33,7 +34,7 @@ namespace Bookmyslot.Api.Common.Encryption
                 var hasedBytes = sha256.ComputeHash(Combine(messageBytes, this.salt));
                 var hashedMessage = Convert.ToBase64String(hasedBytes);
 
-                return HttpUtility.UrlEncode(hashedMessage);
+                return EncryptionHelper.UrlEncode(hashedMessage);
             }
         }
 
