@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Azure.Repositories.Constants
+﻿namespace Bookmyslot.Api.Azure.Services.Constants
 {
     public class BlobConstants
     {

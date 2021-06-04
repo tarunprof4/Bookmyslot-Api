@@ -4,7 +4,6 @@ using Bookmyslot.Api.Common.Encryption.Helpers;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace Bookmyslot.Api.Common.Encryption
 {

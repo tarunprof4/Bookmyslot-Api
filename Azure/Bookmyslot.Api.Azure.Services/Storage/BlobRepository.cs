@@ -1,7 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Bookmyslot.Api.Azure.Contracts.Interfaces;
-using Bookmyslot.Api.Azure.Repositories.Constants;
+using Bookmyslot.Api.Azure.Services.Constants;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
@@ -9,7 +9,7 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.Azure.Repositories
+namespace Bookmyslot.Api.Azure.Services.Storage
 {
     public class BlobRepository : IBlobRepository
     {
@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.Azure.Repositories
                 await this.dbInterceptor.GetQueryResults("SaveProfilePicture", parameters, () => blobClient.UploadAsync(stream, blobHttpHeaders));
             }
 
-            return new Response<string>() { Result = blobClient.Uri.AbsoluteUri};
+            return new Response<string>() { Result = blobClient.Uri.AbsoluteUri };
         }
 
 
