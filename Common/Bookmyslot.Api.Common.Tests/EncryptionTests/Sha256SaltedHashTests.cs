@@ -9,7 +9,7 @@ namespace Bookmyslot.Api.Common.Tests.EncryptionTests
 
     public class Sha256SaltedHashTests
     {
-        private Sha256SaltedHash sha256SaltedHash;
+        private FlexibleSha256SaltedHash sha256SaltedHash;
         private IRandomNumberGenerator randomNumberGenerator;
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace Bookmyslot.Api.Common.Tests.EncryptionTests
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var encryptionConfiguration = new EncryptionConfiguration(configuration);
 
-            sha256SaltedHash = new Sha256SaltedHash(randomNumberGenerator, encryptionConfiguration);
+            sha256SaltedHash = new FlexibleSha256SaltedHash(randomNumberGenerator, encryptionConfiguration);
         }
 
         [TestCase("test")]

@@ -7,12 +7,12 @@ using System.Text;
 
 namespace Bookmyslot.Api.Common.Encryption
 {
-    public class Sha256SaltedHash : IHashing
+    public class FlexibleSha256SaltedHash : IHashing
     {
         private readonly IRandomNumberGenerator randomNumberGenerator;
         private readonly EncryptionConfiguration encryptionConfiguration;
         private byte[] salt;
-        public Sha256SaltedHash(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration)
+        public FlexibleSha256SaltedHash(IRandomNumberGenerator randomNumberGenerator, EncryptionConfiguration encryptionConfiguration)
         {
             this.randomNumberGenerator = randomNumberGenerator;
             this.encryptionConfiguration = encryptionConfiguration;

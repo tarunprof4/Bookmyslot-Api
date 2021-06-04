@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Encryption;
 using Bookmyslot.Api.Common.Encryption.Configuration;
 using Bookmyslot.Api.Common.Logging;
@@ -10,21 +9,19 @@ namespace Bookmyslot.Api.Common.Tests.EncryptionTests
 {
     public class AesSymmetryEncryptionTests
     {
-        private AesSymmetricEncryption aesSymmetricEncryption;
-        private IRandomNumberGenerator randomNumberGenerator;
+        private FlexibleAesSymmetricEncryption aesSymmetricEncryption;
         private ILoggerService loggerService;
 
 
         [SetUp]
         public void Setup()
         {
-            randomNumberGenerator = new RandomNumberGenerator();
             loggerService = new LoggerService();
 
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var encryptionConfiguration = new EncryptionConfiguration(configuration);
 
-            aesSymmetricEncryption = new AesSymmetricEncryption(randomNumberGenerator, encryptionConfiguration, loggerService);
+            aesSymmetricEncryption = new FlexibleAesSymmetricEncryption(encryptionConfiguration, loggerService);
         }
 
         [TestCase("test", "test")]

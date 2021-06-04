@@ -10,14 +10,14 @@ using System.Text;
 
 namespace Bookmyslot.Api.Common.Encryption
 {
-    public class AesSymmetricEncryption : ISymmetryEncryption
+    public class FlexibleAesSymmetricEncryption : ISymmetryEncryption
     {
         //32 bit randomNumberGenerator
         private readonly byte[] key;
         //16 bit randomNumberGenerator
         private readonly byte[] iv;
         private readonly ILoggerService loggerService;
-        public AesSymmetricEncryption(EncryptionConfiguration encryptionConfiguration, ILoggerService loggerService)
+        public FlexibleAesSymmetricEncryption(EncryptionConfiguration encryptionConfiguration, ILoggerService loggerService)
         {
             this.loggerService = loggerService;
             this.key = Convert.FromBase64String(encryptionConfiguration.SymmetryEncryptionKey); 

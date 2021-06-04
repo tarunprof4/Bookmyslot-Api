@@ -27,8 +27,8 @@ namespace Bookmyslot.Api.Injections
             services.AddTransient<IEventDispatcher, EventDispatcher>();
             services.AddSingleton<ICompression, GZipCompression>();
             services.AddSingleton<IRandomNumberGenerator, RandomNumberGenerator>();
-            services.AddSingleton<ISymmetryEncryption, AesSymmetricEncryption>();
-            services.AddSingleton<IHashing, Sha256SaltedHash>();
+            services.AddSingleton<ISymmetryEncryption, FlexibleAesSymmetricEncryption>();
+            services.AddSingleton<IHashing, FlexibleSha256SaltedHash>();
             services.AddSingleton<ILoggerService, LoggerService>();
 
             EmailInjections(services);
