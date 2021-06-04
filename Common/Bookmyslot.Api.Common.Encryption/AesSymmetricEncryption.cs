@@ -67,8 +67,7 @@ namespace Bookmyslot.Api.Common.Encryption
                     {
                         var cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
 
-                        var strValue = HttpUtility.UrlDecode(encryptedMessage);
-                        var encryptedMessageBytes = Convert.FromBase64String(strValue);
+                        var encryptedMessageBytes = Convert.FromBase64String(encryptedMessage);
                         cryptoStream.Write(encryptedMessageBytes, 0, encryptedMessageBytes.Length);
                         cryptoStream.FlushFinalBlock();
 
