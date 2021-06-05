@@ -1,14 +1,14 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Event;
 
-namespace Bookmyslot.Api.SlotScheduler.Domain.Events
+namespace Bookmyslot.Api.SlotScheduler.Domain.DomainEvents
 {
 
-    public class SlotMeetingInformationRequestedEvent : BaseDomainEvent
+    public class SlotMeetingInformationRequestedDomainEvent : BaseDomainEvent
     {
         public string SlotId { get; set; }
         public string ResendTo { get; set; }
 
-        public SlotMeetingInformationRequestedEvent(string slotId, string resendTo)
+        public SlotMeetingInformationRequestedDomainEvent(string slotId, string resendTo)
         {
             this.SlotId = slotId;
             this.ResendTo = resendTo;

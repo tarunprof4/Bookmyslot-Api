@@ -5,7 +5,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Bookmyslot.Api.SlotScheduler.Business.EventHandlers
+namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
 {
 
     public class SlotCancelledEventHandler : INotificationHandler<SlotCancelledEvent>

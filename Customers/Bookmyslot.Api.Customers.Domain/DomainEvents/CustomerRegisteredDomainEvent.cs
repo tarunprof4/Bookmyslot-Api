@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Event;
 
-namespace Bookmyslot.Api.Customers.Domain.Events
+namespace Bookmyslot.Api.Customers.Domain.DomainEvents
 {
     public class CustomerRegisteredDomainEvent : BaseDomainEvent
     {

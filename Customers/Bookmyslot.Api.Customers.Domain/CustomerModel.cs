@@ -19,5 +19,10 @@
 
         public string Email { get; set; }
 
+        public string GetCustomerFullName()
+        {
+            return string.Format("{0} {1}", FirstName, LastName);
+        }
+
     }
 }

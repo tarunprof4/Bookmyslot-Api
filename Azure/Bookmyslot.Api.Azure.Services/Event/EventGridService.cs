@@ -32,17 +32,17 @@ namespace Bookmyslot.Api.Azure.Services.Event
             this.loggerService = loggerService;
         }
 
-        public async Task PublishEventAsync(string eventName, BaseDomainEvent baseDomainEvent)
+        public async Task PublishEventAsync(string eventName, IntegrationEvent integrationEvent)
         {
             var coorelationId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.CoorelationId];
-            var eventRequestLog = new EventRequestLog(coorelationId, eventName, baseDomainEvent);
+            var eventRequestLog = new EventRequestLog(coorelationId, eventName, integrationEvent);
             this.loggerService.Debug("PublishEventsAsync Started {@eventGridLog}", eventRequestLog);
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             try
             {
-                await this.eventGridClient.PublishEventsAsync(new Uri(GetTopicName(eventName)).Host, CreateEventGridEvent(baseDomainEvent));
+                await this.eventGridClient.PublishEventsAsync(new Uri(GetTopicName(eventName)).Host, CreateEventGridEvent(integrationEvent));
             }
 
             catch (Exception exp)
@@ -57,10 +57,7 @@ namespace Bookmyslot.Api.Azure.Services.Event
                 this.loggerService.Debug("PublishEventsAsync Completed {@eventCompleteLog}", eventCompleteLog);
             }
 
-
-            
         }
-
 
         private string GetTopicName(string eventName)
         {
@@ -68,7 +65,7 @@ namespace Bookmyslot.Api.Azure.Services.Event
             return topicEndpoint;
         }
 
-        private IList<EventGridEvent> CreateEventGridEvent(BaseDomainEvent baseDomainEvent)
+        private IList<EventGridEvent> CreateEventGridEvent(IntegrationEvent integrationEvent)
         {
             List<EventGridEvent> eventsList = new List<EventGridEvent>();
 
@@ -76,7 +73,7 @@ namespace Bookmyslot.Api.Azure.Services.Event
             {
                 Id = Guid.NewGuid().ToString(),
                 EventType = "Contoso.Items.ItemReceived",
-                Data = baseDomainEvent,
+                Data = integrationEvent,
                 EventTime = DateTime.UtcNow,
                 Subject = "Door1",
                 DataVersion = "2.0"
@@ -84,5 +81,7 @@ namespace Bookmyslot.Api.Azure.Services.Event
 
             return eventsList;
         }
+
+        
     }
 }
