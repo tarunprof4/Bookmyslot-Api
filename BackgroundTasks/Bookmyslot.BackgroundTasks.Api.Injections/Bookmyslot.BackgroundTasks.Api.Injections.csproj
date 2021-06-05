@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Business\Bookmyslot.BackgroundTasks.Api.Business.csproj" />
+    <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Contracts\Bookmyslot.BackgroundTasks.Api.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

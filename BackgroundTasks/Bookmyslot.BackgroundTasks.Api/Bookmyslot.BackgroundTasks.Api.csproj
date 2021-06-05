@@ -4,5 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Injections\Bookmyslot.BackgroundTasks.Api.Injections.csproj" />
+  </ItemGroup>
+
 
 </Project>
