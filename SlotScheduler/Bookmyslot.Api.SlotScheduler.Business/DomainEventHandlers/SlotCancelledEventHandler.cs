@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
 using Bookmyslot.Api.Customers.Domain.Constants;
+using Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents;
 using Bookmyslot.Api.SlotScheduler.Domain.DomainEvents;
-using Bookmyslot.Api.SlotScheduler.Domain.Events;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
 {
 
-    public class SlotCancelledEventHandler : INotificationHandler<SlotCancelledEvent>
+    public class SlotCancelledEventHandler : INotificationHandler<SlotCancelledDomainEvent>
     {
         private readonly IEventGridService eventGridService;
         public SlotCancelledEventHandler(IEventGridService eventGridService)
@@ -17,9 +17,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
             this.eventGridService = eventGridService;
         }
 
-        public async Task Handle(SlotCancelledDomainEvent domainEvent, CancellationToken cancellationToken)
+        public async Task Handle(SlotCancelledDomainEvent slotCancelledDomainEvent, CancellationToken cancellationToken)
         {
-            await this.eventGridService.PublishEventAsync(EventConstants.SlotCancelledEvent, domainEvent);
+            var cancelledBy = slotCancelledDomainEvent.CancelledByCustomerSummaryModel.FullName;
+            var slotCancelledIntegrationEvent = new SlotCancelledIntegrationEvent(slotCancelledDomainEvent.CancelledSlotModel, cancelledBy);
+
+            await this.eventGridService.PublishEventAsync(EventConstants.SlotCancelledEvent, slotCancelledIntegrationEvent);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
 
         public async Task Handle(SlotMeetingInformationRequestedEvent domainEvent, CancellationToken cancellationToken)
         {
+
             await this.eventGridService.PublishEventAsync(EventConstants.SlotMeetingInformationRequestedEvent, domainEvent);
         }
     }

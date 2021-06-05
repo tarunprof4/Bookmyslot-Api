@@ -31,6 +31,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
             this.StartTime = slotModel.SlotStartTime.ToString();
             this.EndTime = slotModel.SlotEndTime.ToString();
             this.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
+            this.MeetingLink = MeetingLink;
         }
     }
 }
