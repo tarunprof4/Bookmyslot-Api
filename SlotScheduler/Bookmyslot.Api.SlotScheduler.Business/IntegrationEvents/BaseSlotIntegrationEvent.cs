@@ -7,19 +7,18 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
 {
     public abstract class BaseSlotIntegrationEvent : IntegrationEvent
     {
-        protected string Title { get; set; }
-        protected string Country { get; set; }
-        protected string TimeZone { get; set; }
-        protected string SlotDate { get; set; }
-        protected string StartTime { get; set; }
-        protected string EndTime { get; set; }
+        public string Title { get; }
+        public string Country { get; }
+        public string TimeZone { get;  }
+        public string SlotDate { get;  }
+        public string StartTime { get;  }
+        public string EndTime { get;  }
 
-        protected string Duration { get; set; }
+        public string Duration { get; }
 
-        protected string MeetingLink { get; set; }
+        public string MeetingLink { get;  }
 
-
-        protected void SetBaseSlotIntegrationEvent(SlotModel slotModel)
+        public BaseSlotIntegrationEvent(SlotModel slotModel)
         {
             this.Title = slotModel.Title;
             this.Country = slotModel.Country;
@@ -30,5 +29,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
             this.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
             this.MeetingLink = MeetingLink;
         }
+      
+
     }
 }

@@ -6,8 +6,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
     {
         public string BookedBy { get; }
         public SlotScheduledIntegrationEvent(SlotModel slotModel, string bookedBy)
+            :base(slotModel)
         {
-            base.SetBaseSlotIntegrationEvent(slotModel);
             this.BookedBy = bookedBy;
         }
     }

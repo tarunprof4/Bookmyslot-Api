@@ -7,8 +7,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
     {
         public string ResendTo { get; }
         public SlotMeetingInformationRequestedIntegrationEvent(SlotModel slotModel, string resendTo)
+            : base(slotModel)
         {
-            base.SetBaseSlotIntegrationEvent(slotModel);
             this.ResendTo = resendTo;
         }
     }
