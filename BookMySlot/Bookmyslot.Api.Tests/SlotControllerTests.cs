@@ -4,6 +4,7 @@ using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
@@ -118,7 +119,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(InValidSlot));
             symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Never());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<CustomerSummaryModel>())), Times.Never());
             cancelSlotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CancelSlotViewModel>())), Times.Once());
         }
 
@@ -136,7 +137,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
             symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<CustomerSummaryModel>())), Times.Never());
             cancelSlotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CancelSlotViewModel>())), Times.Once());
         }
 
@@ -148,7 +149,7 @@ namespace Bookmyslot.Api.Tests
             var cancelSlotViewModel = new CancelSlotViewModel() { SlotKey = ValidSlotKey };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlotViewModel));
             Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
-            slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<string>(),It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
+            slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<string>(),It.IsAny<CustomerSummaryModel>())).Returns(Task.FromResult(slotBusinessMockResponse));
 
             var response = await slotController.CancelSlot(cancelSlotViewModel);
 
@@ -157,7 +158,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
             symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
-            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
+            slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<CustomerSummaryModel>())), Times.Once());
             cancelSlotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CancelSlotViewModel>())), Times.Once());
         }
 

@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using System.Collections.Generic;
@@ -14,8 +15,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             this.slotRepository = slotRepository;
         }
-        public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel, string bookedBy)
+        public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel, CustomerSummaryModel bookedByCustomerSummaryModel)
         {
+            var bookedBy = bookedByCustomerSummaryModel.Id;
             if (slotModel.IsSlotBookedByHimself(bookedBy))
             {
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot });
@@ -26,7 +28,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleDateInvalid });
             }
 
-            slotModel.ScheduleSlot(bookedBy);
+            slotModel.ScheduleSlot(bookedByCustomerSummaryModel);
             return await this.slotRepository.UpdateSlotBooking(slotModel);
         }
     }

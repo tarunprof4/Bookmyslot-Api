@@ -1,7 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
-using Bookmyslot.Api.SlotScheduler.Domain.Events;
+using Bookmyslot.Api.SlotScheduler.Domain.DomainEvents;
 using NodaTime;
 using System;
 
@@ -114,10 +115,10 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         }
 
 
-        public void ScheduleSlot(string bookedBy)
+        public void ScheduleSlot(CustomerSummaryModel bookedByCustomerSummaryModel)
         {
-            Events.Add(new SlotScheduledEvent(this.Id, bookedBy));
-            this.BookedBy = bookedBy;
+            Events.Add(new SlotScheduledDomainEvent(this, bookedByCustomerSummaryModel));
+            this.BookedBy = bookedByCustomerSummaryModel.Id;
             this.SlotMeetingLink = CreateSlotMeetingUrl();
         }
 
@@ -129,9 +130,9 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
             return meetingLinkUrl;
         }
 
-        public void ResendSlotMeetingInformation(string resendTo)
+        public void ResendSlotMeetingInformation(CustomerSummaryModel resendToCustomerSummaryModel)
         {
-            Events.Add(new SlotMeetingInformationRequestedEvent(this.Id, resendTo));
+            Events.Add(new SlotMeetingInformationRequestedDomainEvent(this, resendToCustomerSummaryModel));
         }
 
 

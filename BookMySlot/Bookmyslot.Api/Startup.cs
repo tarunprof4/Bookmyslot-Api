@@ -4,12 +4,12 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
-using Bookmyslot.Api.Customers.Business.EventHandlers;
+using Bookmyslot.Api.Customers.Business.DomainEventHandlers;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.Injections;
 using Bookmyslot.Api.NodaTime.Contracts.Constants;
 using Bookmyslot.Api.NodaTime.Interfaces;
-using Bookmyslot.Api.SlotScheduler.Business.EventHandlers;
+using Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers;
 using Bookmyslot.Api.Web.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,10 +44,10 @@ namespace Bookmyslot.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMediatR(typeof(CustomerRegisteredNotificationHandler).Assembly,
-                typeof(SlotCancelledEventHandler).Assembly,
-                typeof(SlotMeetingInformationRequestedEventHandler).Assembly,
-                typeof(SlotMeetingInformationRequestedEventHandler).Assembly);
+            services.AddMediatR(typeof(CustomerRegisteredDomainEventHandler).Assembly,
+                typeof(SlotCancelledDomainEventHandler).Assembly,
+                typeof(SlotMeetingInformationRequestedDomainEventHandler).Assembly,
+                typeof(SlotMeetingInformationRequestedDomainEventHandler).Assembly);
 
 
             var appConfiguration = new AppConfiguration(Configuration);

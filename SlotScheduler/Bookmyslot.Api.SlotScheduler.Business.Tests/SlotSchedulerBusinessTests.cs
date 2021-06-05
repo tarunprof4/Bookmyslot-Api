@@ -1,6 +1,8 @@
+using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
@@ -41,8 +43,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             var slotModel = CreateValidSlotModel();
             slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
+            var bookedByCustomerSummaryModel = new CustomerSummaryModel(new CurrentUserModel() { Id = slotModel.BookedBy });
 
-            var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
+            var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, bookedByCustomerSummaryModel);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotScheduleDateInvalid);
@@ -56,8 +59,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModel = CreateValidSlotModel();
             slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(OlderSlotDateUtc, TimeZoneConstants.IndianTimezone);
             slotModel.BookedBy = CreatedBy;
+            var bookedByCustomerSummaryModel = new CustomerSummaryModel(new CurrentUserModel() { Id = slotModel.BookedBy });
 
-            var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
+            var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, bookedByCustomerSummaryModel);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
             Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot);
@@ -69,8 +73,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task ScheduleSlot_ValidDetails_ReturnsSuccessResponse()
         {
             var slotModel = CreateValidSlotModel();
-            
-            var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
+            var bookedByCustomerSummaryModel = new CustomerSummaryModel(new CurrentUserModel() { Id = slotModel.BookedBy });
+
+            var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, bookedByCustomerSummaryModel);
 
             slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<SlotModel>())), Times.Once());
         }
