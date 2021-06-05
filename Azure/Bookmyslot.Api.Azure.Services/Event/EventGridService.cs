@@ -42,10 +42,10 @@ namespace Bookmyslot.Api.Azure.Services.Event
             stopWatch.Start();
             try
             {
-               // var client = new EventGridClient(new TopicCredentials("TheLocal+DevelopmentKey="));
-               // await client.PublishEventsWithHttpMessagesAsync("localhost:60101", CreateEventGridEvent(integrationEvent));
+                var client = new EventGridClient(new TopicCredentials("TheLocal+DevelopmentKey="));
+                await client.PublishEventsAsync("localhost:60101", CreateEventGridEvent(integrationEvent));
 
-                await this.eventGridClient.PublishEventsAsync(new Uri(GetTopicName(eventName)).Host, CreateEventGridEvent(integrationEvent));
+                //await this.eventGridClient.PublishEventsAsync(new Uri(GetTopicName(eventName)).Host, CreateEventGridEvent(integrationEvent));
             }
 
             catch (Exception exp)

@@ -167,6 +167,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.SlotSchedule
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Azure.Services", "Azure\Bookmyslot.Api.Azure.Services\Bookmyslot.Api.Azure.Services.csproj", "{B1FC69AE-44A7-47B9-8E41-A7F8FA2F2F6F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackgroundTasks", "BackgroundTasks", "{62684FA8-C700-4E57-9D37-FFA18F58009C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api\Bookmyslot.BackgroundTasks.Api.csproj", "{545CD63B-0B77-4D8F-B08D-735E4852AD42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -421,6 +425,10 @@ Global
 		{B1FC69AE-44A7-47B9-8E41-A7F8FA2F2F6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1FC69AE-44A7-47B9-8E41-A7F8FA2F2F6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1FC69AE-44A7-47B9-8E41-A7F8FA2F2F6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{545CD63B-0B77-4D8F-B08D-735E4852AD42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{545CD63B-0B77-4D8F-B08D-735E4852AD42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{545CD63B-0B77-4D8F-B08D-735E4852AD42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{545CD63B-0B77-4D8F-B08D-735E4852AD42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -497,6 +505,7 @@ Global
 		{57D9D2BD-196C-4E0F-A5C0-9C5FD325979F} = {3A26CBA2-A489-4FA3-BFB4-987D087F4B18}
 		{87BAB85F-747A-476C-A159-5ECEEB508D50} = {3F730722-5092-42A2-B439-D974333D0B99}
 		{B1FC69AE-44A7-47B9-8E41-A7F8FA2F2F6F} = {14BA1D7E-64E3-4A69-9CA3-EE5AD8FB145C}
+		{545CD63B-0B77-4D8F-B08D-735E4852AD42} = {62684FA8-C700-4E57-9D37-FFA18F58009C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}
