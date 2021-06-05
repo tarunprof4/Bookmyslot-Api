@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Domain;
@@ -53,7 +54,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
 
 
-        public async Task<Response<bool>> CancelSlot(string slotId, string cancelledBy)
+        public async Task<Response<bool>> CancelSlot(string slotId, CustomerSummaryModel cancelledByCustomerSummaryModel)
         {
             if (string.IsNullOrWhiteSpace(slotId))
             {
@@ -63,6 +64,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             var checkSlotExistsResponse = await CheckIfSlotExists(slotId);
             if (checkSlotExistsResponse.Item1)
             {
+                var cancelledBy = cancelledByCustomerSummaryModel.Id;
                 var slotModel = checkSlotExistsResponse.Item2;
                 var slotStatus = slotModel.CancelSlot(cancelledBy);
                 var cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);

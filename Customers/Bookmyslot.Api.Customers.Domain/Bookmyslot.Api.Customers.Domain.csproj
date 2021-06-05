@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.Common\Bookmyslot.Api.Authentication.Common.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Contracts\Bookmyslot.Api.Common.Contracts.csproj" />
   </ItemGroup>
 

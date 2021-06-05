@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
 using Bookmyslot.Api.Customers.Domain.Constants;
+using Bookmyslot.Api.SlotScheduler.Domain.DomainEvents;
 using Bookmyslot.Api.SlotScheduler.Domain.Events;
 using MediatR;
 using System.Threading;
@@ -16,7 +17,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
             this.eventGridService = eventGridService;
         }
 
-        public async Task Handle(SlotCancelledEvent domainEvent, CancellationToken cancellationToken)
+        public async Task Handle(SlotCancelledDomainEvent domainEvent, CancellationToken cancellationToken)
         {
             await this.eventGridService.PublishEventAsync(EventConstants.SlotCancelledEvent, domainEvent);
         }
