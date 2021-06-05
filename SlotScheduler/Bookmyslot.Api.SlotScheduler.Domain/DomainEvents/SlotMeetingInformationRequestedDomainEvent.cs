@@ -1,17 +1,18 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Event;
+using Bookmyslot.Api.Customers.Domain;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain.DomainEvents
 {
 
     public class SlotMeetingInformationRequestedDomainEvent : BaseDomainEvent
     {
-        public string SlotId { get; set; }
-        public string ResendTo { get; set; }
+        public SlotModel SlotModel { get; set; }
+        public CustomerSummaryModel ResendToCustomerSummaryModel { get; }
 
-        public SlotMeetingInformationRequestedDomainEvent(string slotId, string resendTo)
+        public SlotMeetingInformationRequestedDomainEvent(SlotModel slotModel, CustomerSummaryModel resendToCustomerSummaryModel)
         {
-            this.SlotId = slotId;
-            this.ResendTo = resendTo;
+            this.SlotModel = slotModel;
+            this.ResendToCustomerSummaryModel = resendToCustomerSummaryModel;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Domain.Events;
+using Bookmyslot.Api.Customers.Domain.DomainEvents;
 
 namespace Bookmyslot.Api.Customers.Domain
 {

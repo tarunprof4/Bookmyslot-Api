@@ -1,7 +1,4 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Event;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Customers.Business.IntegrationEvents
 {

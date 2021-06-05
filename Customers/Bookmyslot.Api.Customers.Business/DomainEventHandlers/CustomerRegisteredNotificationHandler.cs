@@ -1,10 +1,9 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
+using Bookmyslot.Api.Customers.Business.IntegrationEvents;
 using Bookmyslot.Api.Customers.Domain.Constants;
-using Bookmyslot.Api.Customers.Domain.Events;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Bookmyslot.Api.Customers.Business.IntegrationEvents;
 
 namespace Bookmyslot.Api.Customers.Business.DomainEventHandlers
 {

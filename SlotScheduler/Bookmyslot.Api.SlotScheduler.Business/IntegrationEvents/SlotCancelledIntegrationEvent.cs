@@ -2,9 +2,6 @@
 using Bookmyslot.Api.Common.Contracts.Event;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.SlotScheduler.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
 {
