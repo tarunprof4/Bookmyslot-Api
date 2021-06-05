@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
 
         public string Duration { get; }
 
-        public string MeetingLink { get;  }
+        public string SlotMeetingLink { get;  }
 
         public BaseSlotIntegrationEvent(SlotModel slotModel)
         {
@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
             this.StartTime = slotModel.SlotStartTime.ToString();
             this.EndTime = slotModel.SlotEndTime.ToString();
             this.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
-            this.MeetingLink = MeetingLink;
+            this.SlotMeetingLink = slotModel.SlotMeetingLink;
         }
       
 
