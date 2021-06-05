@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
 {
-    public class SlotScheduledEventHandler : INotificationHandler<SlotScheduledDomainEvent>
+    public class SlotScheduledDomainEventHandler : INotificationHandler<SlotScheduledDomainEvent>
     {
         private readonly IEventGridService eventGridService;
-        public SlotScheduledEventHandler(IEventGridService eventGridService)
+        public SlotScheduledDomainEventHandler(IEventGridService eventGridService)
         {
             this.eventGridService = eventGridService;
         }

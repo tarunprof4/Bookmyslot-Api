@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Bookmyslot.Api.Customers.Business.DomainEventHandlers
 {
 
-    public class CustomerRegisteredNotificationHandler : INotificationHandler<CustomerRegisteredDomainEvent>
+    public class CustomerRegisteredDomainEventHandler : INotificationHandler<CustomerRegisteredDomainEvent>
     {
         private readonly IEventGridService eventGridService;
-        public CustomerRegisteredNotificationHandler(IEventGridService eventGridService)
+        public CustomerRegisteredDomainEventHandler(IEventGridService eventGridService)
         {
             this.eventGridService = eventGridService;
         }
