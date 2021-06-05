@@ -45,6 +45,7 @@ namespace Bookmyslot.Api.Azure.Services.Event
                 var client = new EventGridClient(new TopicCredentials("TheLocal+DevelopmentKey="));
                 await client.PublishEventsAsync("localhost:60101", CreateEventGridEvent(integrationEvent));
 
+                // await client.PublishEventsWithHttpMessagesAsync("localhost:60101", CreateEventGridEvent(integrationEvent));
                 //await this.eventGridClient.PublishEventsAsync(new Uri(GetTopicName(eventName)).Host, CreateEventGridEvent(integrationEvent));
             }
 
