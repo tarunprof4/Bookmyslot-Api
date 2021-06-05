@@ -6,6 +6,7 @@ using Bookmyslot.Api.Common.Contracts.Event;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.Customers.Domain.DomainEvents;
 using Bookmyslot.Api.Web.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

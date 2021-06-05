@@ -1,4 +1,9 @@
-﻿namespace Bookmyslot.Api.NodaTime.Contracts.Configuration
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Bookmyslot.Api.NodaTime.Contracts.Configuration
 {
     public class NodaTimeZoneLocationConfigurationSingleton
     {

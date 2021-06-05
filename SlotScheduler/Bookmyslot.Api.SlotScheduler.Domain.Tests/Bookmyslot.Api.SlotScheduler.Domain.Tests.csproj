@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Domain\Bookmyslot.Api.Customers.Domain.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.SlotScheduler.Domain\Bookmyslot.Api.SlotScheduler.Domain.csproj" />
   </ItemGroup>
 
