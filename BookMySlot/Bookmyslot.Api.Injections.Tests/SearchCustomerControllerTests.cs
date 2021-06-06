@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Configuration;
+﻿using Bookmyslot.Api.Cache.Contracts.Configuration;
+using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Microsoft.AspNetCore;

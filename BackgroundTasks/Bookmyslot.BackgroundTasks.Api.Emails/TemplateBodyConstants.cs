@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Customers.Emails
+﻿namespace Bookmyslot.BackgroundTasks.Api.Emails
 {
     public class TemplateBodyConstants
     {

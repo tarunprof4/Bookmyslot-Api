@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 
-namespace Bookmyslot.Api.Customers.Emails
+namespace Bookmyslot.BackgroundTasks.Api.Emails
 {
     public class TemplateConstants
     {

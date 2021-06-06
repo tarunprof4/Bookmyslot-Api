@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Contracts\Bookmyslot.BackgroundTasks.Api.Contracts.csproj" />
+    <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Emails\Bookmyslot.BackgroundTasks.Api.Emails.csproj" />
   </ItemGroup>
 
 </Project>

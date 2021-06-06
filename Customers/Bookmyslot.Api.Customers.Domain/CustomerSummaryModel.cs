@@ -8,10 +8,13 @@ namespace Bookmyslot.Api.Customers.Domain
 
         public string FullName { get; }
 
+        public string Email { get; }
+
         public CustomerSummaryModel(CurrentUserModel currentUserModel)
         {
             Id = currentUserModel.Id;
             FullName = currentUserModel.GetFullName();
+            Email = currentUserModel.Email;
         }
      
     }

@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Customers.Emails.ViewModels
+﻿namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
 {
     public class SlotSchedulerCancelledViewModel : BaseSlotSchedulerViewModel
     {

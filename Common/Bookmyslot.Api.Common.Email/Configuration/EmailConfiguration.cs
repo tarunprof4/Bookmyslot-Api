@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Microsoft.Extensions.Configuration;
 
-namespace Bookmyslot.Api.Common.Contracts.Configuration
+namespace Bookmyslot.Api.Common.Email.Configuration
 {
     public class EmailConfiguration
     {

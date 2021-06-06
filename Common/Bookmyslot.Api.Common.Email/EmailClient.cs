@@ -1,8 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Logging;
+using Bookmyslot.Api.Common.Email.Configuration;
 using Bookmyslot.Api.Common.Email.Constants;
 using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Http;
@@ -37,8 +37,6 @@ namespace Bookmyslot.Api.Common.Email
             this.httpContextAccessor = httpContextAccessor;
             this.loggerService = loggerService;
         }
-
-
         public async Task<Response<bool>> SendEmail(EmailModel emailModel)
         {
             try
@@ -55,7 +53,6 @@ namespace Bookmyslot.Api.Common.Email
                 return Response<bool>.Error(new List<string>() { EmailConstants.SendEmailFailure });
             }
         }
-
         private MailMessage CreateMailMessage(EmailModel emailModel)
         {
             var mailMessage = new MailMessage();
