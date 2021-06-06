@@ -2,7 +2,7 @@
 using Bookmyslot.Api.Common.Contracts.Event;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Logging;
+using Bookmyslot.Api.Common.Logging.Constants;
 using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.EventGrid;

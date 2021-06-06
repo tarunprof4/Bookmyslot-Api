@@ -1,8 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Email;
-using Bookmyslot.Api.Common.Logging;
-using Bookmyslot.Api.Common.Logging.Enrichers;
+using Bookmyslot.BackgroundTasks.Api.Logging;
+using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.BackgroundTasks.Api.Injections

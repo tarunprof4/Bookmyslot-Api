@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.Api.Common.Contracts.Infrastructure.Logging
+﻿namespace Bookmyslot.BackgroundTasks.Api.Logging.Constants
 {
     public class LogConstants
     {
