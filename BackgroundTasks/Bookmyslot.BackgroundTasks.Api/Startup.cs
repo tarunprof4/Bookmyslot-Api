@@ -28,10 +28,7 @@ namespace Bookmyslot.BackgroundTasks.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var appConfiguration = new AppConfiguration(Configuration);
-            services.AddSingleton(appConfiguration);
-
-            Injections(services, appConfiguration);
+            Injections(services);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -56,12 +53,13 @@ namespace Bookmyslot.BackgroundTasks.Api
             });
         }
 
-        private void Injections(IServiceCollection services, AppConfiguration appConfiguration)
+        private void Injections(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
 
             AppConfigurationInjection.LoadInjections(services, Configuration);
             CommonInjection.LoadInjections(services);
+            BackgroundInjection.LoadInjections(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
