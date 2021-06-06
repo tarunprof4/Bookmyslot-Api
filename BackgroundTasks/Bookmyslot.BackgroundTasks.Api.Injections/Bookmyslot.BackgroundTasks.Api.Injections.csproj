@@ -10,9 +10,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Email\Bookmyslot.Api.Common.Email.csproj" />
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
     <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Business\Bookmyslot.BackgroundTasks.Api.Business.csproj" />
     <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Contracts\Bookmyslot.BackgroundTasks.Api.Contracts.csproj" />
+    <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Logging\Bookmyslot.BackgroundTasks.Api.Logging.csproj" />
   </ItemGroup>
 
 </Project>

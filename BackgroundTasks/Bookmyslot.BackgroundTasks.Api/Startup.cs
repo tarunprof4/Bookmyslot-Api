@@ -28,10 +28,8 @@ namespace Bookmyslot.BackgroundTasks.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var appConfiguration = new AppConfiguration(Configuration);
-            services.AddSingleton(appConfiguration);
-
-            Injections(services, appConfiguration);
+           
+            Injections(services);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -56,12 +54,16 @@ namespace Bookmyslot.BackgroundTasks.Api
             });
         }
 
-        private void Injections(IServiceCollection services, AppConfiguration appConfiguration)
+        private void Injections(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            var appConfiguration = new AppConfiguration(Configuration);
+            services.AddSingleton(appConfiguration);
+
 
             AppConfigurationInjection.LoadInjections(services, Configuration);
             CommonInjection.LoadInjections(services);
+            BackgroundInjection.LoadInjections(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
@@ -97,11 +99,9 @@ namespace Bookmyslot.BackgroundTasks.Api
     
         private static void InitializeSerilog(IServiceProvider serviceProvider)
         {
-            var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
             var appConfiguration = serviceProvider.GetService<AppConfiguration>();
-
-
-
+            var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
+            
 
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
@@ -123,7 +123,7 @@ namespace Bookmyslot.BackgroundTasks.Api
 
 
             var loggerService = serviceProvider.GetService<ILoggerService>();
-            loggerService.Debug("Starting Bookmyslot web host");
+            loggerService.Debug("Starting Background web host");
         }
 
       

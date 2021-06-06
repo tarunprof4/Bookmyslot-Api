@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Logging.Constants;
+﻿using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
+using Bookmyslot.BackgroundTasks.Api.Logging.Constants;
 using Microsoft.AspNetCore.Http;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Bookmyslot.Api.Common.Logging.Enrichers
+namespace Bookmyslot.BackgroundTasks.Api.Logging.Enrichers
 {
     public class DefaultLogEnricher : ILogEventEnricher
     {

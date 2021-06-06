@@ -12,8 +12,6 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
         }
         private static void AppInjections(IServiceCollection services, IConfiguration configuration)
         {
-            var cacheConfiguration = new Contracts.Configuration.AppConfiguration(configuration);
-            services.AddSingleton(cacheConfiguration);
             var emailConfiguration = new EmailConfiguration(configuration);
             services.AddSingleton(emailConfiguration);
         }
