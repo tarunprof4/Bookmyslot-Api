@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace Bookmyslot.Api.Common.Contracts.Configuration
+namespace Bookmyslot.Api.Cache.Contracts.Configuration
 {
     public class CacheConfiguration
     {

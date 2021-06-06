@@ -1,5 +1,4 @@
-﻿
-using Bookmyslot.Api.Common.Contracts.Configuration;
+﻿using Bookmyslot.Api.Common.Email.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

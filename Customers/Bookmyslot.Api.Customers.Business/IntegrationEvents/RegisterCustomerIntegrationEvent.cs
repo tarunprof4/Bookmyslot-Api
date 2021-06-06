@@ -6,10 +6,13 @@ namespace Bookmyslot.Api.Customers.Business.IntegrationEvents
     {
         public string FirstName { get; }
         public string LastName { get; }
-        public RegisterCustomerIntegrationEvent(string firstName, string lastName)
+
+        public string Email { get; }
+        public RegisterCustomerIntegrationEvent(string firstName, string lastName, string email)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
+            this.Email = email;
         }
     }
 }

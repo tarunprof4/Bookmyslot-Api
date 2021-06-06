@@ -169,13 +169,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.Api.Azure.Servic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackgroundTasks", "BackgroundTasks", "{62684FA8-C700-4E57-9D37-FFA18F58009C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api\Bookmyslot.BackgroundTasks.Api.csproj", "{545CD63B-0B77-4D8F-B08D-735E4852AD42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.BackgroundTasks.Api", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api\Bookmyslot.BackgroundTasks.Api.csproj", "{545CD63B-0B77-4D8F-B08D-735E4852AD42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api.Business", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Business\Bookmyslot.BackgroundTasks.Api.Business.csproj", "{B8CBA124-151C-498B-AD34-E46D952C7E35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.BackgroundTasks.Api.Business", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Business\Bookmyslot.BackgroundTasks.Api.Business.csproj", "{B8CBA124-151C-498B-AD34-E46D952C7E35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api.Contracts", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Contracts\Bookmyslot.BackgroundTasks.Api.Contracts.csproj", "{C04AD8A1-F863-46EE-B375-7E7E1339156C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.BackgroundTasks.Api.Contracts", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Contracts\Bookmyslot.BackgroundTasks.Api.Contracts.csproj", "{C04AD8A1-F863-46EE-B375-7E7E1339156C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api.Injections", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Injections\Bookmyslot.BackgroundTasks.Api.Injections.csproj", "{B95C4C2C-DD90-4A0D-97D3-3AEF7CF6930E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.BackgroundTasks.Api.Injections", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Injections\Bookmyslot.BackgroundTasks.Api.Injections.csproj", "{B95C4C2C-DD90-4A0D-97D3-3AEF7CF6930E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api.Emails", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Emails\Bookmyslot.BackgroundTasks.Api.Emails.csproj", "{139A8E0F-7575-4A5B-8BA4-A0E46000D4B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -447,6 +449,10 @@ Global
 		{B95C4C2C-DD90-4A0D-97D3-3AEF7CF6930E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B95C4C2C-DD90-4A0D-97D3-3AEF7CF6930E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B95C4C2C-DD90-4A0D-97D3-3AEF7CF6930E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{139A8E0F-7575-4A5B-8BA4-A0E46000D4B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{139A8E0F-7575-4A5B-8BA4-A0E46000D4B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{139A8E0F-7575-4A5B-8BA4-A0E46000D4B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{139A8E0F-7575-4A5B-8BA4-A0E46000D4B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -527,6 +533,7 @@ Global
 		{B8CBA124-151C-498B-AD34-E46D952C7E35} = {62684FA8-C700-4E57-9D37-FFA18F58009C}
 		{C04AD8A1-F863-46EE-B375-7E7E1339156C} = {62684FA8-C700-4E57-9D37-FFA18F58009C}
 		{B95C4C2C-DD90-4A0D-97D3-3AEF7CF6930E} = {62684FA8-C700-4E57-9D37-FFA18F58009C}
+		{139A8E0F-7575-4A5B-8BA4-A0E46000D4B1} = {62684FA8-C700-4E57-9D37-FFA18F58009C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}

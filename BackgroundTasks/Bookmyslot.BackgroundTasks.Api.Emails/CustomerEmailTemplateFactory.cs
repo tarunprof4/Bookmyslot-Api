@@ -1,16 +1,13 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.Customers.Domain;
-using Bookmyslot.Api.Customers.Emails.ViewModels;
-using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.BackgroundTasks.Api.Contracts;
+using Bookmyslot.BackgroundTasks.Api.Emails.ViewModels;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Bookmyslot.Api.Customers.Emails
+namespace Bookmyslot.BackgroundTasks.Api.Emails
 {
     public static class CustomerEmailTemplateFactory
     {
@@ -146,8 +143,8 @@ namespace Bookmyslot.Api.Customers.Emails
         {
             baseSlotSchedulerViewModel.Title = slotModel.Title;
             baseSlotSchedulerViewModel.Country = slotModel.Country;
-            baseSlotSchedulerViewModel.TimeZone = slotModel.SlotStartZonedDateTime.Zone.Id;
-            baseSlotSchedulerViewModel.SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
+            //baseSlotSchedulerViewModel.TimeZone = slotModel.SlotStartZonedDateTime.Zone.Id;
+            //baseSlotSchedulerViewModel.SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
             baseSlotSchedulerViewModel.StartTime = slotModel.SlotStartTime.ToString();
             baseSlotSchedulerViewModel.EndTime = slotModel.SlotEndTime.ToString();
             baseSlotSchedulerViewModel.Duration = slotModel.SlotDuration.TotalMinutes.ToString();

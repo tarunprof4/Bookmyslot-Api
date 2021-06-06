@@ -21,7 +21,7 @@ namespace Bookmyslot.Api.Customers.Business.DomainEventHandlers
         {
             var registerCustomerModel = customerRegisteredDomainEvent.RegisterCustomerModel;
             var RegisterCustomerIntegrationEvent = new RegisterCustomerIntegrationEvent(registerCustomerModel.FirstName,
-                registerCustomerModel.LastName);
+                registerCustomerModel.LastName, registerCustomerModel.Email);
 
             await this.eventGridService.PublishEventAsync(EventConstants.CustomerRegisteredEvent, RegisterCustomerIntegrationEvent);
         }
