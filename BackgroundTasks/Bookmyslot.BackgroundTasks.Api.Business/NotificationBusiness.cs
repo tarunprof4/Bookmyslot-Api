@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
+using Bookmyslot.BackgroundTasks.Api.Emails;
 using System;
 using System.Threading.Tasks;
 
@@ -14,11 +15,10 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
             this.emailInteraction = emailInteraction;
         }
 
-
-        public async Task<Response<bool>> SendCustomerRegisterNotification(CustomerModel registerCustomerModel)
+        public async Task<Response<bool>> SendCustomerRegisterNotification(CustomerModel customerModel)
         {
-            //this.emailInteraction.SendEmail();
-            throw new NotImplementedException();
+            var emailModel = CustomerEmailTemplateFactory.GetCustomerRegistrationWelcomeEmailTemplate(customerModel);
+            return await this.emailInteraction.SendEmail(emailModel);
         }
     }
 }

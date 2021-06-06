@@ -1,10 +1,13 @@
 using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Email;
+using Bookmyslot.Api.Common.Email.Configuration;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts;
 using Bookmyslot.Api.SlotScheduler.Contracts.Constants;
+using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Moq;
@@ -13,7 +16,7 @@ using System;
 using System.Threading.Tasks;
 
 
-namespace Bookmyslot.Api.Customers.Emails.RegressionTests
+namespace Bookmyslot.BackgroundTasks.Api.Emails.RegressionTests
 {
     public class CustomerEmailTests
     {
@@ -25,7 +28,7 @@ namespace Bookmyslot.Api.Customers.Emails.RegressionTests
         private readonly DateTime ValidSlotDate = DateTime.UtcNow.AddDays(2);
         private readonly DateTime InValidSlotDate = DateTime.UtcNow.AddDays(-2);
         private readonly TimeSpan ValidSlotStartTime = new TimeSpan(0, 0, 0);
-        private readonly TimeSpan ValidSlotEndTime = new TimeSpan(0, SlotConstants.MinimumSlotDuration, 0);
+        private readonly TimeSpan ValidSlotEndTime = new TimeSpan(0, 30, 0);
 
 
         private const string FirstName = "First";
@@ -33,15 +36,17 @@ namespace Bookmyslot.Api.Customers.Emails.RegressionTests
         private EmailClient emailClient;
         private Mock<IHttpContextAccessor> httpContextAccessorMock;
         private EmailConfiguration emailConfiguration;
+        private Mock<ILoggerService> loggerServiceMock;
 
         [SetUp]
         public void Setup()
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             emailConfiguration = new EmailConfiguration(configuration);
+            loggerServiceMock = new Mock<ILoggerService>();
 
             httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            emailClient = new EmailClient(httpContextAccessorMock.Object, emailConfiguration);
+            emailClient = new EmailClient(httpContextAccessorMock.Object, emailConfiguration, loggerServiceMock.Object);
         }
 
         [Test]
@@ -76,7 +81,7 @@ namespace Bookmyslot.Api.Customers.Emails.RegressionTests
         [Test]
         public async Task SlotMeetingInformationTemplate()
         {
-            var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(CreateValidSlotModel(), MeetingLink, DefaultValidCreateCustomerModel());
+            var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(CreateValidSlotModel(), DefaultValidCreateCustomerModel());
             var response = await emailClient.SendEmail(emailModel);
 
             Assert.AreEqual(response.Result, true);
@@ -90,7 +95,7 @@ namespace Bookmyslot.Api.Customers.Emails.RegressionTests
             var slotModel = new SlotModel();
             slotModel.Id = SlotId;
             slotModel.Country = Country;
-            slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDate, TimeZoneConstants.IndianTimezone);
+            //slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDate, TimeZoneConstants.IndianTimezone);
             slotModel.Title = Title;
             slotModel.CreatedBy = CreatedBy;
             slotModel.SlotStartTime = ValidSlotStartTime;
