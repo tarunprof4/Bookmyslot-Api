@@ -14,6 +14,8 @@
 //{
 //    public class CustomerEmailTests
 //    {
+//        //////https://www.google.com/settings/security/lesssecureapps 
+        
 //        private readonly string SlotId = Guid.NewGuid().ToString();
 //        private const string Title = "Title";
 //        private const string CreatedBy = "CreatedBy";
