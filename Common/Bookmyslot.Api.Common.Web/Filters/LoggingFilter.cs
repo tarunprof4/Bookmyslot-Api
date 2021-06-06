@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Logging.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -8,9 +9,11 @@ namespace Bookmyslot.Api.Common.Web.Filters
 {
     public class LoggingFilter : IAsyncActionFilter
     {
+        private readonly ICurrentUser currentUser;
         private readonly ILoggerService loggerService;
-        public LoggingFilter(ILoggerService loggerService)
+        public LoggingFilter(ICurrentUser currentUser, ILoggerService loggerService)
         {
+            this.currentUser = currentUser;
             this.loggerService = loggerService;
         }
 
@@ -18,8 +21,9 @@ namespace Bookmyslot.Api.Common.Web.Filters
         {
             //var operationName = context.ActionDescriptor.DisplayName;
             var operationName  = ((ControllerBase)context.Controller).ControllerContext.ActionDescriptor.ActionName;
-            var user = "a@gmail.com";
-            var actionLog = new ActionLog(operationName, user);
+            var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
+            var customerId = currentUserResponse.Result.Id;
+            var actionLog = new ActionLog(operationName, customerId);
 
             this.loggerService.Information("Operation Started {@action}", actionLog);
             await next();
