@@ -61,7 +61,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
             symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())), Times.Never());
+            resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
             resendSlotInformationViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<ResendSlotInformationViewModel>())), Times.Once());
         }
 
@@ -82,7 +82,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
             symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())), Times.Never());
+            resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
             resendSlotInformationViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<ResendSlotInformationViewModel>())), Times.Once());
         }
 
@@ -95,7 +95,7 @@ namespace Bookmyslot.Api.Tests
             var resendSlotInformationViewModel = new ResendSlotInformationViewModel() { ResendSlotModel = ValidResendSlotModel };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(resendSlotInformationViewModel));
             Response<bool> resendSlotInformationBusinessMockResponse = new Response<bool>() { Result = true };
-            resendSlotInformationBusinessMock.Setup(a => a.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())).Returns(Task.FromResult(resendSlotInformationBusinessMockResponse));
+            resendSlotInformationBusinessMock.Setup(a => a.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(resendSlotInformationBusinessMockResponse));
 
             var response = await emailController.ResendSlotMeetingInformation(resendSlotInformationViewModel);
 
@@ -103,7 +103,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
-            resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())), Times.Once());
+            resendSlotInformationBusinessMock.Verify((m => m.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Once());
             resendSlotInformationViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<ResendSlotInformationViewModel>())), Times.Once());
         }
 
