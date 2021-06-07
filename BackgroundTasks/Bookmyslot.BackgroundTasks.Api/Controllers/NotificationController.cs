@@ -35,7 +35,16 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
 
             var notificationResponse = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
 
+            var notificationResponse1 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
+            var notificationResponse2 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
+            var notificationResponse3 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
+
             return this.CreatePostHttpResponse(notificationResponse);
+        }
+
+        private SlotModel GetDefaultSlotModel()
+        {
+
         }
     }
 }

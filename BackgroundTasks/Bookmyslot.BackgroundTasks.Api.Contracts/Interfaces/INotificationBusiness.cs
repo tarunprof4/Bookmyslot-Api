@@ -10,5 +10,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces
         Task<Response<bool>> SlotScheduledNotificatiion(SlotModel slotModel, CustomerModel createdBy, CustomerModel bookedBy);
 
         Task<Response<bool>> SlotCancelledNotificatiion(SlotModel slotModel, CustomerModel cancelledBy);
+
+        Task<Response<bool>> SlotMeetingInformationNotification(SlotModel slotModel, CustomerModel resendTo);
     }
 }

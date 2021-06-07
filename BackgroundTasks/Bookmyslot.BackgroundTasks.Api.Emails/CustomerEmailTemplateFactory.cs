@@ -25,7 +25,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
             return CreateEmailModel(newCustomerModel, TemplateConstants.CustomerRegistrationWelcomeEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotBookedEmailTemplate(SlotModel slotModel, CustomerModel bookedBy)
+        public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, CustomerModel bookedBy)
         {
             SlotSchedulerBookedViewModel slotSchedulerBookedViewModel = new SlotSchedulerBookedViewModel();
             PopulateSlotSchedulerViewModel(slotSchedulerBookedViewModel, slotModel);
