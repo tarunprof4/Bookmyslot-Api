@@ -13,11 +13,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business
     public class SlotSchedulerBusiness : ISlotSchedulerBusiness
     {
         private readonly ISlotRepository slotRepository;
-        private readonly ICustomerRepository customerRepository;
-        public SlotSchedulerBusiness(ISlotRepository slotRepository, ICustomerRepository customerRepository)
+        private readonly ICustomerBusiness customerBusiness;
+        public SlotSchedulerBusiness(ISlotRepository slotRepository, ICustomerBusiness customerBusiness)
         {
             this.slotRepository = slotRepository;
-            this.customerRepository = customerRepository;
+            this.customerBusiness = customerBusiness;
         }
         public async Task<Response<bool>> ScheduleSlot(SlotModel slotModel, string bookedBy)
         {
@@ -31,7 +31,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotScheduleDateInvalid });
             }
 
-            var customerModelsResponse = await this.customerRepository.GetCustomersByCustomerIds(new List<string>() { slotModel.CreatedBy, bookedBy });
+            var customerModelsResponse = await this.customerBusiness.GetCustomersByCustomerIds(new List<string>() { slotModel.CreatedBy, bookedBy });
 
             var createdByCustomerModel = customerModelsResponse.Result.First(a => a.Id == slotModel.CreatedBy);
             var bookedByCustomerModel = customerModelsResponse.Result.First(a => a.Id == bookedBy);

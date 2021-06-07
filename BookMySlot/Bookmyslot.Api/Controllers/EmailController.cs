@@ -77,8 +77,8 @@ namespace Bookmyslot.Api.Controllers
                 if (slotModel != null)
                 {
                     var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                    var customerSummaryModel = new CustomerSummaryModel(currentUserResponse.Result);
-                    var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel, customerSummaryModel);
+                    var resendSlotInformationResponse = await this.resendSlotInformationBusiness.ResendSlotMeetingInformation(slotModel,
+                        currentUserResponse.Result.Id);
                     return this.CreatePostHttpResponse(resendSlotInformationResponse);
                 }
 

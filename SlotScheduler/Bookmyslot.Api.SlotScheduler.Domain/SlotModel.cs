@@ -130,9 +130,9 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
             return meetingLinkUrl;
         }
 
-        public void ResendSlotMeetingInformation(CustomerSummaryModel resendToCustomerSummaryModel)
+        public void ResendSlotMeetingInformation(CustomerModel resendToCustomerModel)
         {
-            Events.Add(new SlotMeetingInformationRequestedDomainEvent(this, resendToCustomerSummaryModel));
+            Events.Add(new SlotMeetingInformationRequestedDomainEvent(this, resendToCustomerModel));
         }
 
 

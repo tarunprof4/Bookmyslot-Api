@@ -1,15 +1,16 @@
-﻿using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.SlotScheduler.Domain;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
 {
 
     public class SlotMeetingInformationRequestedIntegrationEvent : BaseSlotIntegrationEvent
     {
-        public string ResendTo { get; }
-        public SlotMeetingInformationRequestedIntegrationEvent(SlotModel slotModel, string resendTo)
+        public CustomerModel ResendToCustomerModel { get; }
+        public SlotMeetingInformationRequestedIntegrationEvent(SlotModel slotModel, CustomerModel resendToCustomerModel)
             : base(slotModel)
         {
-            this.ResendTo = resendTo;
+            this.ResendToCustomerModel = resendToCustomerModel;
         }
     }
 }

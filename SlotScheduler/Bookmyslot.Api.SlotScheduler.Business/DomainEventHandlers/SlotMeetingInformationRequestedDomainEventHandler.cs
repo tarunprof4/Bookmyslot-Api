@@ -19,8 +19,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
 
         public async Task Handle(SlotMeetingInformationRequestedDomainEvent slotMeetingInformationRequestedDomainEvent, CancellationToken cancellationToken)
         {
-            var resendTo = slotMeetingInformationRequestedDomainEvent.ResendToCustomerSummaryModel.FullName;
-            var slotScheduledIntegrationEvent = new SlotMeetingInformationRequestedIntegrationEvent(slotMeetingInformationRequestedDomainEvent.SlotModel, resendTo);
+            var slotScheduledIntegrationEvent = new SlotMeetingInformationRequestedIntegrationEvent(slotMeetingInformationRequestedDomainEvent.SlotModel,
+                slotMeetingInformationRequestedDomainEvent.ResendToCustomerModel);
             await this.eventGridService.PublishEventAsync(EventConstants.SlotMeetingInformationRequestedEvent, slotScheduledIntegrationEvent);
         }
     }
