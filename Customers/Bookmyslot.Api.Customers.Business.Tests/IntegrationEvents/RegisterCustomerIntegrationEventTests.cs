@@ -1,9 +1,6 @@
 ﻿using Bookmyslot.Api.Customers.Business.IntegrationEvents;
 using Bookmyslot.Api.Customers.Domain;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bookmyslot.Api.Customers.Business.Tests.IntegrationEvents
 {

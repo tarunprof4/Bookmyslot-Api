@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Domain;
@@ -20,12 +20,15 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         private readonly ICustomerCancelledSlotRepository customerCancelledSlotRepository;
         private readonly ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness;
         private readonly IValidator<SlotModel> slotModelValidator;
-        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository, ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness, IValidator<SlotModel> slotModelValidator)
+        private readonly ICustomerBusiness customerBusiness;
+        public SlotBusiness(ISlotRepository slotRepository, ICustomerCancelledSlotRepository customerCancelledSlotRepository,
+            ICustomerLastSharedSlotBusiness customerLastBookedSlotBusiness, IValidator<SlotModel> slotModelValidator, ICustomerBusiness customerBusiness)
         {
             this.slotRepository = slotRepository;
             this.customerCancelledSlotRepository = customerCancelledSlotRepository;
             this.customerLastBookedSlotBusiness = customerLastBookedSlotBusiness;
             this.slotModelValidator = slotModelValidator;
+            this.customerBusiness = customerBusiness;
         }
 
         private void SanitizeSlotModel(SlotModel slotModel)
@@ -54,7 +57,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
 
 
 
-        public async Task<Response<bool>> CancelSlot(string slotId, CustomerSummaryModel cancelledByCustomerSummaryModel)
+        public async Task<Response<bool>> CancelSlot(string slotId, string cancelledBy)
         {
             if (string.IsNullOrWhiteSpace(slotId))
             {
@@ -64,11 +67,12 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             var checkSlotExistsResponse = await CheckIfSlotExists(slotId);
             if (checkSlotExistsResponse.Item1)
             {
-                var cancelledBy = cancelledByCustomerSummaryModel.Id;
                 var slotModel = checkSlotExistsResponse.Item2;
                 var slotStatus = slotModel.CancelSlot(cancelledBy);
                 var cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
-                cancelledSlotModel.SlotCancelled(cancelledByCustomerSummaryModel);
+
+                var cancelledByCustomerModel = await this.customerBusiness.GetCustomerById(cancelledBy);
+                cancelledSlotModel.SlotCancelled(cancelledByCustomerModel.Result);
 
                 var cancelSlotTask = slotStatus == SlotConstants.DeleteSlot ? this.slotRepository.DeleteSlot(slotModel.Id):
                    this.slotRepository.UpdateSlotBooking(slotModel);

@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Customers.Business.IntegrationEvents;
-using Bookmyslot.Api.Web.Common;
+﻿using Bookmyslot.Api.Web.Common;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;

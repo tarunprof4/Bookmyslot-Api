@@ -35,9 +35,9 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
             }
         }
 
-        public void SlotCancelled(CustomerSummaryModel cancelledByCustomerSummaryModel)
+        public void SlotCancelled(CustomerModel cancelledByCustomerModel)
         {
-            Events.Add(new SlotCancelledDomainEvent(this, cancelledByCustomerSummaryModel));
+            Events.Add(new SlotCancelledDomainEvent(this, cancelledByCustomerModel));
         }
      
     }

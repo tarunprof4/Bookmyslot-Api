@@ -7,12 +7,12 @@ namespace Bookmyslot.Api.SlotScheduler.Domain.DomainEvents
     public class SlotCancelledDomainEvent : BaseDomainEvent
     {
         public CancelledSlotModel CancelledSlotModel { get;  }
-        public CustomerSummaryModel CancelledByCustomerSummaryModel { get;  }
+        public CustomerModel CancelledByCustomerModel { get; }
 
-        public SlotCancelledDomainEvent(CancelledSlotModel cancelledSlotModel, CustomerSummaryModel cancelledByCustomerSummaryModel)
+        public SlotCancelledDomainEvent(CancelledSlotModel cancelledSlotModel, CustomerModel cancelledByCustomerModel)
         {
             this.CancelledSlotModel = cancelledSlotModel;
-            this.CancelledByCustomerSummaryModel = cancelledByCustomerSummaryModel;
+            this.CancelledByCustomerModel = cancelledByCustomerModel;
         }
     }
 }
