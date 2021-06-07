@@ -1,4 +1,3 @@
-using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Helpers;

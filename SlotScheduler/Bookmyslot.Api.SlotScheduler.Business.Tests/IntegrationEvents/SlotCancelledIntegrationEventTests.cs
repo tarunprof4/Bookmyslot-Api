@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Customers.Domain;
-using Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents;
 using NUnit.Framework;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.Tests.IntegrationEvents
