@@ -2,7 +2,6 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
@@ -54,8 +53,8 @@ namespace Bookmyslot.Api.Controllers
                 if (customerSlotModel != null)
                 {
                     var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                    var customerSummaryModel = new CustomerSummaryModel(currentUserResponse.Result);
-                    var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel, customerSummaryModel);
+                    
+                    var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel, currentUserResponse.Result.Id);
                     return this.CreatePostHttpResponse(slotScheduleResponse);
                 }
 

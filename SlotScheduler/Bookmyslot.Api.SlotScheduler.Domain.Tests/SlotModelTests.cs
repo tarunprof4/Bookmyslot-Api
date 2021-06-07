@@ -1,4 +1,3 @@
-using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Domain;
@@ -189,8 +188,9 @@ namespace Bookmyslot.Api.SlotScheduler.Domain.Tests
             var slotModel = CreateValidSlotModel();
             slotModel.BookedBy = string.Empty;
             slotModel.SlotMeetingLink = string.Empty;
-            var bookedByCustomerSummaryModel = new CustomerSummaryModel(new CurrentUserModel() { Id = BookedBy });
-            slotModel.ScheduleSlot(bookedByCustomerSummaryModel);
+            var createdByCustomerModel = new CustomerModel() { Id = CreatedBy };
+            var bookedByCustomerModel = new CustomerModel() { Id = BookedBy };
+            slotModel.ScheduleSlot(createdByCustomerModel, bookedByCustomerModel);
 
             Assert.AreEqual(slotModel.BookedBy, BookedBy);
             Assert.AreNotEqual(slotModel.SlotMeetingLink, string.Empty);

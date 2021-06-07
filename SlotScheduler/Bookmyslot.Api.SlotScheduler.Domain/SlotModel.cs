@@ -115,10 +115,10 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         }
 
 
-        public void ScheduleSlot(CustomerSummaryModel bookedByCustomerSummaryModel)
+        public void ScheduleSlot(CustomerModel createdByCustomerModel, CustomerModel bookedByCustomerModel)
         {
-            Events.Add(new SlotScheduledDomainEvent(this, bookedByCustomerSummaryModel));
-            this.BookedBy = bookedByCustomerSummaryModel.Id;
+            Events.Add(new SlotScheduledDomainEvent(this, createdByCustomerModel, bookedByCustomerModel));
+            this.BookedBy = bookedByCustomerModel.Id;
             this.SlotMeetingLink = CreateSlotMeetingUrl();
         }
 
@@ -130,9 +130,9 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
             return meetingLinkUrl;
         }
 
-        public void ResendSlotMeetingInformation(CustomerSummaryModel resendToCustomerSummaryModel)
+        public void ResendSlotMeetingInformation(CustomerModel resendToCustomerModel)
         {
-            Events.Add(new SlotMeetingInformationRequestedDomainEvent(this, resendToCustomerSummaryModel));
+            Events.Add(new SlotMeetingInformationRequestedDomainEvent(this, resendToCustomerModel));
         }
 
 

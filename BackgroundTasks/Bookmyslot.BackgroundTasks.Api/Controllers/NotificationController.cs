@@ -33,6 +33,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
                 Email = "tarun.aggarwal4@gmail.com"
             };
 
+            //RegisterCustomerIntegrationEvent
             var notificationResponse = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
 
             var notificationResponse1 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);

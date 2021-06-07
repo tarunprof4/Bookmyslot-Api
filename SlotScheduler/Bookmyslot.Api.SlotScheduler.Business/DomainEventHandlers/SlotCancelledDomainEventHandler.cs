@@ -19,8 +19,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
 
         public async Task Handle(SlotCancelledDomainEvent slotCancelledDomainEvent, CancellationToken cancellationToken)
         {
-            var cancelledBy = slotCancelledDomainEvent.CancelledByCustomerSummaryModel.FullName;
-            var slotCancelledIntegrationEvent = new SlotCancelledIntegrationEvent(slotCancelledDomainEvent.CancelledSlotModel, cancelledBy);
+            var slotCancelledIntegrationEvent = new SlotCancelledIntegrationEvent(slotCancelledDomainEvent.CancelledSlotModel,
+                slotCancelledDomainEvent.CancelledByCustomerModel);
 
             await this.eventGridService.PublishEventAsync(EventConstants.SlotCancelledEvent, slotCancelledIntegrationEvent);
         }

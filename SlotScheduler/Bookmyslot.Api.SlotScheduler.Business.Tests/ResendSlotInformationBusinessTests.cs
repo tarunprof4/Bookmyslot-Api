@@ -1,6 +1,7 @@
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
 using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
 using Moq;
@@ -25,11 +26,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
         private ResendSlotInformationBusiness resendSlotInformationBusiness;
         private readonly Mock<IEventDispatcher> eventDispatcherMock;
+        private readonly Mock<ICustomerBusiness> customerBusinessMock;
 
         [SetUp]
         public void Setup()
         {
-            resendSlotInformationBusiness = new ResendSlotInformationBusiness(eventDispatcherMock.Object);
+            //customerBusinessMock = new Mock<ICustomerBusiness>();
+            resendSlotInformationBusiness = new ResendSlotInformationBusiness(eventDispatcherMock.Object, customerBusinessMock.Object);
         }
 
    

@@ -6,13 +6,13 @@ namespace Bookmyslot.Api.SlotScheduler.Domain.DomainEvents
 
     public class SlotMeetingInformationRequestedDomainEvent : BaseDomainEvent
     {
-        public SlotModel SlotModel { get; set; }
-        public CustomerSummaryModel ResendToCustomerSummaryModel { get; }
+        public SlotModel SlotModel { get;  }
+        public CustomerModel ResendToCustomerModel { get; }
 
-        public SlotMeetingInformationRequestedDomainEvent(SlotModel slotModel, CustomerSummaryModel resendToCustomerSummaryModel)
+        public SlotMeetingInformationRequestedDomainEvent(SlotModel slotModel, CustomerModel resendToCustomerModel)
         {
             this.SlotModel = slotModel;
-            this.ResendToCustomerSummaryModel = resendToCustomerSummaryModel;
+            this.ResendToCustomerModel = resendToCustomerModel;
         }
     }
 }
