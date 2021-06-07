@@ -10,8 +10,9 @@ using System;
 namespace Bookmyslot.Api.SlotScheduler.Business.Tests.IntegrationEvents
 {
 
+
     [TestFixture]
-    public class SlotScheduledIntegrationEventTests
+    public class SlotMeetingInformationRequestedIntegrationEventTests
     {
         private const string FirstName = "FirstName";
         private const string LastName = "LastName";
@@ -38,23 +39,19 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests.IntegrationEvents
         {
             var slotModel = CreateValidSlotModel();
             var customerModel = GetDefaultCustomerModel();
-            var slotScheduledIntegrationEvent = new SlotScheduledIntegrationEvent(slotModel, customerModel, customerModel);
+            var slotMeetingInformationRequestedIntegrationEvent = new SlotMeetingInformationRequestedIntegrationEvent(slotModel, customerModel);
 
-            Assert.AreEqual(slotScheduledIntegrationEvent.BookedByCustomerModel.FirstName, customerModel.FirstName);
-            Assert.AreEqual(slotScheduledIntegrationEvent.BookedByCustomerModel.LastName, customerModel.LastName);
-            Assert.AreEqual(slotScheduledIntegrationEvent.BookedByCustomerModel.Email, customerModel.Email);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.ResendToCustomerModel.FirstName, customerModel.FirstName);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.ResendToCustomerModel.LastName, customerModel.LastName);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.ResendToCustomerModel.Email, customerModel.Email);
 
-            Assert.AreEqual(slotScheduledIntegrationEvent.CreatedByCustomerModel.FirstName, customerModel.FirstName);
-            Assert.AreEqual(slotScheduledIntegrationEvent.CreatedByCustomerModel.LastName, customerModel.LastName);
-            Assert.AreEqual(slotScheduledIntegrationEvent.CreatedByCustomerModel.Email, customerModel.Email);
-
-            Assert.AreEqual(slotScheduledIntegrationEvent.Title, Title);
-            Assert.AreEqual(slotScheduledIntegrationEvent.Country, Country);
-            Assert.AreEqual(slotScheduledIntegrationEvent.TimeZone, TimeZoneConstants.IndianTimezone);
-            Assert.AreEqual(slotScheduledIntegrationEvent.SlotStartTime, slotModel.SlotStartTime);
-            Assert.AreEqual(slotScheduledIntegrationEvent.SlotEndTime, slotModel.SlotEndTime);
-            Assert.AreEqual(slotScheduledIntegrationEvent.SlotDuration, slotModel.SlotDuration);
-            Assert.AreEqual(slotScheduledIntegrationEvent.SlotMeetingLink, slotModel.SlotMeetingLink);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.Title, Title);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.Country, Country);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.TimeZone, TimeZoneConstants.IndianTimezone);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.SlotStartTime, slotModel.SlotStartTime);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.SlotEndTime, slotModel.SlotEndTime);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.SlotDuration, slotModel.SlotDuration);
+            Assert.AreEqual(slotMeetingInformationRequestedIntegrationEvent.SlotMeetingLink, slotModel.SlotMeetingLink);
         }
 
 

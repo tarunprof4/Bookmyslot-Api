@@ -54,7 +54,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests.IntegrationEvents
             return new CancelledSlotModel()
             {
                 Title = Title,
-                Country = Title,
+                Country = Country,
                 SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDate, TimeZoneConstants.IndianTimezone),
                 SlotStartTime = ValidSlotStartTime,
                 SlotEndTime = ValidSlotEndTime,
