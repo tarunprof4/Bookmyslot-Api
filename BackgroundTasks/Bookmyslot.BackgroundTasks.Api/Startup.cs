@@ -1,9 +1,9 @@
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
 using Bookmyslot.BackgroundTasks.Api.Injections;
+using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -39,20 +39,15 @@ namespace Bookmyslot.BackgroundTasks.Api
             }));
 
 
-            RegisterFilters(services);
+            services.AddControllers();
+            //RegisterFilters(services);
 
             SwaggerDocumentation(services);
         }
 
 
 
-        private static void RegisterFilters(IServiceCollection services)
-        {
-            services.AddMvc(options =>
-            {
-                options.Filters.Add<LoggingFilter>();
-            });
-        }
+     
 
         private void Injections(IServiceCollection services)
         {
@@ -85,6 +80,8 @@ namespace Bookmyslot.BackgroundTasks.Api
             app.ConfigureGlobalExceptionHandler(loggerService);
 
             app.UseRouting();
+
+
             app.UseCors("MyPolicy");
 
             app.UseOpenApi();
@@ -150,14 +147,14 @@ namespace Bookmyslot.BackgroundTasks.Api
                     };
                 };
 
-                config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
-                config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Bearer token"
-                }));
+                //config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+                //config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new OpenApiSecurityScheme()
+                //{
+                //    Type = OpenApiSecuritySchemeType.ApiKey,
+                //    Name = "Authorization",
+                //    In = OpenApiSecurityApiKeyLocation.Header,
+                //    Description = "Bearer token"
+                //}));
             });
         }
 

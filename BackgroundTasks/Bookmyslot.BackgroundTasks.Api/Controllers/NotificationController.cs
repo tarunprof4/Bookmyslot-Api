@@ -18,6 +18,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
             this.notificationBusiness = notificationBusiness;
         }
 
+
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/Notification")]
