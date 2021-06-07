@@ -38,8 +38,11 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
             var createdByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, createdBy);
             var bookedByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, bookedBy);
             
-            await this.emailInteraction.SendEmail(createdByEmailModel);
-            return await this.emailInteraction.SendEmail(bookedByEmailModel);
+            var sendEmailToCreatorTask =  this.emailInteraction.SendEmail(createdByEmailModel);
+            var sendEmailToBookedByTask = this.emailInteraction.SendEmail(bookedByEmailModel);
+
+            await Task.WhenAll(sendEmailToCreatorTask, sendEmailToBookedByTask);
+            return sendEmailToBookedByTask.Result;
         }
     }
 }

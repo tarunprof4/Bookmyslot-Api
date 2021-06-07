@@ -1,6 +1,5 @@
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
-using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
 using Bookmyslot.BackgroundTasks.Api.Injections;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NSwag;
-using NSwag.Generation.Processors.Security;
 using Serilog;
 using System;
 

@@ -42,9 +42,6 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
             return this.CreatePostHttpResponse(notificationResponse);
         }
 
-        private SlotModel GetDefaultSlotModel()
-        {
-
-        }
+       
     }
 }
