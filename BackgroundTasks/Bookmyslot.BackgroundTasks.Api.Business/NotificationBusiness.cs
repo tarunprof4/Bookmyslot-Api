@@ -15,7 +15,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
             this.emailInteraction = emailInteraction;
         }
 
-        public async Task<Response<bool>> SendCustomerRegisterNotification(CustomerModel customerModel)
+        public async Task<Response<bool>> SendCustomerRegisteredNotification(CustomerModel customerModel)
         {
             var emailModel = CustomerEmailTemplateFactory.GetCustomerRegistrationWelcomeEmailTemplate(customerModel);
             return await this.emailInteraction.SendEmail(emailModel);

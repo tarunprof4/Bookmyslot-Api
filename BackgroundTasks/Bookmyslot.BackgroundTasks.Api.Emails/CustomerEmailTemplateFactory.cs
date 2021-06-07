@@ -4,6 +4,8 @@ using Bookmyslot.BackgroundTasks.Api.Emails.ViewModels;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Bookmyslot.BackgroundTasks.Api.Emails
 {
@@ -61,7 +63,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
         {
             SlotMeetingViewModel slotMeetingViewModel = new SlotMeetingViewModel();
             PopulateSlotSchedulerViewModel(slotMeetingViewModel, slotModel);
-            slotMeetingViewModel.MeetingLink = slotModel.SlotMeetingLink;
+            
             
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(CustomerModel)))
             {
@@ -75,46 +77,46 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
         }
 
 
-        //private static string GetTemplateBody(string templateName)
-        //{
-        //    var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        //    var templatesFolder = Path.Join(directory, TemplateConstants.Templates);
-        //    var templatePath = Path.Join(templatesFolder, templateName);
-
-        //    var content = string.Empty;
-        //    using (var streamReader = new StreamReader(templatePath))
-        //    {
-        //        content = streamReader.ReadToEnd();
-        //    }
-
-        //    return content;
-        //}
-
-
-
         private static string GetTemplateBody(string templateName)
         {
-            if (templateName == TemplateConstants.TemplateCustomerRegistationWelcomeEmailNotification)
-                return TemplateBodyConstants.CustomerRegistrationWelcomeEmailTemplateBody;
+            var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var templatesFolder = Path.Join(directory, TemplateConstants.Templates);
+            var templatePath = Path.Join(templatesFolder, templateName);
 
-            else if (templateName == TemplateConstants.TemplateSlotScheduledNotification)
+            var content = string.Empty;
+            using (var streamReader = new StreamReader(templatePath))
             {
-                return TemplateBodyConstants.SlotScheduledTemplateBody;
+                content = streamReader.ReadToEnd();
             }
 
-            else if (templateName == TemplateConstants.TemplateSlotCancelledNotification)
-            {
-                return TemplateBodyConstants.SlotCancelledTemplateBody;
-            }
-
-            else if (templateName == TemplateConstants.TemplateSlotMeetingInformationNotification)
-            {
-                return TemplateBodyConstants.SlotMeetingInformationTemplateBody;
-            }
-
-
-            return "";
+            return content;
         }
+
+
+
+        //private static string GetTemplateBody(string templateName)
+        //{
+        //    if (templateName == TemplateConstants.TemplateCustomerRegistationWelcomeEmailNotification)
+        //        return TemplateBodyConstants.CustomerRegistrationWelcomeEmailTemplateBody;
+
+        //    else if (templateName == TemplateConstants.TemplateSlotScheduledNotification)
+        //    {
+        //        return TemplateBodyConstants.SlotScheduledTemplateBody;
+        //    }
+
+        //    else if (templateName == TemplateConstants.TemplateSlotCancelledNotification)
+        //    {
+        //        return TemplateBodyConstants.SlotCancelledTemplateBody;
+        //    }
+
+        //    else if (templateName == TemplateConstants.TemplateSlotMeetingInformationNotification)
+        //    {
+        //        return TemplateBodyConstants.SlotMeetingInformationTemplateBody;
+        //    }
+
+
+        //    return "";
+        //}
 
 
 
@@ -146,6 +148,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
             baseSlotSchedulerViewModel.StartTime = slotModel.SlotStartTime.ToString();
             baseSlotSchedulerViewModel.EndTime = slotModel.SlotEndTime.ToString();
             baseSlotSchedulerViewModel.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
+            baseSlotSchedulerViewModel.MeetingLink = slotModel.SlotMeetingLink;
         }
 
     }
