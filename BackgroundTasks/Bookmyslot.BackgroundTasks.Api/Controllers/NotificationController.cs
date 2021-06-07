@@ -18,6 +18,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
             this.notificationBusiness = notificationBusiness;
         }
 
+
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/Notification")]
@@ -32,9 +33,15 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
                 Email = "tarun.aggarwal4@gmail.com"
             };
 
-            var notificationResponse = await this.notificationBusiness.SendCustomerRegisterNotification(customerModel);
+            var notificationResponse = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
+
+            var notificationResponse1 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
+            var notificationResponse2 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
+            var notificationResponse3 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
 
             return this.CreatePostHttpResponse(notificationResponse);
         }
+
+       
     }
 }
