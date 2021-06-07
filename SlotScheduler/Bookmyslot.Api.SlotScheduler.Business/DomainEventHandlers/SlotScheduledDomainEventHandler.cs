@@ -20,7 +20,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
         {
             var slotScheduledIntegrationEvent = new SlotScheduledIntegrationEvent(slotScheduledDomainEvent.SlotModel,
                 slotScheduledDomainEvent.CreatedByCustomerModel, slotScheduledDomainEvent.BookedByCustomerModel);
-            await this.eventGridService.PublishEventAsync(EventConstants.SlotScheduledEvent, slotScheduledIntegrationEvent);
+            await this.eventGridService.PublishEventAsync(slotScheduledIntegrationEvent);
         }
     }
 }

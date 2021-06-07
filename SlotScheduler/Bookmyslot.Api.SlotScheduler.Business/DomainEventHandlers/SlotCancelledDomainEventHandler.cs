@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers
             var slotCancelledIntegrationEvent = new SlotCancelledIntegrationEvent(slotCancelledDomainEvent.CancelledSlotModel,
                 slotCancelledDomainEvent.CancelledByCustomerModel);
 
-            await this.eventGridService.PublishEventAsync(EventConstants.SlotCancelledEvent, slotCancelledIntegrationEvent);
+            await this.eventGridService.PublishEventAsync(slotCancelledIntegrationEvent);
         }
     }
 }

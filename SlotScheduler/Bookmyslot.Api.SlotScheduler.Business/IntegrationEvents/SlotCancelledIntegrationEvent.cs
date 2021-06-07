@@ -2,6 +2,7 @@
 using Bookmyslot.Api.Common.Contracts.Event;
 using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.Customers.Domain.Constants;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using System;
 
@@ -17,7 +18,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
         public TimeSpan SlotEndTime { get; }
         public TimeSpan SlotDuration { get; }
         public CustomerModel CancelledByCustomerModel { get; }
-        public SlotCancelledIntegrationEvent(CancelledSlotModel cancelledSlotModel, CustomerModel cancelledByCustomerModel)
+        public SlotCancelledIntegrationEvent(CancelledSlotModel cancelledSlotModel, CustomerModel cancelledByCustomerModel):
+            base(EventConstants.SlotCancelledEvent)
         {
             this.Title = cancelledSlotModel.Title;
             this.Country = cancelledSlotModel.Country;

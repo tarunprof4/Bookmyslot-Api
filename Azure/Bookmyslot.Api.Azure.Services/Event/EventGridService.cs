@@ -32,10 +32,10 @@ namespace Bookmyslot.Api.Azure.Services.Event
             this.loggerService = loggerService;
         }
 
-        public async Task PublishEventAsync(string eventName, IntegrationEvent integrationEvent)
+        public async Task PublishEventAsync(IntegrationEvent integrationEvent)
         {
             var coorelationId = httpContextAccessor.HttpContext.Request.Headers[LogConstants.CoorelationId];
-            var eventRequestLog = new EventRequestLog(coorelationId, eventName, integrationEvent);
+            var eventRequestLog = new EventRequestLog(coorelationId, integrationEvent.EventType, integrationEvent);
             this.loggerService.Debug("PublishEventsAsync Started {@eventGridLog}", eventRequestLog);
 
             Stopwatch stopWatch = new Stopwatch();
@@ -76,11 +76,11 @@ namespace Bookmyslot.Api.Azure.Services.Event
             eventsList.Add(new EventGridEvent()
             {
                 Id = Guid.NewGuid().ToString(),
-                EventType = "Contoso.Items.ItemReceived",
+                EventType = integrationEvent.EventType,
                 Data = integrationEvent,
-                EventTime = DateTime.UtcNow,
+                EventTime = integrationEvent.CreationDate,
                 Subject = "Door1",
-                DataVersion = "2.0"
+                DataVersion = "1.0"
             });
 
             return eventsList;
