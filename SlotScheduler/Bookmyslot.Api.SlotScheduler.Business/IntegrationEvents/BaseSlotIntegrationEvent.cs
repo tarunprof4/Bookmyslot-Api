@@ -11,10 +11,10 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
         public string Country { get; }
         public string TimeZone { get;  }
         public string SlotDate { get;  }
-        public string StartTime { get;  }
-        public string EndTime { get;  }
+        public string SlotStartTime { get;  }
+        public string SlotEndTime { get;  }
 
-        public string Duration { get; }
+        public string SlotDuration { get; }
 
         public string SlotMeetingLink { get;  }
 
@@ -24,9 +24,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
             this.Country = slotModel.Country;
             this.TimeZone = slotModel.SlotStartZonedDateTime.Zone.Id;
             this.SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
-            this.StartTime = slotModel.SlotStartTime.ToString();
-            this.EndTime = slotModel.SlotEndTime.ToString();
-            this.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
+            this.SlotStartTime = slotModel.SlotStartTime.ToString();
+            this.SlotEndTime = slotModel.SlotEndTime.ToString();
+            this.SlotDuration = slotModel.SlotDuration.TotalMinutes.ToString();
             this.SlotMeetingLink = slotModel.SlotMeetingLink;
         }
       

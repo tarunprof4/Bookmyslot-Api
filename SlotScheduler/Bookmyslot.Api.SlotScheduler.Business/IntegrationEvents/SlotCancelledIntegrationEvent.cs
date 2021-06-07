@@ -8,29 +8,26 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
 {
     public class SlotCancelledIntegrationEvent : IntegrationEvent
     {
-        public string Title { get; set; }
-        public string Country { get; set; }
-        public string TimeZone { get; set; }
-        public string SlotDate { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-        public string Duration { get; set; }
+        public string Title { get;  }
+        public string Country { get;  }
+        public string TimeZone { get;  }
+        public string SlotDate { get;  }
+        public string SlotStartTime { get;  }
+        public string SlotEndTime { get;  }
+        public string SlotDuration { get;  }
         public CustomerModel CancelledByCustomerModel { get; }
         public SlotCancelledIntegrationEvent(CancelledSlotModel cancelledSlotModel, CustomerModel cancelledByCustomerModel)
-        {
-            SetSlotCancelledIntegrationEvent(cancelledSlotModel);
-            this.CancelledByCustomerModel = cancelledByCustomerModel;
-        }
-
-        private void SetSlotCancelledIntegrationEvent(CancelledSlotModel cancelledSlotModel)
         {
             this.Title = cancelledSlotModel.Title;
             this.Country = cancelledSlotModel.Country;
             this.TimeZone = cancelledSlotModel.SlotStartZonedDateTime.Zone.Id;
             this.SlotDate = NodaTimeHelper.FormatLocalDate(cancelledSlotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
-            this.StartTime = cancelledSlotModel.SlotStartTime.ToString();
-            this.EndTime = cancelledSlotModel.SlotEndTime.ToString();
-            this.Duration = cancelledSlotModel.SlotDuration.TotalMinutes.ToString();
+            this.SlotStartTime = cancelledSlotModel.SlotStartTime.ToString();
+            this.SlotEndTime = cancelledSlotModel.SlotEndTime.ToString();
+            this.SlotDuration = cancelledSlotModel.SlotDuration.TotalMinutes.ToString();
+            this.CancelledByCustomerModel = cancelledByCustomerModel;
         }
+
+       
     }
 }
