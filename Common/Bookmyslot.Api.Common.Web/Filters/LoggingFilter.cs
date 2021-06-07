@@ -11,12 +11,10 @@ namespace Bookmyslot.Api.Common.Web.Filters
 {
     public class LoggingFilter : IAsyncActionFilter
     {
-        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ICurrentUser currentUser;
         private readonly ILoggerService loggerService;
-        public LoggingFilter(IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser, ILoggerService loggerService)
+        public LoggingFilter(ICurrentUser currentUser, ILoggerService loggerService)
         {
-            this.httpContextAccessor = httpContextAccessor;
             this.currentUser = currentUser;
             this.loggerService = loggerService;
         }
@@ -27,10 +25,8 @@ namespace Bookmyslot.Api.Common.Web.Filters
             var operationName  = ((ControllerBase)context.Controller).ControllerContext.ActionDescriptor.ActionName;
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
             var userName = currentUserResponse.Result.UserName;
-
-            this.httpContextAccessor.HttpContext.Request.Headers.Add(LogConstants.Username, userName);
-            var actionLog = new ActionLog(operationName);
-
+            
+            var actionLog = new ActionLog(operationName, userName);
             this.loggerService.Information("Operation Started {@action}", actionLog);
             await next();
 

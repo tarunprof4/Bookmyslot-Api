@@ -21,7 +21,6 @@ namespace Bookmyslot.Api.Common.Logging.Enrichers
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("Level", logEvent.Level));
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("UtcTimestamp", logEvent.Timestamp.UtcDateTime));
             logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("CoorelationId", this.httpContextAccessor.HttpContext?.Request.Headers[LogConstants.CoorelationId]));
-            logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("USerName", this.httpContextAccessor.HttpContext?.Request.Headers[LogConstants.Username]));
         }
     }
 }
