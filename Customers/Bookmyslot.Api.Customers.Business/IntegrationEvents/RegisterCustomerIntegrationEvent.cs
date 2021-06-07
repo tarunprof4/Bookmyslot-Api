@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Event;
+using Bookmyslot.Api.Customers.Domain;
 
 namespace Bookmyslot.Api.Customers.Business.IntegrationEvents
 {
@@ -6,13 +7,14 @@ namespace Bookmyslot.Api.Customers.Business.IntegrationEvents
     {
         public string FirstName { get; }
         public string LastName { get; }
-
         public string Email { get; }
-        public RegisterCustomerIntegrationEvent(string firstName, string lastName, string email)
+
+        public string PhoneNumber { get; }
+        public RegisterCustomerIntegrationEvent(RegisterCustomerModel registerCustomerModel)
         {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.Email = email;
+            this.FirstName = registerCustomerModel.FirstName;
+            this.LastName = registerCustomerModel.LastName;
+            this.Email = registerCustomerModel.Email;
         }
     }
 }

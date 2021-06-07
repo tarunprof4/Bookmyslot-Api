@@ -20,10 +20,9 @@ namespace Bookmyslot.Api.Customers.Business.DomainEventHandlers
         public async Task Handle(CustomerRegisteredDomainEvent customerRegisteredDomainEvent, CancellationToken cancellationToken)
         {
             var registerCustomerModel = customerRegisteredDomainEvent.RegisterCustomerModel;
-            var RegisterCustomerIntegrationEvent = new RegisterCustomerIntegrationEvent(registerCustomerModel.FirstName,
-                registerCustomerModel.LastName, registerCustomerModel.Email);
+            var registerCustomerIntegrationEvent = new RegisterCustomerIntegrationEvent(registerCustomerModel);
 
-            await this.eventGridService.PublishEventAsync(EventConstants.CustomerRegisteredEvent, RegisterCustomerIntegrationEvent);
+            await this.eventGridService.PublishEventAsync(EventConstants.CustomerRegisteredEvent, registerCustomerIntegrationEvent);
         }
     }
 }

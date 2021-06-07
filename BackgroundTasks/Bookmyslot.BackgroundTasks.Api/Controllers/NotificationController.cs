@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Web.Common;
+﻿using Bookmyslot.Api.Customers.Business.IntegrationEvents;
+using Bookmyslot.Api.Web.Common;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
                 Email = "tarun.aggarwal4@gmail.com"
             };
 
+            //RegisterCustomerIntegrationEvent
             var notificationResponse = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
 
             var notificationResponse1 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
