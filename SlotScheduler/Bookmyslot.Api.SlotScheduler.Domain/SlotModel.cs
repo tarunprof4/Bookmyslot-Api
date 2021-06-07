@@ -115,9 +115,9 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         }
 
 
-        public void ScheduleSlot(CustomerSummaryModel bookedByCustomerSummaryModel)
+        public void ScheduleSlot(CustomerModel createdByCustomerModel, CustomerModel bookedByCustomerModel)
         {
-            Events.Add(new SlotScheduledDomainEvent(this, bookedByCustomerSummaryModel));
+            Events.Add(new SlotScheduledDomainEvent(this, createdByCustomerModel, bookedByCustomerModel));
             this.BookedBy = bookedByCustomerSummaryModel.Id;
             this.SlotMeetingLink = CreateSlotMeetingUrl();
         }

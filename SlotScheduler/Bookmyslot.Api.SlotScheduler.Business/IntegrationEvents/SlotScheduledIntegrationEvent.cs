@@ -1,14 +1,17 @@
-﻿using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.Api.SlotScheduler.Domain;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
 {
     public class SlotScheduledIntegrationEvent : BaseSlotIntegrationEvent
     {
-        public string BookedBy { get; }
-        public SlotScheduledIntegrationEvent(SlotModel slotModel, string bookedBy)
+        public CustomerModel CreatedByCustomerModel { get; }
+        public CustomerModel BookedByCustomerModel { get; }
+        public SlotScheduledIntegrationEvent(SlotModel slotModel, CustomerModel createdByCustomerModel, CustomerModel bookedByCustomerModel)
             :base(slotModel)
         {
-            this.BookedBy = bookedBy;
+            this.CreatedByCustomerModel = createdByCustomerModel;
+            this.BookedByCustomerModel = bookedByCustomerModel;
         }
     }
 }

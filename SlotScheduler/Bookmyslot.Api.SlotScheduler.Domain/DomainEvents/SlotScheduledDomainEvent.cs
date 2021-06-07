@@ -5,13 +5,15 @@ namespace Bookmyslot.Api.SlotScheduler.Domain.DomainEvents
 {
     public class SlotScheduledDomainEvent : BaseDomainEvent
     {
-        public SlotModel SlotModel { get; set; }
-        public CustomerSummaryModel BookedByCustomerSummaryModel { get; }
+        public SlotModel SlotModel { get;  }
+        public CustomerModel CreatedByCustomerModel { get; }
+        public CustomerModel BookedByCustomerModel { get; }
 
-        public SlotScheduledDomainEvent(SlotModel slotModel, CustomerSummaryModel bookedByCustomerSummaryModel)
+        public SlotScheduledDomainEvent(SlotModel slotModel, CustomerModel createdByCustomerModel, CustomerModel bookedByCustomerModel)
         {
             this.SlotModel = slotModel;
-            this.BookedByCustomerSummaryModel = bookedByCustomerSummaryModel;
+            this.CreatedByCustomerModel = createdByCustomerModel;
+            this.BookedByCustomerModel = bookedByCustomerModel;
         }
     }
 }
