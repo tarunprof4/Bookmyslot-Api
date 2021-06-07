@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.Customers.Business.DomainEventHandlers
             var registerCustomerModel = customerRegisteredDomainEvent.RegisterCustomerModel;
             var registerCustomerIntegrationEvent = new RegisterCustomerIntegrationEvent(registerCustomerModel);
 
-            await this.eventGridService.PublishEventAsync(EventConstants.CustomerRegisteredEvent, registerCustomerIntegrationEvent);
+            await this.eventGridService.PublishEventAsync(registerCustomerIntegrationEvent);
         }
     }
 }

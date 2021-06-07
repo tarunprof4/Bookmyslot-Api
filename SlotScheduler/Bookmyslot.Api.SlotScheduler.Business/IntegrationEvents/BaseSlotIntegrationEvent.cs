@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Event;
 using Bookmyslot.Api.Common.Helpers;
+using Bookmyslot.Api.Customers.Domain.Constants;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using System;
 
@@ -19,7 +20,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
 
         public string SlotMeetingLink { get;  }
 
-        public BaseSlotIntegrationEvent(SlotModel slotModel)
+        public BaseSlotIntegrationEvent(SlotModel slotModel, string eventType):
+            base(eventType)
         {
             this.Title = slotModel.Title;
             this.Country = slotModel.Country;
