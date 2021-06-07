@@ -2,16 +2,16 @@
 {
     public class ActionLog
     { 
-        public ActionLog(string operationName, string customerId)
+        public ActionLog(string operationName, string userName)
         {
             this.OperationName = operationName;
-            this.CustomerId = customerId;
+            this.UserName = userName;
         }
 
 
         public string OperationName { get; set; }
 
-        public string CustomerId { get; set; }
+        public string UserName { get; set; }
 
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+using Bookmyslot.Api.Common.Logging.Constants;
 using Bookmyslot.Api.Common.Logging.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Threading.Tasks;
@@ -22,9 +24,9 @@ namespace Bookmyslot.Api.Common.Web.Filters
             //var operationName = context.ActionDescriptor.DisplayName;
             var operationName  = ((ControllerBase)context.Controller).ControllerContext.ActionDescriptor.ActionName;
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result.Id;
-            var actionLog = new ActionLog(operationName, customerId);
-
+            var userName = currentUserResponse.Result.UserName;
+            
+            var actionLog = new ActionLog(operationName, userName);
             this.loggerService.Information("Operation Started {@action}", actionLog);
             await next();
 
