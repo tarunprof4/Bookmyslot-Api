@@ -63,7 +63,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(InValidSlot));
             symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Never());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            slotSchedulerBusinessMock.Verify((m => m.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())), Times.Never());
+            slotSchedulerBusinessMock.Verify((m => m.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
             slotSchedulerViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<SlotSchedulerViewModel>())), Times.Once());
         }
 
@@ -82,7 +82,7 @@ namespace Bookmyslot.Api.Tests
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
             symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
-            slotSchedulerBusinessMock.Verify((m => m.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())), Times.Never());
+            slotSchedulerBusinessMock.Verify((m => m.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Never());
             slotSchedulerViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<SlotSchedulerViewModel>())), Times.Once());
         }
 
@@ -95,7 +95,7 @@ namespace Bookmyslot.Api.Tests
             var slotSchedulerViewModel = new SlotSchedulerViewModel() { SlotModelKey = ValidSlotSchedulerSlotModelKey };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(slotSchedulerViewModel));
             Response<bool> slotSchedulerBusinessMockResponse = new Response<bool>() { Result = true };
-            slotSchedulerBusinessMock.Setup(a => a.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())).Returns(Task.FromResult(slotSchedulerBusinessMockResponse));
+            slotSchedulerBusinessMock.Setup(a => a.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotSchedulerBusinessMockResponse));
 
             var response = await slotSchedulerController.Post(new SlotSchedulerViewModel() { SlotModelKey = InValidSlotSchedulerSlotModelKey });
 
@@ -103,7 +103,7 @@ namespace Bookmyslot.Api.Tests
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             symmetryEncryptionMock.Verify((m => m.Decrypt(It.IsAny<string>())), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Once());
-            slotSchedulerBusinessMock.Verify((m => m.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<CustomerSummaryModel>())), Times.Once());
+            slotSchedulerBusinessMock.Verify((m => m.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<string>())), Times.Once());
             slotSchedulerViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<SlotSchedulerViewModel>())), Times.Once());
         }
 
