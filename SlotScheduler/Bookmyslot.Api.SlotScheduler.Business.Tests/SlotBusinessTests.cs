@@ -47,6 +47,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerCancelledSlotRepositoryMock = new Mock<ICustomerCancelledSlotRepository>();
             customerLastBookedSlotBusinessMock = new Mock<ICustomerLastSharedSlotBusiness>();
             slotModelValidatorMock = new Mock<IValidator<SlotModel>>();
+            customerBusinessMock = new Mock<ICustomerBusiness>();
             slotBusiness = new SlotBusiness(slotRepositoryMock.Object, customerCancelledSlotRepositoryMock.Object,
                 customerLastBookedSlotBusinessMock.Object, slotModelValidatorMock.Object, customerBusinessMock.Object);
         }
