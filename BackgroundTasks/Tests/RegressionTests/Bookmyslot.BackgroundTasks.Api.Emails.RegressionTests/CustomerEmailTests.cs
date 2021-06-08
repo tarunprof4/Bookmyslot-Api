@@ -1,3 +1,4 @@
+//using Bookmyslot.Api.Common.Contracts.Constants;
 //using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 //using Bookmyslot.Api.Common.Email;
 //using Bookmyslot.Api.Common.Email.Configuration;
@@ -27,8 +28,13 @@
 //        private readonly TimeSpan ValidSlotEndTime = new TimeSpan(0, 30, 0);
 
 
-//        private const string FirstName = "First";
-//        private const string LastName = "Last";
+//        private const string CreatedByFirstName = "CreatedByFirstName";
+//        private const string CreatedByLastName = "CreatedByLastName";
+//        private const string CreatedByEmail = "tarun.aggarwal4@gmail.com";
+//        private const string BookedByFirstName = "BookedByFirstName";
+//        private const string BookedByyLastName = "BookedByyLastName";
+//        private const string BookedByEmail = "tarunbookmyslot@gmail.com";
+
 //        private EmailClient emailClient;
 //        private Mock<IHttpContextAccessor> httpContextAccessorMock;
 //        private EmailConfiguration emailConfiguration;
@@ -48,7 +54,7 @@
 //        [Test]
 //        public async Task RegisterCustomerWelcomeEmail()
 //        {
-//            var emailModel = CustomerEmailTemplateFactory.GetCustomerRegistrationWelcomeEmailTemplate(DefaultValidCreateCustomerModel());
+//            var emailModel = CustomerEmailTemplateFactory.GetCustomerRegistrationWelcomeEmailTemplate(DefaultValidCreatedByCustomerModel());
 //            var response = await emailClient.SendEmail(emailModel);
 //            Assert.AreEqual(response.Result, true);
 //        }
@@ -57,7 +63,9 @@
 //        [Test]
 //        public async Task SlotScheduledEmailTemplate()
 //        {
-//            var emailModel = CustomerEmailTemplateFactory.SlotBookedEmailTemplate(CreateValidSlotModel(), DefaultValidCreateCustomerModel());
+
+//            var emailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(CreateValidSlotModel(),
+//                DefaultValidCreatedByCustomerModel(), DefaultValidBookedByCustomerModel());
 //            var response = await emailClient.SendEmail(emailModel);
 
 //            Assert.AreEqual(response.Result, true);
@@ -67,7 +75,8 @@
 //        [Test]
 //        public async Task SlotCancelledEmailTemplate()
 //        {
-//            var emailModel = CustomerEmailTemplateFactory.SlotCancelledEmailTemplate(CreateValidSlotModel(), DefaultValidCreateCustomerModel());
+//            var emailModel = CustomerEmailTemplateFactory.SlotCancelledEmailTemplate(CreateValidSlotModel(), 
+//                DefaultValidCreatedByCustomerModel(), DefaultValidBookedByCustomerModel());
 //            var response = await emailClient.SendEmail(emailModel);
 
 //            Assert.AreEqual(response.Result, true);
@@ -77,7 +86,7 @@
 //        [Test]
 //        public async Task SlotMeetingInformationTemplate()
 //        {
-//            var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(CreateValidSlotModel(), DefaultValidCreateCustomerModel());
+//            var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(CreateValidSlotModel(), DefaultValidCreatedByCustomerModel());
 //            var response = await emailClient.SendEmail(emailModel);
 
 //            Assert.AreEqual(response.Result, true);
@@ -91,20 +100,31 @@
 //            var slotModel = new SlotModel();
 //            slotModel.Id = SlotId;
 //            slotModel.Country = Country;
-//            //slotModel.SlotStartZonedDateTime = NodaTimeHelper.ConvertUtcDateTimeToZonedDateTime(ValidSlotDate, TimeZoneConstants.IndianTimezone);
+//            slotModel.SlotDate = ValidSlotDate.ToString();
+//            slotModel.TimeZone = TimeZoneConstants.IndianTimezone;
 //            slotModel.Title = Title;
-//            slotModel.CreatedBy = CreatedBy;
 //            slotModel.SlotStartTime = ValidSlotStartTime;
 //            slotModel.SlotEndTime = ValidSlotEndTime;
+//            slotModel.SlotMeetingLink = MeetingLink;
 
 //            return slotModel;
 //        }
 
-//        private CustomerModel DefaultValidCreateCustomerModel()
+//        private CustomerModel DefaultValidCreatedByCustomerModel()
 //        {
 //            var customerModel = new CustomerModel();
-//            customerModel.FirstName = FirstName;
-//            customerModel.LastName = LastName;
+//            customerModel.FirstName = CreatedByFirstName;
+//            customerModel.LastName = CreatedByLastName;
+//            customerModel.Email = CreatedByEmail;
+//            return customerModel;
+//        }
+
+//        private CustomerModel DefaultValidBookedByCustomerModel()
+//        {
+//            var customerModel = new CustomerModel();
+//            customerModel.FirstName = BookedByFirstName;
+//            customerModel.LastName = BookedByyLastName;
+//            customerModel.Email = BookedByEmail;
 //            return customerModel;
 //        }
 //    }
