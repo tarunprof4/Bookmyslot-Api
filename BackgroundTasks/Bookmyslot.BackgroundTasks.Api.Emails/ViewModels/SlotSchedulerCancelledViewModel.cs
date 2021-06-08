@@ -6,11 +6,11 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
     {
         public CustomerModel CancelledBy { get; }
         public CustomerModel NotCancelledBy { get;  }
-        public SlotSchedulerCancelledViewModel(SlotModel slotModel, CustomerModel cancelledBy, CustomerModel customerModel) :
+        public SlotSchedulerCancelledViewModel(SlotModel slotModel, CustomerModel cancelledBy, CustomerModel notcancelledBy) :
           base(slotModel)
         {
             this.CancelledBy = cancelledBy;
-            this.NotCancelledBy = customerModel;
+            this.NotCancelledBy = notcancelledBy;
         }
     }
 }

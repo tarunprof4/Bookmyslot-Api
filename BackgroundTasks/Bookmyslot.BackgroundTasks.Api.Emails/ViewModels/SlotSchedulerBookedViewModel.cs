@@ -9,10 +9,10 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
         public CustomerModel BookedBy { get; }
         
 
-        public SlotSchedulerBookedViewModel(SlotModel slotModel, CustomerModel customerModel, CustomerModel BookedBy) :
+        public SlotSchedulerBookedViewModel(SlotModel slotModel, CustomerModel createdBy, CustomerModel BookedBy) :
             base(slotModel)
         {
-            this.CreatedBy = customerModel;
+            this.CreatedBy = createdBy;
             this.BookedBy = BookedBy;
         }
 

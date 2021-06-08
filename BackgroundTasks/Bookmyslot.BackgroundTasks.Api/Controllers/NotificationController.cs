@@ -33,9 +33,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
             //RegisterCustomerIntegrationEvent
             var notificationResponse = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
 
-            var notificationResponse1 = await this.notificationBusiness.SlotCancelledNotificatiion(slotModel, customerModel, customerModel);
-            var notificationResponse2 = await this.notificationBusiness.SlotMeetingInformationNotification(slotModel, customerModel);
-            var notificationResponse3 = await this.notificationBusiness.SlotScheduledNotificatiion(slotModel, customerModel, customerModel);
+            //var notificationResponse1 = await this.notificationBusiness.SlotCancelledNotificatiion(slotModel, customerModel, customerModel);
+            //var notificationResponse2 = await this.notificationBusiness.SlotMeetingInformationNotification(slotModel, customerModel);
+            //var notificationResponse3 = await this.notificationBusiness.SlotScheduledNotificatiion(slotModel, customerModel, customerModel);
 
             return this.CreatePostHttpResponse(notificationResponse);
         }
