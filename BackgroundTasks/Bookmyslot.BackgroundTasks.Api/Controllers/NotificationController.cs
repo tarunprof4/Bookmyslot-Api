@@ -3,6 +3,7 @@ using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.BackgroundTasks.Api.Controllers
@@ -26,23 +27,43 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ActionName("SendNotification")]
         public async Task<IActionResult> SendNotification()
         {
-            var customerModel = new CustomerModel()
+            CustomerModel customerModel = GetCustomerModel();
+            var slotModel = GetSlotModel();
+
+            //RegisterCustomerIntegrationEvent
+            var notificationResponse = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
+
+            //var notificationResponse1 = await this.notificationBusiness.SlotCancelledNotificatiion(slotModel, customerModel, customerModel);
+            //var notificationResponse2 = await this.notificationBusiness.SlotMeetingInformationNotification(slotModel, customerModel);
+            //var notificationResponse3 = await this.notificationBusiness.SlotScheduledNotificatiion(slotModel, customerModel, customerModel);
+
+            return this.CreatePostHttpResponse(notificationResponse);
+        }
+
+        private CustomerModel GetCustomerModel()
+        {
+            return new CustomerModel()
             {
                 FirstName = "First",
                 LastName = "Last",
                 Email = "tarun.aggarwal4@gmail.com"
             };
-
-            //RegisterCustomerIntegrationEvent
-            var notificationResponse = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
-
-            var notificationResponse1 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
-            var notificationResponse2 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
-            var notificationResponse3 = await this.notificationBusiness.SendCustomerRegisteredNotification(customerModel);
-
-            return this.CreatePostHttpResponse(notificationResponse);
         }
 
-       
+
+        private SlotModel GetSlotModel()
+        {
+            return new SlotModel()
+            {
+                Title = "Title",
+                Country = "Count",
+                TimeZone = "time",
+                SlotDate = "22-Ju-202",
+                SlotStartTime = new TimeSpan(1,1,1),
+                SlotEndTime = new TimeSpan(2, 2, 2),
+                SlotMeetingLink = "SlotMeetingLin"
+            };
+        }
+
     }
 }

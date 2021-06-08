@@ -21,9 +21,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
-        public async Task<Response<bool>> SlotCancelledNotificatiion(SlotModel slotModel, CustomerModel cancelledBy)
+        public async Task<Response<bool>> SlotCancelledNotificatiion(SlotModel slotModel, CustomerModel cancelledBy, CustomerModel notCancelledBy)
         {
-            var emailModel = CustomerEmailTemplateFactory.SlotCancelledEmailTemplate(slotModel, cancelledBy);
+            var emailModel = CustomerEmailTemplateFactory.SlotCancelledEmailTemplate(slotModel, cancelledBy, notCancelledBy);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
@@ -35,14 +35,19 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
 
         public async Task<Response<bool>> SlotScheduledNotificatiion(SlotModel slotModel, CustomerModel createdBy, CustomerModel bookedBy)
         {
-            var createdByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, createdBy);
-            var bookedByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, bookedBy);
-            
-            var sendEmailToCreatorTask =  this.emailInteraction.SendEmail(createdByEmailModel);
-            var sendEmailToBookedByTask = this.emailInteraction.SendEmail(bookedByEmailModel);
+            var createdByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, createdBy, bookedBy);
 
-            await Task.WhenAll(sendEmailToCreatorTask, sendEmailToBookedByTask);
-            return sendEmailToBookedByTask.Result;
+            return await this.emailInteraction.SendEmail(createdByEmailModel);
+
+
+            //var createdByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, createdBy, bookedBy);
+            //var bookedByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, bookedBy);
+
+            //var sendEmailToCreatorTask =  this.emailInteraction.SendEmail(createdByEmailModel);
+            //var sendEmailToBookedByTask = this.emailInteraction.SendEmail(bookedByEmailModel);
+
+            //await Task.WhenAll(sendEmailToCreatorTask, sendEmailToBookedByTask);
+            //return sendEmailToBookedByTask.Result;
         }
     }
 }

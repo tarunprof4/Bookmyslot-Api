@@ -9,13 +9,10 @@ namespace Bookmyslot.BackgroundTasks.Api.Contracts
 
         public string Title { get; set; }
 
-        public string CreatedBy { get; set; }
-
-        public string BookedBy { get; set; }
-
+        public string TimeZone { get; set; }
         public string Country { get; set; }
 
-        //public ZonedDateTime SlotStartZonedDateTime { get; set; }
+        public string SlotDate { get; set; }
 
         public TimeSpan SlotStartTime { get; set; }
 
