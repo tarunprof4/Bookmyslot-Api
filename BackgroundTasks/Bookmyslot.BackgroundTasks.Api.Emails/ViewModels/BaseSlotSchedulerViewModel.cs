@@ -1,16 +1,28 @@
-﻿namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
+﻿using Bookmyslot.BackgroundTasks.Api.Contracts;
+
+namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
 {
-    public class BaseSlotSchedulerViewModel
+    public abstract class BaseSlotSchedulerViewModel
     {
-        public string Title { get; set; }
-        public string Country { get; set; }
-        public string TimeZone { get; set; }
-        public string SlotDate { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public string Title { get; }
+        public string Country { get; }
+        public string TimeZone { get; }
+        public string SlotSlotDate { get; }
+        public string SlotStartTime { get; }
+        public string SlotEndTime { get; }
+        public string SlotDuration { get; }
+        public string SlotMeetingLink { get; }
 
-        public string Duration { get; set; }
-
-        public string MeetingLink { get; set; }
+        public BaseSlotSchedulerViewModel(SlotModel slotModel)
+        {
+            this.Title = slotModel.Title;
+            this.Country = slotModel.Country;
+            this.TimeZone = slotModel.TimeZone;
+            this.SlotSlotDate = slotModel.SlotDate;
+            this.SlotStartTime = slotModel.SlotStartTime.ToString();
+            this.SlotEndTime = slotModel.SlotEndTime.ToString();
+            this.SlotDuration = slotModel.SlotDuration.TotalMinutes.ToString();
+            this.SlotMeetingLink = slotModel.SlotMeetingLink;
+        }
     }
 }

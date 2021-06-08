@@ -13,7 +13,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
     {
         public static EmailModel GetCustomerRegistrationWelcomeEmailTemplate(CustomerModel newCustomerModel)
         {
-            var registerCustomerViewModel = CreateRegisterCustomerViewModel(newCustomerModel);
+            var registerCustomerViewModel = new RegisterCustomerViewModel(newCustomerModel);
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(RegisterCustomerViewModel)))
             {
                 var customerRegistrationWelcomeEmailTemplateBody = GetTemplateBody(TemplateConstants.TemplateCustomerRegistationWelcomeEmailNotification);
@@ -25,46 +25,41 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
             return CreateEmailModel(newCustomerModel, TemplateConstants.CustomerRegistrationWelcomeEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, CustomerModel bookedBy)
+        public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, CustomerModel createdByCustomerModel, CustomerModel bookedByCustomerModel)
         {
-            SlotSchedulerBookedViewModel slotSchedulerBookedViewModel = new SlotSchedulerBookedViewModel();
-            PopulateSlotSchedulerViewModel(slotSchedulerBookedViewModel, slotModel);
-            slotSchedulerBookedViewModel.BookedBy = string.Format("{0} {1}", bookedBy.FirstName, bookedBy.LastName);
+            SlotSchedulerBookedViewModel slotSchedulerBookedViewModel = new SlotSchedulerBookedViewModel(slotModel, createdByCustomerModel, bookedByCustomerModel);
 
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(SlotSchedulerBookedViewModel)))
             {
                 var slotScheduledTemplateBody = GetTemplateBody(TemplateConstants.TemplateSlotScheduledNotification);
                 var compiledMessageBody = Engine.Razor.RunCompile(slotScheduledTemplateBody, TemplateConstants.SlotScheduledEmailTemplateKey, typeof(SlotSchedulerBookedViewModel), slotSchedulerBookedViewModel);
-                return CreateEmailModel(bookedBy, TemplateConstants.SlotScheduledEmailSubject, compiledMessageBody);
+                return CreateEmailModel(createdByCustomerModel, TemplateConstants.SlotScheduledEmailSubject, compiledMessageBody);
             }
 
             var messageBody = Engine.Razor.Run(TemplateConstants.SlotScheduledEmailTemplateKey, typeof(SlotSchedulerBookedViewModel), slotSchedulerBookedViewModel);
-            return CreateEmailModel(bookedBy, TemplateConstants.SlotScheduledEmailSubject, messageBody);
+            return CreateEmailModel(createdByCustomerModel, TemplateConstants.SlotScheduledEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotCancelledEmailTemplate(SlotModel slotModel, CustomerModel cancelledByCustomerModel)
+        public static EmailModel SlotCancelledEmailTemplate(SlotModel slotModel, CustomerModel cancelledByCustomerModel, CustomerModel notCancelledByCustomerModel)
         {
-            SlotSchedulerCancelledViewModel slotSchedulerCancelledByViewModel = new SlotSchedulerCancelledViewModel();
-            PopulateSlotSchedulerViewModel(slotSchedulerCancelledByViewModel, slotModel);
-            slotSchedulerCancelledByViewModel.CancelledBy = string.Format("{0} {1}", cancelledByCustomerModel.FirstName, cancelledByCustomerModel.LastName);
-
+            SlotSchedulerCancelledViewModel slotSchedulerCancelledByViewModel = new SlotSchedulerCancelledViewModel(slotModel,
+                cancelledByCustomerModel, notCancelledByCustomerModel);
+            
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(SlotSchedulerBookedViewModel)))
             {
                 var slotCancelledTemplateBody = GetTemplateBody(TemplateConstants.TemplateSlotCancelledNotification);
                 var compiledMessageBody = Engine.Razor.RunCompile(slotCancelledTemplateBody, TemplateConstants.SlotCancelledEmailTemplateKey, typeof(SlotSchedulerCancelledViewModel), slotSchedulerCancelledByViewModel);
-                return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, compiledMessageBody);
+                return CreateEmailModel(notCancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, compiledMessageBody);
             }
 
             var messageBody = Engine.Razor.Run(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(SlotSchedulerCancelledViewModel), slotSchedulerCancelledByViewModel);
-            return CreateEmailModel(cancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
+            return CreateEmailModel(notCancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
         }
 
         public static EmailModel SlotMeetingInformationTemplate(SlotModel slotModel, CustomerModel resendTo)
         {
-            SlotMeetingViewModel slotMeetingViewModel = new SlotMeetingViewModel();
-            PopulateSlotSchedulerViewModel(slotMeetingViewModel, slotModel);
-            
-            
+            SlotMeetingViewModel slotMeetingViewModel = new SlotMeetingViewModel(slotModel);
+
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(CustomerModel)))
             {
                 var slotInformationTemplateBody = GetTemplateBody(TemplateConstants.TemplateSlotMeetingInformationNotification);
@@ -125,31 +120,14 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
             var emailModel = new EmailModel();
             emailModel.Subject = subject;
             emailModel.Body = messageBody;
-            emailModel.To = new List<string>() { "tarun.aggarwal4@gmail.com" };
+            emailModel.To = new List<string>() { customerModel.Email };
             emailModel.IsBodyHtml = true;
             return emailModel;
         }
 
 
-        private static RegisterCustomerViewModel CreateRegisterCustomerViewModel(CustomerModel customerModel)
-        {
-            var registerCustomerViewModel = new RegisterCustomerViewModel();
-            registerCustomerViewModel.FirstName = customerModel.FirstName;
-            registerCustomerViewModel.LastName = customerModel.LastName;
-            return registerCustomerViewModel;
-        }
 
-        private static void PopulateSlotSchedulerViewModel(BaseSlotSchedulerViewModel baseSlotSchedulerViewModel, SlotModel slotModel)
-        {
-            baseSlotSchedulerViewModel.Title = slotModel.Title;
-            baseSlotSchedulerViewModel.Country = slotModel.Country;
-            //baseSlotSchedulerViewModel.TimeZone = slotModel.SlotStartZonedDateTime.Zone.Id;
-            //baseSlotSchedulerViewModel.SlotDate = NodaTimeHelper.FormatLocalDate(slotModel.SlotStartZonedDateTime.Date, DateTimeConstants.ApplicationOutPutDatePattern);
-            baseSlotSchedulerViewModel.StartTime = slotModel.SlotStartTime.ToString();
-            baseSlotSchedulerViewModel.EndTime = slotModel.SlotEndTime.ToString();
-            baseSlotSchedulerViewModel.Duration = slotModel.SlotDuration.TotalMinutes.ToString();
-            baseSlotSchedulerViewModel.MeetingLink = slotModel.SlotMeetingLink;
-        }
 
+    
     }
 }

@@ -27,7 +27,7 @@
 </head>
 <body>
     <div>
-        Hi @Model.CancelledBy has cancelled your below booked slot
+        Hi @Model.CancelledBy.FirstName @Model.CancelledBy.LastName has cancelled your below booked slot
     </div>
     <table>
         <tr>
@@ -43,10 +43,10 @@
             <td>@Model.Title</td>
             <td>@Model.Country</td>
             <td>@Model.TimeZone</td>
-            <td>@Model.SlotDate</td>
-            <td>@Model.StartTime</td>
-            <td>@Model.EndTime</td>
-            <td>@Model.Duration</td>
+            <td>@Model.SlotSlotDate</td>
+            <td>@Model.SlotStartTime</td>
+            <td>@Model.SlotEndTime</td>
+            <td>@Model.SlotDuration</td>
         </tr>
     </table>
 
