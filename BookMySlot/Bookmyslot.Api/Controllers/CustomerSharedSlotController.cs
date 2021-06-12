@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
+using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
@@ -17,6 +18,7 @@ namespace Bookmyslot.Api.Controllers
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(AuthorizedFilter))]
     public class CustomerSharedSlotController : BaseApiController
     {
         private readonly ICustomerSharedSlotBusiness customerSharedSlotBusiness;

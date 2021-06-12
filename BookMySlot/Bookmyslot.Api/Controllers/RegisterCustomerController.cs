@@ -1,4 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
@@ -16,6 +17,7 @@ namespace Bookmyslot.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
+    [ServiceFilter(typeof(AuthorizedFilter))]
     public class RegisterCustomerController : BaseApiController
     {
         private readonly IRegisterCustomerBusiness registerCustomerBusiness;

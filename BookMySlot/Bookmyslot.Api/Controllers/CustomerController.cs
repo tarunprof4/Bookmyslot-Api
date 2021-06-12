@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.ViewModels;
+using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,7 @@ namespace Bookmyslot.Api.Controllers
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(AuthorizedFilter))]
     public class CustomerController : BaseApiController
     {
         private readonly ICustomerBusiness customerBusiness;

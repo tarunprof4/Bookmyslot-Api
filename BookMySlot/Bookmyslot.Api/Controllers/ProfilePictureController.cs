@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.File.ViewModels;
@@ -16,6 +17,7 @@ namespace Bookmyslot.Api.Controllers
 {
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(AuthorizedFilter))]
     public class ProfilePictureController : BaseApiController
     {
         private const string Image = "image";
