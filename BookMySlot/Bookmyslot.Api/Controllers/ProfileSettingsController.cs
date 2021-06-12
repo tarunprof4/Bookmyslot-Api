@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
@@ -19,6 +20,7 @@ namespace Bookmyslot.Api.Controllers
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(AuthorizedFilter))]
     public class ProfileSettingsController : BaseApiController
     {
         private readonly IProfileSettingsBusiness profileSettingsBusiness;

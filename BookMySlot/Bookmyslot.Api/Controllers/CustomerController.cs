@@ -14,6 +14,7 @@ namespace Bookmyslot.Api.Controllers
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(AuthorizedFilter))]
     public class CustomerController : BaseApiController
     {
         private readonly ICustomerBusiness customerBusiness;

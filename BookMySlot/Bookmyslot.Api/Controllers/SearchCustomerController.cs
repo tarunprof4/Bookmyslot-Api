@@ -4,6 +4,7 @@ using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
@@ -26,6 +27,7 @@ namespace Bookmyslot.Api.Controllers
     [Consumes("application/json")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(AuthorizedFilter))]
     public class SearchCustomerController : BaseApiController
     {
         private readonly ISearchCustomerBusiness searchCustomerBusiness;

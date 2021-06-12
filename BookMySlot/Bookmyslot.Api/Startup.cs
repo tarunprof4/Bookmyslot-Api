@@ -3,7 +3,6 @@ using Bookmyslot.Api.Common.Contracts.Configuration;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
-using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Business.DomainEventHandlers;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.Injections;
@@ -115,7 +114,7 @@ namespace Bookmyslot.Api
         {
             services.AddMvc(options =>
             {
-                options.Filters.Add<LoggingFilter>();
+                //options.Filters.Add<LoggingFilter>();
             });
         }
 
@@ -123,6 +122,7 @@ namespace Bookmyslot.Api
         {
             services.AddHttpContextAccessor();
 
+            WebInjections.LoadInjections(services);
             AppConfigurationInjection.LoadInjections(services, Configuration);
             AuthenticationInjection.LoadInjections(services);
             CacheInjection.LoadInjections(services, appConfiguration);
