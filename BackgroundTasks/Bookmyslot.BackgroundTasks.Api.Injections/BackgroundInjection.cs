@@ -1,5 +1,6 @@
 ﻿using Bookmyslot.BackgroundTasks.Api.Business;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
+using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Repository;
 using Bookmyslot.BackgroundTasks.Api.Repositories;
@@ -32,27 +33,16 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
             var uri = new Uri("http://localhost:9200");
             var connectionPool = new SingleNodeConnectionPool(uri);
 
-            var customerIndex = "myindex1";
-            var searchAsYouType = "search-as-you-type";
-
+            var customerIndex = ElasticSearchConstants.CustomerIndex;
             var settings = new ConnectionSettings()
-    .DefaultIndex("defaultindex")
-    .DefaultMappingFor<CustomerModel>(m => m
-        .IndexName(customerIndex).IdProperty(p => p.Id)
-    ).
-    EnableHttpCompression();
-
-
-
-
-
-
-
+                           .DefaultMappingFor<CustomerModel>(m => m
+                           .IndexName(customerIndex).IdProperty(p => p.Id))
+                           .EnableHttpCompression();
 
             var elasticClient = new ElasticClient(settings);
             services.AddSingleton(elasticClient);
 
-
+            var searchAsYouType = ElasticSearchConstants.SearchAsYouTypeField;
             if (!elasticClient.Indices.Exists(customerIndex).Exists)
             {
                 var createIndexResponse = elasticClient.Indices.Create(customerIndex, c => c
