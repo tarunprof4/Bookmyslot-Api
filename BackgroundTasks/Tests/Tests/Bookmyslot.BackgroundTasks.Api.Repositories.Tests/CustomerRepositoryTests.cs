@@ -34,25 +34,21 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             customerRepository = new CustomerRepository(elasticClientMock.Object, dbInterceptorMock.Object, loggerServiceMock.Object);
         }
 
-        //[Test]
-        //public async Task CreateValidCustomer_ReturnsSuccessResponse()
-        //{
-        //    var customerModel = DefaultCreateCustomerModel();
+        [Test]
+        public async Task CreateValidCustomer_ReturnsSuccessResponse()
+        {
+            var customerModel = DefaultCreateCustomerModel();
+            var mockSearchResponse = new Mock<IndexResponse>();
+            mockSearchResponse.Setup(x => x.IsValid).Returns(true);
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-        //    var indexResponse = new IndexResponse();
+            var createCustomerModelResponse = await customerRepository.CreateCustomer(customerModel);
 
-        //    var s = JsonConvert.SerializeObject(indexResponse);
-
-
-        //    dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(indexResponse));
-
-        //    var createCustomerModelResponse = await customerRepository.CreateCustomer(customerModel);
-
-        //    Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
-        //    Assert.AreEqual(createCustomerModelResponse.Result, true);
-        //    dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
-        //    loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never);
-        //}
+            Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
+            Assert.AreEqual(createCustomerModelResponse.Result, true);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
+            loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never);
+        }
 
         [Test]
         public async Task CreateInValidCustomer_ReturnsErrorResponse()
@@ -71,6 +67,22 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
         }
 
         [Test]
+        public async Task UpdateValidCustomer_ReturnsSuccessResponse()
+        {
+            var customerModel = DefaultCreateCustomerModel();
+            var mockSearchResponse = new Mock<IndexResponse>();
+            mockSearchResponse.Setup(x => x.IsValid).Returns(true);
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
+
+            var createCustomerModelResponse = await customerRepository.UpdateCustomer(customerModel);
+
+            Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
+            Assert.AreEqual(createCustomerModelResponse.Result, true);
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
+            loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
         public async Task UpdateInValidCustomer_ReturnsErrorResponse()
         {
             var customerModel = DefaultCreateCustomerModel();
@@ -85,6 +97,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
             loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
+
+
+      
 
         private SearchCustomerModel DefaultCreateCustomerModel()
         {
