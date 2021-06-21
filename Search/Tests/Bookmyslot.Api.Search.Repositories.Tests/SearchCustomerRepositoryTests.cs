@@ -1,6 +1,6 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Search.Contracts;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Moq;
 using Newtonsoft.Json;
@@ -120,14 +120,10 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             var searchCustomerModels = new List<SearchCustomerModel>();
             var searchCustomerModel = new SearchCustomerModel();
             searchCustomerModel.UserName = UserName;
-            searchCustomerModel.FullName = FullName;
-            searchCustomerModel.PhotoUrl = PhotoUrl;
             searchCustomerModels.Add(searchCustomerModel);
 
             searchCustomerModel = new SearchCustomerModel();
             searchCustomerModel.UserName = UserName;
-            searchCustomerModel.FullName = FullName;
-            searchCustomerModel.PhotoUrl = PhotoUrl;
             searchCustomerModels.Add(searchCustomerModel);
 
             return searchCustomerModels;

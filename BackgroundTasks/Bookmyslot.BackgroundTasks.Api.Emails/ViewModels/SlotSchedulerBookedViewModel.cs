@@ -4,12 +4,12 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
 {
     public class SlotSchedulerBookedViewModel : BaseSlotSchedulerViewModel
     {
-        public CustomerModel CreatedBy { get;  }
+        public SearchCustomerModel CreatedBy { get;  }
 
-        public CustomerModel BookedBy { get; }
+        public SearchCustomerModel BookedBy { get; }
         
 
-        public SlotSchedulerBookedViewModel(SlotModel slotModel, CustomerModel createdBy, CustomerModel BookedBy) :
+        public SlotSchedulerBookedViewModel(SlotModel slotModel, SearchCustomerModel createdBy, SearchCustomerModel BookedBy) :
             base(slotModel)
         {
             this.CreatedBy = createdBy;

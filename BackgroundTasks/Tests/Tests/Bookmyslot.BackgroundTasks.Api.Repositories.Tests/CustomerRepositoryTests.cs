@@ -1,11 +1,10 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Moq;
 using Nest;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
@@ -87,9 +86,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
 
-        private CustomerModel DefaultCreateCustomerModel()
+        private SearchCustomerModel DefaultCreateCustomerModel()
         {
-            var customerModel = new CustomerModel();
+            var customerModel = new SearchCustomerModel();
             customerModel.Id = ID;
             customerModel.Email = EMAIL;
             customerModel.UserName = USERNAME;

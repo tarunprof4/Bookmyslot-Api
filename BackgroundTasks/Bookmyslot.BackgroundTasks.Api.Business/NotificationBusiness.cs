@@ -15,25 +15,25 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
             this.emailInteraction = emailInteraction;
         }
 
-        public async Task<Response<bool>> SendCustomerRegisteredNotification(CustomerModel customerModel)
+        public async Task<Response<bool>> SendCustomerRegisteredNotification(SearchCustomerModel customerModel)
         {
             var emailModel = CustomerEmailTemplateFactory.GetCustomerRegistrationWelcomeEmailTemplate(customerModel);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
-        public async Task<Response<bool>> SlotCancelledNotificatiion(SlotModel slotModel, CustomerModel cancelledBy, CustomerModel notCancelledBy)
+        public async Task<Response<bool>> SlotCancelledNotificatiion(SlotModel slotModel, SearchCustomerModel cancelledBy, SearchCustomerModel notCancelledBy)
         {
             var emailModel = CustomerEmailTemplateFactory.SlotCancelledEmailTemplate(slotModel, cancelledBy, notCancelledBy);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
-        public async Task<Response<bool>> SlotMeetingInformationNotification(SlotModel slotModel, CustomerModel resendTo)
+        public async Task<Response<bool>> SlotMeetingInformationNotification(SlotModel slotModel, SearchCustomerModel resendTo)
         {
             var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(slotModel, resendTo);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
-        public async Task<Response<bool>> SlotScheduledNotificatiion(SlotModel slotModel, CustomerModel createdBy, CustomerModel bookedBy)
+        public async Task<Response<bool>> SlotScheduledNotificatiion(SlotModel slotModel, SearchCustomerModel createdBy, SearchCustomerModel bookedBy)
         {
             var createdByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, createdBy, bookedBy);
 

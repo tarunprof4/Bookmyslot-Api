@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Search.Contracts;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using System.Collections.Generic;
@@ -16,30 +16,32 @@ namespace Bookmyslot.Api.Search.Business
             this.searchRepository = searchRepository;
             this.searchCustomerRepository = searchCustomerRepository;
         }
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey)
+        public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameterModel pageParameterModel)
         {
             searchKey = searchKey.ToLowerInvariant();
-            var preProcessedSearchedCustomers = await this.searchRepository.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(SearchConstants.SearchCustomer, searchKey);
+            var cacheSearchKey = SearchCustomerModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
+
+            var preProcessedSearchedCustomers = await this.searchRepository.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(SearchConstants.SearchCustomer, cacheSearchKey);
             if (preProcessedSearchedCustomers.ResultType == ResultType.Success)
             {
                 return preProcessedSearchedCustomers;
             }
 
-            var searchedCustomersResponse = await this.SearchCustomersBySearchIntent(searchKey);
+            var searchedCustomersResponse = await this.SearchCustomersBySearchIntent(searchKey, pageParameterModel);
             if (searchedCustomersResponse.ResultType == ResultType.Success)
             {
-                await this.searchRepository.SavePreProcessedSearchedResponse(SearchConstants.SearchCustomer, searchKey, searchedCustomersResponse.Result);
+                await this.searchRepository.SavePreProcessedSearchedResponse(SearchConstants.SearchCustomer, cacheSearchKey, searchedCustomersResponse.Result);
             }
 
             return searchedCustomersResponse;
         }
 
 
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersBySearchIntent(string searchKey)
+        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersBySearchIntent(string searchKey, PageParameterModel pageParameterModel)
         {
             if (searchKey[0] == SearchConstants.SearchCustomerByNameIdentifier)
             {
-                return await this.searchCustomerRepository.SearchCustomersByName(SanitizeSearchKey(searchKey));
+                return await this.searchCustomerRepository.SearchCustomersByName(SanitizeSearchKey(searchKey), pageParameterModel);
             }
             else if (searchKey[0] == SearchConstants.SearchCustomerByUserNameIdentifier)
             {

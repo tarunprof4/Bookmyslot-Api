@@ -1,4 +1,4 @@
-﻿namespace Bookmyslot.BackgroundTasks.Api.Contracts.Constants
+﻿namespace Bookmyslot.Bookmyslot.Api.Common.Search.Constants
 {
     public class ElasticSearchConstants
     {

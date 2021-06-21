@@ -5,11 +5,10 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Database;
 using Bookmyslot.Api.Common.Email;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
-using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Bookmyslot.BackgroundTasks.Api.Logging;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
+using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;
 using Elasticsearch.Net;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
@@ -25,7 +24,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
             LoggingInjections(services);
             EmailInjections(services);
             DatabaseInjections(services);
-            SearchInjections(services, appConfiguration);
+            ElasticSearchInjections(services, appConfiguration);
         }
 
         
@@ -51,14 +50,14 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
             services.AddSingleton<IDbInterceptor, DbInterceptor>();
         }
 
-        private static void SearchInjections(IServiceCollection services, AppConfiguration appConfiguration)
+        private static void ElasticSearchInjections(IServiceCollection services, AppConfiguration appConfiguration)
         {
             var uri = new Uri(appConfiguration.ElasticSearchUrl);
             var connectionPool = new SingleNodeConnectionPool(uri);
 
             var customerIndex = ElasticSearchConstants.CustomerIndex;
             var settings = new ConnectionSettings()
-                           .DefaultMappingFor<CustomerModel>(m => m
+                           .DefaultMappingFor<SearchCustomerModel>(m => m
                            .IndexName(customerIndex).IdProperty(p => p.Id))
                            .EnableHttpCompression();
 

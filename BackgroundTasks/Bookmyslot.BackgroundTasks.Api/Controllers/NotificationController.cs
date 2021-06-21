@@ -27,7 +27,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ActionName("SendNotification")]
         public async Task<IActionResult> SendNotification()
         {
-            CustomerModel customerModel = GetCustomerModel();
+            SearchCustomerModel customerModel = GetCustomerModel();
             var slotModel = GetSlotModel();
 
             //RegisterCustomerIntegrationEvent
@@ -40,9 +40,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
             return this.CreatePostHttpResponse(notificationResponse);
         }
 
-        private CustomerModel GetCustomerModel()
+        private SearchCustomerModel GetCustomerModel()
         {
-            return new CustomerModel()
+            return new SearchCustomerModel()
             {
                 FirstName = "First",
                 LastName = "Last",
