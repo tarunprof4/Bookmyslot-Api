@@ -15,7 +15,7 @@ namespace Bookmyslot.Api.Common.ViewModels
 
         private int pageSize;
 
-        [DefaultValue("10")]
+        [DefaultValue("100")]
         [Range(1, PaginationConstants.PageSize)]
         public int PageSize
         {

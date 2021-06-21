@@ -129,7 +129,7 @@ namespace Bookmyslot.Api
             DataBaseInjection.LoadInjections(services, appConfiguration);
             CommonInjection.LoadInjections(services);
             CustomerInjection.LoadInjections(services);
-            SearchInjection.LoadInjections(services);
+            SearchInjection.LoadInjections(services, appConfiguration);
             SlotSchedulerInjection.LoadInjections(services);
             HttpFactoryInjections.LoadInjections(services);
             NodaTimeInjection.LoadInjections(services);

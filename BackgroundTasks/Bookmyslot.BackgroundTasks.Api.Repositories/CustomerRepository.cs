@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Repository;
 using Nest;
@@ -21,19 +21,19 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories
             this.dbInterceptor = dbInterceptor;
             this.loggerService = loggerService;
         }
-        public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
+        public async Task<Response<bool>> CreateSearchCustomer(SearchCustomerModel searchCustomerModel)
         {
-            return await CreateUpdateCustomer(customerModel, "CreateCustomer", AppBusinessMessagesConstants.CreateCustomerFailed);
+            return await CreateUpdateCustomer(searchCustomerModel, "CreateCustomer", AppBusinessMessagesConstants.CreateCustomerFailed);
         }
 
-        public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
+        public async Task<Response<bool>> UpdateSearchCustomer(SearchCustomerModel searchCustomerModel)
         {
-            return await CreateUpdateCustomer(customerModel, "UpdateCustomer", AppBusinessMessagesConstants.UpdateCustomerFailed);
+            return await CreateUpdateCustomer(searchCustomerModel, "UpdateCustomer", AppBusinessMessagesConstants.UpdateCustomerFailed);
         }
 
-        private async Task<Response<bool>> CreateUpdateCustomer(CustomerModel customerModel, string operationName, string operationFailedMessage)
+        private async Task<Response<bool>> CreateUpdateCustomer(SearchCustomerModel searchCustomerModel, string operationName, string operationFailedMessage)
         {
-            var createCustomerResponse = await this.dbInterceptor.GetQueryResults(operationName, customerModel, () => this.elasticClient.IndexDocumentAsync(customerModel));
+            var createCustomerResponse = await this.dbInterceptor.GetQueryResults(operationName, searchCustomerModel, () => this.elasticClient.IndexDocumentAsync(searchCustomerModel));
             if (createCustomerResponse.IsValid)
             {
                 return new Response<bool>() { Result = true };

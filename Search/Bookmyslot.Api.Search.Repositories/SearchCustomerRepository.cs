@@ -1,11 +1,13 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
-using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.Search.Repositories.Queries;
 using Dapper;
+using Nest;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -18,11 +20,13 @@ namespace Bookmyslot.Api.Search.Repositories
     {
         private readonly IDbConnection connection;
         private readonly IDbInterceptor dbInterceptor;
+        private readonly ElasticClient elasticClient;
 
-        public SearchCustomerRepository(IDbConnection connection, IDbInterceptor dbInterceptor)
+        public SearchCustomerRepository(IDbConnection connection, IDbInterceptor dbInterceptor, ElasticClient elasticClient)
         {
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
+            this.elasticClient = elasticClient;
         }
 
         public async Task<Response<SearchCustomerModel>> SearchCustomersByUserName(string userName)
@@ -36,15 +40,43 @@ namespace Bookmyslot.Api.Search.Repositories
         }
 
 
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name)
+        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel)
         {
-            var searchName = GenerateSearchByNameKey(name).ToString();
-            var parameters = new { name = searchName };
-            var sql = RegisterCustomerTableQueries.SearchCustomerByNameQuery;
+            var includeFields = new List<Field>();
+            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.Id));
+            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.FullName));
 
-            var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SearchCustomersByName", parameters, () => this.connection.QueryAsync<SearchCustomerEntity>(sql, parameters));
+            var firstNameField = Infer.Field<SearchCustomerModel>(f => f.FirstName);
+            var lastNameField = Infer.Field<SearchCustomerModel>(f => f.LastName);
+            var fullNameField = Infer.Field<SearchCustomerModel>(f => f.FullName);
+            Field[] multiMatchFields = { firstNameField, lastNameField, fullNameField };
 
-            return ResponseModelFactory.CreateSearchCustomerModelsResponse(searchCustomerEntities);
+            var request = new SearchRequest<SearchCustomerModel>()
+            {
+                From = pageParameterModel.PageNumber,
+                Size = pageParameterModel.PageSize,
+                Query = new MultiMatchQuery
+                {
+                    Fields = multiMatchFields,
+                    Query = name,
+                    Type = TextQueryType.BoolPrefix,
+                },
+                Source = new SourceFilter
+                {
+                    Includes = includeFields.ToArray(),
+                }
+            };
+
+            var response = await this.dbInterceptor.GetQueryResults("SearchCustomersByName", name, () =>
+            this.elasticClient.SearchAsync<SearchCustomerModel>(request));
+
+            if(response.Documents.Count == 0)
+            {
+                return Response<List<SearchCustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
+            }
+
+            return new Response<List<SearchCustomerModel>>() { Result= response.Documents.ToList() } ;
+         
         }
 
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine)

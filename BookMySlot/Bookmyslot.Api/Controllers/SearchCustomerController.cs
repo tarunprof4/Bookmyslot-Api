@@ -4,8 +4,8 @@ using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Common.Web.Filters;
-using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
@@ -42,23 +42,14 @@ namespace Bookmyslot.Api.Controllers
         }
 
 
-        /// <summary>
-        /// Gets customer by search 
-        /// </summary>
-        /// <param name="searchKey">search key</param>
-        /// <returns >customer details</returns>
-        /// <response code="200">Returns searched customers</response>
-        /// <response code="404">no customer found</response>
-        /// <response code="400">validation error bad request</response>
-        /// <response code="500">internal server error</response>
-        // GET api/<CustomerController>/email
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("{searchKey}")]
         [ActionName("SearchCustomer")]
-        public async Task<IActionResult> Get(string searchKey)
+        public async Task<IActionResult> Get(string searchKey, int pageNumber, int pageSize)
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {
@@ -72,21 +63,25 @@ namespace Bookmyslot.Api.Controllers
                 return this.CreateGetHttpResponse(validationResponse);
             }
 
-            var cacheModel = CreateCacheModel(searchKey);
+            var pageParameterModel = new PageParameterModel() { PageNumber = pageNumber, PageSize = pageSize };
+            
+            var cacheModel = CreateCacheModel(searchKey, pageParameterModel);
 
             var customerResponse = await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(cacheModel,
-                  () => this.searchCustomerBusiness.SearchCustomers(searchKey));
+                  () => this.searchCustomerBusiness.SearchCustomers(searchKey, pageParameterModel));
 
             return this.CreateGetHttpResponse(customerResponse);
         }
 
-        private CacheModel CreateCacheModel(string searchKey)
+        private CacheModel CreateCacheModel(string searchKey, PageParameterModel pageParameterModel)
         {
             var cacheModel = new CacheModel();
-            cacheModel.Key = string.Format(CacheConstants.CustomerSearchKey, searchKey);
+            var cacheSearchKey = CacheModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
+            cacheModel.Key = string.Format(CacheConstants.CustomerSearchKey, cacheSearchKey);
             cacheModel.ExpiryTime = TimeSpan.FromSeconds(this.cacheConfiguration.CustomerSearchInSeconds);
             return cacheModel;
         }
     }
 }
+

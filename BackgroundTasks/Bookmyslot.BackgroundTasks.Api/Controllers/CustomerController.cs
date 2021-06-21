@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Web.Common;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
+﻿using Bookmyslot.Api.Common.Search.Contracts;
+using Bookmyslot.Api.Web.Common;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,11 +27,11 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ActionName("CreateCustomer")]
         public async Task<IActionResult> Post()
         {
-            CustomerModel customerModel = GetCustomerModel();
+            var searchCustomerModel = GetSearchCustomerModel();
 
-            var notificationResponse = await this.customerBusiness.CreateCustomer(customerModel);
+            var createCustomerResponse = await this.customerBusiness.CreateSearchCustomer(searchCustomerModel);
 
-            return this.CreatePostHttpResponse(notificationResponse);
+            return this.CreatePostHttpResponse(createCustomerResponse);
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -41,16 +41,16 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ActionName("UpdateCustomer")]
         public async Task<IActionResult> Put()
         {
-            CustomerModel customerModel = GetCustomerModel();
+            SearchCustomerModel searchCustomerModel = GetSearchCustomerModel();
 
-            var notificationResponse = await this.customerBusiness.CreateCustomer(customerModel);
+            var updateCustomerResponse = await this.customerBusiness.UpdateSearchCustomer(searchCustomerModel);
 
-            return this.CreatePostHttpResponse(notificationResponse);
+            return this.CreatePostHttpResponse(updateCustomerResponse);
         }
 
-        private CustomerModel GetCustomerModel()
+        private SearchCustomerModel GetSearchCustomerModel()
         {
-            return new CustomerModel()
+            return new SearchCustomerModel()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = "UserName",

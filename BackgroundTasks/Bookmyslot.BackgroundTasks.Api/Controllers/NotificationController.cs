@@ -27,7 +27,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ActionName("SendNotification")]
         public async Task<IActionResult> SendNotification()
         {
-            CustomerModel customerModel = GetCustomerModel();
+            var customerModel = GetCustomerModel();
             var slotModel = GetSlotModel();
 
             //RegisterCustomerIntegrationEvent

@@ -9,9 +9,6 @@ using System;
 
 namespace Bookmyslot.BackgroundTasks.Api.Injections.Tests
 {
-
-
-
     public class CustomerControllerTests
     {
         private IServiceProvider serviceProvider;

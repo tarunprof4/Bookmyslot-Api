@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Contracts\Bookmyslot.Api.Cache.Contracts.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Search.Contracts\Bookmyslot.Api.Search.Contracts.csproj" />
   </ItemGroup>
 

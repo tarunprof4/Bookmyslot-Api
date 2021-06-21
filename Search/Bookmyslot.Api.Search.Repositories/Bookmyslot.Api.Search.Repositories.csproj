@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Database\Bookmyslot.Api.Common.Database.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Search\Bookmyslot.Api.Common.Search.csproj" />
     <ProjectReference Include="..\Bookmyslot.Api.Search.Contracts\Bookmyslot.Api.Search.Contracts.csproj" />
   </ItemGroup>
 

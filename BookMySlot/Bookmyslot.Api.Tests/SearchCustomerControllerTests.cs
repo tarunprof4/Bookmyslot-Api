@@ -3,8 +3,8 @@ using Bookmyslot.Api.Cache.Contracts.Configuration;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Controllers;
-using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +43,7 @@ namespace Bookmyslot.Api.Tests
         [TestCase("   ")]
         public async Task SearchCustomer_InValidSearchKey_ReturnsValidationResponse(string searchKey)
         {
-            var response = await searchCustomerController.Get(searchKey);
+            var response = await searchCustomerController.Get(searchKey, 0, 0);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -56,7 +56,7 @@ namespace Bookmyslot.Api.Tests
         [TestCase(InValidSearchKey)]
         public async Task SearchCustomer_InValidSearchKeyMinLength_ReturnsValidationResponse(string searchKey)
         {
-            var response = await searchCustomerController.Get(searchKey);
+            var response = await searchCustomerController.Get(searchKey, 0 , 0);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -71,7 +71,7 @@ namespace Bookmyslot.Api.Tests
             Response<List<SearchCustomerModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Empty };
             distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
 
-            var response = await searchCustomerController.Get(ValidSearchKey);
+            var response = await searchCustomerController.Get(ValidSearchKey, 0 , 0);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
@@ -85,13 +85,13 @@ namespace Bookmyslot.Api.Tests
             Response<List<SearchCustomerModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Success };
             distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
 
-            var response = await searchCustomerController.Get(ValidSearchKey);
+            var response = await searchCustomerController.Get(ValidSearchKey, 0, 100);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Once());
         }
-     
+
     }
 }

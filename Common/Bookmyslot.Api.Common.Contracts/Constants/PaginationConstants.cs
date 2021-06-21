@@ -2,6 +2,6 @@
 {
     public class PaginationConstants
     {
-        public const int PageSize = 10;
+        public const int PageSize = 100;
     }
 }

@@ -1,10 +1,10 @@
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
-using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Bookmyslot.BackgroundTasks.Api.Injections;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
+using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -135,8 +135,8 @@ namespace Bookmyslot.BackgroundTasks.Api
             if (!elasticClient.Indices.Exists(ElasticSearchConstants.CustomerIndex).Exists)
             {
                 var createIndexResponse = elasticClient.Indices.Create(ElasticSearchConstants.CustomerIndex, c => c
-       .Map<CustomerModel>(mm => mm
-       .AutoMap<CustomerModel>()
+       .Map<SearchCustomerModel>(mm => mm
+       .AutoMap<SearchCustomerModel>()
 
        .Properties(p => p
        .Text(t => t.Name(n => n.FirstName)
