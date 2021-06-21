@@ -1,15 +1,14 @@
 ﻿using Nest;
+using Newtonsoft.Json;
 
-namespace Bookmyslot.Api.Common.Search.Contracts
+namespace Bookmyslot.Api.Search.Contracts
 {
+
     public class SearchCustomerModel
     {
         [Keyword]
+        [JsonIgnore]
         public string Id { get; set; }
-
-
-        [Keyword]
-        public string Email { get; set; }
 
         [Keyword]
         public string UserName { get; set; }
@@ -31,8 +30,5 @@ namespace Bookmyslot.Api.Common.Search.Contracts
 
         [Keyword]
         public string PhotoUrl { get; set; }
-
-
-
     }
 }

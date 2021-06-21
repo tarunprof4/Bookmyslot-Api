@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Search.Business;
+using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories;
 using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;

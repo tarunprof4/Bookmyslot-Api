@@ -5,7 +5,7 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Database;
 using Bookmyslot.Api.Common.Email;
-using Bookmyslot.Api.Common.Search.Contracts;
+using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
 using Bookmyslot.BackgroundTasks.Api.Logging;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
@@ -58,7 +58,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
 
             var customerIndex = ElasticSearchConstants.CustomerIndex;
             var settings = new ConnectionSettings()
-                           .DefaultMappingFor<SearchCustomerModel>(m => m
+                           .DefaultMappingFor<CustomerModel>(m => m
                            .IndexName(customerIndex).IdProperty(p => p.Id))
                            .EnableHttpCompression();
 
