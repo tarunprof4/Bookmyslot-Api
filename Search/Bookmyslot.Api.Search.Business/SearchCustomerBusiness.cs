@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.Api.Cache.Contracts;
+using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
@@ -19,7 +20,7 @@ namespace Bookmyslot.Api.Search.Business
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameterModel pageParameterModel)
         {
             searchKey = searchKey.ToLowerInvariant();
-            var cacheSearchKey = SearchCustomerModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
+            var cacheSearchKey = CacheModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
 
             var preProcessedSearchedCustomers = await this.searchRepository.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(SearchConstants.SearchCustomer, cacheSearchKey);
             if (preProcessedSearchedCustomers.ResultType == ResultType.Success)

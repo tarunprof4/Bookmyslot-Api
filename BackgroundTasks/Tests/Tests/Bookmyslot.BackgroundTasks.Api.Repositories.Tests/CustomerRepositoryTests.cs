@@ -42,7 +42,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             mockSearchResponse.Setup(x => x.IsValid).Returns(true);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var createCustomerModelResponse = await customerRepository.CreateCustomer(customerModel);
+            var createCustomerModelResponse = await customerRepository.CreateSearchCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(createCustomerModelResponse.Result, true);
@@ -57,7 +57,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             var indexResponse = new IndexResponse();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(indexResponse));
 
-            var createCustomerModelResponse = await customerRepository.CreateCustomer(customerModel);
+            var createCustomerModelResponse = await customerRepository.CreateSearchCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Error);
             Assert.AreEqual(createCustomerModelResponse.Result, false);
@@ -74,7 +74,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             mockSearchResponse.Setup(x => x.IsValid).Returns(true);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var createCustomerModelResponse = await customerRepository.UpdateCustomer(customerModel);
+            var createCustomerModelResponse = await customerRepository.UpdateSearchCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(createCustomerModelResponse.Result, true);
@@ -89,7 +89,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             var indexResponse = new IndexResponse();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(indexResponse));
 
-            var createCustomerModelResponse = await customerRepository.UpdateCustomer(customerModel);
+            var createCustomerModelResponse = await customerRepository.UpdateSearchCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Error);
             Assert.AreEqual(createCustomerModelResponse.Result, false);

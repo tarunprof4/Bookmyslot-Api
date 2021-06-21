@@ -13,14 +13,14 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
         {
             this.customerRepository = customerRepository;
         }
-        public async Task<Response<bool>> CreateCustomer(SearchCustomerModel searchCustomerModel)
+        public async Task<Response<bool>> CreateSearchCustomer(SearchCustomerModel searchCustomerModel)
         {
-            return await this.customerRepository.CreateCustomer(searchCustomerModel);
+            return await this.customerRepository.CreateSearchCustomer(searchCustomerModel);
         }
 
-        public async Task<Response<bool>> UpdateCustomer(SearchCustomerModel searchCustomerModel)
+        public async Task<Response<bool>> UpdateSearchCustomer(SearchCustomerModel searchCustomerModel)
         {
-            return await this.customerRepository.UpdateCustomer(searchCustomerModel);
+            return await this.customerRepository.UpdateSearchCustomer(searchCustomerModel);
         }
     }
 }

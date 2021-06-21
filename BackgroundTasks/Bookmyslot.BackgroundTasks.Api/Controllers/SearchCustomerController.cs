@@ -11,10 +11,10 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    public class CustomerController : BaseApiController
+    public class SearchCustomerController : BaseApiController
     {
         private readonly ICustomerBusiness customerBusiness;
-        public CustomerController(ICustomerBusiness customerBusiness)
+        public SearchCustomerController(ICustomerBusiness customerBusiness)
         {
             this.customerBusiness = customerBusiness;
         }
@@ -22,28 +22,28 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/Customer")]
+        [Route("api/v1/SearchCustomer")]
         [HttpPost()]
-        [ActionName("CreateCustomer")]
+        [ActionName("CreateSearchCustomer")]
         public async Task<IActionResult> Post()
         {
             var searchCustomerModel = GetSearchCustomerModel();
 
-            var createCustomerResponse = await this.customerBusiness.CreateCustomer(searchCustomerModel);
+            var createCustomerResponse = await this.customerBusiness.CreateSearchCustomer(searchCustomerModel);
 
             return this.CreatePostHttpResponse(createCustomerResponse);
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/Customer")]
+        [Route("api/v1/SearchCustomer")]
         [HttpPut()]
-        [ActionName("UpdateCustomer")]
+        [ActionName("UpdateSearchCustomer")]
         public async Task<IActionResult> Put()
         {
             SearchCustomerModel searchCustomerModel = GetSearchCustomerModel();
 
-            var updateCustomerResponse = await this.customerBusiness.UpdateCustomer(searchCustomerModel);
+            var updateCustomerResponse = await this.customerBusiness.UpdateSearchCustomer(searchCustomerModel);
 
             return this.CreatePostHttpResponse(updateCustomerResponse);
         }

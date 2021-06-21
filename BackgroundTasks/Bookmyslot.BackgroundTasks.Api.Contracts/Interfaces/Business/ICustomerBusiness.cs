@@ -6,8 +6,8 @@ namespace Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business
 {
     public interface ICustomerBusiness
     {
-        Task<Response<bool>> CreateCustomer(SearchCustomerModel searchCustomerModel);
+        Task<Response<bool>> CreateSearchCustomer(SearchCustomerModel searchCustomerModel);
 
-        Task<Response<bool>> UpdateCustomer(SearchCustomerModel searchCustomerModel);
+        Task<Response<bool>> UpdateSearchCustomer(SearchCustomerModel searchCustomerModel);
     }
 }

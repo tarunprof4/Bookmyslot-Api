@@ -1,5 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Nest;
+﻿using Nest;
 
 namespace Bookmyslot.Api.Common.Search.Contracts
 {
@@ -30,10 +29,10 @@ namespace Bookmyslot.Api.Common.Search.Contracts
         [Text]
         public string BioHeadLine { get; set; }
 
+        [Keyword]
+        public string PhotoUrl { get; set; }
 
-        public static string GetSearchCustomerCacehKey(string searchKey, PageParameterModel pageParameterModel)
-        {
-            return string.Format("{0}-{1}-{2}", searchKey, pageParameterModel.PageNumber, pageParameterModel.PageSize);
-        }
+
+
     }
 }

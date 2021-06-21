@@ -21,12 +21,12 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories
             this.dbInterceptor = dbInterceptor;
             this.loggerService = loggerService;
         }
-        public async Task<Response<bool>> CreateCustomer(SearchCustomerModel searchCustomerModel)
+        public async Task<Response<bool>> CreateSearchCustomer(SearchCustomerModel searchCustomerModel)
         {
             return await CreateUpdateCustomer(searchCustomerModel, "CreateCustomer", AppBusinessMessagesConstants.CreateCustomerFailed);
         }
 
-        public async Task<Response<bool>> UpdateCustomer(SearchCustomerModel searchCustomerModel)
+        public async Task<Response<bool>> UpdateSearchCustomer(SearchCustomerModel searchCustomerModel)
         {
             return await CreateUpdateCustomer(searchCustomerModel, "UpdateCustomer", AppBusinessMessagesConstants.UpdateCustomerFailed);
         }
