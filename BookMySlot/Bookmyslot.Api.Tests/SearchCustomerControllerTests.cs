@@ -4,6 +4,7 @@ using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
+using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
