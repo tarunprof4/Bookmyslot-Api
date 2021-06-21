@@ -5,25 +5,51 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Database;
 using Bookmyslot.Api.Common.Email;
+using Bookmyslot.BackgroundTasks.Api.Contracts;
+using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
+using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Bookmyslot.BackgroundTasks.Api.Logging;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
+using Elasticsearch.Net;
 using Microsoft.Extensions.DependencyInjection;
+using Nest;
+using System;
 
 namespace Bookmyslot.BackgroundTasks.Api.Injections
 {
     public class CommonInjection
     {
-        public static void LoadInjections(IServiceCollection services)
+        public static void LoadInjections(IServiceCollection services, AppConfiguration appConfiguration)
         {
+            CompressionInjections(services);
             LoggingInjections(services);
             EmailInjections(services);
             DatabaseInjections(services);
+            SearchInjections(services, appConfiguration);
         }
 
+        private static void SearchInjections(IServiceCollection services, AppConfiguration appConfiguration)
+        {
+            var uri = new Uri(appConfiguration.ElasticSearchUrl);
+            var connectionPool = new SingleNodeConnectionPool(uri);
+
+            var customerIndex = ElasticSearchConstants.CustomerIndex;
+            var settings = new ConnectionSettings()
+                           .DefaultMappingFor<CustomerModel>(m => m
+                           .IndexName(customerIndex).IdProperty(p => p.Id))
+                           .EnableHttpCompression();
+
+            var elasticClient = new ElasticClient(settings);
+            services.AddSingleton(elasticClient);
+        }
+
+        private static void CompressionInjections(IServiceCollection services)
+        {
+            services.AddSingleton<ICompression, GZipCompression>();
+        }
         private static void LoggingInjections(IServiceCollection services)
         {
             services.AddSingleton<ILoggerService, LoggerService>();
-            services.AddSingleton<ICompression, GZipCompression>();
             services.AddTransient<DefaultLogEnricher>();
         }
 
