@@ -1,5 +1,6 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
+using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Moq;
@@ -22,13 +23,15 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
         private CustomerRepository customerRepository;
         private Mock<ElasticClient> elasticClientMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
+        private Mock<ILoggerService> loggerServiceMock;
 
         [SetUp]
         public void SetUp()
         {
             elasticClientMock = new Mock<ElasticClient>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            customerRepository = new CustomerRepository(elasticClientMock.Object, dbInterceptorMock.Object);
+            loggerServiceMock = new Mock<ILoggerService>();
+            customerRepository = new CustomerRepository(elasticClientMock.Object, dbInterceptorMock.Object, loggerServiceMock.Object);
         }
 
         [Test]
@@ -46,6 +49,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(createCustomerModelResponse.Result, true);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
+            loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never);
         }
 
         [Test]
@@ -61,6 +65,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             Assert.AreEqual(createCustomerModelResponse.Result, false);
             Assert.IsTrue(createCustomerModelResponse.Messages.Contains(AppBusinessMessagesConstants.CreateCustomerFailed));
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
+            loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
 
         private CustomerModel DefaultCreateCustomerModel()

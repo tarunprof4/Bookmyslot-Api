@@ -28,20 +28,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
             SearchInjections(services, appConfiguration);
         }
 
-        private static void SearchInjections(IServiceCollection services, AppConfiguration appConfiguration)
-        {
-            var uri = new Uri(appConfiguration.ElasticSearchUrl);
-            var connectionPool = new SingleNodeConnectionPool(uri);
-
-            var customerIndex = ElasticSearchConstants.CustomerIndex;
-            var settings = new ConnectionSettings()
-                           .DefaultMappingFor<CustomerModel>(m => m
-                           .IndexName(customerIndex).IdProperty(p => p.Id))
-                           .EnableHttpCompression();
-
-            var elasticClient = new ElasticClient(settings);
-            services.AddSingleton(elasticClient);
-        }
+        
 
         private static void CompressionInjections(IServiceCollection services)
         {
@@ -62,6 +49,21 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
         private static void DatabaseInjections(IServiceCollection services)
         {
             services.AddSingleton<IDbInterceptor, DbInterceptor>();
+        }
+
+        private static void SearchInjections(IServiceCollection services, AppConfiguration appConfiguration)
+        {
+            var uri = new Uri(appConfiguration.ElasticSearchUrl);
+            var connectionPool = new SingleNodeConnectionPool(uri);
+
+            var customerIndex = ElasticSearchConstants.CustomerIndex;
+            var settings = new ConnectionSettings()
+                           .DefaultMappingFor<CustomerModel>(m => m
+                           .IndexName(customerIndex).IdProperty(p => p.Id))
+                           .EnableHttpCompression();
+
+            var elasticClient = new ElasticClient(settings);
+            services.AddSingleton(elasticClient);
         }
 
     }

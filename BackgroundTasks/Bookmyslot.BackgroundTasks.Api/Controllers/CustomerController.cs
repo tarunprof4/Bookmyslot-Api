@@ -20,7 +20,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         }
 
 
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/Customer")]
         [HttpPost()]
