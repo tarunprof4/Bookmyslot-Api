@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Search.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

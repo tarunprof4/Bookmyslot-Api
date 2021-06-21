@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Search.Contracts;
+﻿using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using System.Collections.Generic;
 
@@ -10,7 +10,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
         {
             return new SearchCustomerModel()
             {
-                UserName= searchCustomerEntity.UserName,
+                UserName = searchCustomerEntity.UserName,
                 FirstName = searchCustomerEntity.FirstName, 
                 LastName = searchCustomerEntity.LastName,
                 PhotoUrl = searchCustomerEntity.PhotoUrl

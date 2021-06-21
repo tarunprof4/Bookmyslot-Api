@@ -1,5 +1,4 @@
 using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Moq;
 using NUnit.Framework;

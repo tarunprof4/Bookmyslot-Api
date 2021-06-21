@@ -1,8 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
+using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.Search.Repositories.Queries;
@@ -43,8 +43,10 @@ namespace Bookmyslot.Api.Search.Repositories
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel)
         {
             var includeFields = new List<Field>();
-            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.Id));
-            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.FullName));
+            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.UserName));
+            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.FirstName));
+            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.LastName));
+            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.PhotoUrl));
 
             var firstNameField = Infer.Field<SearchCustomerModel>(f => f.FirstName);
             var lastNameField = Infer.Field<SearchCustomerModel>(f => f.LastName);

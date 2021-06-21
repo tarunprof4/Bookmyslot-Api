@@ -1,7 +1,6 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Moq;
 using Nest;

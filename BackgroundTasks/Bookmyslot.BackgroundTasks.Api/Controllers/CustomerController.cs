@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Search.Contracts;
-using Bookmyslot.Api.Web.Common;
+﻿using Bookmyslot.Api.Web.Common;
+using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +27,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ActionName("CreateCustomer")]
         public async Task<IActionResult> Post()
         {
-            var searchCustomerModel = GetSearchCustomerModel();
+            var customerModel = GetSearchCustomerModel();
 
-            var createCustomerResponse = await this.customerBusiness.CreateSearchCustomer(searchCustomerModel);
+            var createCustomerResponse = await this.customerBusiness.CreateCustomer(customerModel);
 
             return this.CreatePostHttpResponse(createCustomerResponse);
         }
@@ -41,16 +41,16 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ActionName("UpdateCustomer")]
         public async Task<IActionResult> Put()
         {
-            SearchCustomerModel searchCustomerModel = GetSearchCustomerModel();
+            var customerModel = GetSearchCustomerModel();
 
-            var updateCustomerResponse = await this.customerBusiness.UpdateSearchCustomer(searchCustomerModel);
+            var updateCustomerResponse = await this.customerBusiness.UpdateCustomer(customerModel);
 
             return this.CreatePostHttpResponse(updateCustomerResponse);
         }
 
-        private SearchCustomerModel GetSearchCustomerModel()
+        private CustomerModel GetSearchCustomerModel()
         {
-            return new SearchCustomerModel()
+            return new CustomerModel()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = "UserName",

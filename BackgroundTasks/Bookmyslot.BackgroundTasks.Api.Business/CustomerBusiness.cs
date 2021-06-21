@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Search.Contracts;
+using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Repository;
 using System.Threading.Tasks;
@@ -13,14 +13,14 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
         {
             this.customerRepository = customerRepository;
         }
-        public async Task<Response<bool>> CreateSearchCustomer(SearchCustomerModel searchCustomerModel)
+        public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
         {
-            return await this.customerRepository.CreateSearchCustomer(searchCustomerModel);
+            return await this.customerRepository.CreateCustomer(customerModel);
         }
 
-        public async Task<Response<bool>> UpdateSearchCustomer(SearchCustomerModel searchCustomerModel)
+        public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
         {
-            return await this.customerRepository.UpdateSearchCustomer(searchCustomerModel);
+            return await this.customerRepository.UpdateCustomer(customerModel);
         }
     }
 }

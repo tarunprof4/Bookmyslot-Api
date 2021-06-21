@@ -1,6 +1,5 @@
 using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Moq;
 using Nest;
