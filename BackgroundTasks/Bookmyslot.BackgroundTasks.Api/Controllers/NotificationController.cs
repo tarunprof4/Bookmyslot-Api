@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Web.Common;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
-using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces;
+using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

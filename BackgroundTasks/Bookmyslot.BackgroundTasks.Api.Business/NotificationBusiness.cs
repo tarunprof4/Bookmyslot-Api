@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
-using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces;
+using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Bookmyslot.BackgroundTasks.Api.Emails;
 using System.Threading.Tasks;
 
