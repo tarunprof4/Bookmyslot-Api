@@ -6,5 +6,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Repository
     public interface ICustomerRepository
     {
         Task<Response<bool>> CreateCustomer(CustomerModel customerModel);
+
+        Task<Response<bool>> UpdateCustomer(CustomerModel customerModel);
     }
 }

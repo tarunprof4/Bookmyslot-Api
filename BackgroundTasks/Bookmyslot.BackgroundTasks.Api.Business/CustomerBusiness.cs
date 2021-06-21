@@ -19,9 +19,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
             return await this.customerRepository.CreateCustomer(customerModel);
         }
 
-        public Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
+        public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
         {
-            throw new NotImplementedException();
+            return await this.customerRepository.UpdateCustomer(customerModel);
         }
     }
 }
