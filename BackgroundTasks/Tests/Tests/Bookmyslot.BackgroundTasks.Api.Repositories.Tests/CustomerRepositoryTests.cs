@@ -71,6 +71,22 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
         }
 
+        [Test]
+        public async Task UpdateInValidCustomer_ReturnsErrorResponse()
+        {
+            var customerModel = DefaultCreateCustomerModel();
+            var indexResponse = new IndexResponse();
+            dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>())).Returns(Task.FromResult(indexResponse));
+
+            var createCustomerModelResponse = await customerRepository.UpdateCustomer(customerModel);
+
+            Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Error);
+            Assert.AreEqual(createCustomerModelResponse.Result, false);
+            Assert.IsTrue(createCustomerModelResponse.Messages.Contains(AppBusinessMessagesConstants.UpdateCustomerFailed));
+            dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
+            loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
+        }
+
         private CustomerModel DefaultCreateCustomerModel()
         {
             var customerModel = new CustomerModel();

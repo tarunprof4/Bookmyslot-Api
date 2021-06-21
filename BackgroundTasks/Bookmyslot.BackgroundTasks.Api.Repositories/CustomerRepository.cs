@@ -23,14 +23,24 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories
         }
         public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
         {
-            var createCustomerResponse = await this.dbInterceptor.GetQueryResults("CreateCustomer", customerModel, () => this.elasticClient.IndexDocumentAsync(customerModel));
+            return await CreateUpdateCustomer(customerModel, "CreateCustomer", AppBusinessMessagesConstants.CreateCustomerFailed);
+        }
+
+        public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
+        {
+            return await CreateUpdateCustomer(customerModel, "UpdateCustomer", AppBusinessMessagesConstants.UpdateCustomerFailed);
+        }
+
+        private async Task<Response<bool>> CreateUpdateCustomer(CustomerModel customerModel, string operationName, string operationFailedMessage)
+        {
+            var createCustomerResponse = await this.dbInterceptor.GetQueryResults(operationName, customerModel, () => this.elasticClient.IndexDocumentAsync(customerModel));
             if (createCustomerResponse.IsValid)
             {
                 return new Response<bool>() { Result = true };
             }
 
             this.loggerService.Error(createCustomerResponse.OriginalException, string.Empty);
-            return Response<bool>.Error(new List<string>() { AppBusinessMessagesConstants.CreateCustomerFailed });
+            return Response<bool>.Error(new List<string>() { operationFailedMessage });
         }
     }
 }

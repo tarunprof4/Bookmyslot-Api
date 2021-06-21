@@ -24,8 +24,22 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/Customer")]
         [HttpPost()]
-        [ActionName("SendNotification")]
-        public async Task<IActionResult> CreateCustomer()
+        [ActionName("CreateCustomer")]
+        public async Task<IActionResult> Post()
+        {
+            CustomerModel customerModel = GetCustomerModel();
+
+            var notificationResponse = await this.customerBusiness.CreateCustomer(customerModel);
+
+            return this.CreatePostHttpResponse(notificationResponse);
+        }
+
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Route("api/v1/Customer")]
+        [HttpPut()]
+        [ActionName("UpdateCustomer")]
+        public async Task<IActionResult> Put()
         {
             CustomerModel customerModel = GetCustomerModel();
 
