@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bookmyslot.BackgroundTasks.Api.Contracts.Constants
+﻿namespace Bookmyslot.BackgroundTasks.Api.Contracts.Constants
 {
     public class AppBusinessMessagesConstants
     {

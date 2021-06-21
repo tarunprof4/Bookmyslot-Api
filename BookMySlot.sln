@@ -191,6 +191,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookmyslot.BackgroundTasks.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api.Repositories", "BackgroundTasks\Bookmyslot.BackgroundTasks.Api.Repositories\Bookmyslot.BackgroundTasks.Api.Repositories.csproj", "{45D008C6-3C79-4B7D-B210-6EAF9A2361EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookmyslot.BackgroundTasks.Api.Repositories.Tests", "BackgroundTasks\Tests\Tests\Bookmyslot.BackgroundTasks.Api.Repositories.Tests\Bookmyslot.BackgroundTasks.Api.Repositories.Tests.csproj", "{223EDBE2-B5F7-458A-84EB-21B478D3701B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -481,6 +483,10 @@ Global
 		{45D008C6-3C79-4B7D-B210-6EAF9A2361EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D008C6-3C79-4B7D-B210-6EAF9A2361EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D008C6-3C79-4B7D-B210-6EAF9A2361EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{223EDBE2-B5F7-458A-84EB-21B478D3701B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{223EDBE2-B5F7-458A-84EB-21B478D3701B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{223EDBE2-B5F7-458A-84EB-21B478D3701B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{223EDBE2-B5F7-458A-84EB-21B478D3701B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -568,6 +574,7 @@ Global
 		{80256219-A8B8-4B2A-9372-75BD0969F7B3} = {2970DFDD-93FB-47E4-A6EA-887F95EE08A2}
 		{E8FA4984-37EF-4E9D-A8F8-247AF235A0F7} = {62684FA8-C700-4E57-9D37-FFA18F58009C}
 		{45D008C6-3C79-4B7D-B210-6EAF9A2361EB} = {62684FA8-C700-4E57-9D37-FFA18F58009C}
+		{223EDBE2-B5F7-458A-84EB-21B478D3701B} = {2970DFDD-93FB-47E4-A6EA-887F95EE08A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13C55224-AAF6-4E33-941A-364305E244D6}
