@@ -11,7 +11,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
 {
     public static class CustomerEmailTemplateFactory
     {
-        public static EmailModel GetCustomerRegistrationWelcomeEmailTemplate(SearchCustomerModel newCustomerModel)
+        public static EmailModel GetCustomerRegistrationWelcomeEmailTemplate(CustomerModel newCustomerModel)
         {
             var registerCustomerViewModel = new RegisterCustomerViewModel(newCustomerModel);
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.CustomerRegistrationWelcomeEmailTemplateKey, typeof(RegisterCustomerViewModel)))
@@ -25,7 +25,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
             return CreateEmailModel(newCustomerModel, TemplateConstants.CustomerRegistrationWelcomeEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, SearchCustomerModel createdByCustomerModel, SearchCustomerModel bookedByCustomerModel)
+        public static EmailModel SlotScheduledEmailTemplate(SlotModel slotModel, CustomerModel createdByCustomerModel, CustomerModel bookedByCustomerModel)
         {
             SlotSchedulerBookedViewModel slotSchedulerBookedViewModel = new SlotSchedulerBookedViewModel(slotModel, createdByCustomerModel, bookedByCustomerModel);
 
@@ -40,7 +40,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
             return CreateEmailModel(createdByCustomerModel, TemplateConstants.SlotScheduledEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotCancelledEmailTemplate(SlotModel slotModel, SearchCustomerModel cancelledByCustomerModel, SearchCustomerModel notCancelledByCustomerModel)
+        public static EmailModel SlotCancelledEmailTemplate(SlotModel slotModel, CustomerModel cancelledByCustomerModel, CustomerModel notCancelledByCustomerModel)
         {
             SlotSchedulerCancelledViewModel slotSchedulerCancelledByViewModel = new SlotSchedulerCancelledViewModel(slotModel,
                 cancelledByCustomerModel, notCancelledByCustomerModel);
@@ -56,11 +56,11 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
             return CreateEmailModel(notCancelledByCustomerModel, TemplateConstants.SlotCancelledEmailSubject, messageBody);
         }
 
-        public static EmailModel SlotMeetingInformationTemplate(SlotModel slotModel, SearchCustomerModel resendTo)
+        public static EmailModel SlotMeetingInformationTemplate(SlotModel slotModel, CustomerModel resendTo)
         {
             SlotMeetingViewModel slotMeetingViewModel = new SlotMeetingViewModel(slotModel);
 
-            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(SearchCustomerModel)))
+            if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(CustomerModel)))
             {
                 var slotInformationTemplateBody = GetTemplateBody(TemplateConstants.TemplateSlotMeetingInformationNotification);
                 var compiledMessageBody = Engine.Razor.RunCompile(slotInformationTemplateBody, TemplateConstants.SlotMeetingInformationEmailTemplateKey, typeof(SlotMeetingViewModel), slotMeetingViewModel);
@@ -115,7 +115,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
 
 
 
-        private static EmailModel CreateEmailModel(SearchCustomerModel customerModel, string subject, string messageBody)
+        private static EmailModel CreateEmailModel(CustomerModel customerModel, string subject, string messageBody)
         {
             var emailModel = new EmailModel();
             emailModel.Subject = subject;

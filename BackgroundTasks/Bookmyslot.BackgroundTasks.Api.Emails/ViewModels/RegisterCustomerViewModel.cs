@@ -1,4 +1,6 @@
-﻿namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
+﻿using Bookmyslot.BackgroundTasks.Api.Contracts;
+
+namespace Bookmyslot.BackgroundTasks.Api.Emails.ViewModels
 {
     public class RegisterCustomerViewModel
     {
@@ -7,7 +9,7 @@
 
         public string Email { get;  }
 
-        public RegisterCustomerViewModel(SearchCustomerModel customerModel)
+        public RegisterCustomerViewModel(CustomerModel customerModel)
         {
             this.FirstName = customerModel.FirstName;
             this.LastName = customerModel.LastName;

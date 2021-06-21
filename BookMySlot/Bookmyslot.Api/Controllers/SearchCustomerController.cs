@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.Controllers
         }
 
 
-     
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -66,7 +66,7 @@ namespace Bookmyslot.Api.Controllers
             var pageParameterModel = new PageParameterModel() { PageNumber = pageNumber, PageSize = pageSize };
             var cacheSearchKey = SearchCustomerModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
             var cacheModel = CreateCacheModel(cacheSearchKey);
-            
+
 
             var customerResponse = await
                   this.distributedInMemoryCacheBuisness.GetFromCacheAsync(cacheModel,
@@ -83,4 +83,5 @@ namespace Bookmyslot.Api.Controllers
             return cacheModel;
         }
     }
+}
 

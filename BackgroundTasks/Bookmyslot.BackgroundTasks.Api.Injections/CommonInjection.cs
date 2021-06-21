@@ -5,6 +5,7 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Database;
 using Bookmyslot.Api.Common.Email;
+using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
 using Bookmyslot.BackgroundTasks.Api.Logging;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;

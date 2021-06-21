@@ -3,6 +3,7 @@ using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Common.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Moq;
+using Nest;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
@@ -27,13 +28,15 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         private SearchCustomerRepository searchCustomerRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;
+        private Mock<ElasticClient> elasticClientMock;
 
         [SetUp]
         public void SetUp()
         {
             dbConnectionMock = new Mock<IDbConnection>();
             dbInterceptorMock = new Mock<IDbInterceptor>();
-            searchCustomerRepository = new SearchCustomerRepository(dbConnectionMock.Object, dbInterceptorMock.Object);
+            elasticClientMock = new Mock<ElasticClient>();
+            searchCustomerRepository = new SearchCustomerRepository(dbConnectionMock.Object, dbInterceptorMock.Object, elasticClientMock.Object);
         }
 
 
@@ -69,7 +72,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             IEnumerable<SearchCustomerEntity> searchCustomerEntities = new List<SearchCustomerEntity>();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName);
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel());
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
@@ -81,7 +84,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             IEnumerable<SearchCustomerEntity> searchCustomerEntities = DefaultCreateSearchCustomerEntities();
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>())).Returns(Task.FromResult(searchCustomerEntities));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName);
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel());
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IEnumerable<SearchCustomerEntity>>>>()), Times.Once);
