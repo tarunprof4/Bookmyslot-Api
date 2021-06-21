@@ -9,7 +9,7 @@ using System;
 
 namespace Bookmyslot.BackgroundTasks.Api.Injections.Tests
 {
-    public class SearchCustomerControllerTests
+    public class CustomerControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -27,7 +27,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections.Tests
         {
             var customerBusiness = serviceProvider.GetService<ICustomerBusiness>();
 
-            var controller = new SearchCustomerController(customerBusiness);
+            var controller = new CustomerController(customerBusiness);
 
             Assert.IsNotNull(customerBusiness);
             Assert.IsNotNull(controller);

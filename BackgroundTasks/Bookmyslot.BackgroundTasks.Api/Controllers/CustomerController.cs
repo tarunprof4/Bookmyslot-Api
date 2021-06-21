@@ -11,10 +11,10 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
     [Produces("application/json")]
     [Consumes("application/json")]
     [ApiController]
-    public class SearchCustomerController : BaseApiController
+    public class CustomerController : BaseApiController
     {
         private readonly ICustomerBusiness customerBusiness;
-        public SearchCustomerController(ICustomerBusiness customerBusiness)
+        public CustomerController(ICustomerBusiness customerBusiness)
         {
             this.customerBusiness = customerBusiness;
         }
@@ -22,9 +22,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/SearchCustomer")]
+        [Route("api/v1/Customer")]
         [HttpPost()]
-        [ActionName("CreateSearchCustomer")]
+        [ActionName("CreateCustomer")]
         public async Task<IActionResult> Post()
         {
             var searchCustomerModel = GetSearchCustomerModel();
@@ -36,9 +36,9 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Route("api/v1/SearchCustomer")]
+        [Route("api/v1/Customer")]
         [HttpPut()]
-        [ActionName("UpdateSearchCustomer")]
+        [ActionName("UpdateCustomer")]
         public async Task<IActionResult> Put()
         {
             SearchCustomerModel searchCustomerModel = GetSearchCustomerModel();
