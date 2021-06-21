@@ -1,4 +1,4 @@
-using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
+﻿using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Bookmyslot.BackgroundTasks.Api.Controllers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +9,10 @@ using System;
 
 namespace Bookmyslot.BackgroundTasks.Api.Injections.Tests
 {
-    public class NotificationControllerTests
+
+
+
+    public class CustomerControllerTests
     {
         private IServiceProvider serviceProvider;
 
@@ -25,11 +28,11 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections.Tests
         [Test]
         public void StartupTest()
         {
-            var notificationBusiness = serviceProvider.GetService<INotificationBusiness>();
+            var customerBusiness = serviceProvider.GetService<ICustomerBusiness>();
 
-            var controller = new NotificationController(notificationBusiness);
+            var controller = new CustomerController(customerBusiness);
 
-            Assert.IsNotNull(notificationBusiness);
+            Assert.IsNotNull(customerBusiness);
             Assert.IsNotNull(controller);
         }
     }

@@ -9,10 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />
+    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Database\Bookmyslot.Api.Common.Database.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Email\Bookmyslot.Api.Common.Email.csproj" />
     <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Business\Bookmyslot.BackgroundTasks.Api.Business.csproj" />
     <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Contracts\Bookmyslot.BackgroundTasks.Api.Contracts.csproj" />
     <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Logging\Bookmyslot.BackgroundTasks.Api.Logging.csproj" />
+    <ProjectReference Include="..\Bookmyslot.BackgroundTasks.Api.Repositories\Bookmyslot.BackgroundTasks.Api.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

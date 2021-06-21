@@ -1,6 +1,8 @@
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
+using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
+using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Bookmyslot.BackgroundTasks.Api.Injections;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Nest;
 using NSwag;
 using Serilog;
 using System;
@@ -55,7 +58,7 @@ namespace Bookmyslot.BackgroundTasks.Api
 
 
             AppConfigurationInjection.LoadInjections(services, Configuration);
-            CommonInjection.LoadInjections(services);
+            CommonInjection.LoadInjections(services, appConfiguration);
             BackgroundInjection.LoadInjections(services);
         }
 
@@ -63,6 +66,8 @@ namespace Bookmyslot.BackgroundTasks.Api
         {
 
             InitializeSerilog(serviceProvider);
+
+            InitializeElasticSearchIndexes(serviceProvider);
 
 
             if (env.IsDevelopment())
@@ -92,6 +97,7 @@ namespace Bookmyslot.BackgroundTasks.Api
         }
 
     
+        
         private static void InitializeSerilog(IServiceProvider serviceProvider)
         {
             var appConfiguration = serviceProvider.GetService<AppConfiguration>();
@@ -121,7 +127,35 @@ namespace Bookmyslot.BackgroundTasks.Api
             loggerService.Debug("Starting Background web host");
         }
 
-      
+        private static void InitializeElasticSearchIndexes(IServiceProvider serviceProvider)
+        {
+            var elasticClient = serviceProvider.GetService<ElasticClient>();
+
+            var searchAsYouType = ElasticSearchConstants.SearchAsYouTypeField;
+            if (!elasticClient.Indices.Exists(ElasticSearchConstants.CustomerIndex).Exists)
+            {
+                var createIndexResponse = elasticClient.Indices.Create(ElasticSearchConstants.CustomerIndex, c => c
+       .Map<CustomerModel>(mm => mm
+       .AutoMap<CustomerModel>()
+
+       .Properties(p => p
+       .Text(t => t.Name(n => n.FirstName)
+       .Fields(ff => ff.SearchAsYouType(v => v.Name(searchAsYouType)))))
+
+       .Properties(p => p
+       .Text(t => t.Name(n => n.LastName)
+       .Fields(ff => ff.SearchAsYouType(v => v.Name(searchAsYouType)))))
+
+       .Properties(p => p
+       .Text(t => t.Name(n => n.FullName)
+       .Fields(ff => ff.SearchAsYouType(v => v.Name(searchAsYouType)))))
+
+       ));
+
+            }
+
+        }
+
         private static void SwaggerDocumentation(IServiceCollection services)
         {
             services.AddOpenApiDocument(config =>
