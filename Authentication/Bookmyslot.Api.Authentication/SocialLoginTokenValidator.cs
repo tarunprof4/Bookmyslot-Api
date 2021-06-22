@@ -25,6 +25,6 @@ namespace Bookmyslot.Api.Authentication
             return await this.googleTokenValidator.ValidateToken(idToken);
         }
 
-      
+
     }
 }

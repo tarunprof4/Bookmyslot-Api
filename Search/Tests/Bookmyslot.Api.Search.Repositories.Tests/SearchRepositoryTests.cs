@@ -76,7 +76,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         }
 
 
-       
+
 
 
 
@@ -95,7 +95,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         }
 
 
-  
+
 
         private SearchEntity DefaultCreateSearchEntity()
         {
@@ -110,7 +110,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             return JsonConvert.SerializeObject(searchCustomerModels);
         }
 
-     
+
 
     }
 }

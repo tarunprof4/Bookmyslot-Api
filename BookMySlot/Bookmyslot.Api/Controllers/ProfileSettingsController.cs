@@ -102,7 +102,7 @@ namespace Bookmyslot.Api.Controllers
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
                 var customerId = currentUserResponse.Result.Id;
-                
+
                 var customerResponse = await this.profileSettingsBusiness.UpdateProfileSettings(CreateProfileSettingsModel(profileSettingsViewModel), customerId);
                 return this.CreatePutHttpResponse(customerResponse);
             }
@@ -110,7 +110,7 @@ namespace Bookmyslot.Api.Controllers
             return this.CreatePutHttpResponse(validationResponse);
         }
 
-       
+
 
         private ProfileSettingsModel CreateProfileSettingsModel(ProfileSettingsViewModel profileSettingsViewModel)
         {

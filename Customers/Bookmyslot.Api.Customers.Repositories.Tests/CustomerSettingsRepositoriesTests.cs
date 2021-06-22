@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
     {
         private const string CustomerId = "CustomerId";
         private const string TIMEZONE = "timezone";
-        
+
         private const string LASTNAME = "lastname";
         private const string PROVIDER = "provider";
 
@@ -83,7 +83,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             return customerSettingsEntity;
         }
 
-     
+
 
     }
 }

@@ -48,11 +48,11 @@ namespace Bookmyslot.Api.Tests
             cancelledSlotResponseAdaptorMock = new Mock<ICancelledSlotResponseAdaptor>();
             bookedSlotResponseAdaptorMock = new Mock<IBookedSlotResponseAdaptor>();
 
-            customerBookedSlotController = new CustomerBookedSlotController(customerBookedSlotBusinessMock.Object, 
+            customerBookedSlotController = new CustomerBookedSlotController(customerBookedSlotBusinessMock.Object,
                 symmetryEncryptionMock.Object, currentUserMock.Object, customerResponseAdaptorMock.Object,
                 cancelledSlotResponseAdaptorMock.Object, bookedSlotResponseAdaptorMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id= CustomerId, FirstName = FirstName } };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -172,7 +172,7 @@ namespace Bookmyslot.Api.Tests
             return new BookedSlotViewModel();
         }
 
-        
+
 
 
         private CustomerModel CreateDefaultCustomerModel()

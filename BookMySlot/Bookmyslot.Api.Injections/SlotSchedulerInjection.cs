@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.Injections
         private static void SlotSchedulerBusinessInjections(IServiceCollection services)
         {
             services.AddScoped<IValidator<SlotModel>>(x => new SlotModelValidator());
-            
+
 
             services.AddTransient<ISlotBusiness, SlotBusiness>();
             services.AddTransient<ISlotSchedulerBusiness, SlotSchedulerBusiness>();

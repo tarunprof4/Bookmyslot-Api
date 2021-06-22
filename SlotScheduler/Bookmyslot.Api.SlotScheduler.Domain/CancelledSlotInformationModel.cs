@@ -4,8 +4,8 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
 {
     public class CancelledSlotInformationModel
     {
-       public CancelledSlotModel CancelledSlotModel { get; set; }
+        public CancelledSlotModel CancelledSlotModel { get; set; }
 
-       public CustomerModel CancelledByCustomerModel { get; set; }
+        public CustomerModel CancelledByCustomerModel { get; set; }
     }
 }

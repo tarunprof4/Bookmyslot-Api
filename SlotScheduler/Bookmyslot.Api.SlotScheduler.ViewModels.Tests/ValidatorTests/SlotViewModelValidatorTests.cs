@@ -84,7 +84,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
             Assert.IsTrue(validationResult.IsValid);
         }
 
-    
+
         private SlotViewModel DefaultInValidSlotViewModel()
         {
             var slotviewModel = new SlotViewModel();

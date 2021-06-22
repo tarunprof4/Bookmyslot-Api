@@ -31,7 +31,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private SlotSchedulerBusiness slotSchedulerBusiness;
         private Mock<ISlotRepository> slotRepositoryMock;
         private Mock<ICustomerBusiness> customerBusinessMock;
-        
+
 
         [SetUp]
         public void Setup()
@@ -111,6 +111,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             return slotModel;
         }
 
-      
+
     }
 }

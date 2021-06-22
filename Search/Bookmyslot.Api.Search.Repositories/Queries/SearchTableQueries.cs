@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
         public const string GetPreProcessedSearchedCustomerQuery = @"select * from" + " " + DatabaseConstants.SearchTable + " " + "where SearchKey=@SearchKey";
 
 
-       
+
 
 
     }

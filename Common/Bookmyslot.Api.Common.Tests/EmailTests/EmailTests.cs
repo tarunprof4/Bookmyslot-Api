@@ -76,9 +76,9 @@ namespace Bookmyslot.Api.Common.Tests.EmailTests
         private EmailModel GetDefaultEmptyEmailModel()
         {
             var emailModel = new EmailModel();
-            emailModel.To = new List<string>() {  };
-            emailModel.Cc = new List<string>() {  };
-            emailModel.Bcc = new List<string>() {  };
+            emailModel.To = new List<string>() { };
+            emailModel.Cc = new List<string>() { };
+            emailModel.Bcc = new List<string>() { };
 
             return emailModel;
         }

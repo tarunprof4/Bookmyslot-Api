@@ -67,7 +67,7 @@ namespace Bookmyslot.Api.Search.Repositories
             return ResponseModelFactory.CreateSearchCustomerModelsResponse(response);
         }
 
-        
+
 
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel)
         {

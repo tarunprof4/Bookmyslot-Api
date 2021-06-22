@@ -9,7 +9,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
     public class CancelledSlotModel : BaseEventModel
     {
         public string Id { get; set; }
-        
+
         public string Title { get; set; }
 
         public string CreatedBy { get; set; }
@@ -39,6 +39,6 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         {
             Events.Add(new SlotCancelledDomainEvent(this, cancelledByCustomerModel));
         }
-     
+
     }
 }

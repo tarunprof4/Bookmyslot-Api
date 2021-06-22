@@ -134,7 +134,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
 
             var customerSettingsModelResponse = await customerRepository.GetCustomersByCustomerIds(new List<string>() { CustomerId, CustomerId });
 
-            
+
             foreach (var customerModel in customerSettingsModelResponse.Result)
             {
                 Assert.AreEqual(customerModel.Id, Id);

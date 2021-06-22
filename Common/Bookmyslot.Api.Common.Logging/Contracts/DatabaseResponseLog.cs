@@ -2,9 +2,9 @@
 
 namespace Bookmyslot.Api.Common.Logging.Contracts
 {
-    public class DatabaseResponseLog 
+    public class DatabaseResponseLog
     {
-        public DatabaseResponseLog(string coorelationId,  string compressedResponse, TimeSpan responseTime)
+        public DatabaseResponseLog(string coorelationId, string compressedResponse, TimeSpan responseTime)
         {
             this.CoorelationId = coorelationId;
             this.CompressedResponse = compressedResponse;

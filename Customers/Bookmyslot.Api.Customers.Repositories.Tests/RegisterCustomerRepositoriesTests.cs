@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             return registerCustomerModel;
         }
 
-      
+
 
 
     }

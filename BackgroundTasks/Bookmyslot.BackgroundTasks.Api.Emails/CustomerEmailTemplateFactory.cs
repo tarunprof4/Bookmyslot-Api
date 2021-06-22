@@ -44,7 +44,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
         {
             SlotSchedulerCancelledViewModel slotSchedulerCancelledByViewModel = new SlotSchedulerCancelledViewModel(slotModel,
                 cancelledByCustomerModel, notCancelledByCustomerModel);
-            
+
             if (!Engine.Razor.IsTemplateCached(TemplateConstants.SlotCancelledEmailTemplateKey, typeof(SlotSchedulerBookedViewModel)))
             {
                 var slotCancelledTemplateBody = GetTemplateBody(TemplateConstants.TemplateSlotCancelledNotification);
@@ -128,6 +128,6 @@ namespace Bookmyslot.BackgroundTasks.Api.Emails
 
 
 
-    
+
     }
 }

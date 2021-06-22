@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookmyslot.Api.Common.Email
 {
-    public class EmailValidator 
+    public class EmailValidator
     {
-       
+
         public static Response<bool> Validate(EmailModel emailModel)
         {
             List<string> validationErrors = new List<string>();
@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.Common.Email
                 return Response<bool>.ValidationError(validationErrors);
             }
 
-            return  Response<bool>.Success(true);
+            return Response<bool>.Success(true);
         }
     }
 }

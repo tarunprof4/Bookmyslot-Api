@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests.IntegrationEvents
         public void CreateRegisterCustomerIntegrationEvent()
         {
             var registerCustomerModel = GetDefaultRegisterCustomerModel();
-            var registerCustomerIntegrationEvent= new RegisterCustomerIntegrationEvent(registerCustomerModel);
+            var registerCustomerIntegrationEvent = new RegisterCustomerIntegrationEvent(registerCustomerModel);
 
             Assert.AreEqual(registerCustomerModel.FirstName, registerCustomerIntegrationEvent.FirstName);
             Assert.AreEqual(registerCustomerModel.LastName, registerCustomerIntegrationEvent.LastName);

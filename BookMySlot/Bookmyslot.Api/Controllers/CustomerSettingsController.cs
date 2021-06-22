@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICurrentUser currentUser;
         private readonly IValidator<CustomerSettingsViewModel> customerSettingsViewModelValidator;
 
-        public CustomerSettingsController(ICustomerSettingsBusiness customerSettingsBusiness, ICurrentUser currentUser, 
+        public CustomerSettingsController(ICustomerSettingsBusiness customerSettingsBusiness, ICurrentUser currentUser,
              IValidator<CustomerSettingsViewModel> customerSettingsViewModelValidator)
         {
             this.customerSettingsBusiness = customerSettingsBusiness;

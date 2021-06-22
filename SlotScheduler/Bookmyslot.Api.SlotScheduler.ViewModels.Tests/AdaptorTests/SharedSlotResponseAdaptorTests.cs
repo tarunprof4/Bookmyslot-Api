@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             customerResponseAdaptorMock.Setup(a => a.CreateCustomerViewModel(It.IsAny<CustomerModel>())).Returns(customerViewModel);
             symmetryEncryptionMock.Setup(a => a.Encrypt(It.IsAny<string>())).Returns(SlotInformation);
             var sharedSlotModel = CreateDefaultSharedSlotModel();
-            
+
             var bookedSlotViewModelResponse = sharedSlotResponseAdaptor.CreateSharedSlotViewModel(sharedSlotModel);
 
             var bookedSlotViewModel = bookedSlotViewModelResponse.Result;
@@ -92,7 +92,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             return sharedSlotModelResponse;
         }
 
-     
+
 
     }
 }

@@ -27,8 +27,8 @@
         public const string CustomerIdNotValid = "Customer id is not valid";
         public const string EmailIdExists = "Email id exists";
         public const string EmailIdDoesNotExists = "Email id does not exists";
-        
-      
+
+
         public const string NoRecordsFound = "no records found";
 
         public const string SlotTitleRequired = "slot title is required";
@@ -43,10 +43,10 @@
         public const string SlotDurationInvalid = "slot duration  cannot be less than 20 mins";
         public const string SlotScheduleDateInvalid = "slot cannot be booked for past date";
         public const string SlotScheduleCannotBookOwnSlot = "You cannot book your own slot please";
-        
+
 
         public const string SlotIdInvalid = "slot id is not valid";
-        
+
         public const string SlotIdDoesNotExists = "slot does not exists";
 
         public const string NoLastSlotShared = "customer hasnt shared any slot yet";

@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.Tests
         private const string InValidSlot = "InValidSlot";
 
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationDatePattern);
-        private const string ValidSlotKey= "ValidSlotKey";
+        private const string ValidSlotKey = "ValidSlotKey";
 
         private SlotController slotController;
         private Mock<ISlotBusiness> slotBusinessMock;
@@ -58,12 +58,12 @@ namespace Bookmyslot.Api.Tests
             slotController = new SlotController(slotBusinessMock.Object, symmetryEncryptionMock.Object, currentUserMock.Object,
                 slotRequestAdaptorMock.Object, slotViewModelValidatorMock.Object, cancelSlotViewModelValidatorMock.Object);
 
-            
+
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
-      
+
         [Test]
         public async Task CreateSlot_InValidSlotViewModel_ReturnsValidationResponse()
         {
@@ -94,7 +94,7 @@ namespace Bookmyslot.Api.Tests
             slotBusinessMock.Setup(a => a.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
 
             var postResponse = await slotController.Post(DefaultValidSlotViewModel());
-            
+
             var objectResult = postResponse as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status201Created);
             Assert.AreEqual(objectResult.Value, guid);
@@ -140,7 +140,7 @@ namespace Bookmyslot.Api.Tests
             cancelSlotViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CancelSlotViewModel>())), Times.Once());
         }
 
-       
+
         [Test]
         public async Task CancelSlot_ValidCancelSlotViewModel_ReturnsValidationResponse()
         {
@@ -148,7 +148,7 @@ namespace Bookmyslot.Api.Tests
             var cancelSlotViewModel = new CancelSlotViewModel() { SlotKey = ValidSlotKey };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlotViewModel));
             Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
-            slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<string>(),It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
+            slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
 
             var response = await slotController.CancelSlot(cancelSlotViewModel);
 
@@ -183,7 +183,7 @@ namespace Bookmyslot.Api.Tests
             return slotviewModel;
         }
 
-     
+
 
 
         private static List<ValidationFailure> CreateDefaultValidationFailure()

@@ -24,8 +24,8 @@ namespace Bookmyslot.Api.Customers.Repositories.EntityFactory
         private static string CreateUniqueId()
         {
             var guid1 = Guid.NewGuid().ToString().Replace("-", string.Empty);
-            var guid2 = Guid.NewGuid().ToString().Substring(0,4).Replace("-", string.Empty);
-            
+            var guid2 = Guid.NewGuid().ToString().Substring(0, 4).Replace("-", string.Empty);
+
             var uniqueId = string.Format("{0}{1}", guid1, guid2);
             return uniqueId;
         }

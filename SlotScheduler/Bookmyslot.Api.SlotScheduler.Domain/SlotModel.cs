@@ -11,7 +11,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
     public class SlotModel : BaseEventModel
     {
         public string Id { get; set; }
-        
+
         public string Title { get; set; }
 
         public string CreatedBy { get; set; }

@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.Customers.Business
             profileSettingsModel.LastName = profileSettingsModel.LastName.Trim();
             profileSettingsModel.Gender = profileSettingsModel.Gender.Trim();
         }
-       
+
 
         public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
         {

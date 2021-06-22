@@ -34,11 +34,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return ResponseModelFactory.CreateCustomersFromSlotModelsResponse(slotEntities);
         }
 
-        
+
 
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
         {
-            var parameters = new { IsDeleted = false, CreatedBy= email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
+            var parameters = new { IsDeleted = false, CreatedBy = email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetCustomerAvailableSlotsFromTodayQuery;
 
             var slotEntities = await this.dbInterceptor.GetQueryResults("GetCustomerAvailableSlots", parameters, () => this.connection.QueryAsync<SlotEntity>(sql, parameters));

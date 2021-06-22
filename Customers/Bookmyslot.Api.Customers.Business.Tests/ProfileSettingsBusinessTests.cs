@@ -30,7 +30,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             profileSettingsBusiness = new ProfileSettingsBusiness(profileSettingRepositoryMock.Object, blobRepositoryMock.Object);
         }
 
-      
+
 
         [Test]
         public async Task GetProfileSettingsByEmail_ValidEmailId_CallsGetProfileSettingsByEmailIdRepository()

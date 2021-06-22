@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.Customers.ViewModels.Tests.ValidatorTests
         [Test]
         public void ValidateAdditionalProfileSettingsViewModel_ValidViewModel_ReturnSuccessResponse()
         {
-            var validationResult = validator.Validate(new AdditionalProfileSettingsViewModel("bio") );
+            var validationResult = validator.Validate(new AdditionalProfileSettingsViewModel("bio"));
 
             Assert.IsTrue(validationResult.IsValid);
         }

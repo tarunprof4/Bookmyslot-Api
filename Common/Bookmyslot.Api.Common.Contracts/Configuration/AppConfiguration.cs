@@ -49,6 +49,6 @@ namespace Bookmyslot.Api.Common.Contracts.Configuration
 
         public string BlobStorageConnectionString => this.blobStorageConnectionString;
 
-        
+
     }
 }

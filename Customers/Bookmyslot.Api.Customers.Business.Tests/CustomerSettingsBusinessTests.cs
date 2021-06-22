@@ -25,7 +25,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-      
+
 
         private CustomerSettingsModel DefaultValidCustomerSettingsModel()
         {

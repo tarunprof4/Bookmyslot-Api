@@ -35,7 +35,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests.Validators
         }
 
 
-   
+
 
 
         [Test]
