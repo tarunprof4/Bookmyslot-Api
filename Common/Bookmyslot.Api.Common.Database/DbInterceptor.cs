@@ -40,6 +40,6 @@ namespace Bookmyslot.Api.Common.Database
 
             return result;
         }
-    
+
     }
 }

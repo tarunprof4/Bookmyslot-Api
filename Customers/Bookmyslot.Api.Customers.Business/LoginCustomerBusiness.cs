@@ -44,8 +44,8 @@ namespace Bookmyslot.Api.Customers.Business
             if (results.IsValid)
             {
                 SanitizeSocialCustomerLoginModel(socialCustomerLoginModel);
-                var validateTokenResponse =  await ValidateSocialCustomerToken(socialCustomerLoginModel);
-                if(validateTokenResponse.ResultType == ResultType.Success)
+                var validateTokenResponse = await ValidateSocialCustomerToken(socialCustomerLoginModel);
+                if (validateTokenResponse.ResultType == ResultType.Success)
                 {
                     var validatedSocialCustomer = validateTokenResponse.Result;
 
@@ -107,15 +107,20 @@ namespace Bookmyslot.Api.Customers.Business
 
         private RegisterCustomerModel CreateRegisterCustomerModel(SocialCustomerModel socialCustomer)
         {
-            return  new RegisterCustomerModel() { FirstName = socialCustomer.FirstName, LastName = socialCustomer.LastName, 
-                Email = socialCustomer.Email, Provider = socialCustomer.Provider };
+            return new RegisterCustomerModel()
+            {
+                FirstName = socialCustomer.FirstName,
+                LastName = socialCustomer.LastName,
+                Email = socialCustomer.Email,
+                Provider = socialCustomer.Provider
+            };
         }
 
 
         private async Task<bool> CheckIfCustomerExists(string email)
         {
             var customerResponse = await this.customerBusiness.GetCustomerByEmail(email);
-            if(customerResponse.ResultType == ResultType.Success)
+            if (customerResponse.ResultType == ResultType.Success)
             {
                 return true;
             }
@@ -123,6 +128,6 @@ namespace Bookmyslot.Api.Customers.Business
             return false;
         }
 
-       
+
     }
 }

@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICustomerResponseAdaptor customerResponseAdaptor;
         private readonly ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor;
         private readonly ISharedSlotResponseAdaptor sharedSlotResponseAdaptor;
-        
+
 
 
         public CustomerSharedSlotController(ICustomerSharedSlotBusiness customerSharedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, ICustomerResponseAdaptor customerResponseAdaptor, ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor, ISharedSlotResponseAdaptor sharedSlotResponseAdaptor)
@@ -146,7 +146,7 @@ namespace Bookmyslot.Api.Controllers
             { ResultType = cancelledSlotModels.ResultType, Messages = cancelledSlotModels.Messages });
         }
 
-      
-       
+
+
     }
 }

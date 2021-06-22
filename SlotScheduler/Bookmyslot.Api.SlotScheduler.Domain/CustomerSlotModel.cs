@@ -7,6 +7,6 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
     {
         public IEnumerable<SlotModel> SlotModels { get; set; }
         public CustomerModel CustomerModel { get; set; }
-        
+
     }
 }

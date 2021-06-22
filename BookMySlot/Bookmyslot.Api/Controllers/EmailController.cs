@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly IResendSlotInformationBusiness resendSlotInformationBusiness;
         private readonly ICurrentUser currentUser;
         private readonly IValidator<ResendSlotInformationViewModel> resendSlotInformationViewModelValidator;
-        public EmailController(ISymmetryEncryption symmetryEncryption, IResendSlotInformationBusiness resendSlotInformationBusiness, 
+        public EmailController(ISymmetryEncryption symmetryEncryption, IResendSlotInformationBusiness resendSlotInformationBusiness,
             ICurrentUser currentUser, IValidator<ResendSlotInformationViewModel> resendSlotInformationViewModelValidator)
         {
             this.symmetryEncryption = symmetryEncryption;
@@ -90,7 +90,7 @@ namespace Bookmyslot.Api.Controllers
             return this.CreatePostHttpResponse(validationResponse);
         }
 
-      
+
     }
 
 

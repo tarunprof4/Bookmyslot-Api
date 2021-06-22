@@ -5,7 +5,7 @@ namespace Bookmyslot.Api.SlotScheduler.Domain.DomainEvents
 {
     public class SlotScheduledDomainEvent : BaseDomainEvent
     {
-        public SlotModel SlotModel { get;  }
+        public SlotModel SlotModel { get; }
         public CustomerModel CreatedByCustomerModel { get; }
         public CustomerModel BookedByCustomerModel { get; }
 

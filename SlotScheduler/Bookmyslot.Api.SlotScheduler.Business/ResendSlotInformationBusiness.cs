@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             var resendToCustomerModel = await this.customerBusiness.GetCustomerById(resendTo);
             slotModel.ResendSlotMeetingInformation(resendToCustomerModel.Result);
             await this.eventDispatcher.DispatchEvents(slotModel.Events);
-            
+
             return new Response<bool>() { Result = true };
         }
     }

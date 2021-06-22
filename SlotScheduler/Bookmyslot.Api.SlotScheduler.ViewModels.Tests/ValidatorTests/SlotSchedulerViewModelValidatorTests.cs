@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
         [Test]
         public void ValidateSlotSchedulerViewModel_ValidViewModel_ReturnSuccessResponse()
         {
-            var validationResult = validator.Validate(new SlotSchedulerViewModel() {SlotModelKey = "SlotModelKey" });
+            var validationResult = validator.Validate(new SlotSchedulerViewModel() { SlotModelKey = "SlotModelKey" });
 
             Assert.IsTrue(validationResult.IsValid);
         }

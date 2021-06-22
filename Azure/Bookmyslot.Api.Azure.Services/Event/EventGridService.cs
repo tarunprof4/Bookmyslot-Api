@@ -86,6 +86,6 @@ namespace Bookmyslot.Api.Azure.Services.Event
             return eventsList;
         }
 
-        
+
     }
 }

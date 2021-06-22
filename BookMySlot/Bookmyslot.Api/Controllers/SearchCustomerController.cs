@@ -64,7 +64,7 @@ namespace Bookmyslot.Api.Controllers
             }
 
             var pageParameterModel = new PageParameterModel() { PageNumber = pageNumber, PageSize = pageSize };
-            
+
             var cacheModel = CreateCacheModel(searchKey, pageParameterModel);
 
             var customerResponse = await

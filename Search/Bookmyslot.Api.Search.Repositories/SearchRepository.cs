@@ -28,7 +28,7 @@ namespace Bookmyslot.Api.Search.Repositories
 
         public async Task<Response<T>> GetPreProcessedSearchedResponse<T>(string searchType, string searchKey)
         {
-            
+
             var parameters = new { SearchKey = CreateSearchKey(searchType, searchKey) };
             var sql = SearchTableQueries.GetPreProcessedSearchedCustomerQuery;
 
@@ -58,7 +58,7 @@ namespace Bookmyslot.Api.Search.Repositories
             return new Response<bool>() { Result = true };
         }
 
-     
+
 
         private string CreateSearchKey(string searchType, string key)
         {

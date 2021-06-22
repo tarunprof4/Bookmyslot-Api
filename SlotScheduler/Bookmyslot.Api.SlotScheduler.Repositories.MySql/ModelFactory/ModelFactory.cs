@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory
         }
 
 
-        
+
 
         internal static List<SlotModel> CreateSlotModels(IEnumerable<SlotEntity> slotEntities)
         {

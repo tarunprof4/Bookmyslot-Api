@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Cache.Business.Tests
             distributedCacheMock.Verify((m => m.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())), Times.Once());
             distributedCacheMock.Verify((m => m.SetAsync(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<DistributedCacheEntryOptions>(), It.IsAny<CancellationToken>())), Times.Never());
         }
-        
+
 
 
         [Test]

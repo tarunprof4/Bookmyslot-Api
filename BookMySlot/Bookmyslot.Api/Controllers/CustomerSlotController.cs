@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICurrentUser currentUser;
         private readonly ICustomerResponseAdaptor customerResponseAdaptor;
         private readonly IAvailableSlotResponseAdaptor availableSlotResponseAdaptor;
-        
+
 
         public CustomerSlotController(ICustomerSlotBusiness customerSlotBusiness, ISymmetryEncryption symmetryEncryption, IDistributedInMemoryCacheBuisness distributedInMemoryCacheBuisness, IHashing sha256SaltedHash, CacheConfiguration cacheConfiguration, ICurrentUser currentUser, ICustomerResponseAdaptor customerResponseAdaptor, IAvailableSlotResponseAdaptor availableSlotResponseAdaptor)
         {

@@ -68,13 +68,13 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
         }
 
 
-      
+
 
 
 
         private AdditionalProfileSettingsModel DefaultCreateAdditionalProfileSettingsModel()
         {
-            var additionalProfileSettingsModel= new AdditionalProfileSettingsModel();
+            var additionalProfileSettingsModel = new AdditionalProfileSettingsModel();
             additionalProfileSettingsModel.BioHeadLine = BioHeadLine;
             return additionalProfileSettingsModel;
         }

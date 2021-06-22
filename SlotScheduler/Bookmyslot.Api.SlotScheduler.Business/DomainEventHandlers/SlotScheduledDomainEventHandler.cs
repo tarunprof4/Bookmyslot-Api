@@ -1,5 +1,4 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
-using Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents;
 using Bookmyslot.Api.SlotScheduler.Domain.DomainEvents;
 using MediatR;
 using System.Threading;

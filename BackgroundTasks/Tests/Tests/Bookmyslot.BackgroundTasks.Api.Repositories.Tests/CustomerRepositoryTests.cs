@@ -99,7 +99,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
         }
 
 
-      
+
 
         private CustomerModel DefaultCreateCustomerModel()
         {
@@ -107,7 +107,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             customerModel.Id = ID;
             customerModel.Email = EMAIL;
             customerModel.UserName = USERNAME;
-            
+
             customerModel.FirstName = FIRSTNAME;
             customerModel.LastName = LASTNAME;
 

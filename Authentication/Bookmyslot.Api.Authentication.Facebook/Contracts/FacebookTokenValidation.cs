@@ -7,7 +7,7 @@ namespace Bookmyslot.Api.Authentication.Facebook.Contracts
         [JsonProperty("data")]
         public Data Data { get; set; }
 
-      
+
     }
 
     public class Data

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Bookmyslot.Api.Authentication
 {
-    public class JwtTokenProvider: IJwtTokenProvider
+    public class JwtTokenProvider : IJwtTokenProvider
     {
         private readonly AuthenticationConfiguration authenticationConfiguration;
 

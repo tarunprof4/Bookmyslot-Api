@@ -32,7 +32,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             return ResponseModelFactory.CreateCustomerSettingsModelResponse(customerSettingsEntity);
         }
 
-     
+
 
         public async Task<Response<bool>> UpdateCustomerSettings(string customerId, CustomerSettingsModel customerSettingsModel)
         {
@@ -51,6 +51,6 @@ namespace Bookmyslot.Api.Customers.Repositories
             return new Response<bool>() { Result = true };
         }
 
-      
+
     }
 }

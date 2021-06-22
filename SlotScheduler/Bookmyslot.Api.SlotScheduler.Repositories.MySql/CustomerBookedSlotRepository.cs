@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
         }
-      
+
         public async Task<Response<IEnumerable<SlotModel>>> GetCustomerBookedSlots(string customerId)
         {
             var parameters = new { IsDeleted = false, BookedBy = customerId };

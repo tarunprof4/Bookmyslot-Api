@@ -2,7 +2,7 @@
 {
     public class AdditionalProfileSettingsModel
     {
-        
+
         public string BioHeadLine { get; set; }
     }
 }

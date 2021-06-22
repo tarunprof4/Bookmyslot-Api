@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Controllers
                 if (customerSlotModel != null)
                 {
                     var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                    
+
                     var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel, currentUserResponse.Result.Id);
                     return this.CreatePostHttpResponse(slotScheduleResponse);
                 }

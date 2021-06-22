@@ -9,7 +9,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Queries
         public const string CreateSlotQuery = @"INSERT INTO" + " " + DatabaseConstants.SlotTable + " " +
             @"(Id, Title, CreatedBy, TimeZone, SlotDate, SlotStartDateTimeUtc,SlotEndDateTimeUtc, SlotStartTime, SlotEndTime, CreatedDateUtc, IsDeleted, Country)
  VALUES(@Id, @Title, @CreatedBy, @TimeZone, @SlotDate, @SlotStartDateTimeUtc, @SlotEndDateTimeUtc, @SlotStartTime, @SlotEndTime, @CreatedDateUtc, @IsDeleted, @Country); ";
- 
+
 
         public const string GetSlotQuery = @"SELECT * FROM" + " " + DatabaseConstants.SlotTable + " " + @"where IsDeleted=@IsDeleted and Id=@Id";
 

@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             registerCustomerRepositoryMock.Verify((m => m.RegisterCustomer(registerCustomerModel)), Times.Once());
         }
 
-     
+
 
         [Test]
         public async Task RegisterCustomer_CustomerWithSameEmailIdAlreadyExists_ReturnsError()
@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-      
+
 
         private RegisterCustomerModel CreateRegisterCustomerModel()
         {

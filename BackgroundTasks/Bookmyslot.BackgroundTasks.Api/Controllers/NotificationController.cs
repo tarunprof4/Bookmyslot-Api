@@ -59,7 +59,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
                 Country = "Count",
                 TimeZone = "time",
                 SlotDate = "22-Ju-202",
-                SlotStartTime = new TimeSpan(1,1,1),
+                SlotStartTime = new TimeSpan(1, 1, 1),
                 SlotEndTime = new TimeSpan(2, 2, 2),
                 SlotMeetingLink = "SlotMeetingLin"
             };

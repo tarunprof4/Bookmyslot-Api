@@ -44,8 +44,12 @@ namespace Bookmyslot.Api.Authentication.Google
 
         private SocialCustomerModel CreateSocialCustomerModel(GoogleJsonWebSignature.Payload payload)
         {
-            return new SocialCustomerModel() { FirstName = payload.GivenName, LastName = payload.FamilyName, 
-                Email = payload.Email, Provider = LoginConstants.ProviderGoogle
+            return new SocialCustomerModel()
+            {
+                FirstName = payload.GivenName,
+                LastName = payload.FamilyName,
+                Email = payload.Email,
+                Provider = LoginConstants.ProviderGoogle
             };
         }
     }

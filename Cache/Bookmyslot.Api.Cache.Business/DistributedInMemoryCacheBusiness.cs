@@ -29,7 +29,7 @@ namespace Bookmyslot.Api.Cache.Contracts.Interfaces
                 return await GetInvokedMethodResponse(cacheModel, retrieveValues);
             }
 
-            var serializedResponse =  Encoding.UTF8.GetString(cachedBytes);
+            var serializedResponse = Encoding.UTF8.GetString(cachedBytes);
             return new Response<T>() { Result = JsonConvert.DeserializeObject<T>(serializedResponse) };
         }
 

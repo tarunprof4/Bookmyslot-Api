@@ -5,13 +5,13 @@ using FluentValidation.Results;
 
 namespace Bookmyslot.Api.Customers.Business.Validations
 {
-    public class SocialLoginCustomerValidator :  AbstractValidator<SocialCustomerLoginModel>
+    public class SocialLoginCustomerValidator : AbstractValidator<SocialCustomerLoginModel>
     {
         public SocialLoginCustomerValidator()
         {
             RuleFor(x => x.AuthToken).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.AuthTokenRequired);
             RuleFor(x => x.Provider).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TokenProviderRequired);
-            
+
             RuleFor(x => x).Cascade(CascadeMode.Stop).Must(googleValidateIdToken).WithMessage(AppBusinessMessagesConstants.IdTokenRequired);
         }
         protected override bool PreValidate(ValidationContext<SocialCustomerLoginModel> context, ValidationResult result)

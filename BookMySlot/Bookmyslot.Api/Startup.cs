@@ -189,7 +189,7 @@ namespace Bookmyslot.Api
             var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
             var appConfiguration = serviceProvider.GetService<AppConfiguration>();
 
-            
+
 
 
             Log.Logger = new LoggerConfiguration()

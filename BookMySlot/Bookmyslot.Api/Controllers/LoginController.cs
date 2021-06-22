@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> SocialCustomerLogin([FromBody] SocialCustomerLoginModel socialCustomerLoginModel)
         {
             var loginResponse = await this.loginCustomerBusiness.LoginSocialCustomer(socialCustomerLoginModel);
-          
+
             return this.CreatePostHttpResponse(loginResponse);
         }
     }

@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private readonly string SlotId = Guid.NewGuid().ToString();
         private const string Title = "Title";
         private const string CreatedBy = "CreatedBy";
-        
+
         private readonly string ValidSlotDate = DateTime.UtcNow.AddDays(2).ToString(DateTimeConstants.ApplicationDatePattern);
         private readonly DateTime ValidSlotDateUtc = DateTime.UtcNow.AddDays(2);
         private readonly string OlderSlotDate = DateTime.UtcNow.AddDays(-2).ToString(DateTimeConstants.ApplicationDatePattern);
@@ -35,8 +35,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             resendSlotInformationBusiness = new ResendSlotInformationBusiness(eventDispatcherMock.Object, customerBusinessMock.Object);
         }
 
-   
-     
+
+
         //[Test]
         //public async Task ScheduleSlot_ValidDetails_ReturnsSuccessResponse()
         //{
@@ -74,6 +74,6 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             return slotModel;
         }
 
-     
+
     }
 }

@@ -61,7 +61,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests.IntegrationEvents
             };
         }
 
-  
+
 
         private CustomerModel GetDefaultCustomerModel()
         {

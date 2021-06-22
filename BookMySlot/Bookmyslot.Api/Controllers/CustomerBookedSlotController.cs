@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICustomerResponseAdaptor customerResponseAdaptor;
         private readonly ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor;
         private readonly IBookedSlotResponseAdaptor bookedSlotResponseAdaptor;
-        
+
 
 
         public CustomerBookedSlotController(ICustomerBookedSlotBusiness customerBookedSlotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, ICustomerResponseAdaptor customerResponseAdaptor, ICancelledSlotResponseAdaptor cancelledSlotResponseAdaptor, IBookedSlotResponseAdaptor bookedSlotResponseAdaptor)
@@ -77,7 +77,7 @@ namespace Bookmyslot.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("api/v1/CustomerBookedSlot/GetCustomerCompletedSlots")]
         [HttpGet()]
-        
+
 
 
         public async Task<IActionResult> GetCustomerCompletedSlots()

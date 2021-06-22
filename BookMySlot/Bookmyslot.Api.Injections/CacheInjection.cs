@@ -31,6 +31,6 @@ namespace Bookmyslot.Api.Injections
         }
 
 
-     
+
     }
 }

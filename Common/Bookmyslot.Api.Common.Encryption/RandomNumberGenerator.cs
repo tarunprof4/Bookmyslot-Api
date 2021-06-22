@@ -5,7 +5,7 @@ namespace Bookmyslot.Api.Common.Encryption
 {
     public class RandomNumberGenerator : IRandomNumberGenerator
     {
-        public  byte[] GenerateRandomNumber(int length)
+        public byte[] GenerateRandomNumber(int length)
         {
             using (var randomNumberGenerator = new RNGCryptoServiceProvider())
             {

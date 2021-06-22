@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
         public TimeSpan SlotEndTime { get; }
         public TimeSpan SlotDuration { get; }
         public CustomerModel CancelledByCustomerModel { get; }
-        public SlotCancelledIntegrationEvent(CancelledSlotModel cancelledSlotModel, CustomerModel cancelledByCustomerModel):
+        public SlotCancelledIntegrationEvent(CancelledSlotModel cancelledSlotModel, CustomerModel cancelledByCustomerModel) :
             base(EventConstants.SlotCancelledEvent)
         {
             this.Title = cancelledSlotModel.Title;

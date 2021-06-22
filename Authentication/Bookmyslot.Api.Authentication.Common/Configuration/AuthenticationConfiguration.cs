@@ -4,7 +4,7 @@ using System;
 
 namespace Bookmyslot.Api.Authentication.Common.Configuration
 {
-    public class AuthenticationConfiguration 
+    public class AuthenticationConfiguration
     {
         private readonly string subject;
 
@@ -18,7 +18,7 @@ namespace Bookmyslot.Api.Authentication.Common.Configuration
 
         private readonly string claimEmail;
 
-        
+
         public AuthenticationConfiguration(IConfiguration configuration)
         {
             var authenticationSettings = configuration.GetSection(AppSettingKeysConstants.AuthenticationSettings).GetSection(AppSettingKeysConstants.JwtTokenSettings);
@@ -29,7 +29,7 @@ namespace Bookmyslot.Api.Authentication.Common.Configuration
             this.tokenexpiryInHours = Convert.ToInt32(authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenExpiryInHours).Value);
             this.secretKey = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenSecretKey).Value;
 
-            this.claimEmail = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenClaimSettings).GetSection(AppSettingKeysConstants.JwtTokenClaimEmail).Value; 
+            this.claimEmail = authenticationSettings.GetSection(AppSettingKeysConstants.JwtTokenClaimSettings).GetSection(AppSettingKeysConstants.JwtTokenClaimEmail).Value;
         }
 
         public string Subject => this.subject;

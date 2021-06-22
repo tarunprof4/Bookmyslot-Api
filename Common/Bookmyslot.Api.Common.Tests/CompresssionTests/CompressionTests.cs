@@ -39,7 +39,7 @@ namespace Bookmyslot.Api.Common.Tests.CompresssionTests
             Assert.AreEqual(preCompressedSerialization, postCompressedSerialization);
         }
 
-     
+
         private EmailModel GetDefaultValidEmailModel()
         {
             var emailModel = new EmailModel();
@@ -53,8 +53,8 @@ namespace Bookmyslot.Api.Common.Tests.CompresssionTests
             return emailModel;
         }
 
-       
 
-       
+
+
     }
 }

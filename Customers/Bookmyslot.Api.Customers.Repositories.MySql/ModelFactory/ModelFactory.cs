@@ -6,12 +6,12 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
 {
     internal class ModelFactory
     {
-      
+
         internal static CustomerModel CreateCustomerModel(RegisterCustomerEntity registerCustomerEntity)
         {
             return new CustomerModel()
             {
-                Id= registerCustomerEntity.Id,
+                Id = registerCustomerEntity.Id,
                 FirstName = registerCustomerEntity.FirstName,
                 LastName = registerCustomerEntity.LastName,
                 BioHeadLine = registerCustomerEntity.BioHeadLine,

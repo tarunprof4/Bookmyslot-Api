@@ -28,7 +28,7 @@
         public const string JwtTokenSettings = "JwtTokenSettings";
         public const string SocialLogin = "SocialLogin";
         public const string GoogleAuthenticationSettings = "GoogleAuthenticationSettings";
-        
+
 
         public const string JwtTokenSubject = "Subject";
         public const string JwtTokenIssuer = "Issuer";

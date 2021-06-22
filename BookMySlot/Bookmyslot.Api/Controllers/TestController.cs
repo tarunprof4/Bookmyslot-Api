@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly ILoggerService loggerService;
         private readonly IMediator mediator;
 
-        
+
 
 
 
@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Controllers
             this.mediator = mediator;
         }
 
-  
+
 
         [HttpGet()]
         [Route("api/v1/test/Testing")]

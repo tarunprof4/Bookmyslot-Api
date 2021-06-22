@@ -7,7 +7,7 @@
         public const string EmailToAddressIsRequired = "Email To Address is Required";
         public const string EmailToAddressIsInvalid = "Email To Address {0} is Invalid";
         public const string EmailccAddressIsInvalid = "Email cc Address is Invalid";
-        public const string EmailBccAddressIsInvalid= "Email Bcc Address is Invalid";
+        public const string EmailBccAddressIsInvalid = "Email Bcc Address is Invalid";
         public const string EmailSubjectIsRequired = "Email Subject is Required";
         public const string EmailBodyIsRequired = "Email Body is Required";
 

@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return ResponseModelFactory.CreateCancelledSlotModels(cancelledSlotEntities);
         }
 
-        
+
 
         public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerBookedCancelledSlots(string customerId)
         {
