@@ -40,14 +40,6 @@ namespace Bookmyslot.Api.Search.Repositories
 
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel)
         {
-            var includeFields = new List<Field>
-            {
-                Infer.Field<SearchCustomerModel>(f => f.UserName),
-                Infer.Field<SearchCustomerModel>(f => f.FirstName),
-                Infer.Field<SearchCustomerModel>(f => f.LastName),
-                Infer.Field<SearchCustomerModel>(f => f.ProfilePictureUrl)
-            };
-
             var firstNameField = Infer.Field<SearchCustomerModel>(f => f.FirstName);
             var lastNameField = Infer.Field<SearchCustomerModel>(f => f.LastName);
             var fullNameField = Infer.Field<SearchCustomerModel>(f => f.FullName);
@@ -65,7 +57,7 @@ namespace Bookmyslot.Api.Search.Repositories
                 },
                 Source = new SourceFilter
                 {
-                    Includes = includeFields.ToArray(),
+                    Includes = this.GetIncludedFields().ToArray(),
                 }
             };
 
@@ -75,16 +67,10 @@ namespace Bookmyslot.Api.Search.Repositories
             return ResponseModelFactory.CreateSearchCustomerModelsResponse(response);
         }
 
+        
+
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel)
         {
-            var includeFields = new List<Field>
-            {
-                Infer.Field<SearchCustomerModel>(f => f.UserName),
-                Infer.Field<SearchCustomerModel>(f => f.FirstName),
-                Infer.Field<SearchCustomerModel>(f => f.LastName),
-                Infer.Field<SearchCustomerModel>(f => f.ProfilePictureUrl)
-            };
-
             var request = new SearchRequest<SearchCustomerModel>()
             {
                 From = pageParameterModel.PageNumber,
@@ -98,7 +84,7 @@ namespace Bookmyslot.Api.Search.Repositories
                 },
                 Source = new SourceFilter
                 {
-                    Includes = includeFields.ToArray(),
+                    Includes = this.GetIncludedFields().ToArray(),
                 }
             };
 
@@ -108,5 +94,15 @@ namespace Bookmyslot.Api.Search.Repositories
             return ResponseModelFactory.CreateSearchCustomerModelsResponse(response);
         }
 
+        private List<Field> GetIncludedFields()
+        {
+            return new List<Field>
+            {
+                Infer.Field<SearchCustomerModel>(f => f.UserName),
+                Infer.Field<SearchCustomerModel>(f => f.FirstName),
+                Infer.Field<SearchCustomerModel>(f => f.LastName),
+                Infer.Field<SearchCustomerModel>(f => f.ProfilePictureUrl)
+            };
+        }
     }
 }
