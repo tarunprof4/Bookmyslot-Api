@@ -56,27 +56,27 @@ namespace Bookmyslot.Api.Search.Business.Tests
             searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Never());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(It.IsAny<string>())), Times.Never());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Never());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<SearchCustomerModel>>())), Times.Never());
         }
-         
+
 
         [Test]
         public async Task SearchCustomers_GetCustomerByUserName_ReturnsSuccessResponse()
         {
             string searchKey = SearchByUserName;
             Response<List<SearchCustomerModel>> searchRepositoryResponseMock = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Empty };
-            searchRepositoryMock.Setup(a => a.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(),It.IsAny<string>())).Returns(Task.FromResult(searchRepositoryResponseMock));
+            searchRepositoryMock.Setup(a => a.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(searchRepositoryResponseMock));
             Response<SearchCustomerModel> searchCustomersResponseMock = new Response<SearchCustomerModel>() { Result = new SearchCustomerModel() };
             searchCustomerRepositoryMock.Setup(a => a.SearchCustomersByUserName(It.IsAny<string>())).Returns(Task.FromResult(searchCustomersResponseMock));
-            
+
             var searchedCustomersResponse = await searchCustomerBusiness.SearchCustomers(searchKey, new PageParameterModel());
 
             Assert.AreEqual(searchedCustomersResponse.ResultType, ResultType.Success);
             searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Never());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(It.IsAny<string>())), Times.Never());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Never());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<SearchCustomerModel>>())), Times.Once());
         }
 
@@ -96,7 +96,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Never());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Once());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey)), Times.Never());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey, It.IsAny<PageParameterModel>())), Times.Never());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<SearchCustomerModel>>())), Times.Never());
         }
 
@@ -115,7 +115,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Never());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Once());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey)), Times.Never());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey, It.IsAny<PageParameterModel>())), Times.Never());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<SearchCustomerModel>>())), Times.Once());
         }
 
@@ -127,7 +127,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             Response<List<SearchCustomerModel>> searchRepositoryResponseMock = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Empty };
             searchRepositoryMock.Setup(a => a.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(searchRepositoryResponseMock));
             Response<List<SearchCustomerModel>> searchCustomersResponseMock = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Empty }; ;
-            searchCustomerRepositoryMock.Setup(a => a.SearchCustomersByBioHeadLine(It.IsAny<string>())).Returns(Task.FromResult(searchCustomersResponseMock));
+            searchCustomerRepositoryMock.Setup(a => a.SearchCustomersByBioHeadLine(It.IsAny<string>(), It.IsAny<PageParameterModel>())).Returns(Task.FromResult(searchCustomersResponseMock));
 
             var searchedCustomersResponse = await searchCustomerBusiness.SearchCustomers(searchKey, new PageParameterModel());
 
@@ -135,7 +135,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Never());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Never());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey)), Times.Once());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey, It.IsAny<PageParameterModel>())), Times.Once());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), searchKey, It.IsAny<List<SearchCustomerModel>>())), Times.Never());
         }
 
@@ -146,7 +146,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             Response<List<SearchCustomerModel>> searchRepositoryResponseMock = new Response<List<SearchCustomerModel>>() { ResultType = ResultType.Empty };
             searchRepositoryMock.Setup(a => a.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(searchRepositoryResponseMock));
             Response<List<SearchCustomerModel>> searchCustomersResponseMock = new Response<List<SearchCustomerModel>>();
-            searchCustomerRepositoryMock.Setup(a => a.SearchCustomersByBioHeadLine(It.IsAny<string>())).Returns(Task.FromResult(searchCustomersResponseMock));
+            searchCustomerRepositoryMock.Setup(a => a.SearchCustomersByBioHeadLine(It.IsAny<string>(), It.IsAny<PageParameterModel>())).Returns(Task.FromResult(searchCustomersResponseMock));
 
             var searchedCustomersResponse = await searchCustomerBusiness.SearchCustomers(searchKey, new PageParameterModel());
 
@@ -154,7 +154,7 @@ namespace Bookmyslot.Api.Search.Business.Tests
             searchRepositoryMock.Verify((m => m.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(It.IsAny<string>(), It.IsAny<string>())), Times.Once());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByUserName(It.IsAny<string>())), Times.Never());
             searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByName(It.IsAny<string>(), It.IsAny<PageParameterModel>())), Times.Never());
-            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey)), Times.Once());
+            searchCustomerRepositoryMock.Verify((m => m.SearchCustomersByBioHeadLine(searchKey, It.IsAny<PageParameterModel>())), Times.Once());
             searchRepositoryMock.Verify((m => m.SavePreProcessedSearchedResponse(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<SearchCustomerModel>>())), Times.Once());
         }
     }

@@ -63,7 +63,7 @@ namespace Bookmyslot.Api.Search.Business
 
             else
             {
-                return await this.searchCustomerRepository.SearchCustomersByBioHeadLine(searchKey);
+                return await this.searchCustomerRepository.SearchCustomersByBioHeadLine(searchKey, pageParameterModel);
             }
         }
 

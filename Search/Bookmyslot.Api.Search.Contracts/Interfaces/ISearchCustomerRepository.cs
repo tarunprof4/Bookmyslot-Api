@@ -8,6 +8,6 @@ namespace Bookmyslot.Api.Search.Contracts.Interfaces
     {
         Task<Response<SearchCustomerModel>> SearchCustomersByUserName(string userName);
         Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel);
-        Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine);
+        Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel);
     }
 }
