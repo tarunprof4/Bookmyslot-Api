@@ -11,7 +11,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
             return new SearchCustomerModel()
             {
                 UserName = searchCustomerEntity.UserName,
-                FirstName = searchCustomerEntity.FirstName, 
+                FirstName = searchCustomerEntity.FirstName,
                 LastName = searchCustomerEntity.LastName,
                 ProfilePictureUrl = searchCustomerEntity.ProfilePictureUrl
             };

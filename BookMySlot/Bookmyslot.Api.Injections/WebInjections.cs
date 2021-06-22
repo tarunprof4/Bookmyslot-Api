@@ -11,6 +11,6 @@ namespace Bookmyslot.Api.Injections
         {
             services.AddScoped<AuthorizedFilter>();
         }
-  
+
     }
 }

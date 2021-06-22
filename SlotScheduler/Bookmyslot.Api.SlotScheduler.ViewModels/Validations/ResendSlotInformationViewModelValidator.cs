@@ -22,6 +22,6 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
         }
 
 
-     
+
     }
 }

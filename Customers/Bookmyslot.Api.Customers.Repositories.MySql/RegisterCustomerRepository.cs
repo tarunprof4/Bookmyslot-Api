@@ -15,14 +15,14 @@ namespace Bookmyslot.Api.Customers.Repositories
         private readonly IDbConnection connection;
         private readonly IDbInterceptor dbInterceptor;
         private readonly IEventDispatcher eventDispatcher;
-        
+
         public RegisterCustomerRepository(IDbConnection connection, IDbInterceptor dbInterceptor, IEventDispatcher eventDispatcher)
         {
             this.connection = connection;
             this.dbInterceptor = dbInterceptor;
             this.eventDispatcher = eventDispatcher;
         }
-    
+
         public async Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
         {
             var registerCustomerEntity = EntityFactory.EntityFactory.CreateRegisterCustomerEntity(registerCustomerModel);
@@ -42,11 +42,11 @@ namespace Bookmyslot.Api.Customers.Repositories
 
             await this.dbInterceptor.GetQueryResults("RegisterCustomer", parameters, () => this.connection.ExecuteAsync(sql, parameters));
             await this.eventDispatcher.DispatchEvents(registerCustomerModel.Events);
-            
+
 
             return new Response<string>() { Result = registerCustomerModel.Email };
         }
 
-      
+
     }
 }

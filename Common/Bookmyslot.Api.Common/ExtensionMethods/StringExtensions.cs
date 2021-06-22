@@ -8,7 +8,7 @@ namespace Bookmyslot.Api.Common.ExtensionMethods
         public static bool isDateValid(this string dateString, string datePattern)
         {
             DateTime dateTime;
-            if (DateTime.TryParseExact(dateString, datePattern,  CultureInfo.InvariantCulture,
+            if (DateTime.TryParseExact(dateString, datePattern, CultureInfo.InvariantCulture,
           DateTimeStyles.None, out dateTime))
             {
                 return true;

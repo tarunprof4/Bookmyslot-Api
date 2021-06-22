@@ -28,7 +28,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Injections
             ElasticSearchInjections(services, appConfiguration);
         }
 
-        
+
 
         private static void CompressionInjections(IServiceCollection services)
         {

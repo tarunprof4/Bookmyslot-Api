@@ -49,7 +49,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return await GetCustomerSlots("GetCustomerCompletedSlots", sql, parameters);
         }
 
-        
+
 
 
         private async Task<Response<IEnumerable<SlotModel>>> GetCustomerSlots(string operationName, string sql, object parameters)

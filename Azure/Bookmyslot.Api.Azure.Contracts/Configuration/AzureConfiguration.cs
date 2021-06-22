@@ -7,7 +7,7 @@ namespace Bookmyslot.Api.Azure.Contracts.Configuration
     {
         private readonly string bmsTopic;
         private readonly string bmsTopicKey;
-     
+
         public AzureConfiguration(IConfiguration configuration)
         {
             var eventGridSettings = configuration.GetSection(AppSettingKeysConstants.AzureSettings).GetSection(AppSettingKeysConstants.EventGridSettings);

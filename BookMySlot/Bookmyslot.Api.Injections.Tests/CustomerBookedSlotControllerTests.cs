@@ -33,7 +33,7 @@ namespace Bookmyslot.Api.Injections.Tests
             var customerResponseAdaptor = serviceProvider.GetService<ICustomerResponseAdaptor>();
             var cancelledSlotResponseAdaptor = serviceProvider.GetService<ICancelledSlotResponseAdaptor>();
             var bookedSlotResponseAdaptor = serviceProvider.GetService<IBookedSlotResponseAdaptor>();
-            
+
             var controller = new CustomerBookedSlotController(customerBookedSlotBusiness, symmetryEncryption, currentUser,
                 customerResponseAdaptor, cancelledSlotResponseAdaptor, bookedSlotResponseAdaptor);
 

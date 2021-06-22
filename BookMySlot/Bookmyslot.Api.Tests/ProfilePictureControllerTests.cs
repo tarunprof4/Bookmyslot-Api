@@ -81,7 +81,7 @@ namespace Bookmyslot.Api.Tests
 
 
 
-     
+
         private ImageConfigurationSingleton DefaultImageConfigurationSingleton()
         {
             Dictionary<string, string> imageExtensions = CreateImageExtensions();

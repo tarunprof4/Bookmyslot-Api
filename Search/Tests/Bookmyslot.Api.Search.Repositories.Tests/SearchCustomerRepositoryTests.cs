@@ -17,7 +17,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         private const string SearchByUserName = "@UserName";
         private const string SearchByName = "#name";
         private const string SearchByBioHeadLine = "bioheadline";
-        private const string UserName= "UserName";
+        private const string UserName = "UserName";
         private const string FullName = "FirstNameLastName";
         private const string PhotoUrl = "PhotoUrl";
         private SearchCustomerRepository searchCustomerRepository;
@@ -78,7 +78,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         [Test]
         public async Task SearchCustomersByName_HasRecord_ReturnsSuccessResponse()
         {
-            IReadOnlyCollection<SearchCustomerModel> searchCustomerModels = new List<SearchCustomerModel>() {  new SearchCustomerModel() };
+            IReadOnlyCollection<SearchCustomerModel> searchCustomerModels = new List<SearchCustomerModel>() { new SearchCustomerModel() };
             var mockSearchResponse = new Mock<ISearchResponse<SearchCustomerModel>>();
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
@@ -93,7 +93,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         [Test]
         public async Task SearchCustomersByBioHeadLine_HasNoRecord_ReturnsEmptyResponse()
         {
-            IReadOnlyCollection<SearchCustomerModel> searchCustomerModels = new List<SearchCustomerModel>() {  };
+            IReadOnlyCollection<SearchCustomerModel> searchCustomerModels = new List<SearchCustomerModel>() { };
             var mockSearchResponse = new Mock<ISearchResponse<SearchCustomerModel>>();
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
@@ -107,7 +107,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         [Test]
         public async Task SearchCustomersByBioHeadLine_HasRecord_ReturnsSuccessResponse()
         {
-            IReadOnlyCollection<SearchCustomerModel> searchCustomerModels = new List<SearchCustomerModel>() { new SearchCustomerModel()};
+            IReadOnlyCollection<SearchCustomerModel> searchCustomerModels = new List<SearchCustomerModel>() { new SearchCustomerModel() };
             var mockSearchResponse = new Mock<ISearchResponse<SearchCustomerModel>>();
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
@@ -157,6 +157,6 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
         }
 
 
-      
+
     }
 }

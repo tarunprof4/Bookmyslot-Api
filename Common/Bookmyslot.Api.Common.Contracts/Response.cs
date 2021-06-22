@@ -2,9 +2,9 @@
 
 namespace Bookmyslot.Api.Common.Contracts
 {
-    public class Response<T> 
+    public class Response<T>
     {
-        public T Result { get;  set; }
+        public T Result { get; set; }
         public ResultType ResultType { get; set; }
         public List<string> Messages { get; set; }
 
@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Common.Contracts
             this.ResultType = ResultType.Success;
         }
 
-      
+
         public static Response<T> Success(T result)
         {
             var response = new Response<T> { ResultType = ResultType.Success, Result = result };
@@ -29,7 +29,7 @@ namespace Bookmyslot.Api.Common.Contracts
         }
 
 
-        public static  Response<T> Error(List<string> errorMessages)
+        public static Response<T> Error(List<string> errorMessages)
         {
             var response = new Response<T> { ResultType = ResultType.Error, Messages = errorMessages };
 

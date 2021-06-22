@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
             {
                 return Response<SearchCustomerModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
             }
-            
+
             var SearchCustomerModel = ModelFactory.CreateSearchCustomerModel(searchCustomerEntity);
             return Response<SearchCustomerModel>.Success(SearchCustomerModel);
         }

@@ -29,7 +29,7 @@ namespace Bookmyslot.BackgroundTasks.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+
             Injections(services);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -48,7 +48,7 @@ namespace Bookmyslot.BackgroundTasks.Api
 
 
 
-     
+
 
         private void Injections(IServiceCollection services)
         {
@@ -96,13 +96,13 @@ namespace Bookmyslot.BackgroundTasks.Api
             });
         }
 
-    
-        
+
+
         private static void InitializeSerilog(IServiceProvider serviceProvider)
         {
             var appConfiguration = serviceProvider.GetService<AppConfiguration>();
             var defaultLogEnricher = serviceProvider.GetService<DefaultLogEnricher>();
-            
+
 
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()

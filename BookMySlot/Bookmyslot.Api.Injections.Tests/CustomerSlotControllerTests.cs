@@ -39,7 +39,7 @@ namespace Bookmyslot.Api.Injections.Tests
             var availableSlotResponseAdaptor = serviceProvider.GetService<IAvailableSlotResponseAdaptor>();
 
 
-            var controller = new CustomerSlotController(customerSlotBusiness, symmetryEncryption, distributedInMemoryCacheBuisness, hash, 
+            var controller = new CustomerSlotController(customerSlotBusiness, symmetryEncryption, distributedInMemoryCacheBuisness, hash,
                 cacheConfiguration, currentUser, customerResponseAdaptor, availableSlotResponseAdaptor);
 
             Assert.IsNotNull(customerSlotBusiness);

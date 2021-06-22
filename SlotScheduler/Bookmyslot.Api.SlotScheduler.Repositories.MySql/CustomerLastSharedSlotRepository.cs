@@ -59,6 +59,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return ResponseModelFactory.CreateCustomerLastSharedSlotModelResponse(customerLastSharedSlotEntity);
         }
 
-      
+
     }
 }

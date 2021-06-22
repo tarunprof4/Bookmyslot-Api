@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             this.eventDispatcher = eventDispatcher;
         }
 
-     
+
 
         public async Task<Response<string>> CreateSlot(SlotModel slotModel)
         {
@@ -51,20 +51,21 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
 
             await this.dbInterceptor.GetQueryResults("CreateSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
-            
+
             return new Response<string>() { Result = slotEntity.Id };
         }
 
         public async Task<Response<bool>> DeleteSlot(string slotId)
         {
             var sql = SlotTableQueries.DeleteSlotQuery;
-            var parameters = new {
+            var parameters = new
+            {
                 Id = slotId,
                 ModifiedDateUtc = DateTime.UtcNow,
                 IsDeleted = true
             };
             await this.dbInterceptor.GetQueryResults("DeleteSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
-            
+
             return new Response<bool>() { Result = true };
         }
 
@@ -78,7 +79,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             return ResponseModelFactory.CreateSlotModelResponse(slotEntity);
         }
 
-     
+
 
         public async Task<Response<bool>> UpdateSlotBooking(SlotModel slotModel)
         {
@@ -95,6 +96,6 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             return new Response<bool>() { Result = true };
         }
-      
+
     }
 }

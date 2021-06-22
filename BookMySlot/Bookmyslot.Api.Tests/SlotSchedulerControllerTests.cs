@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.Tests
             slotSchedulerBusinessMock = new Mock<ISlotSchedulerBusiness>();
             currentUserMock = new Mock<ICurrentUser>();
             slotSchedulerViewModelValidatorMock = new Mock<IValidator<SlotSchedulerViewModel>>();
-            slotSchedulerController = new SlotSchedulerController(slotSchedulerBusinessMock.Object, symmetryEncryptionMock.Object, 
+            slotSchedulerController = new SlotSchedulerController(slotSchedulerBusinessMock.Object, symmetryEncryptionMock.Object,
                 currentUserMock.Object, slotSchedulerViewModelValidatorMock.Object);
 
             Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
@@ -86,7 +86,7 @@ namespace Bookmyslot.Api.Tests
             slotSchedulerViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<SlotSchedulerViewModel>())), Times.Once());
         }
 
-      
+
 
         [Test]
         public async Task ScheduleSlot_ValidSlotSchedulerInformationModel_ReturnsSuccessResponse()

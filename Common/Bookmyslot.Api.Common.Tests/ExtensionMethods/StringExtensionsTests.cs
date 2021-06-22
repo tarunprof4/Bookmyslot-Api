@@ -32,6 +32,6 @@ namespace Bookmyslot.Api.Common.Tests.ExtensionMethods
             Assert.IsFalse(isDateValid);
         }
 
-     
+
     }
 }

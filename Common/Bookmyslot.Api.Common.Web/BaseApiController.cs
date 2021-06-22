@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.Web.Common
 
         protected virtual IActionResult CreatePostHttpResponse<T>(Response<T> response)
         {
-            
+
             if (response.ResultType == ResultType.Success)
             {
                 return this.Created(string.Empty, response.Result);

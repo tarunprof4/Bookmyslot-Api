@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Bookmyslot.Api.Common.Web.Filters
 {
 
-    public class AuthorizedFilter :  IAsyncActionFilter
+    public class AuthorizedFilter : IAsyncActionFilter
     {
         private readonly ICurrentUser currentUser;
         private readonly ILoggerService loggerService;

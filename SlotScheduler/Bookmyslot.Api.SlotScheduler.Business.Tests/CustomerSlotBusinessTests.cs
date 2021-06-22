@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         private Mock<ICustomerSlotRepository> customerSlotRepositoryMock;
         private Mock<ICustomerBusiness> customerBusinessMock;
         private Mock<ICustomerSettingsRepository> customerSettingsRepositoryMock;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -31,7 +31,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerBusinessMock = new Mock<ICustomerBusiness>();
             customerSettingsRepositoryMock = new Mock<ICustomerSettingsRepository>();
 
-            customerSlotBusiness = new CustomerSlotBusiness(customerSlotRepositoryMock.Object, 
+            customerSlotBusiness = new CustomerSlotBusiness(customerSlotRepositoryMock.Object,
                 customerBusinessMock.Object, customerSettingsRepositoryMock.Object);
         }
 
@@ -67,7 +67,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             Assert.AreEqual(customerSlotModelResponse.ResultType, ResultType.Empty);
             customerSlotRepositoryMock.Verify((m => m.GetDistinctCustomersNearestSlotFromToday(It.IsAny<PageParameterModel>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Never());
-            
+
         }
 
 

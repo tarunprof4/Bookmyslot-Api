@@ -20,7 +20,7 @@ namespace Bookmyslot.Api.Common.Encryption
         public FlexibleAesSymmetricEncryption(EncryptionConfiguration encryptionConfiguration, ILoggerService loggerService)
         {
             this.loggerService = loggerService;
-            this.key = Convert.FromBase64String(encryptionConfiguration.SymmetryEncryptionKey); 
+            this.key = Convert.FromBase64String(encryptionConfiguration.SymmetryEncryptionKey);
             this.iv = Convert.FromBase64String(encryptionConfiguration.SymmetryEncryptionIv);
         }
 
@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.Common.Encryption
 
                     var encryptedMessageBytes = memoryStream.ToArray();
                     var encryptedMessage = Convert.ToBase64String(encryptedMessageBytes);
-                    
+
                     return EncryptionHelper.UrlEncode(encryptedMessage);
                 }
             }
@@ -88,7 +88,7 @@ namespace Bookmyslot.Api.Common.Encryption
 
         }
 
-   
+
         private void SetAesDefaults(AesCryptoServiceProvider aes)
         {
             aes.Mode = CipherMode.CBC;

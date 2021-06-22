@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.Tests
         private const string Title = "Title";
         private const string Country = "Country";
         private const string TimeZone = "TimeZone";
-        private readonly TimeSpan SlotStartTime = new TimeSpan(2,0,0);
+        private readonly TimeSpan SlotStartTime = new TimeSpan(2, 0, 0);
         private readonly TimeSpan SlotEndTime = new TimeSpan(3, 0, 0);
         private CustomerLastSharedSlotController customerLastSharedSlotController;
         private Mock<ICustomerLastSharedSlotBusiness> customerLastSharedSlotBusinessMock;
@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerLastSlot_NoRecordAvailable_ReturnsEmptyResponse()
         {
-            Response<CustomerLastSharedSlotModel> customerLastBookedSlotBusinessMockResponse = new Response<CustomerLastSharedSlotModel>() {  ResultType = ResultType.Empty};
+            Response<CustomerLastSharedSlotModel> customerLastBookedSlotBusinessMockResponse = new Response<CustomerLastSharedSlotModel>() { ResultType = ResultType.Empty };
             customerLastSharedSlotBusinessMock.Setup(a => a.GetCustomerLatestSharedSlot(It.IsAny<string>())).Returns(Task.FromResult(customerLastBookedSlotBusinessMockResponse));
 
             var response = await customerLastSharedSlotController.Get();

@@ -49,8 +49,8 @@ namespace Bookmyslot.Api.Authentication
             await GetCurrentUserResponse(email, cacheModel, true);
         }
 
-     
-        private async Task<Response<CurrentUserModel>> GetCurrentUserResponse(string email, CacheModel cacheModel, bool refresh= false)
+
+        private async Task<Response<CurrentUserModel>> GetCurrentUserResponse(string email, CacheModel cacheModel, bool refresh = false)
         {
             return await this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                                   cacheModel,

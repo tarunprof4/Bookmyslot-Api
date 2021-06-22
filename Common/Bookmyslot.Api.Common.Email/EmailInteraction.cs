@@ -14,7 +14,7 @@ namespace Bookmyslot.Api.Common.Email
         public async Task<Response<bool>> SendEmail(EmailModel emailModel)
         {
             var validateEmail = EmailValidator.Validate(emailModel);
-            if(validateEmail.ResultType == ResultType.Success)
+            if (validateEmail.ResultType == ResultType.Success)
             {
                 return await this.emailClient.SendEmail(emailModel);
             }

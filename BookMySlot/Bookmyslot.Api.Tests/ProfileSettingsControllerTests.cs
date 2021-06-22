@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Tests
             profileSettingsBusinessMock.Setup(a => a.GetProfileSettingsByCustomerId(It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             var response = await profileSettingsController.Get();
-            
+
             var objectResult = response as ObjectResult;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
             var profileSettingsViewModel = objectResult.Value as ProfileSettingsViewModel;
@@ -86,7 +86,7 @@ namespace Bookmyslot.Api.Tests
             profileSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<ProfileSettingsViewModel>())), Times.Once());
         }
 
-    
+
 
         [Test]
         public async Task UpdateProfileSettings_ValidProfileSettings_ReturnsSuccessResponse()
@@ -94,7 +94,7 @@ namespace Bookmyslot.Api.Tests
             profileSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<ProfileSettingsViewModel>())).Returns(new ValidationResult());
             Response<bool> profileSettingsBusinessMockResponse = new Response<bool>() { Result = true };
             profileSettingsBusinessMock.Setup(a => a.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
-            
+
             var response = await profileSettingsController.Put(DefaultValidProfileSettingViewModel()); ;
 
             var objectResult = response as NoContentResult;

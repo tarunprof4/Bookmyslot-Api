@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         [TestCase("12-12-2000", TimeZoneConstants.IndianTimezone, 18, 30, 0)]
         public void ConvertZonedDateTimeToUtcDateTime_PassIndiaTimeZone_ReturnsUtcZonedDateTime(string dateString, string timeZone, int utcHour, int utcMinute, int utcSecond)
         {
-            var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, DateTimeConstants.ApplicationDatePattern,new TimeSpan());
+            var localDateTime = NodaTimeHelper.ConvertDateStringToLocalDateTime(dateString, DateTimeConstants.ApplicationDatePattern, new TimeSpan());
             var indiaZonedDateTime = NodaTimeHelper.ConvertLocalDateTimeToZonedDateTime(localDateTime, timeZone);
             var utcDateTime = NodaTimeHelper.ConvertZonedDateTimeToUtcDateTime(indiaZonedDateTime);
 
@@ -73,7 +73,7 @@ namespace Bookmyslot.Api.Common.Tests.HelperTests
         }
 
 
-      
+
 
 
         [Test()]

@@ -79,7 +79,7 @@ namespace Bookmyslot.Api.Tests
             customerSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CustomerSettingsViewModel>())), Times.Once());
         }
 
-    
+
 
 
 
@@ -89,7 +89,7 @@ namespace Bookmyslot.Api.Tests
             customerSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<CustomerSettingsViewModel>())).Returns(new ValidationResult());
             Response<bool> customerSettingsMockResponse = new Response<bool>() { Result = true };
             customerSettingsBusinessMock.Setup(a => a.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())).Returns(Task.FromResult(customerSettingsMockResponse));
-            
+
             var response = await customerSettingsController.Put(new CustomerSettingsViewModel() { Country = ValidCountry, TimeZone = ValidTimeZone });
 
             var objectResult = response as NoContentResult;
@@ -99,7 +99,7 @@ namespace Bookmyslot.Api.Tests
             customerSettingsViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<CustomerSettingsViewModel>())), Times.Once());
         }
 
-     
+
 
         private CustomerSettingsModel DefaultCustomerSettingsModel()
         {

@@ -37,10 +37,10 @@ namespace Bookmyslot.Api.Tests
         {
             registerCustomerBusinessMock = new Mock<IRegisterCustomerBusiness>();
             registerCustomerViewModelValidatorMock = new Mock<IValidator<RegisterCustomerViewModel>>();
-            registerCustomerController = new RegisterCustomerController(registerCustomerBusinessMock.Object, 
+            registerCustomerController = new RegisterCustomerController(registerCustomerBusinessMock.Object,
                 registerCustomerViewModelValidatorMock.Object);
         }
-      
+
 
 
         [Test]
@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.Tests
             registerCustomerViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<RegisterCustomerViewModel>())), Times.Once());
         }
 
-      
+
 
         [Test]
         public async Task SaveRegisterCustomer_ValidRegisterCustomer_ReturnsSuccessResponse()

@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly ICurrentUser currentUser;
         private readonly IValidator<AdditionalProfileSettingsViewModel> additionalProfileSettingsViewModelValidator;
 
-        public AdditionalProfileSettingsController(IAdditionalProfileSettingsBusiness additionalProfileSettingsBusiness, 
+        public AdditionalProfileSettingsController(IAdditionalProfileSettingsBusiness additionalProfileSettingsBusiness,
             ICurrentUser currentUser, IValidator<AdditionalProfileSettingsViewModel> additionalProfileSettingsViewModelValidator)
         {
             this.additionalProfileSettingsBusiness = additionalProfileSettingsBusiness;
@@ -50,7 +50,7 @@ namespace Bookmyslot.Api.Controllers
         [HttpGet]
         [ActionName("GetProfileSettings")]
         [Route("api/v1/AdditionalProfileSettings")]
-        
+
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();

@@ -10,16 +10,16 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
     {
         public string Title { get; }
         public string Country { get; }
-        public string TimeZone { get;  }
-        public string SlotDate { get;  }
-        public TimeSpan SlotStartTime { get;  }
-        public TimeSpan SlotEndTime { get;  }
+        public string TimeZone { get; }
+        public string SlotDate { get; }
+        public TimeSpan SlotStartTime { get; }
+        public TimeSpan SlotEndTime { get; }
 
         public TimeSpan SlotDuration { get; }
 
-        public string SlotMeetingLink { get;  }
+        public string SlotMeetingLink { get; }
 
-        public BaseSlotIntegrationEvent(SlotModel slotModel, string eventType):
+        public BaseSlotIntegrationEvent(SlotModel slotModel, string eventType) :
             base(eventType)
         {
             this.Title = slotModel.Title;
@@ -31,7 +31,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents
             this.SlotDuration = slotModel.SlotDuration;
             this.SlotMeetingLink = slotModel.SlotMeetingLink;
         }
-      
+
 
     }
 }

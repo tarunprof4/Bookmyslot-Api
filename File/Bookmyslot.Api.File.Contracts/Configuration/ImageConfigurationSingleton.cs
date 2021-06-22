@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.File.Contracts.Configuration
         public ReadOnlyDictionary<string, string> Extensions { get; }
         public ReadOnlyDictionary<string, List<byte[]>> ExtensionSignatures { get; }
 
-        
+
 
         private ImageConfigurationSingleton(Dictionary<string, string> extensions, Dictionary<string, List<byte[]>> extensionSignatures)
         {

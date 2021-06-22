@@ -12,6 +12,6 @@ namespace Bookmyslot.Api.SlotScheduler.Domain
         public CustomerSettingsModel CustomerSettingsModel { get; set; }
     }
 
- 
+
 
 }

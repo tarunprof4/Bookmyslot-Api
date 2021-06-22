@@ -16,7 +16,7 @@ namespace Bookmyslot.Api.File.ViewModels.Validations
             RuleFor(x => x.ImageFile).Cascade(CascadeMode.Stop).Must(isFileNotNull).WithMessage(AppBusinessMessagesConstants.FileMissing).
                 Must(isFileSizeValid).WithMessage(AppBusinessMessagesConstants.ImageSizeTooLong).
                 Must(isImageExtensionValid).WithMessage(AppBusinessMessagesConstants.InvalidImageExtension).
-                Must(isImageExtensionSignatureValid).WithMessage(AppBusinessMessagesConstants.InvalidImageExtensionSignature); 
+                Must(isImageExtensionSignatureValid).WithMessage(AppBusinessMessagesConstants.InvalidImageExtensionSignature);
         }
 
 
@@ -54,7 +54,7 @@ namespace Bookmyslot.Api.File.ViewModels.Validations
         }
 
 
-       
+
 
     }
 }

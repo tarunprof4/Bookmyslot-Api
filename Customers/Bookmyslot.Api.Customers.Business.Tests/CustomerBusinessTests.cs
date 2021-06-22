@@ -40,7 +40,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-      
+
 
         [Test]
         public async Task GetCustomerByCustomerId_ValidCustomerId_CallsGetCustomerByCustomerIdRepository()
@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task GetCustomersByCustomerIds_ValidCustomerIds_CallsGetCustomersByCustomerIdsRepository()
         {
-            var customer = await customerBusiness.GetCustomersByCustomerIds(new List<string>() { CUSTOMERID, CUSTOMERID});
+            var customer = await customerBusiness.GetCustomersByCustomerIds(new List<string>() { CUSTOMERID, CUSTOMERID });
 
             customerRepositoryMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }

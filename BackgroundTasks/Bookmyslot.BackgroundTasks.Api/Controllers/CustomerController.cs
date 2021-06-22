@@ -63,7 +63,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Controllers
         }
 
 
-        
+
 
     }
 }

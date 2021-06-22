@@ -186,7 +186,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModel = new SlotModel();
             Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { ResultType = ResultType.Empty };
             slotRepositoryMock.Setup(a => a.GetSlot(It.IsAny<string>())).Returns(Task.FromResult(slotModelGetResponseMock));
-            
+
             var slotModelResponse = await this.slotBusiness.CancelSlot(Guid.NewGuid().ToString(), deletedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Empty);
@@ -198,7 +198,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomerById(It.IsAny<string>())), Times.Never());
         }
 
-     
+
 
 
         private SlotModel CreateValidSlotModel()

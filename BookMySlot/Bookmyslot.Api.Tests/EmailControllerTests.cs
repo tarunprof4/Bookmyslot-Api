@@ -86,7 +86,7 @@ namespace Bookmyslot.Api.Tests
             resendSlotInformationViewModelValidatorMock.Verify((m => m.Validate(It.IsAny<ResendSlotInformationViewModel>())), Times.Once());
         }
 
-      
+
 
         [Test]
         public async Task ResendSlotMeetingInformation_ValidResendSlotInformationModel_ReturnsSuccessResponse()

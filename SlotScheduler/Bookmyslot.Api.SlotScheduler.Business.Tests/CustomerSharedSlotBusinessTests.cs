@@ -63,7 +63,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerYetToBeBookedSlots(It.IsAny<string>())), Times.Once());
 
 
-            
+
         }
 
 

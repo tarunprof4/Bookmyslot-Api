@@ -32,9 +32,19 @@ namespace Bookmyslot.Api.Tests
             currentUserMock = new Mock<ICurrentUser>();
             customerController = new CustomerController(customerBusinessMock.Object, currentUserMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() 
-            { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName, LastName = LastName,
-            BioHeadLine = BioHeadLine, ProfilePictureUrl = ProfilePictureUrl, UserName = UserName, IsVerified = IsVerified} };
+            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>()
+            {
+                Result = new CurrentUserModel()
+                {
+                    Id = CustomerId,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    BioHeadLine = BioHeadLine,
+                    ProfilePictureUrl = ProfilePictureUrl,
+                    UserName = UserName,
+                    IsVerified = IsVerified
+                }
+            };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 

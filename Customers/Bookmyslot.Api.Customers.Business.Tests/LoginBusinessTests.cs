@@ -45,7 +45,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         }
 
 
-        
+
 
         [Test]
         public async Task LoginGoogleCustomer_InValidSocialCustomerLoginModel_ReturnValidationErrorResponse()
@@ -68,7 +68,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             socialLoginCustomerValidatorMock.Verify((m => m.Validate(It.IsAny<SocialCustomerLoginModel>())), Times.Once());
         }
 
-   
+
 
         [Test]
         public async Task LoginGoogleCustomer_ValidTokenAndCustomerAlreadyExists_ReturnLoginSuccessResponse()
@@ -120,7 +120,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
 
 
 
-       
+
 
         [Test]
         public async Task LoginFacebookCustomer_InValidSocialCustomerLoginModel_ReturnValidationErrorResponse()

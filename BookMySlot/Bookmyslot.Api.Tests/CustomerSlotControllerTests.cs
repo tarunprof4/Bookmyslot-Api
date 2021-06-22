@@ -118,7 +118,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetDistinctCustomersNearestSlotFromToday_ValidPageParameterModel_ReturnsSuccessResponse()
         {
-            Response<List<CustomerSlotModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<CustomerSlotModel>>() { Result = CreateDefaultCustomerSlotModels()};
+            Response<List<CustomerSlotModel>> distributedInMemoryCacheBuisnessMockResponse = new Response<List<CustomerSlotModel>>() { Result = CreateDefaultCustomerSlotModels() };
             distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Response<List<CustomerSlotModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
             IEnumerable<CustomerViewModel> createCustomerViewModelsMockResponse = new List<CustomerViewModel>();
             customerResponseAdaptorMock.Setup(a => a.CreateCustomerViewModels(It.IsAny<IEnumerable<CustomerModel>>())).Returns(createCustomerViewModelsMockResponse);
@@ -280,7 +280,7 @@ namespace Bookmyslot.Api.Tests
             return new BookAvailableSlotViewModel();
         }
 
-        
+
 
         private PageParameterViewModel DefaultInValidPageParameterViewModel()
         {

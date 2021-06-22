@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.dbInterceptor = dbInterceptor;
         }
 
-      
+
         public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
         {
             var parameters = new { Email = email.ToLowerInvariant() };
@@ -53,7 +53,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             return ResponseModelFactory.CreateCustomerModelResponse(registerCustomerEntity);
         }
 
-     
+
 
         public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
         {
@@ -65,8 +65,8 @@ namespace Bookmyslot.Api.Customers.Repositories
             return ResponseModelFactory.CreateCustomerModelsResponse(registerCustomerEntities);
         }
 
-    
 
-       
+
+
     }
 }

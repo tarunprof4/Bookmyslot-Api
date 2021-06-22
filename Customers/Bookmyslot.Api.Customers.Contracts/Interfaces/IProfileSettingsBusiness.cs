@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 
         Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName);
 
-        
+
 
 
     }

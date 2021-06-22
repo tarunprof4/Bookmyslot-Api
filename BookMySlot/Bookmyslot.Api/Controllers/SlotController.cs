@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.Controllers
         private readonly IValidator<SlotViewModel> slotViewModelValidator;
         private readonly IValidator<CancelSlotViewModel> cancelSlotViewModelValidator;
 
-        public SlotController(ISlotBusiness slotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser, 
+        public SlotController(ISlotBusiness slotBusiness, ISymmetryEncryption symmetryEncryption, ICurrentUser currentUser,
             ISlotRequestAdaptor slotRequestAdaptor, IValidator<SlotViewModel> slotViewModelValidator,
             IValidator<CancelSlotViewModel> cancelSlotViewModelValidator)
         {
@@ -76,11 +76,11 @@ namespace Bookmyslot.Api.Controllers
                 var slotResponse = await slotBusiness.CreateSlot(this.slotRequestAdaptor.CreateSlotModel(slotViewModel), customerId);
                 return this.CreatePostHttpResponse(slotResponse);
             }
-            var validationResponse =  Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePostHttpResponse(validationResponse);
         }
 
-       
+
 
         /// <summary>
         /// Cancel User slot
