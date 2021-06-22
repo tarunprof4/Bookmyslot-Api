@@ -19,12 +19,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
     public class SearchRepositoryTests
     {
         private const string SearchKey = "SearchKey";
-        private const string Id = "Id";
         private const string UserName = "UserName";
-        private const string FirstName = "FirstName";
-        private const string LastName = "LastName";
-        private const string FullName = "FirstNameLastName";
-        private const string PhotoUrl = "PhotoUrl";
         private SearchRepository searchRepository;
         private Mock<IDbConnection> dbConnectionMock;
         private Mock<IDbInterceptor> dbInterceptorMock;

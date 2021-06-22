@@ -13,7 +13,7 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
                 UserName = searchCustomerEntity.UserName,
                 FirstName = searchCustomerEntity.FirstName, 
                 LastName = searchCustomerEntity.LastName,
-                PhotoUrl = searchCustomerEntity.PhotoUrl
+                ProfilePictureUrl = searchCustomerEntity.ProfilePictureUrl
             };
         }
 

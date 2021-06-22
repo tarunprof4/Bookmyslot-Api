@@ -21,7 +21,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Enitites
 
         public string Provider { get; set; }
 
-        public string PhotoUrl { get; set; }
+        public string ProfilePictureUrl { get; set; }
 
         public DateTime CreatedDateUtc { get; set; }
 

@@ -26,7 +26,5 @@ namespace Bookmyslot.Api.Customers.ViewModels
 
         [MaxLength(AppBusinessConstants.ProviderMaxLength, ErrorMessage = AppBusinessMessagesConstants.ProviderMaxLength)]
         public string Provider { get; set; }
-
-        public string PhotoUrl { get; set; }
     }
 }

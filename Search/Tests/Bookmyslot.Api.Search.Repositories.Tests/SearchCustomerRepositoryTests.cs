@@ -4,7 +4,6 @@ using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Moq;
 using Nest;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -144,37 +143,20 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             searchCustomerEntity.UserName = UserName;
             searchCustomerEntity.FirstName = FullName;
             searchCustomerEntity.LastName = FullName;
-            searchCustomerEntity.PhotoUrl = PhotoUrl;
+            searchCustomerEntity.ProfilePictureUrl = PhotoUrl;
             searchCustomerEntities.Add(searchCustomerEntity);
 
             searchCustomerEntity = new SearchCustomerEntity();
             searchCustomerEntity.UserName = UserName;
             searchCustomerEntity.FirstName = FullName;
             searchCustomerEntity.LastName = FullName;
-            searchCustomerEntity.PhotoUrl = PhotoUrl;
+            searchCustomerEntity.ProfilePictureUrl = PhotoUrl;
             searchCustomerEntities.Add(searchCustomerEntity);
 
             return searchCustomerEntities;
         }
 
-        private SearchEntity DefaultCreateSearchEntity()
-        {
-            var searchEntity = new SearchEntity();
-            searchEntity.SearchKey = SearchKey;
-            searchEntity.Value = CompressedSearchCustomerModels(DefaultCreateSearchCustomerModels());
-            return searchEntity;
-        }
 
-        private string CompressedSearchCustomerModels(List<SearchCustomerModel> searchCustomerModels)
-        {
-            return JsonConvert.SerializeObject(searchCustomerModels);
-        }
-
-        private List<SearchCustomerModel> DeCompressedSearchCustomerModels(string compressedModel)
-        {
-            var searchCustomerModels =  JsonConvert.DeserializeObject<List<SearchCustomerModel>>(compressedModel);
-            return searchCustomerModels;
-        }
-
+      
     }
 }

@@ -8,6 +8,6 @@
 
         public string LastName { get; set; }
 
-        public string PhotoUrl { get; set; }
+        public string ProfilePictureUrl { get; set; }
     }
 }
