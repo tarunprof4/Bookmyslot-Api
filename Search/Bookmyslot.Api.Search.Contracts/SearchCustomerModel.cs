@@ -1,4 +1,5 @@
-﻿using Nest;
+﻿using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;
+using Nest;
 using Newtonsoft.Json;
 
 namespace Bookmyslot.Api.Search.Contracts
@@ -25,7 +26,7 @@ namespace Bookmyslot.Api.Search.Contracts
             }
         }
 
-        [Text]
+        [Text(Analyzer = ElasticSearchConstants.StandardAnalyzer)]
         public string BioHeadLine { get; set; }
 
         [Keyword]

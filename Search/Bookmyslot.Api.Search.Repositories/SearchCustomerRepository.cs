@@ -1,16 +1,15 @@
 ﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.Search.Repositories.Queries;
+using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;
 using Dapper;
 using Nest;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Repositories
@@ -41,12 +40,6 @@ namespace Bookmyslot.Api.Search.Repositories
 
         public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel)
         {
-            var includeFields = new List<Field>();
-            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.UserName));
-            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.FirstName));
-            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.LastName));
-            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.ProfilePictureUrl));
-
             var firstNameField = Infer.Field<SearchCustomerModel>(f => f.FirstName);
             var lastNameField = Infer.Field<SearchCustomerModel>(f => f.LastName);
             var fullNameField = Infer.Field<SearchCustomerModel>(f => f.FullName);
@@ -64,31 +57,52 @@ namespace Bookmyslot.Api.Search.Repositories
                 },
                 Source = new SourceFilter
                 {
-                    Includes = includeFields.ToArray(),
+                    Includes = this.GetIncludedFields().ToArray(),
                 }
             };
 
             var response = await this.dbInterceptor.GetQueryResults("SearchCustomersByName", name, () =>
             this.elasticClient.SearchAsync<SearchCustomerModel>(request));
 
-            if(response.Documents.Count == 0)
-            {
-                return Response<List<SearchCustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
-            }
-
-            return new Response<List<SearchCustomerModel>>() { Result= response.Documents.ToList() } ;
-         
+            return ResponseModelFactory.CreateSearchCustomerModelsResponse(response);
         }
 
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine)
+        
+
+        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel)
         {
-            var parameters = new { bioHeadLine = bioHeadLine };
-            var sql = RegisterCustomerTableQueries.SearchCustomerByBioHeadLineQuery;
+            var request = new SearchRequest<SearchCustomerModel>()
+            {
+                From = pageParameterModel.PageNumber,
+                Size = pageParameterModel.PageSize,
+                Query = new MatchQuery
+                {
+                    Field = Infer.Field<SearchCustomerModel>(f => f.BioHeadLine),
+                    Query = bioHeadLine,
+                    Analyzer = ElasticSearchConstants.StandardAnalyzer,
+                    Lenient = true,
+                },
+                Source = new SourceFilter
+                {
+                    Includes = this.GetIncludedFields().ToArray(),
+                }
+            };
 
-            var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SearchCustomersByBioHeadLine", parameters, () => this.connection.QueryAsync<SearchCustomerEntity>(sql, parameters));
+            var response = await this.dbInterceptor.GetQueryResults("SearchCustomersByBioHeadLine", bioHeadLine, () =>
+            this.elasticClient.SearchAsync<SearchCustomerModel>(request));
 
-            return ResponseModelFactory.CreateSearchCustomerModelsResponse(searchCustomerEntities);
+            return ResponseModelFactory.CreateSearchCustomerModelsResponse(response);
         }
 
+        private List<Field> GetIncludedFields()
+        {
+            return new List<Field>
+            {
+                Infer.Field<SearchCustomerModel>(f => f.UserName),
+                Infer.Field<SearchCustomerModel>(f => f.FirstName),
+                Infer.Field<SearchCustomerModel>(f => f.LastName),
+                Infer.Field<SearchCustomerModel>(f => f.ProfilePictureUrl)
+            };
+        }
     }
 }

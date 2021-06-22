@@ -6,6 +6,6 @@
 
         public const string SearchAsYouTypeField = "search-as-you-type";
 
-        
+        public const string StandardAnalyzer = "standard";
     }
 }

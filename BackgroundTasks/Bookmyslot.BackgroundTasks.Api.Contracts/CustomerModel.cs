@@ -1,4 +1,5 @@
-﻿using Nest;
+﻿using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;
+using Nest;
 
 namespace Bookmyslot.BackgroundTasks.Api.Contracts
 {
@@ -26,7 +27,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Contracts
             }
         }
 
-        [Text]
+        [Text(Analyzer = ElasticSearchConstants.StandardAnalyzer)]
         public string BioHeadLine { get; set; }
 
         [Keyword]
