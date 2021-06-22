@@ -10,13 +10,11 @@ namespace Bookmyslot.Api.Customers.Business
     public class ProfileSettingsBusiness : IProfileSettingsBusiness
     {
         private readonly IProfileSettingsRepository profileSettingsRepository;
-        private readonly ICustomerRepository customerRepository;
         private readonly IBlobRepository blobRepository;
 
-        public ProfileSettingsBusiness(IProfileSettingsRepository profileSettingsRepository, ICustomerRepository customerRepository, IBlobRepository blobRepository)
+        public ProfileSettingsBusiness(IProfileSettingsRepository profileSettingsRepository, IBlobRepository blobRepository)
         {
             this.profileSettingsRepository = profileSettingsRepository;
-            this.customerRepository = customerRepository;
             this.blobRepository = blobRepository;
         }
 

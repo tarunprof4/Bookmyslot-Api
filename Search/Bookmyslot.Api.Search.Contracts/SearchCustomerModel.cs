@@ -29,6 +29,6 @@ namespace Bookmyslot.Api.Search.Contracts
         public string BioHeadLine { get; set; }
 
         [Keyword]
-        public string PhotoUrl { get; set; }
+        public string ProfilePictureUrl { get; set; }
     }
 }

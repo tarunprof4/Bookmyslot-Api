@@ -11,7 +11,6 @@ using Nest;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Search.Repositories
@@ -46,7 +45,7 @@ namespace Bookmyslot.Api.Search.Repositories
             includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.UserName));
             includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.FirstName));
             includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.LastName));
-            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.PhotoUrl));
+            includeFields.Add(Infer.Field<SearchCustomerModel>(f => f.ProfilePictureUrl));
 
             var firstNameField = Infer.Field<SearchCustomerModel>(f => f.FirstName);
             var lastNameField = Infer.Field<SearchCustomerModel>(f => f.LastName);
@@ -91,19 +90,5 @@ namespace Bookmyslot.Api.Search.Repositories
             return ResponseModelFactory.CreateSearchCustomerModelsResponse(searchCustomerEntities);
         }
 
-     
-        private StringBuilder GenerateSearchByNameKey(string name)
-        {
-            StringBuilder searchName = new StringBuilder();
-            var splitNameArray = name.Split().Distinct();
-            foreach(var splitName in splitNameArray)
-            {
-                searchName.Append(splitName);
-                searchName.Append("* ");
-            }
-
-            return searchName;
-        }
-      
     }
 }

@@ -15,15 +15,15 @@ VALUES(@Id, @FirstName, @LastName, @UserName, @Email, @Provider, @CreatedDateUtc
  WHERE Id=@customerId";
 
         public const string UpdateProfilePictureQuery = @"UPDATE" + " " + DatabaseConstants.RegisterCustomerTable + " " + @"SET 
-   PhotoUrl=@profilePictureUrl, ModifiedDateUtc =@modifiedDateUtc WHERE Id=@customerId";
+   ProfilePictureUrl=@profilePictureUrl, ModifiedDateUtc =@modifiedDateUtc WHERE Id=@customerId";
 
-        public const string GetCustomersByCustomerIdsQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified, PhotoUrl, UserName from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id IN @CustomerIds";
+        public const string GetCustomersByCustomerIdsQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified, ProfilePictureUrl, UserName from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id IN @CustomerIds";
 
-        public const string GetCustomerByEmailQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified, PhotoUrl, UserName from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Email = @Email";
+        public const string GetCustomerByEmailQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified, ProfilePictureUrl, UserName from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Email = @Email";
 
         public const string GetCustomerIdByEmailQuery = @"select Id from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Email = @Email";
 
-        public const string GetCustomerByIdQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified, PhotoUrl, UserName from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id = @CustomerId";
+        public const string GetCustomerByIdQuery = @"select Id, Email, FirstName, LastName, BioHeadLine, IsVerified, ProfilePictureUrl, UserName from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id = @CustomerId";
 
         public const string GetProfileSettingsByCustomerIdQuery = @"select Email, FirstName, LastName, Gender from" + " " + DatabaseConstants.RegisterCustomerTable + " " + "where Id=@customerId";
 
