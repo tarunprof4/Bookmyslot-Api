@@ -14,6 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -61,6 +62,13 @@ namespace Bookmyslot.Api.Controllers
         [Route("api/v1/test/Testing")]
         public async Task<IActionResult> Testing()
         {
+            decimal price = 2;
+            var aa = price.ToString("C");
+            var currentCulture = CultureInfo.CurrentCulture;
+            var currentUICulture = CultureInfo.CurrentUICulture;
+            var defaultCurrentCulture = CultureInfo.DefaultThreadCurrentCulture;
+            var defaultCurrentUICulture = CultureInfo.DefaultThreadCurrentUICulture;
+
             var registerCustomer = CreateRegisterCustomerModel();
             //registerCustomer.RegisterCustomer();
 
