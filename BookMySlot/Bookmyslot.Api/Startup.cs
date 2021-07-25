@@ -1,5 +1,6 @@
 using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
@@ -167,10 +168,23 @@ namespace Bookmyslot.Api
             app.UseAuthentication();
             app.UseAuthorization();
 
+            SetRequestCulture(app);
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void SetRequestCulture(IApplicationBuilder app)
+        {
+            var supportedCultures = new[] { CultureConstants.IndiaCulture };
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            localizationOptions.ApplyCurrentCultureToResponseHeaders = true;
+            app.UseRequestLocalization(localizationOptions);
         }
 
         private static void BootStrapApp(IServiceProvider serviceProvider)
