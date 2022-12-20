@@ -183,7 +183,7 @@ namespace Bookmyslot.Api
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 
-            localizationOptions.ApplyCurrentCultureToResponseHeaders = true;
+            //localizationOptions.ApplyCurrentCultureToResponseHeaders = true;
             app.UseRequestLocalization(localizationOptions);
         }
 
