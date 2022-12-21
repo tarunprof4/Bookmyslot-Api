@@ -1,6 +1,6 @@
 ﻿namespace Bookmyslot.SharedKernel.ValueObject
 {
-    public class BmsKeyValuePair<TKey, TValue>
+    public class BmsKeyValuePair<TKey, TValue> : BaseValueObject
     {
         public BmsKeyValuePair(TKey key, TValue value)
         {

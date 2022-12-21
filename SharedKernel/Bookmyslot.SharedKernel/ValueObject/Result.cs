@@ -2,7 +2,7 @@
 
 namespace Bookmyslot.SharedKernel.ValueObject
 {
-    public class Result<T>
+    public class Result<T> : BaseValueObject
     {
         public T Value { get; set; }
         public ResultType ResultType { get; set; }

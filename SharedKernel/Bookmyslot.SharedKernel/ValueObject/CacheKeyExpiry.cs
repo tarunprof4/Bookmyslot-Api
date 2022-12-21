@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Bookmyslot.SharedKernel.ValueObject
 {
-    public class CacheKeyExpiry
+    public class CacheKeyExpiry : BaseValueObject
     {
         public string Key { get; set; }
         public TimeSpan ExpiryTime { get; set; }

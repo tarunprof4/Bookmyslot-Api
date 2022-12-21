@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookmyslot.SharedKernel.ValueObject
 {
-    public class PageParameterViewModel
+    public class PageParameterViewModel : BaseValueObject
     {
         [Required]
         [DefaultValue("0")]

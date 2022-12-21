@@ -3,7 +3,7 @@ using Bookmyslot.SharedKernel.Constants;
 
 namespace Bookmyslot.SharedKernel.ValueObject
 {
-    public class PageParameter
+    public class PageParameter : BaseValueObject
     {
         const int maxPageSize = PaginationConstants.PageSize;
         private int pageNumber;
