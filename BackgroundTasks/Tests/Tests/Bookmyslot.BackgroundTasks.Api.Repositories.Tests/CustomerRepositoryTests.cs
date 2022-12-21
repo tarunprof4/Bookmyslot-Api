@@ -1,8 +1,8 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Logging;
 using Moq;
 using Nest;
 using NUnit.Framework;
@@ -45,7 +45,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             var createCustomerModelResponse = await customerRepository.CreateCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(createCustomerModelResponse.Result, true);
+            Assert.AreEqual(createCustomerModelResponse.Value, true);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
             loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never);
         }
@@ -60,7 +60,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             var createCustomerModelResponse = await customerRepository.CreateCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Error);
-            Assert.AreEqual(createCustomerModelResponse.Result, false);
+            Assert.AreEqual(createCustomerModelResponse.Value, false);
             Assert.IsTrue(createCustomerModelResponse.Messages.Contains(AppBusinessMessagesConstants.CreateCustomerFailed));
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
             loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);
@@ -77,7 +77,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             var createCustomerModelResponse = await customerRepository.UpdateCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(createCustomerModelResponse.Result, true);
+            Assert.AreEqual(createCustomerModelResponse.Value, true);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
             loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Never);
         }
@@ -92,7 +92,7 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories.Tests
             var createCustomerModelResponse = await customerRepository.UpdateCustomer(customerModel);
 
             Assert.AreEqual(createCustomerModelResponse.ResultType, ResultType.Error);
-            Assert.AreEqual(createCustomerModelResponse.Result, false);
+            Assert.AreEqual(createCustomerModelResponse.Value, false);
             Assert.IsTrue(createCustomerModelResponse.Messages.Contains(AppBusinessMessagesConstants.UpdateCustomerFailed));
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<IndexResponse>>>()), Times.Once);
             loggerServiceMock.Verify(m => m.Error(It.IsAny<Exception>(), It.IsAny<string>()), Times.Once);

@@ -1,8 +1,8 @@
-﻿
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using Newtonsoft.Json;
 using System;
 
@@ -18,11 +18,11 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors
             this.symmetryEncryption = symmetryEncryption;
             this.customerResponseAdaptor = customerResponseAdaptor;
         }
-        public Response<SharedSlotViewModel> CreateSharedSlotViewModel(Response<SharedSlotModel> sharedSlotModelResponse)
+        public Result<SharedSlotViewModel> CreateSharedSlotViewModel(Result<SharedSlotModel> sharedSlotModelResponse)
         {
             if (sharedSlotModelResponse.ResultType == ResultType.Success)
             {
-                var sharedSlotModel = sharedSlotModelResponse.Result;
+                var sharedSlotModel = sharedSlotModelResponse.Value;
 
                 var sharedSlotViewModel = new SharedSlotViewModel();
                 foreach (var sharedSlot in sharedSlotModel.SharedSlotModels)
@@ -32,10 +32,10 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors
                     sharedSlotViewModel.SharedSlotModels.Add(new Tuple<CustomerViewModel, SlotModel, string>(bookedByCustomerViewModel, sharedSlot.Value, slotInformation));
                 }
 
-                return new Response<SharedSlotViewModel>() { Result = sharedSlotViewModel };
+                return new Result<SharedSlotViewModel>() { Value = sharedSlotViewModel };
             }
 
-            return new Response<SharedSlotViewModel>()
+            return new Result<SharedSlotViewModel>()
             {
                 ResultType = sharedSlotModelResponse.ResultType,
                 Messages = sharedSlotModelResponse.Messages

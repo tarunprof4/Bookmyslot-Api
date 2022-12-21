@@ -1,11 +1,10 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
@@ -34,7 +33,7 @@ namespace Bookmyslot.Api.Authentication
         }
 
 
-        public async Task<Response<CurrentUserModel>> GetCurrentUserFromCache()
+        public async Task<Result<CurrentUserModel>> GetCurrentUserFromCache()
         {
             var email = GetEmailFromClaims();
             var cacheModel = CreateCacheModel(email);
@@ -50,7 +49,7 @@ namespace Bookmyslot.Api.Authentication
         }
 
 
-        private async Task<Response<CurrentUserModel>> GetCurrentUserResponse(string email, CacheModel cacheModel, bool refresh = false)
+        private async Task<Result<CurrentUserModel>> GetCurrentUserResponse(string email, CacheModel cacheModel, bool refresh = false)
         {
             return await this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                                   cacheModel,

@@ -1,7 +1,7 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.NodaTime.Contracts.Configuration;
+﻿using Bookmyslot.Api.NodaTime.Contracts.Configuration;
 using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Validations;
+using Bookmyslot.SharedKernel.Constants;
 using FluentValidation;
 using Moq;
 using NUnit.Framework;
@@ -46,7 +46,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.SlotDetailsMissing));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotDetailsMissing));
         }
 
 
@@ -57,10 +57,10 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.SlotTitleRequired));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.CountryRequired));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.TimeZoneRequired));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.SlotDateRequired));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotTitleRequired));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.CountryRequired));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.TimeZoneRequired));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotDateRequired));
         }
 
 
@@ -71,9 +71,9 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.ValidatorTests
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.InValidCountry));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.InValidTimeZone));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidCountry));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidTimeZone));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidSlotDate));
         }
 
         [Test]

@@ -1,11 +1,12 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,7 +58,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerBookedSlots()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result.Id;
+            var customerId = currentUserResponse.Value.Id;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerBookedSlots(customerId);
             var customerBookedViewModelResponse = this.bookedSlotResponseAdaptor.CreateBookedSlotViewModel(customerBookedSlotModels);
             return this.CreateGetHttpResponse(customerBookedViewModelResponse);
@@ -83,7 +84,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCompletedSlots()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result.Id;
+            var customerId = currentUserResponse.Value.Id;
             var customerBookedSlotModels = await this.customerBookedSlotBusiness.GetCustomerCompletedSlots(customerId);
             var customerBookedViewModelResponse = this.bookedSlotResponseAdaptor.CreateBookedSlotViewModel(customerBookedSlotModels);
             return this.CreateGetHttpResponse(customerBookedViewModelResponse);
@@ -108,16 +109,16 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> GetCustomerCancelledSlots()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result.Id;
+            var customerId = currentUserResponse.Value.Id;
             var customercancelledSlotInformationModels = await this.customerBookedSlotBusiness.GetCustomerCancelledSlots(customerId);
             if (customercancelledSlotInformationModels.ResultType == ResultType.Success)
             {
-                var cancelledSlotInformationViewModels = new Response<IEnumerable<CancelledSlotInformationViewModel>>()
-                { Result = this.cancelledSlotResponseAdaptor.CreateCancelledSlotInformationViewModels(customercancelledSlotInformationModels.Result) };
+                var cancelledSlotInformationViewModels = new Result<IEnumerable<CancelledSlotInformationViewModel>>()
+                { Value = this.cancelledSlotResponseAdaptor.CreateCancelledSlotInformationViewModels(customercancelledSlotInformationModels.Value) };
                 return this.CreateGetHttpResponse(cancelledSlotInformationViewModels);
             }
 
-            return this.CreateGetHttpResponse(new Response<IEnumerable<CancelledSlotInformationViewModel>>()
+            return this.CreateGetHttpResponse(new Result<IEnumerable<CancelledSlotInformationViewModel>>()
             { ResultType = customercancelledSlotInformationModels.ResultType, Messages = customercancelledSlotInformationModels.Messages });
         }
     }

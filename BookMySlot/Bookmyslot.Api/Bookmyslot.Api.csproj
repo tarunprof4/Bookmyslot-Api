@@ -22,8 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.ViewModels\Bookmyslot.Api.Authentication.ViewModels.csproj" />
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Logging\Bookmyslot.Api.Common.Logging.csproj" />
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.ViewModels\Bookmyslot.Api.Common.ViewModels.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Web\Bookmyslot.Api.Common.Web.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.ViewModels\Bookmyslot.Api.Customers.ViewModels.csproj" />
     <ProjectReference Include="..\..\File\Bookmyslot.Api.File.ViewModels\Bookmyslot.Api.File.ViewModels.csproj" />

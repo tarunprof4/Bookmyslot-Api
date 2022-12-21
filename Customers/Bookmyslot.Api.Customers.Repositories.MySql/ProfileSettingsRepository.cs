@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Customers.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Customers.Repositories.Queries;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using System;
 using System.Data;
@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.dbInterceptor = dbInterceptor;
         }
 
-        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
+        public async Task<Result<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
         {
             var parameters = new { customerId = customerId };
             var sql = RegisterCustomerTableQueries.GetProfileSettingsByCustomerIdQuery;
@@ -32,7 +32,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             return ResponseModelFactory.CreateProfileSettingsModelResponse(registerCustomerEntity);
         }
 
-        public async Task<Response<bool>> UpdateProfilePicture(string customerId, string profilePictureUrl)
+        public async Task<Result<bool>> UpdateProfilePicture(string customerId, string profilePictureUrl)
         {
             var parameters = new
             {
@@ -44,10 +44,10 @@ namespace Bookmyslot.Api.Customers.Repositories
 
             await this.dbInterceptor.GetQueryResults("UpdateProfilePicture", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
-            return new Response<bool>() { Result = true };
+            return new Result<bool>() { Value = true };
         }
 
-        public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
+        public async Task<Result<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
         {
             var parameters = new
             {
@@ -61,7 +61,7 @@ namespace Bookmyslot.Api.Customers.Repositories
 
             await this.dbInterceptor.GetQueryResults("UpdateProfileSettings", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
-            return new Response<bool>() { Result = true };
+            return new Result<bool>() { Value = true };
         }
     }
 }

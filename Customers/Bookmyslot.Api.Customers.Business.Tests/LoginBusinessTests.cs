@@ -1,10 +1,11 @@
 using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
@@ -53,7 +54,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             List<ValidationFailure> validationFailures = CreateDefaultValidationFailurer();
             socialLoginCustomerValidatorMock.Setup(a => a.Validate(It.IsAny<SocialCustomerLoginModel>())).Returns(new ValidationResult(validationFailures));
             var googleCustomerLoginModel = GetDefaultGoogleCustomerLoginModel();
-            var inValidTokenResponse = new Response<SocialCustomerModel>() { ResultType = ResultType.ValidationError };
+            var inValidTokenResponse = new Result<SocialCustomerModel>() { ResultType = ResultType.ValidationError };
             socialLoginTokenValidatorMock.Setup(a => a.LoginWithGoogle(It.IsAny<string>())).Returns(Task.FromResult(inValidTokenResponse));
 
             var loginResponse = await loginCustomerBusiness.LoginSocialCustomer(googleCustomerLoginModel);
@@ -75,9 +76,9 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         {
             socialLoginCustomerValidatorMock.Setup(a => a.Validate(It.IsAny<SocialCustomerLoginModel>())).Returns(new ValidationResult());
             var googleCustomerLoginModel = GetDefaultGoogleCustomerLoginModel();
-            var validTokenResponse = new Response<SocialCustomerModel>() { Result = GetDefaultSocialCustomerModel(LoginConstants.ProviderGoogle) };
+            var validTokenResponse = new Result<SocialCustomerModel>() { Value = GetDefaultSocialCustomerModel(LoginConstants.ProviderGoogle) };
             socialLoginTokenValidatorMock.Setup(a => a.LoginWithGoogle(It.IsAny<string>())).Returns(Task.FromResult(validTokenResponse));
-            var customerModelResponse = new Response<CustomerModel>() { Result = GetDefaultCustomerModel() };
+            var customerModelResponse = new Result<CustomerModel>() { Value = GetDefaultCustomerModel() };
             customerBusinessMock.Setup(a => a.GetCustomerByEmail(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponse));
             jwtTokenProviderMock.Setup(a => a.GenerateToken(It.IsAny<string>())).Returns(TOKEN);
 
@@ -98,11 +99,11 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         {
             socialLoginCustomerValidatorMock.Setup(a => a.Validate(It.IsAny<SocialCustomerLoginModel>())).Returns(new ValidationResult());
             var googleCustomerLoginModel = GetDefaultGoogleCustomerLoginModel();
-            var validTokenResponse = new Response<SocialCustomerModel>() { Result = GetDefaultSocialCustomerModel(LoginConstants.ProviderGoogle) };
+            var validTokenResponse = new Result<SocialCustomerModel>() { Value = GetDefaultSocialCustomerModel(LoginConstants.ProviderGoogle) };
             socialLoginTokenValidatorMock.Setup(a => a.LoginWithGoogle(It.IsAny<string>())).Returns(Task.FromResult(validTokenResponse));
-            var customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Empty };
+            var customerModelResponse = new Result<CustomerModel>() { ResultType = ResultType.Empty };
             customerBusinessMock.Setup(a => a.GetCustomerByEmail(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponse));
-            var validRegisterCustomerResponse = new Response<string>() { Result = EMAIL };
+            var validRegisterCustomerResponse = new Result<string>() { Value = EMAIL };
             registerCustomerBusinessMock.Setup(a => a.RegisterCustomer(It.IsAny<RegisterCustomerModel>())).Returns(Task.FromResult(validRegisterCustomerResponse));
             jwtTokenProviderMock.Setup(a => a.GenerateToken(It.IsAny<string>())).Returns(TOKEN);
 
@@ -128,7 +129,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
             List<ValidationFailure> validationFailures = CreateDefaultValidationFailurer();
             socialLoginCustomerValidatorMock.Setup(a => a.Validate(It.IsAny<SocialCustomerLoginModel>())).Returns(new ValidationResult(validationFailures));
             var facebookCustomerLoginModel = GetDefaultFacebookCustomerLoginModel();
-            var inValidTokenResponse = new Response<SocialCustomerModel>() { ResultType = ResultType.ValidationError };
+            var inValidTokenResponse = new Result<SocialCustomerModel>() { ResultType = ResultType.ValidationError };
             socialLoginTokenValidatorMock.Setup(a => a.LoginWithFacebook(It.IsAny<string>())).Returns(Task.FromResult(inValidTokenResponse));
 
             var loginResponse = await loginCustomerBusiness.LoginSocialCustomer(facebookCustomerLoginModel);
@@ -148,9 +149,9 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         {
             socialLoginCustomerValidatorMock.Setup(a => a.Validate(It.IsAny<SocialCustomerLoginModel>())).Returns(new ValidationResult());
             var facebookCustomerLoginModel = GetDefaultFacebookCustomerLoginModel();
-            var validTokenResponse = new Response<SocialCustomerModel>() { Result = GetDefaultSocialCustomerModel(LoginConstants.ProviderFacebook) };
+            var validTokenResponse = new Result<SocialCustomerModel>() { Value = GetDefaultSocialCustomerModel(LoginConstants.ProviderFacebook) };
             socialLoginTokenValidatorMock.Setup(a => a.LoginWithFacebook(It.IsAny<string>())).Returns(Task.FromResult(validTokenResponse));
-            var customerModelResponse = new Response<CustomerModel>() { Result = GetDefaultCustomerModel() };
+            var customerModelResponse = new Result<CustomerModel>() { Value = GetDefaultCustomerModel() };
             customerBusinessMock.Setup(a => a.GetCustomerByEmail(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponse));
             jwtTokenProviderMock.Setup(a => a.GenerateToken(It.IsAny<string>())).Returns(TOKEN);
 
@@ -171,11 +172,11 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         {
             socialLoginCustomerValidatorMock.Setup(a => a.Validate(It.IsAny<SocialCustomerLoginModel>())).Returns(new ValidationResult());
             var facebookCustomerLoginModel = GetDefaultFacebookCustomerLoginModel();
-            var validTokenResponse = new Response<SocialCustomerModel>() { Result = GetDefaultSocialCustomerModel(LoginConstants.ProviderFacebook) };
+            var validTokenResponse = new Result<SocialCustomerModel>() { Value = GetDefaultSocialCustomerModel(LoginConstants.ProviderFacebook) };
             socialLoginTokenValidatorMock.Setup(a => a.LoginWithFacebook(It.IsAny<string>())).Returns(Task.FromResult(validTokenResponse));
-            var customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Empty };
+            var customerModelResponse = new Result<CustomerModel>() { ResultType = ResultType.Empty };
             customerBusinessMock.Setup(a => a.GetCustomerByEmail(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponse));
-            var validRegisterCustomerResponse = new Response<string>() { Result = EMAIL };
+            var validRegisterCustomerResponse = new Result<string>() { Value = EMAIL };
             registerCustomerBusinessMock.Setup(a => a.RegisterCustomer(It.IsAny<RegisterCustomerModel>())).Returns(Task.FromResult(validRegisterCustomerResponse));
             jwtTokenProviderMock.Setup(a => a.GenerateToken(It.IsAny<string>())).Returns(TOKEN);
 

@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Search.Contracts;
+﻿using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Compression;
+using Bookmyslot.SharedKernel.Contracts.Database;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;

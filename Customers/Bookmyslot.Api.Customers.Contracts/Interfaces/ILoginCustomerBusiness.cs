@@ -1,11 +1,11 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
-using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 {
     public interface ILoginCustomerBusiness
     {
-        Task<Response<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel);
+        Task<Result<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel);
     }
 }

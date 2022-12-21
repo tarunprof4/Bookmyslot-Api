@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Controllers;
+﻿using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.Tests
         public async Task SaveRegisterCustomer_ValidRegisterCustomer_ReturnsSuccessResponse()
         {
             registerCustomerViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<RegisterCustomerViewModel>())).Returns(new ValidationResult());
-            Response<string> registerCustomerBusinessMockResponse = new Response<string>() { Result = string.Empty };
+            Result<string> registerCustomerBusinessMockResponse = new Result<string>() { Value = string.Empty };
             registerCustomerBusinessMock.Setup(a => a.RegisterCustomer(It.IsAny<RegisterCustomerModel>())).Returns(Task.FromResult(registerCustomerBusinessMockResponse));
 
             var response = await registerCustomerController.Post(DefaultValidRegisterCustomerViewModel());

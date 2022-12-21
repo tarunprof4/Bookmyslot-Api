@@ -1,8 +1,5 @@
 using Bookmyslot.Api.Authentication.Common.Configuration;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Logging.Enrichers;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.Api.Customers.Business.DomainEventHandlers;
 using Bookmyslot.Api.File.Contracts.Interfaces;
@@ -11,6 +8,9 @@ using Bookmyslot.Api.NodaTime.Contracts.Constants;
 using Bookmyslot.Api.NodaTime.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Business.DomainEventHandlers;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.Logging.Enrichers;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

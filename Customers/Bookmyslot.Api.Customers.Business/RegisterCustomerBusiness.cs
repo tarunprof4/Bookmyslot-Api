@@ -1,7 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Bookmyslot.Api.Customers.Business
             this.customerRepository = customerRepository;
         }
 
-        public async Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
+        public async Task<Result<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
         {
             var customerExists = await CheckIfCustomerExists(registerCustomerModel.Email);
             if (!customerExists)
@@ -27,7 +28,7 @@ namespace Bookmyslot.Api.Customers.Business
 
             }
 
-            return new Response<string>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdExists } };
+            return new Result<string>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.EmailIdExists } };
         }
 
         private void SanitizeCustomerModel(RegisterCustomerModel registerCustomerModel)

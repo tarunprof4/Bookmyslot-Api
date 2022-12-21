@@ -3,9 +3,10 @@ using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.Facebook.Configuration;
 using Bookmyslot.Api.Authentication.Facebook.Contracts;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.ValueObject;
 using Marvin.StreamExtensions;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,13 @@ namespace Bookmyslot.Api.Authentication.Facebook
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ILoggerService loggerService;
 
-
         public FaceBookTokenValidator(IHttpClientFactory httpClientFactory, FacebookAuthenticationConfiguration facebookAuthenticationConfiguration, ILoggerService loggerService)
         {
             this.httpClientFactory = httpClientFactory;
             this.facebookAuthenticationConfiguration = facebookAuthenticationConfiguration;
             this.loggerService = loggerService;
         }
-        public async Task<Response<SocialCustomerModel>> ValidateAccessToken(string authToken)
+        public async Task<Result<SocialCustomerModel>> ValidateAccessToken(string authToken)
         {
             try
             {
@@ -47,19 +47,19 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 var facebookUserInfo = facebookUserInfoResponse.Result;
                 if (isTokenValid.ResultType == ResultType.Success && facebookUserInfo.ResultType == ResultType.Success)
                 {
-                    return new Response<SocialCustomerModel>() { Result = CreateSocialCustomerModel(facebookUserInfo.Result) };
+                    return new Result<SocialCustomerModel>() { Value = CreateSocialCustomerModel(facebookUserInfo.Value) };
                 }
 
-                return Response<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                return Result<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
             }
             catch (Exception ex)
             {
                 this.loggerService.Error(ex, string.Empty);
-                return Response<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                return Result<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
             }
         }
 
-        public async Task<Response<bool>> ValidateToken(string url)
+        public async Task<Result<bool>> ValidateToken(string url)
         {
             var httpClient = httpClientFactory.CreateClient();
             HttpRequestMessage request = CreateHttpRequest(url);
@@ -71,7 +71,7 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 if (!response.IsSuccessStatusCode)
                 {
                     this.loggerService.Debug("FaceBook Validate Access Token Failed");
-                    return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                    return Result<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
                 }
 
                 var stream = await response.Content.ReadAsStreamAsync();
@@ -79,18 +79,18 @@ namespace Bookmyslot.Api.Authentication.Facebook
 
                 if (facebookTokenValidationResponse.Data.IsValid)
                 {
-                    return new Response<bool>() { Result = true };
+                    return new Result<bool>() { Value = true };
                 }
                 else
                 {
                     this.loggerService.Debug("FaceBook Validate Access Token {@errorStream}", stream);
-                    return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                    return Result<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
                 }
             }
 
         }
 
-        public async Task<Response<FacebookUserInfo>> GetUserInfo(string url)
+        public async Task<Result<FacebookUserInfo>> GetUserInfo(string url)
         {
             var httpClient = httpClientFactory.CreateClient();
             HttpRequestMessage request = CreateHttpRequest(url);
@@ -104,11 +104,11 @@ namespace Bookmyslot.Api.Authentication.Facebook
                 {
                     var facebookUserInfoError = await stream.ReadAndDeserializeFromJsonAsync<FacebookUserInfoError>();
                     this.loggerService.Debug("FaceBook Get User Info Failed {@facebookUserInfoError}", facebookUserInfoError);
-                    return Response<FacebookUserInfo>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                    return Result<FacebookUserInfo>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
                 }
 
                 var facebookUserInfo = await stream.ReadAndDeserializeFromJsonAsync<FacebookUserInfo>();
-                return new Response<FacebookUserInfo>() { Result = facebookUserInfo };
+                return new Result<FacebookUserInfo>() { Value = facebookUserInfo };
             }
         }
 

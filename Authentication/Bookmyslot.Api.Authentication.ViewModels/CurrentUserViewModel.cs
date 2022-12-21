@@ -1,5 +1,5 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
-using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.SharedKernel.ValueObject;
 
 namespace Bookmyslot.Api.Authentication.ViewModels
 {
@@ -19,7 +19,7 @@ namespace Bookmyslot.Api.Authentication.ViewModels
         public string UserName { get; set; }
 
 
-        public static Response<CurrentUserViewModel> CreateCurrentUserViewModel(CurrentUserModel currentUserModel)
+        public static Result<CurrentUserViewModel> CreateCurrentUserViewModel(CurrentUserModel currentUserModel)
         {
             var currentUserViewModel = new CurrentUserViewModel
             {
@@ -31,7 +31,7 @@ namespace Bookmyslot.Api.Authentication.ViewModels
                 UserName = currentUserModel.UserName
             };
 
-            var currentUserViewModelResponse = new Response<CurrentUserViewModel>() { Result = currentUserViewModel };
+            var currentUserViewModelResponse = new Result<CurrentUserViewModel>() { Value = currentUserViewModel };
             return currentUserViewModelResponse;
         }
     }

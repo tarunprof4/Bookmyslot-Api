@@ -1,4 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
@@ -16,7 +17,7 @@ namespace Bookmyslot.Api.Cache.Contracts.Interfaces
         {
             this.distributedCache = distributedCache;
         }
-        public async Task<Response<T>> GetFromCacheAsync<T>(CacheModel cacheModel, Func<Task<Response<T>>> retrieveValues, bool refresh = false) where T : class
+        public async Task<Result<T>> GetFromCacheAsync<T>(CacheModel cacheModel, Func<Task<Result<T>>> retrieveValues, bool refresh = false) where T : class
         {
             if (refresh)
             {
@@ -30,15 +31,15 @@ namespace Bookmyslot.Api.Cache.Contracts.Interfaces
             }
 
             var serializedResponse = Encoding.UTF8.GetString(cachedBytes);
-            return new Response<T>() { Result = JsonConvert.DeserializeObject<T>(serializedResponse) };
+            return new Result<T>() { Value = JsonConvert.DeserializeObject<T>(serializedResponse) };
         }
 
-        private async Task<Response<T>> GetInvokedMethodResponse<T>(CacheModel cacheModel, Func<Task<Response<T>>> retrieveValues) where T : class
+        private async Task<Result<T>> GetInvokedMethodResponse<T>(CacheModel cacheModel, Func<Task<Result<T>>> retrieveValues) where T : class
         {
             var invokedResponse = await retrieveValues.Invoke();
             if (invokedResponse.ResultType == ResultType.Success)
             {
-                var compressedBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(invokedResponse.Result));
+                var compressedBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(invokedResponse.Value));
 
                 var options = cacheModel.IsSlidingExpiry ? new DistributedCacheEntryOptions().SetSlidingExpiration(cacheModel.ExpiryTime) :
                     new DistributedCacheEntryOptions().SetAbsoluteExpiration(cacheModel.ExpiryTime);

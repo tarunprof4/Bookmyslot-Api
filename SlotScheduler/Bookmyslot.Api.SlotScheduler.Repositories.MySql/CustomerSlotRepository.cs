@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         }
 
 
-        public async Task<Response<IEnumerable<string>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
+        public async Task<Result<IEnumerable<string>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
         {
             var parameters = new { IsDeleted = false, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetDistinctCustomersNearestSlotFromTodayQuery;
@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
 
 
-        public async Task<Response<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
+        public async Task<Result<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
         {
             var parameters = new { IsDeleted = false, CreatedBy = email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetCustomerAvailableSlotsFromTodayQuery;

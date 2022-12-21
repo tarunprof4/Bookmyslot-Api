@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+﻿using Bookmyslot.SharedKernel.Contracts.Logging;
 using Serilog;
 using System;
 

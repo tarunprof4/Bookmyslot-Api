@@ -1,13 +1,13 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business
 {
     public interface ICustomerLastSharedSlotBusiness
     {
-        Task<Response<bool>> SaveCustomerLatestSharedSlot(CustomerLastSharedSlotModel customerLastSharedSlotModel);
+        Task<Result<bool>> SaveCustomerLatestSharedSlot(CustomerLastSharedSlotModel customerLastSharedSlotModel);
 
-        Task<Response<CustomerLastSharedSlotModel>> GetCustomerLatestSharedSlot(string customerId);
+        Task<Result<CustomerLastSharedSlotModel>> GetCustomerLatestSharedSlot(string customerId);
     }
 }

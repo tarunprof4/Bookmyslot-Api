@@ -1,12 +1,12 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Repository
 {
     public interface ICustomerRepository
     {
-        Task<Response<bool>> CreateCustomer(CustomerModel customerModel);
+        Task<Result<bool>> CreateCustomer(CustomerModel customerModel);
 
-        Task<Response<bool>> UpdateCustomer(CustomerModel customerModel);
+        Task<Result<bool>> UpdateCustomer(CustomerModel customerModel);
     }
 }

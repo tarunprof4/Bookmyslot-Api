@@ -1,7 +1,7 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Repository;
 using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business
@@ -15,13 +15,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             this.customerLastSharedSlotRepository = customerLastSharedSlotRepository;
         }
 
-        public async Task<Response<bool>> SaveCustomerLatestSharedSlot(CustomerLastSharedSlotModel customerLastSharedSlotModel)
+        public async Task<Result<bool>> SaveCustomerLatestSharedSlot(CustomerLastSharedSlotModel customerLastSharedSlotModel)
         {
             return await this.customerLastSharedSlotRepository.SaveCustomerLatestSharedSlot(customerLastSharedSlotModel);
         }
 
 
-        public async Task<Response<CustomerLastSharedSlotModel>> GetCustomerLatestSharedSlot(string customerId)
+        public async Task<Result<CustomerLastSharedSlotModel>> GetCustomerLatestSharedSlot(string customerId)
         {
             return await this.customerLastSharedSlotRepository.GetCustomerLatestSharedSlot(customerId);
         }

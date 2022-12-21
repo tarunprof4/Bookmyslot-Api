@@ -1,6 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.ExtensionMethods;
-using Bookmyslot.Api.NodaTime.Interfaces;
+﻿using Bookmyslot.Api.NodaTime.Interfaces;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.ExtensionMethods;
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -13,17 +13,17 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Validations
         public SlotViewModelValidator(INodaTimeZoneLocationBusiness nodaTimeZoneLocationBusiness)
         {
             this.nodaTimeZoneLocationBusiness = nodaTimeZoneLocationBusiness;
-            RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.SlotTitleRequired);
-            RuleFor(x => x.Country).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.CountryRequired).Must(isCountryValid).WithMessage(AppBusinessMessagesConstants.InValidCountry);
-            RuleFor(x => x.TimeZone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.TimeZoneRequired).Must(isTimeZoneValid).WithMessage(AppBusinessMessagesConstants.InValidTimeZone);
-            RuleFor(x => x.SlotDate).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(AppBusinessMessagesConstants.SlotDateRequired).Must(isSlotDateValid).WithMessage(AppBusinessMessagesConstants.InValidSlotDate);
+            RuleFor(x => x.Title).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotTitleRequired);
+            RuleFor(x => x.Country).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Common.Contracts.Constants.AppBusinessMessagesConstants.CountryRequired).Must(isCountryValid).WithMessage(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidCountry);
+            RuleFor(x => x.TimeZone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Common.Contracts.Constants.AppBusinessMessagesConstants.TimeZoneRequired).Must(isTimeZoneValid).WithMessage(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidTimeZone);
+            RuleFor(x => x.SlotDate).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotDateRequired).Must(isSlotDateValid).WithMessage(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidSlotDate);
         }
 
         protected override bool PreValidate(ValidationContext<SlotViewModel> context, ValidationResult result)
         {
             if (context.InstanceToValidate == null)
             {
-                result.Errors.Add(new ValidationFailure(string.Empty, AppBusinessMessagesConstants.SlotDetailsMissing));
+                result.Errors.Add(new ValidationFailure(string.Empty, Common.Contracts.Constants.AppBusinessMessagesConstants.SlotDetailsMissing));
                 return false;
             }
             return true;

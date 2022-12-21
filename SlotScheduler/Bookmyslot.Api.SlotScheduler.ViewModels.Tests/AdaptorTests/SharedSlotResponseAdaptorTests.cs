@@ -1,9 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -45,11 +46,11 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             customerResponseAdaptorMock.Setup(a => a.CreateCustomerViewModel(It.IsAny<CustomerModel>())).Returns(customerViewModel);
             symmetryEncryptionMock.Setup(a => a.Encrypt(It.IsAny<string>())).Returns(SlotInformation);
             var sharedSlotModel = CreateDefaultSharedSlotModel();
-            sharedSlotModel.Result.SharedSlotModels[0] = new KeyValuePair<CustomerModel, SlotModel>(null, new SlotModel());
+            sharedSlotModel.Value.SharedSlotModels[0] = new KeyValuePair<CustomerModel, SlotModel>(null, new SlotModel());
 
             var bookedSlotViewModelResponse = sharedSlotResponseAdaptor.CreateSharedSlotViewModel(sharedSlotModel);
 
-            var bookedSlotViewModel = bookedSlotViewModelResponse.Result;
+            var bookedSlotViewModel = bookedSlotViewModelResponse.Value;
             Assert.AreEqual(bookedSlotViewModelResponse.ResultType, ResultType.Success);
             Assert.IsNull(bookedSlotViewModel.SharedSlotModels[0].Item1);
             Assert.AreEqual(bookedSlotViewModel.SharedSlotModels[0].Item3, SlotInformation);
@@ -65,15 +66,15 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
 
             var bookedSlotViewModelResponse = sharedSlotResponseAdaptor.CreateSharedSlotViewModel(sharedSlotModel);
 
-            var bookedSlotViewModel = bookedSlotViewModelResponse.Result;
+            var bookedSlotViewModel = bookedSlotViewModelResponse.Value;
             Assert.AreEqual(bookedSlotViewModelResponse.ResultType, ResultType.Success);
             Assert.NotNull(bookedSlotViewModel.SharedSlotModels[0].Item1);
             Assert.AreEqual(bookedSlotViewModel.SharedSlotModels[0].Item3, SlotInformation);
         }
 
-        private Response<SharedSlotModel> CreateEmptyDefaultSharedSlotModel()
+        private Result<SharedSlotModel> CreateEmptyDefaultSharedSlotModel()
         {
-            var emptySharedSlotModelResponse = new Response<SharedSlotModel>()
+            var emptySharedSlotModelResponse = new Result<SharedSlotModel>()
             {
                 ResultType = ResultType.Empty,
                 Messages = new List<string>() { NoRecordsFound }
@@ -82,13 +83,13 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             return emptySharedSlotModelResponse;
         }
 
-        private Response<SharedSlotModel> CreateDefaultSharedSlotModel()
+        private Result<SharedSlotModel> CreateDefaultSharedSlotModel()
         {
             var sharedSlotModel = new SharedSlotModel();
             sharedSlotModel.SharedSlotModels = new List<KeyValuePair<CustomerModel, SlotModel>>();
             sharedSlotModel.SharedSlotModels.Add(new KeyValuePair<CustomerModel, SlotModel>(new CustomerModel(), new SlotModel()));
 
-            var sharedSlotModelResponse = new Response<SharedSlotModel>() { Result = sharedSlotModel };
+            var sharedSlotModelResponse = new Result<SharedSlotModel>() { Value = sharedSlotModel };
             return sharedSlotModelResponse;
         }
 

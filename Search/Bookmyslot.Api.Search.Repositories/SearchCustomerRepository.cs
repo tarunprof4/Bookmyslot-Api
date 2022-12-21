@@ -1,11 +1,11 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Customers.Repositories.ModelFactory;
+﻿using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.Search.Repositories.Queries;
 using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using Nest;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Bookmyslot.Api.Search.Repositories
             this.elasticClient = elasticClient;
         }
 
-        public async Task<Response<SearchCustomerModel>> SearchCustomersByUserName(string userName)
+        public async Task<Result<SearchCustomerModel>> SearchCustomersByUserName(string userName)
         {
             var parameters = new { userName = userName.ToLowerInvariant() };
             var sql = RegisterCustomerTableQueries.SearchCustomerByUserNameQuery;
@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Search.Repositories
         }
 
 
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel)
         {
             var firstNameField = Infer.Field<SearchCustomerModel>(f => f.FirstName);
             var lastNameField = Infer.Field<SearchCustomerModel>(f => f.LastName);
@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.Search.Repositories
 
 
 
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel)
         {
             var request = new SearchRequest<SearchCustomerModel>()
             {

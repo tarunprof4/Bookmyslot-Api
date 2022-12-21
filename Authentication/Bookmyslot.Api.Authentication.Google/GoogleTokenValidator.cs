@@ -4,9 +4,9 @@ using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.Google.Configuration;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
+using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.ValueObject;
 using Google.Apis.Auth;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.Authentication.Google
             this.googleAuthenticationConfiguration = googleAuthenticationConfiguration;
             this.loggerService = loggerService;
         }
-        public async Task<Response<SocialCustomerModel>> ValidateToken(string idToken)
+        public async Task<Result<SocialCustomerModel>> ValidateToken(string idToken)
         {
             try
             {
@@ -32,12 +32,12 @@ namespace Bookmyslot.Api.Authentication.Google
                 validationSettings.Audience = new List<string>() { this.googleAuthenticationConfiguration.GoogleClientId };
                 var validPayload = await GoogleJsonWebSignature.ValidateAsync(idToken, validationSettings);
 
-                return new Response<SocialCustomerModel>() { Result = CreateSocialCustomerModel(validPayload) };
+                return new Result<SocialCustomerModel>() { Value = CreateSocialCustomerModel(validPayload) };
             }
             catch (Exception ex)
             {
                 this.loggerService.Error(ex, string.Empty);
-                return Response<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+                return Result<SocialCustomerModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
             }
         }
 

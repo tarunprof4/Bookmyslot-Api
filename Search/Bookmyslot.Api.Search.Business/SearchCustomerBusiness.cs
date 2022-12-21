@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Cache.Contracts;
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Search.Contracts;
+﻿using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,7 +17,7 @@ namespace Bookmyslot.Api.Search.Business
             this.searchRepository = searchRepository;
             this.searchCustomerRepository = searchCustomerRepository;
         }
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameterModel pageParameterModel)
         {
             searchKey = searchKey.ToLowerInvariant();
             var cacheSearchKey = CacheModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
@@ -31,14 +31,14 @@ namespace Bookmyslot.Api.Search.Business
             var searchedCustomersResponse = await this.SearchCustomersBySearchIntent(searchKey, pageParameterModel);
             if (searchedCustomersResponse.ResultType == ResultType.Success)
             {
-                await this.searchRepository.SavePreProcessedSearchedResponse(SearchConstants.SearchCustomer, cacheSearchKey, searchedCustomersResponse.Result);
+                await this.searchRepository.SavePreProcessedSearchedResponse(SearchConstants.SearchCustomer, cacheSearchKey, searchedCustomersResponse.Value);
             }
 
             return searchedCustomersResponse;
         }
 
 
-        public async Task<Response<List<SearchCustomerModel>>> SearchCustomersBySearchIntent(string searchKey, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersBySearchIntent(string searchKey, PageParameterModel pageParameterModel)
         {
             if (searchKey[0] == SearchConstants.SearchCustomerByNameIdentifier)
             {
@@ -49,15 +49,15 @@ namespace Bookmyslot.Api.Search.Business
                 var searchByUserNameResponse = await this.searchCustomerRepository.SearchCustomersByUserName(SanitizeSearchKey(searchKey));
                 if (searchByUserNameResponse.ResultType == ResultType.Success)
                 {
-                    var searchedCustomerModelResponse = new Response<List<SearchCustomerModel>>
+                    var searchedCustomerModelResponse = new Result<List<SearchCustomerModel>>
                     {
-                        Result = new List<SearchCustomerModel>() { searchByUserNameResponse.Result }
+                        Value = new List<SearchCustomerModel>() { searchByUserNameResponse.Value }
                     };
 
                     return searchedCustomerModelResponse;
                 }
 
-                return new Response<List<SearchCustomerModel>>()
+                return new Result<List<SearchCustomerModel>>()
                 { ResultType = searchByUserNameResponse.ResultType, Messages = searchByUserNameResponse.Messages };
             }
 

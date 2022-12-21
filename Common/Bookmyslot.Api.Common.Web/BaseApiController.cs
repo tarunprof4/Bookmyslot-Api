@@ -1,6 +1,5 @@
-﻿
-
-using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +7,7 @@ namespace Bookmyslot.Api.Web.Common
 {
     public class BaseApiController : ControllerBase
     {
-        private IActionResult HandleUnSuccessfulResponse<T>(Response<T> response)
+        private IActionResult HandleUnSuccessfulResponse<T>(Result<T> response)
         {
             if (response.ResultType == ResultType.Empty)
             {
@@ -22,11 +21,11 @@ namespace Bookmyslot.Api.Web.Common
 
             return StatusCode(StatusCodes.Status500InternalServerError, response.Messages);
         }
-        protected virtual IActionResult CreateGetHttpResponse<T>(Response<T> response)
+        protected virtual IActionResult CreateGetHttpResponse<T>(Result<T> response)
         {
             if (response.ResultType == ResultType.Success)
             {
-                return this.Ok(response.Result);
+                return this.Ok(response.Value);
 
             }
 
@@ -34,18 +33,18 @@ namespace Bookmyslot.Api.Web.Common
         }
 
 
-        protected virtual IActionResult CreatePostHttpResponse<T>(Response<T> response)
+        protected virtual IActionResult CreatePostHttpResponse<T>(Result<T> response)
         {
 
             if (response.ResultType == ResultType.Success)
             {
-                return this.Created(string.Empty, response.Result);
+                return this.Created(string.Empty, response.Value);
             }
 
             return HandleUnSuccessfulResponse(response);
         }
 
-        protected virtual IActionResult CreatePutHttpResponse<T>(Response<T> response)
+        protected virtual IActionResult CreatePutHttpResponse<T>(Result<T> response)
         {
             if (response.ResultType == ResultType.Success)
             {
@@ -56,7 +55,7 @@ namespace Bookmyslot.Api.Web.Common
         }
 
 
-        protected virtual IActionResult CreateDeleteHttpResponse<T>(Response<T> response)
+        protected virtual IActionResult CreateDeleteHttpResponse<T>(Result<T> response)
         {
             if (response.ResultType == ResultType.Success)
             {

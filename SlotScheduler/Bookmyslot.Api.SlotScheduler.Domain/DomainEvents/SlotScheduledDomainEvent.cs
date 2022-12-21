@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts.Event;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel.Event;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain.DomainEvents
 {

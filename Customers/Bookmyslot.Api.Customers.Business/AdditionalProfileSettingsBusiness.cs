@@ -1,6 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Business
@@ -17,12 +17,12 @@ namespace Bookmyslot.Api.Customers.Business
         }
 
 
-        public async Task<Response<AdditionalProfileSettingsModel>> GetAdditionalProfileSettingsByCustomerId(string customerId)
+        public async Task<Result<AdditionalProfileSettingsModel>> GetAdditionalProfileSettingsByCustomerId(string customerId)
         {
             return await this.additionalProfileSettingsRepository.GetAdditionalProfileSettingsByCustomerId(customerId);
         }
 
-        public async Task<Response<bool>> UpdateAdditionalProfileSettings(string customerId, AdditionalProfileSettingsModel additionalProfileSettingsModel)
+        public async Task<Result<bool>> UpdateAdditionalProfileSettings(string customerId, AdditionalProfileSettingsModel additionalProfileSettingsModel)
         {
             SanitizeAdditionalProfileSettingsModel(additionalProfileSettingsModel);
             return await this.additionalProfileSettingsRepository.UpdateAdditionalProfileSettings(customerId, additionalProfileSettingsModel);

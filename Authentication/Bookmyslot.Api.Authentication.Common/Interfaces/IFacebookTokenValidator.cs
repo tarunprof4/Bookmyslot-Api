@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication.Common.Interfaces
@@ -6,6 +6,6 @@ namespace Bookmyslot.Api.Authentication.Common.Interfaces
 
     public interface IFacebookTokenValidator
     {
-        Task<Response<SocialCustomerModel>> ValidateAccessToken(string authToken);
+        Task<Result<SocialCustomerModel>> ValidateAccessToken(string authToken);
     }
 }

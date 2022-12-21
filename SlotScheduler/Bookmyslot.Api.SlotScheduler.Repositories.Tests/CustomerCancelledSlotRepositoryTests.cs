@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Event;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -75,7 +75,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             var cancelledSlotModelsResponse = await customerCancelledSlotRepository.GetCustomerSharedCancelledSlots(CustomerId);
 
-            foreach (var cancelledSlotModel in cancelledSlotModelsResponse.Result)
+            foreach (var cancelledSlotModel in cancelledSlotModelsResponse.Value)
             {
                 Assert.AreEqual(cancelledSlotModel.Id, Id);
                 Assert.AreEqual(cancelledSlotModel.Title, Title);
@@ -110,7 +110,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             var cancelledSlotModelsResponse = await customerCancelledSlotRepository.GetCustomerBookedCancelledSlots(CustomerId);
 
-            foreach (var cancelledSlotModel in cancelledSlotModelsResponse.Result)
+            foreach (var cancelledSlotModel in cancelledSlotModelsResponse.Value)
             {
                 Assert.AreEqual(cancelledSlotModel.Id, Id);
                 Assert.AreEqual(cancelledSlotModel.Title, Title);

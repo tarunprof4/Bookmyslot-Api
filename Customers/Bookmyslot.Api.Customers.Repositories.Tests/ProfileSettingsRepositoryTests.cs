@@ -1,7 +1,7 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Database;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -54,10 +54,10 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var profileSettingsModelResponse = await profileSettingsRepository.GetProfileSettingsByCustomerId(CustomerId);
 
             Assert.AreEqual(profileSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(profileSettingsModelResponse.Result.FirstName, FIRSTNAME);
-            Assert.AreEqual(profileSettingsModelResponse.Result.LastName, LASTNAME);
-            Assert.AreEqual(profileSettingsModelResponse.Result.Email, EMAIL);
-            Assert.AreEqual(profileSettingsModelResponse.Result.Gender, GENDER);
+            Assert.AreEqual(profileSettingsModelResponse.Value.FirstName, FIRSTNAME);
+            Assert.AreEqual(profileSettingsModelResponse.Value.LastName, LASTNAME);
+            Assert.AreEqual(profileSettingsModelResponse.Value.Email, EMAIL);
+            Assert.AreEqual(profileSettingsModelResponse.Value.Gender, GENDER);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<RegisterCustomerEntity>>>()), Times.Once);
         }
 
@@ -72,7 +72,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await profileSettingsRepository.UpdateProfileSettings(profileSettingsModel, CustomerId);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(true, customerSettingsModelResponse.Result);
+            Assert.AreEqual(true, customerSettingsModelResponse.Value);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
@@ -85,7 +85,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await profileSettingsRepository.UpdateProfilePicture(CustomerId, "");
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(true, customerSettingsModelResponse.Result);
+            Assert.AreEqual(true, customerSettingsModelResponse.Value);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 

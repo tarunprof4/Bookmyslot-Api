@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Repository;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Repository;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using System.Data;
 using System.Threading.Tasks;
@@ -22,7 +22,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             this.dbInterceptor = dbInterceptor;
         }
 
-        public async Task<Response<bool>> SaveCustomerLatestSharedSlot(CustomerLastSharedSlotModel customerLastSharedSlotModel)
+        public async Task<Result<bool>> SaveCustomerLatestSharedSlot(CustomerLastSharedSlotModel customerLastSharedSlotModel)
         {
             var customerLastSharedSlotEntity = EntityFactory.EntityFactory.CreateCustomerLastSharedSlotEntity(customerLastSharedSlotModel);
 
@@ -44,11 +44,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
             await this.dbInterceptor.GetQueryResults("SaveCustomerLatestSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
-            return new Response<bool>() { Result = true };
+            return new Result<bool>() { Value = true };
         }
 
 
-        public async Task<Response<CustomerLastSharedSlotModel>> GetCustomerLatestSharedSlot(string customerId)
+        public async Task<Result<CustomerLastSharedSlotModel>> GetCustomerLatestSharedSlot(string customerId)
         {
             var sql = LastSlotSharedTableQueries.GetCustomerLastSharedSlotQuery;
             var parameters = new { CreatedBy = customerId };

@@ -2,8 +2,8 @@
 using Bookmyslot.Api.Authentication.Google.Configuration;
 using Bookmyslot.Api.Azure.Contracts.Configuration;
 using Bookmyslot.Api.Cache.Contracts.Configuration;
-using Bookmyslot.Api.Common.Email.Configuration;
-using Bookmyslot.Api.Common.Encryption.Configuration;
+using Bookmyslot.SharedKernel.Email.Configuration;
+using Bookmyslot.SharedKernel.Encryption.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

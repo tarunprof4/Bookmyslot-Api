@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Database;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerLastSharedSlotEntity>>>())).Returns(Task.FromResult(customerLastBookedSlotEntity));
 
             var customerLastBookedSlotResponse = await customerLastSharedSlotRepository.GetCustomerLatestSharedSlot(CustomerId);
-            var customerLastBookedSlot = customerLastBookedSlotResponse.Result;
+            var customerLastBookedSlot = customerLastBookedSlotResponse.Value;
 
             Assert.AreEqual(customerLastBookedSlotResponse.ResultType, ResultType.Success);
             Assert.AreEqual(customerLastBookedSlot.CreatedBy, CustomerId);

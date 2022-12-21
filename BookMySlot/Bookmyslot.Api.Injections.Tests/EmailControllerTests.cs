@@ -1,8 +1,8 @@
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
 using FluentValidation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;

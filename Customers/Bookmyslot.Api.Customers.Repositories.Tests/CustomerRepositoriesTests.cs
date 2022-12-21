@@ -1,6 +1,6 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Database;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -51,10 +51,10 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await customerRepository.GetCustomerByEmail(EMAIL);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(customerSettingsModelResponse.Result.Id, Id);
-            Assert.AreEqual(customerSettingsModelResponse.Result.FirstName, FIRSTNAME);
-            Assert.AreEqual(customerSettingsModelResponse.Result.LastName, LASTNAME);
-            Assert.AreEqual(customerSettingsModelResponse.Result.BioHeadLine, BioHeadLine);
+            Assert.AreEqual(customerSettingsModelResponse.Value.Id, Id);
+            Assert.AreEqual(customerSettingsModelResponse.Value.FirstName, FIRSTNAME);
+            Assert.AreEqual(customerSettingsModelResponse.Value.LastName, LASTNAME);
+            Assert.AreEqual(customerSettingsModelResponse.Value.BioHeadLine, BioHeadLine);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<RegisterCustomerEntity>>>()), Times.Once);
         }
 
@@ -80,7 +80,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await customerRepository.GetCustomerIdByEmail(EMAIL);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(customerSettingsModelResponse.Result, Id);
+            Assert.AreEqual(customerSettingsModelResponse.Value, Id);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<RegisterCustomerEntity>>>()), Times.Once);
         }
 
@@ -106,10 +106,10 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await customerRepository.GetCustomerById(CustomerId); ;
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(customerSettingsModelResponse.Result.Id, Id);
-            Assert.AreEqual(customerSettingsModelResponse.Result.FirstName, FIRSTNAME);
-            Assert.AreEqual(customerSettingsModelResponse.Result.LastName, LASTNAME);
-            Assert.AreEqual(customerSettingsModelResponse.Result.BioHeadLine, BioHeadLine);
+            Assert.AreEqual(customerSettingsModelResponse.Value.Id, Id);
+            Assert.AreEqual(customerSettingsModelResponse.Value.FirstName, FIRSTNAME);
+            Assert.AreEqual(customerSettingsModelResponse.Value.LastName, LASTNAME);
+            Assert.AreEqual(customerSettingsModelResponse.Value.BioHeadLine, BioHeadLine);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<RegisterCustomerEntity>>>()), Times.Once);
         }
 
@@ -135,7 +135,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await customerRepository.GetCustomersByCustomerIds(new List<string>() { CustomerId, CustomerId });
 
 
-            foreach (var customerModel in customerSettingsModelResponse.Result)
+            foreach (var customerModel in customerSettingsModelResponse.Value)
             {
                 Assert.AreEqual(customerModel.Id, Id);
                 Assert.AreEqual(customerModel.FirstName, FIRSTNAME);

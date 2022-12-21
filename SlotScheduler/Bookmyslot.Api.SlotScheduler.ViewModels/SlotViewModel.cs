@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.SharedKernel.Constants;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

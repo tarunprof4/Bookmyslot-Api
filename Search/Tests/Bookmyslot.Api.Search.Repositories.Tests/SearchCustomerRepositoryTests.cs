@@ -1,7 +1,8 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using Nest;
 using NUnit.Framework;
@@ -69,7 +70,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel());
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);
@@ -83,7 +84,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel());
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);
@@ -98,7 +99,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameterModel());
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameterModel(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);
@@ -112,7 +113,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameterModel());
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameterModel(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);

@@ -1,17 +1,15 @@
-﻿
-
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 {
     public interface IProfileSettingsRepository
     {
-        Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId);
+        Task<Result<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId);
 
-        Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId);
+        Task<Result<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId);
 
-        Task<Response<bool>> UpdateProfilePicture(string customerId, string profilePictureUrl);
+        Task<Result<bool>> UpdateProfilePicture(string customerId, string profilePictureUrl);
     }
 }

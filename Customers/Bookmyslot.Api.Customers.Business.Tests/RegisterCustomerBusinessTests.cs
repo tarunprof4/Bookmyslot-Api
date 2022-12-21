@@ -1,6 +1,7 @@
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         public async Task RegisterCustomer_ValidCustomerDetails_ReturnsSuccess()
         {
             var registerCustomerModel = CreateRegisterCustomerModel();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Empty };
+            Result<CustomerModel> customerModelResponse = new Result<CustomerModel>() { ResultType = ResultType.Empty };
             customerRepositoryMock.Setup(a => a.GetCustomerByEmail(registerCustomerModel.Email)).Returns(Task.FromResult(customerModelResponse));
 
             await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);
@@ -44,7 +45,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         public async Task RegisterCustomer_CustomerWithSameEmailIdAlreadyExists_ReturnsError()
         {
             var registerCustomerModel = CreateRegisterCustomerModel();
-            Response<CustomerModel> customerModelResponse = new Response<CustomerModel>() { ResultType = ResultType.Success };
+            Result<CustomerModel> customerModelResponse = new Result<CustomerModel>() { ResultType = ResultType.Success };
             customerRepositoryMock.Setup(a => a.GetCustomerByEmail(registerCustomerModel.Email)).Returns(Task.FromResult(customerModelResponse));
 
             var registerCustomerResponse = await registerCustomerBusiness.RegisterCustomer(registerCustomerModel);

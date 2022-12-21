@@ -1,11 +1,12 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Helpers;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -51,7 +52,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotScheduleDateInvalid);
+            Assert.AreEqual(slotModelResponse.Messages.First(), Common.Contracts.Constants.AppBusinessMessagesConstants.SlotScheduleDateInvalid);
             slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<SlotModel>())), Times.Never());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Never());
         }
@@ -67,7 +68,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotSchedulerBusiness.ScheduleSlot(slotModel, slotModel.BookedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot);
+            Assert.AreEqual(slotModelResponse.Messages.First(), Common.Contracts.Constants.AppBusinessMessagesConstants.SlotScheduleCannotBookOwnSlot);
             slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<SlotModel>())), Times.Never());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Never());
         }
@@ -86,15 +87,15 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
 
-        private static Response<List<CustomerModel>> GetValidCustomerModels(SlotModel slotModel)
+        private static Result<List<CustomerModel>> GetValidCustomerModels(SlotModel slotModel)
         {
             var customerModels = new List<CustomerModel>();
             var bookedByCustomerModel = new CustomerModel() { Id = slotModel.BookedBy };
             var createdByCustomerModel = new CustomerModel() { Id = slotModel.CreatedBy };
             customerModels.Add(bookedByCustomerModel);
             customerModels.Add(createdByCustomerModel);
-            var customerModelsResponse = new Response<List<CustomerModel>>();
-            customerModelsResponse.Result = customerModels;
+            var customerModelsResponse = new Result<List<CustomerModel>>();
+            customerModelsResponse.Value = customerModels;
             return customerModelsResponse;
         }
 

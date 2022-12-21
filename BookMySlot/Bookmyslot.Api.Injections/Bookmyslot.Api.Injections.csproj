@@ -13,12 +13,9 @@
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.Facebook\Bookmyslot.Api.Authentication.Facebook.csproj" />
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication.Google\Bookmyslot.Api.Authentication.Google.csproj" />
     <ProjectReference Include="..\..\Authentication\Bookmyslot.Api.Authentication\Bookmyslot.Api.Authentication.csproj" />
+    <ProjectReference Include="..\..\Azure\Bookmyslot.Api.Azure.Contracts\Bookmyslot.Api.Azure.Contracts.csproj" />
     <ProjectReference Include="..\..\Azure\Bookmyslot.Api.Azure.Services\Bookmyslot.Api.Azure.Services.csproj" />
     <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Business\Bookmyslot.Api.Cache.Business.csproj" />
-    <ProjectReference Include="..\..\Cache\Bookmyslot.Api.Cache.Repositories\Bookmyslot.Api.Cache.Repositories.csproj" />
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Compression\Bookmyslot.Api.Common.Compression.csproj" />
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Email\Bookmyslot.Api.Common.Email.csproj" />
-    <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Encryption\Bookmyslot.Api.Common.Encryption.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Search\Bookmyslot.Api.Common.Search.csproj" />
     <ProjectReference Include="..\..\Common\Bookmyslot.Api.Common.Web\Bookmyslot.Api.Common.Web.csproj" />
     <ProjectReference Include="..\..\Customers\Bookmyslot.Api.Customers.Business\Bookmyslot.Api.Customers.Business.csproj" />
@@ -28,6 +25,7 @@
     <ProjectReference Include="..\..\NodaTime\Bookmyslot.Api.NodaTime.Business\Bookmyslot.Api.NodaTime.Business.csproj" />
     <ProjectReference Include="..\..\Search\Bookmyslot.Api.Search.Business\Bookmyslot.Api.Search.Business.csproj" />
     <ProjectReference Include="..\..\Search\Bookmyslot.Api.Search.Repositories\Bookmyslot.Api.Search.Repositories.csproj" />
+    <ProjectReference Include="..\..\SharedKernel\Bookmyslot.SharedKernel\Bookmyslot.SharedKernel.csproj" />
     <ProjectReference Include="..\..\SlotScheduler\Bookmyslot.Api.SlotScheduler.Business\Bookmyslot.Api.SlotScheduler.Business.csproj" />
     <ProjectReference Include="..\..\SlotScheduler\Bookmyslot.Api.SlotScheduler.Repositories.MySql\Bookmyslot.Api.SlotScheduler.Repositories.MySql.csproj" />
     <ProjectReference Include="..\..\SlotScheduler\Bookmyslot.Api.SlotScheduler.ViewModels\Bookmyslot.Api.SlotScheduler.ViewModels.csproj" />

@@ -1,11 +1,12 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.Helpers;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NodaTime;
 using NUnit.Framework;
@@ -58,11 +59,11 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             customerResponseAdaptorMock.Setup(a => a.CreateCustomerViewModel(It.IsAny<CustomerModel>())).Returns(customerViewModel);
             symmetryEncryptionMock.Setup(a => a.Encrypt(It.IsAny<string>())).Returns(SlotInformation);
             var bookedSlotModel = CreateDefaultBookedSlotModel();
-            bookedSlotModel.Result.CustomerSettingsModel = null;
+            bookedSlotModel.Value.CustomerSettingsModel = null;
 
             var bookedSlotViewModelResponse = bookedSlotResponseAdaptor.CreateBookedSlotViewModel(bookedSlotModel);
 
-            var bookedSlotViewModel = bookedSlotViewModelResponse.Result;
+            var bookedSlotViewModel = bookedSlotViewModelResponse.Value;
             Assert.AreEqual(bookedSlotViewModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(bookedSlotViewModel.BookedByCustomerCountry, string.Empty);
             Assert.AreEqual(bookedSlotViewModel.BookedSlotModels[0].Item2.Title, Title);
@@ -83,7 +84,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
 
             var bookedSlotViewModelResponse = bookedSlotResponseAdaptor.CreateBookedSlotViewModel(bookedSlotModel);
 
-            var bookedSlotViewModel = bookedSlotViewModelResponse.Result;
+            var bookedSlotViewModel = bookedSlotViewModelResponse.Value;
             Assert.AreEqual(bookedSlotViewModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(bookedSlotViewModel.BookedByCustomerCountry, Country);
             Assert.AreEqual(bookedSlotViewModel.BookedSlotModels[0].Item2.Title, Title);
@@ -94,9 +95,9 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             Assert.AreEqual(bookedSlotViewModel.BookedSlotModels[0].Item2.CustomerSlotStartZonedDateTime, MinZonedDateTime);
         }
 
-        private Response<BookedSlotModel> CreateEmptyDefaultBookedSlotModel()
+        private Result<BookedSlotModel> CreateEmptyDefaultBookedSlotModel()
         {
-            var emptyBookedSlotModelResponse = new Response<BookedSlotModel>()
+            var emptyBookedSlotModelResponse = new Result<BookedSlotModel>()
             {
                 ResultType = ResultType.Empty,
                 Messages = new List<string>() { NoRecordsFound }
@@ -105,14 +106,14 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             return emptyBookedSlotModelResponse;
         }
 
-        private Response<BookedSlotModel> CreateDefaultBookedSlotModel()
+        private Result<BookedSlotModel> CreateDefaultBookedSlotModel()
         {
             var bookedSlotModel = new BookedSlotModel();
             bookedSlotModel.CustomerSettingsModel = new CustomerSettingsModel() { Country = Country };
             bookedSlotModel.BookedSlotModels = new List<KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>>();
             bookedSlotModel.BookedSlotModels.Add(new KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>(new CustomerModel(), CreateDefaultSlotInformationInCustomerTimeZoneViewModel()));
 
-            var bookedSlotModelResponse = new Response<BookedSlotModel>() { Result = bookedSlotModel };
+            var bookedSlotModelResponse = new Result<BookedSlotModel>() { Value = bookedSlotModel };
             return bookedSlotModelResponse;
         }
 

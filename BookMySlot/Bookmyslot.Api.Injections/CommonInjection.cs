@@ -1,14 +1,14 @@
-﻿using Bookmyslot.Api.Common.Compression;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Email;
-using Bookmyslot.Api.Common.Encryption;
-using Bookmyslot.Api.Common.Event;
-using Bookmyslot.Api.Common.Logging;
-using Bookmyslot.Api.Common.Logging.Enrichers;
+﻿using Bookmyslot.SharedKernel.Compression;
+using Bookmyslot.SharedKernel.Contracts.Compression;
+using Bookmyslot.SharedKernel.Contracts.Email;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.Contracts.Event;
+using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.Email;
+using Bookmyslot.SharedKernel.Encryption;
+using Bookmyslot.SharedKernel.Event;
+using Bookmyslot.SharedKernel.Logging;
+using Bookmyslot.SharedKernel.Logging.Enrichers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections

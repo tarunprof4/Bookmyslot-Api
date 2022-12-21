@@ -1,9 +1,9 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
 using Bookmyslot.Api.Authentication.ViewModels;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -32,9 +32,9 @@ namespace Bookmyslot.Api.Tests
             currentUserMock = new Mock<ICurrentUser>();
             customerController = new CustomerController(customerBusinessMock.Object, currentUserMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>()
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>()
             {
-                Result = new CurrentUserModel()
+                Value = new CurrentUserModel()
                 {
                     Id = CustomerId,
                     FirstName = FirstName,

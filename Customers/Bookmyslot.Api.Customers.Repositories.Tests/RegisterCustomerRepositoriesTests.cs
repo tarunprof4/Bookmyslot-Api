@@ -1,7 +1,7 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Event;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var registerCustomerModelResponse = await registerCustomerRepository.RegisterCustomer(registerCustomerModel);
 
             Assert.AreEqual(registerCustomerModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(EMAIL, registerCustomerModelResponse.Result);
+            Assert.AreEqual(EMAIL, registerCustomerModelResponse.Value);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 

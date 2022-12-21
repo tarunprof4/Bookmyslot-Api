@@ -1,12 +1,13 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Helpers;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
@@ -66,7 +67,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
 
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Messages.First(), AppBusinessMessagesConstants.SlotIdInvalid);
+            Assert.AreEqual(slotModelResponse.Messages.First(), Common.Contracts.Constants.AppBusinessMessagesConstants.SlotIdInvalid);
             slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
         }
 
@@ -75,13 +76,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         {
             slotModelValidatorMock.Setup(a => a.Validate(It.IsAny<SlotModel>())).Returns(new ValidationResult());
             var slotModel = CreateValidSlotModel();
-            Response<string> slotModelResponseMock = new Response<string>() { Result = slotModel.Id };
+            Result<string> slotModelResponseMock = new Result<string>() { Value = slotModel.Id };
             slotRepositoryMock.Setup(a => a.CreateSlot(slotModel)).Returns(Task.FromResult(slotModelResponseMock));
 
             var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelResponseMock.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelResponseMock.Result, SlotId);
+            Assert.AreEqual(slotModelResponseMock.Value, SlotId);
 
             slotRepositoryMock.Verify((m => m.CreateSlot(It.IsAny<SlotModel>())), Times.Once());
             customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSharedSlot(It.IsAny<CustomerLastSharedSlotModel>())), Times.Once());
@@ -95,13 +96,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             List<ValidationFailure> validationFailures = CreateDefaultValidationFailure();
             slotModelValidatorMock.Setup(a => a.Validate(It.IsAny<SlotModel>())).Returns(new ValidationResult(validationFailures));
             var slotModel = CreateInvalidSlotModel();
-            Response<string> slotModelResponseMock = new Response<string>() { Result = slotModel.Id };
+            Result<string> slotModelResponseMock = new Result<string>() { Value = slotModel.Id };
             slotRepositoryMock.Setup(a => a.CreateSlot(slotModel)).Returns(Task.FromResult(slotModelResponseMock));
 
             var slotModelResponse = await this.slotBusiness.CreateSlot(slotModel, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.IsNull(slotModelResponse.Result);
+            Assert.IsNull(slotModelResponse.Value);
             Assert.IsTrue(slotModelResponse.Messages.Contains(InValidSlot));
             slotRepositoryMock.Verify((m => m.CreateSlot(slotModel)), Times.Never());
             customerLastBookedSlotBusinessMock.Verify((m => m.SaveCustomerLatestSharedSlot(It.IsAny<CustomerLastSharedSlotModel>())), Times.Never());
@@ -114,19 +115,19 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task CancelSlot_CancelledByCreatedBy_ReturnsSlotDeletedSuccessfully()
         {
             var slotModel = CreateValidBookedSlotModel();
-            Response<CustomerModel> CustomerModelResponseMock = new Response<CustomerModel>() { Result = new CustomerModel() { Id = slotModel.CreatedBy } };
+            Result<CustomerModel> CustomerModelResponseMock = new Result<CustomerModel>() { Value = new CustomerModel() { Id = slotModel.CreatedBy } };
             customerBusinessMock.Setup(a => a.GetCustomerById(It.IsAny<string>())).Returns(Task.FromResult(CustomerModelResponseMock));
-            Response<bool> slotModelDeleteResponseMock = new Response<bool>() { Result = true };
+            Result<bool> slotModelDeleteResponseMock = new Result<bool>() { Value = true };
             slotRepositoryMock.Setup(a => a.DeleteSlot(slotModel.Id)).Returns(Task.FromResult(slotModelDeleteResponseMock));
-            Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { Result = slotModel };
+            Result<SlotModel> slotModelGetResponseMock = new Result<SlotModel>() { Value = slotModel };
             slotRepositoryMock.Setup(a => a.GetSlot(slotModel.Id)).Returns(Task.FromResult(slotModelGetResponseMock));
-            Response<bool> customerCreateCancelledSlotMock = new Response<bool>() { Result = true };
+            Result<bool> customerCreateCancelledSlotMock = new Result<bool>() { Value = true };
             customerCancelledSlotRepositoryMock.Setup(a => a.CreateCustomerCancelledSlot(new CancelledSlotModel())).Returns(Task.FromResult(customerCreateCancelledSlotMock));
 
             var slotModelResponse = await this.slotBusiness.CancelSlot(slotModel.Id, slotModel.CreatedBy);
 
             Assert.AreEqual(slotModelDeleteResponseMock.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelDeleteResponseMock.Result, true);
+            Assert.AreEqual(slotModelDeleteResponseMock.Value, true);
             Assert.IsTrue(slotModel.BookedBy.Contains(slotModel.BookedBy));
 
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<string>())), Times.Once());
@@ -141,19 +142,19 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task CancelSlot_CancelledByBookedBy_ReturnsSlotUpdatedSuccessfully()
         {
             var slotModel = CreateValidBookedSlotModel();
-            Response<CustomerModel> CustomerModelResponseMock = new Response<CustomerModel>() { Result = new CustomerModel() { Id = slotModel.BookedBy } };
+            Result<CustomerModel> CustomerModelResponseMock = new Result<CustomerModel>() { Value = new CustomerModel() { Id = slotModel.BookedBy } };
             customerBusinessMock.Setup(a => a.GetCustomerById(It.IsAny<string>())).Returns(Task.FromResult(CustomerModelResponseMock));
-            Response<bool> slotModelDeleteResponseMock = new Response<bool>() { Result = true };
+            Result<bool> slotModelDeleteResponseMock = new Result<bool>() { Value = true };
             slotRepositoryMock.Setup(a => a.DeleteSlot(slotModel.Id)).Returns(Task.FromResult(slotModelDeleteResponseMock));
-            Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { Result = slotModel };
+            Result<SlotModel> slotModelGetResponseMock = new Result<SlotModel>() { Value = slotModel };
             slotRepositoryMock.Setup(a => a.GetSlot(slotModel.Id)).Returns(Task.FromResult(slotModelGetResponseMock));
-            Response<bool> customerCreateCancelledSlotMock = new Response<bool>() { Result = true };
+            Result<bool> customerCreateCancelledSlotMock = new Result<bool>() { Value = true };
             customerCancelledSlotRepositoryMock.Setup(a => a.CreateCustomerCancelledSlot(new CancelledSlotModel())).Returns(Task.FromResult(customerCreateCancelledSlotMock));
 
             var slotModelResponse = await this.slotBusiness.CancelSlot(slotModel.Id, slotModel.BookedBy);
 
             Assert.AreEqual(slotModelDeleteResponseMock.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelDeleteResponseMock.Result, true);
+            Assert.AreEqual(slotModelDeleteResponseMock.Value, true);
             Assert.AreEqual(slotModel.BookedBy, string.Empty);
 
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<string>())), Times.Once());
@@ -169,8 +170,8 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
             var slotModelResponse = await this.slotBusiness.CancelSlot(string.Empty, deletedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.ValidationError);
-            Assert.AreEqual(slotModelResponse.Result, false);
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotIdInvalid));
+            Assert.AreEqual(slotModelResponse.Value, false);
+            Assert.IsTrue(slotModelResponse.Messages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotIdInvalid));
 
             slotRepositoryMock.Verify((m => m.GetSlot(SlotId)), Times.Never());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<string>())), Times.Never());
@@ -184,13 +185,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task CancelSlot_SlotDoesntExists_ReturnsSlotNotFoundResponse()
         {
             var slotModel = new SlotModel();
-            Response<SlotModel> slotModelGetResponseMock = new Response<SlotModel>() { ResultType = ResultType.Empty };
+            Result<SlotModel> slotModelGetResponseMock = new Result<SlotModel>() { ResultType = ResultType.Empty };
             slotRepositoryMock.Setup(a => a.GetSlot(It.IsAny<string>())).Returns(Task.FromResult(slotModelGetResponseMock));
 
             var slotModelResponse = await this.slotBusiness.CancelSlot(Guid.NewGuid().ToString(), deletedBy);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Empty);
-            Assert.IsTrue(slotModelResponse.Messages.Contains(AppBusinessMessagesConstants.SlotIdDoesNotExists));
+            Assert.IsTrue(slotModelResponse.Messages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotIdDoesNotExists));
             slotRepositoryMock.Verify((m => m.GetSlot(It.IsAny<string>())), Times.Once());
             slotRepositoryMock.Verify((m => m.DeleteSlot(It.IsAny<string>())), Times.Never());
             slotRepositoryMock.Verify((m => m.UpdateSlotBooking(It.IsAny<SlotModel>())), Times.Never());

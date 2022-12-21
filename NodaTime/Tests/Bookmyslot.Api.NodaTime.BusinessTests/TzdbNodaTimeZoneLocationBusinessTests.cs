@@ -1,6 +1,6 @@
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.NodaTime.Business;
 using Bookmyslot.Api.NodaTime.Contracts.Configuration;
+using Bookmyslot.SharedKernel.Constants;
 using NUnit.Framework;
 
 namespace Bookmyslot.Api.NodaTime.BusinessTests

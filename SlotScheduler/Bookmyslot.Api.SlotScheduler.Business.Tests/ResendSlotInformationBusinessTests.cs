@@ -1,9 +1,9 @@
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Common.Helpers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Event;
+using Bookmyslot.SharedKernel.Helpers;
 using Moq;
 using NUnit.Framework;
 using System;

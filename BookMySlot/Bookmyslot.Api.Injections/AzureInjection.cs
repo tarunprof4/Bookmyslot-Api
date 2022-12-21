@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Azure.Services.Event;
 using Bookmyslot.Api.Azure.Services.Storage;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
+using Bookmyslot.SharedKernel.Contracts.EventGrid;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections

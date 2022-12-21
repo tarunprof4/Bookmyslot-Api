@@ -1,7 +1,7 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Database;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await customerSettingsRepository.GetCustomerSettings(CustomerId);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(customerSettingsModelResponse.Result.TimeZone, TIMEZONE);
+            Assert.AreEqual(customerSettingsModelResponse.Value.TimeZone, TIMEZONE);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<CustomerSettingsEntity>>>()), Times.Once);
         }
 
@@ -65,7 +65,7 @@ namespace Bookmyslot.Api.Customers.Repositories.Tests
             var customerSettingsModelResponse = await customerSettingsRepository.UpdateCustomerSettings(CustomerId, customerSettingsModel);
 
             Assert.AreEqual(customerSettingsModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(true, customerSettingsModelResponse.Result);
+            Assert.AreEqual(true, customerSettingsModelResponse.Value);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 

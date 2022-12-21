@@ -1,11 +1,12 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.Helpers;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NodaTime;
 using NUnit.Framework;
@@ -58,11 +59,11 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             customerResponseAdaptorMock.Setup(a => a.CreateCustomerViewModel(It.IsAny<CustomerModel>())).Returns(customerViewModel);
             symmetryEncryptionMock.Setup(a => a.Encrypt(It.IsAny<string>())).Returns(SlotInformation);
             var bookAvailableSlotModel = CreateDefaultBookAvailableSlotModel();
-            bookAvailableSlotModel.Result.CustomerSettingsModel = null;
+            bookAvailableSlotModel.Value.CustomerSettingsModel = null;
 
             var bookAvailableSlotViewModelResponse = availableSlotResponseAdaptor.CreateBookAvailableSlotViewModel(bookAvailableSlotModel);
 
-            var bookAvailableSlotViewModel = bookAvailableSlotViewModelResponse.Result;
+            var bookAvailableSlotViewModel = bookAvailableSlotViewModelResponse.Value;
             Assert.AreEqual(bookAvailableSlotViewModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(bookAvailableSlotViewModel.ToBeBookedByCustomerCountry, string.Empty);
             Assert.AreEqual(bookAvailableSlotViewModel.BookAvailableSlotModels[0].Title, Title);
@@ -81,7 +82,7 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             symmetryEncryptionMock.Setup(a => a.Encrypt(It.IsAny<string>())).Returns(SlotInformation);
 
             var bookAvailableSlotViewModelResponse = availableSlotResponseAdaptor.CreateBookAvailableSlotViewModel(CreateDefaultBookAvailableSlotModel());
-            var bookAvailableSlotViewModel = bookAvailableSlotViewModelResponse.Result;
+            var bookAvailableSlotViewModel = bookAvailableSlotViewModelResponse.Value;
 
             Assert.AreEqual(bookAvailableSlotViewModelResponse.ResultType, ResultType.Success);
             Assert.AreEqual(bookAvailableSlotViewModel.ToBeBookedByCustomerCountry, Country);
@@ -93,9 +94,9 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             Assert.AreEqual(bookAvailableSlotViewModel.BookAvailableSlotModels[0].CustomerSlotStartZonedDateTime, MinZonedDateTime);
         }
 
-        private Response<BookAvailableSlotModel> CreateEmptyDefaultBookAvailableSlotModel()
+        private Result<BookAvailableSlotModel> CreateEmptyDefaultBookAvailableSlotModel()
         {
-            var emptyBookAvailableSlotModelResponse = new Response<BookAvailableSlotModel>()
+            var emptyBookAvailableSlotModelResponse = new Result<BookAvailableSlotModel>()
             {
                 ResultType = ResultType.Empty,
                 Messages = new List<string>() { NoRecordsFound }
@@ -104,14 +105,14 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Tests.AdaptorTests
             return emptyBookAvailableSlotModelResponse;
         }
 
-        private Response<BookAvailableSlotModel> CreateDefaultBookAvailableSlotModel()
+        private Result<BookAvailableSlotModel> CreateDefaultBookAvailableSlotModel()
         {
             var bookAvailableSlotModel = new BookAvailableSlotModel();
             bookAvailableSlotModel.CustomerSettingsModel = new CustomerSettingsModel() { Country = Country };
             bookAvailableSlotModel.AvailableSlotModels = new List<SlotInforamtionInCustomerTimeZoneModel>();
             bookAvailableSlotModel.AvailableSlotModels.Add(CreateDefaultSlotInformationInCustomerTimeZoneViewModel());
 
-            var bookAvailableSlotModelResponse = new Response<BookAvailableSlotModel>() { Result = bookAvailableSlotModel };
+            var bookAvailableSlotModelResponse = new Result<BookAvailableSlotModel>() { Value = bookAvailableSlotModel };
             return bookAvailableSlotModelResponse;
         }
 

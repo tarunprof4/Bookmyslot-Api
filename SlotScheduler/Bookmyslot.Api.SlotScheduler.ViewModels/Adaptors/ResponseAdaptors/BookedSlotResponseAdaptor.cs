@@ -1,8 +1,8 @@
-﻿
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using Newtonsoft.Json;
 using System;
 
@@ -20,11 +20,11 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors
         }
 
 
-        public Response<BookedSlotViewModel> CreateBookedSlotViewModel(Response<BookedSlotModel> bookedSlotModelResponse)
+        public Result<BookedSlotViewModel> CreateBookedSlotViewModel(Result<BookedSlotModel> bookedSlotModelResponse)
         {
             if (bookedSlotModelResponse.ResultType == ResultType.Success)
             {
-                var bookedSlotModel = bookedSlotModelResponse.Result;
+                var bookedSlotModel = bookedSlotModelResponse.Value;
                 var bookedSlotViewModel = new BookedSlotViewModel
                 {
                     BookedByCustomerCountry = bookedSlotModel.CustomerSettingsModel != null ? bookedSlotModel.CustomerSettingsModel.Country : string.Empty,
@@ -49,10 +49,10 @@ namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors
                     bookedSlotViewModel.BookedSlotModels.Add(new Tuple<CustomerViewModel, SlotInformationInCustomerTimeZoneViewModel>(createdByCustomerViewModel, slotInformationInCustomerTimeZoneViewModel));
                 }
 
-                return new Response<BookedSlotViewModel>() { Result = bookedSlotViewModel };
+                return new Result<BookedSlotViewModel>() { Value = bookedSlotViewModel };
             }
 
-            return new Response<BookedSlotViewModel>()
+            return new Result<BookedSlotViewModel>()
             {
                 ResultType = bookedSlotModelResponse.ResultType,
                 Messages = bookedSlotModelResponse.Messages

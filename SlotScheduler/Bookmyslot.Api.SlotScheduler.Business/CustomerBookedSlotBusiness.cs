@@ -1,9 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Helpers;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Helpers;
+using Bookmyslot.SharedKernel.ValueObject;
 using NodaTime;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,32 +27,32 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
             this.customerSettingsRepository = customerSettingsRepository;
         }
 
-        public async Task<Response<IEnumerable<CancelledSlotInformationModel>>> GetCustomerCancelledSlots(string customerId)
+        public async Task<Result<IEnumerable<CancelledSlotInformationModel>>> GetCustomerCancelledSlots(string customerId)
         {
             var cancelledSlotsResponse = await this.customerCancelledSlotRepository.GetCustomerBookedCancelledSlots(customerId);
 
             if (cancelledSlotsResponse.ResultType == ResultType.Success)
             {
-                var customerIds = cancelledSlotsResponse.Result.Select(a => a.CancelledBy);
+                var customerIds = cancelledSlotsResponse.Value.Select(a => a.CancelledBy);
                 var customerModelsResponse = await this.customerBusiness.GetCustomersByCustomerIds(customerIds);
 
                 var cancelledSlotInformationModels = new List<CancelledSlotInformationModel>();
-                foreach (var cancelledSlotResponse in cancelledSlotsResponse.Result)
+                foreach (var cancelledSlotResponse in cancelledSlotsResponse.Value)
                 {
                     var cancelledSlotInformationModel = new CancelledSlotInformationModel();
                     cancelledSlotInformationModel.CancelledSlotModel = cancelledSlotResponse;
-                    cancelledSlotInformationModel.CancelledByCustomerModel = customerModelsResponse.Result.First(a => a.Id == cancelledSlotResponse.CancelledBy);
+                    cancelledSlotInformationModel.CancelledByCustomerModel = customerModelsResponse.Value.First(a => a.Id == cancelledSlotResponse.CancelledBy);
 
                     cancelledSlotInformationModels.Add(cancelledSlotInformationModel);
                 }
 
-                return new Response<IEnumerable<CancelledSlotInformationModel>>() { Result = cancelledSlotInformationModels };
+                return new Result<IEnumerable<CancelledSlotInformationModel>>() { Value = cancelledSlotInformationModels };
             }
 
-            return Response<IEnumerable<CancelledSlotInformationModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Result<IEnumerable<CancelledSlotInformationModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
-        public async Task<Response<BookedSlotModel>> GetCustomerBookedSlots(string customerId)
+        public async Task<Result<BookedSlotModel>> GetCustomerBookedSlots(string customerId)
         {
             var customerSlotModelsResponse = await this.customerBookedSlotRepository.GetCustomerBookedSlots(customerId);
 
@@ -60,10 +61,10 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerSlots(customerSlotModelsResponse, customerId);
             }
 
-            return Response<BookedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Result<BookedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
-        public async Task<Response<BookedSlotModel>> GetCustomerCompletedSlots(string customerId)
+        public async Task<Result<BookedSlotModel>> GetCustomerCompletedSlots(string customerId)
         {
             var customerSlotModelsResponse = await this.customerBookedSlotRepository.GetCustomerCompletedSlots(customerId);
 
@@ -72,12 +73,12 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 return await GetCustomerSlots(customerSlotModelsResponse, customerId);
             }
 
-            return Response<BookedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
+            return Result<BookedSlotModel>.Empty(new List<string>() { AppBusinessMessagesConstants.NoSlotsFound });
         }
 
-        private async Task<Response<BookedSlotModel>> GetCustomerSlots(Response<IEnumerable<SlotModel>> customerSlotModelsResponse, string customerId)
+        private async Task<Result<BookedSlotModel>> GetCustomerSlots(Result<IEnumerable<SlotModel>> customerSlotModelsResponse, string customerId)
         {
-            var customerIds = customerSlotModelsResponse.Result.Select(a => a.CreatedBy);
+            var customerIds = customerSlotModelsResponse.Value.Select(a => a.CreatedBy);
             var customerModelsResponseTask = this.customerBusiness.GetCustomersByCustomerIds(customerIds);
             var customerSettingsResponseTask = this.customerSettingsRepository.GetCustomerSettings(customerId);
             await Task.WhenAll(customerModelsResponseTask, customerSettingsResponseTask);
@@ -86,13 +87,13 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 
             var bookedSlotModel = new BookedSlotModel();
             bookedSlotModel.BookedSlotModels = new List<KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>>();
-            bookedSlotModel.CustomerSettingsModel = customerSettingsResponse.Result;
-            foreach (var slotModel in customerSlotModelsResponse.Result)
+            bookedSlotModel.CustomerSettingsModel = customerSettingsResponse.Value;
+            foreach (var slotModel in customerSlotModelsResponse.Value)
             {
-                var createdByCustomerModel = customerModelsResponse.Result.First(a => a.Id == slotModel.CreatedBy);
+                var createdByCustomerModel = customerModelsResponse.Value.First(a => a.Id == slotModel.CreatedBy);
                 ZonedDateTime customerZonedDateTime = customerSettingsResponse.ResultType != ResultType.Success ?
                    new ZonedDateTime() :
-                   NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(slotModel.SlotStartZonedDateTime, customerSettingsResponse.Result.TimeZone);
+                   NodaTimeHelper.ConvertZonedDateTimeToZonedDateTime(slotModel.SlotStartZonedDateTime, customerSettingsResponse.Value.TimeZone);
 
                 var slotInforamtionInCustomerTimeZoneModel = new SlotInforamtionInCustomerTimeZoneModel()
                 { SlotModel = slotModel, CustomerSlotZonedDateTime = customerZonedDateTime };
@@ -100,7 +101,7 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
                 bookedSlotModel.BookedSlotModels.Add(new KeyValuePair<CustomerModel, SlotInforamtionInCustomerTimeZoneModel>(createdByCustomerModel, slotInforamtionInCustomerTimeZoneModel));
             }
 
-            return new Response<BookedSlotModel>() { Result = bookedSlotModel };
+            return new Result<BookedSlotModel>() { Value = bookedSlotModel };
         }
     }
 }

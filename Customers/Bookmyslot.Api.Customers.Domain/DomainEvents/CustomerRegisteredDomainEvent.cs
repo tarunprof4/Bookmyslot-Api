@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts.Event;
+﻿using Bookmyslot.SharedKernel.Event;
 
 namespace Bookmyslot.Api.Customers.Domain.DomainEvents
 {

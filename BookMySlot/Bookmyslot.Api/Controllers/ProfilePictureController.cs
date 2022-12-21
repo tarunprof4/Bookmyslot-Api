@@ -1,11 +1,12 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.File.Contracts.Interfaces;
 using Bookmyslot.Api.File.ViewModels;
 using Bookmyslot.Api.File.ViewModels.Validations;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -66,20 +67,20 @@ namespace Bookmyslot.Api.Controllers
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result.Id;
-                var firstName = currentUserResponse.Result.FirstName;
+                var customerId = currentUserResponse.Value.Id;
+                var firstName = currentUserResponse.Value.FirstName;
                 var profileUpdateResponse = await this.profileSettingsBusiness.UpdateProfilePicture(file, customerId, firstName);
 
                 if (profileUpdateResponse.ResultType == ResultType.Success)
                 {
-                    await this.currentUser.SetCurrentUserInCache(currentUserResponse.Result.Email);
+                    await this.currentUser.SetCurrentUserInCache(currentUserResponse.Value.Email);
                 }
 
 
                 return this.CreatePutHttpResponse(profileUpdateResponse);
             }
 
-            var validationResponse = Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Result<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePutHttpResponse(validationResponse);
         }
     }

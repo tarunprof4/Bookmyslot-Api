@@ -1,8 +1,9 @@
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -41,20 +42,20 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task GetCustomerYetToBeBookedSlots_ValidCustomer_ReturnsCustomerSharedSlotModelSuccessResponse()
         {
             var slotModels = GetValidSlotModels();
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            Result<IEnumerable<SlotModel>> slotModelResponseMock = new Result<IEnumerable<SlotModel>>() { Value = slotModels };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerYetToBeBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
 
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots(CustomerId);
 
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Value);
+            Assert.NotNull(customerSharedSlotModelResponse.Value.SharedSlotModels.First().Value);
             customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerYetToBeBookedSlots(It.IsAny<string>())), Times.Once());
         }
 
         [Test]
         public async Task GetCustomerYetToBeBookedSlots_InValidCustomer_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
+            Result<IEnumerable<SlotModel>> slotModelResponseMock = new Result<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerYetToBeBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
 
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerYetToBeBookedSlots(CustomerId);
@@ -71,17 +72,17 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task GetCustomerBookedSlots_ValidCustomer_ReturnsCustomerSharedSlotModelSuccessResponse()
         {
             var slotModels = GetValidSlotModels();
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            Result<IEnumerable<SlotModel>> slotModelResponseMock = new Result<IEnumerable<SlotModel>>() { Value = slotModels };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
-            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByBookedByCustomerId(BookedBy1), GetValidCustomerModelByBookedByCustomerId(BookedBy2), GetValidCustomerModelByBookedByCustomerId(BookedBy3) } };
+            Result<List<CustomerModel>> customerModelsMock = new Result<List<CustomerModel>>() { Value = new List<CustomerModel>() { GetValidCustomerModelByBookedByCustomerId(BookedBy1), GetValidCustomerModelByBookedByCustomerId(BookedBy2), GetValidCustomerModelByBookedByCustomerId(BookedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
 
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerBookedSlots(CustomerId);
 
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Value);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Key);
+            Assert.NotNull(customerSharedSlotModelResponse.Value.SharedSlotModels.First().Value);
+            Assert.NotNull(customerSharedSlotModelResponse.Value.SharedSlotModels.First().Key);
             customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerBookedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
@@ -90,7 +91,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         [Test]
         public async Task GetCustomerBookedSlots_InValidCustomer_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
+            Result<IEnumerable<SlotModel>> slotModelResponseMock = new Result<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerBookedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
 
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerBookedSlots(CustomerId);
@@ -135,17 +136,17 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         public async Task GetCustomerCompletedSlots_ValidCustomer_ReturnsCustomerSharedSlotModelSuccessResponse()
         {
             var slotModels = GetValidSlotModels();
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { Result = slotModels };
+            Result<IEnumerable<SlotModel>> slotModelResponseMock = new Result<IEnumerable<SlotModel>>() { Value = slotModels };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
-            Response<List<CustomerModel>> customerModelsMock = new Response<List<CustomerModel>>() { Result = new List<CustomerModel>() { GetValidCustomerModelByBookedByCustomerId(BookedBy1), GetValidCustomerModelByBookedByCustomerId(BookedBy2), GetValidCustomerModelByBookedByCustomerId(BookedBy3) } };
+            Result<List<CustomerModel>> customerModelsMock = new Result<List<CustomerModel>>() { Value = new List<CustomerModel>() { GetValidCustomerModelByBookedByCustomerId(BookedBy1), GetValidCustomerModelByBookedByCustomerId(BookedBy2), GetValidCustomerModelByBookedByCustomerId(BookedBy3) } };
             customerBusinessMock.Setup(a => a.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(customerModelsMock));
 
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots(CustomerId);
 
             Assert.AreEqual(customerSharedSlotModelResponse.ResultType, ResultType.Success);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Value);
-            Assert.NotNull(customerSharedSlotModelResponse.Result.SharedSlotModels.First().Key);
+            Assert.NotNull(customerSharedSlotModelResponse.Value.SharedSlotModels.First().Value);
+            Assert.NotNull(customerSharedSlotModelResponse.Value.SharedSlotModels.First().Key);
             customerSharedSlotRepositoryMock.Verify((m => m.GetCustomerCompletedSlots(It.IsAny<string>())), Times.Once());
             customerBusinessMock.Verify((m => m.GetCustomersByCustomerIds(It.IsAny<IEnumerable<string>>())), Times.Once());
         }
@@ -154,7 +155,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests
         [Test]
         public async Task GetCustomerCompletedSlots_InValidCustomer_ReturnsEmptyResponse()
         {
-            Response<IEnumerable<SlotModel>> slotModelResponseMock = new Response<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
+            Result<IEnumerable<SlotModel>> slotModelResponseMock = new Result<IEnumerable<SlotModel>>() { ResultType = ResultType.Empty };
             customerSharedSlotRepositoryMock.Setup(a => a.GetCustomerCompletedSlots(It.IsAny<string>())).Returns(Task.FromResult(slotModelResponseMock));
 
             var customerSharedSlotModelResponse = await this.customerSharedSlotBusiness.GetCustomerCompletedSlots(CustomerId);

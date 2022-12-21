@@ -1,10 +1,11 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -53,18 +54,18 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result.Id;
+            var customerId = currentUserResponse.Value.Id;
 
             var customerSettingsResponse = await this.customerSettingsBusiness.GetCustomerSettings(customerId);
 
             if (customerSettingsResponse.ResultType == ResultType.Success)
             {
-                var customerSettingsViewModelResponse = new Response<CustomerSettingsViewModel>()
-                { Result = CustomerSettingsViewModel.CreateCustomerSettingsViewModel(customerSettingsResponse.Result) };
+                var customerSettingsViewModelResponse = new Result<CustomerSettingsViewModel>()
+                { Value = CustomerSettingsViewModel.CreateCustomerSettingsViewModel(customerSettingsResponse.Value) };
                 return this.CreateGetHttpResponse(customerSettingsViewModelResponse);
             }
 
-            return this.CreateGetHttpResponse(new Response<CustomerSettingsViewModel>()
+            return this.CreateGetHttpResponse(new Result<CustomerSettingsViewModel>()
             { ResultType = customerSettingsResponse.ResultType, Messages = customerSettingsResponse.Messages });
         }
 
@@ -91,11 +92,11 @@ namespace Bookmyslot.Api.Controllers
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result.Id;
+                var customerId = currentUserResponse.Value.Id;
                 var customerSettingsResponse = await this.customerSettingsBusiness.UpdateCustomerSettings(customerId, CreateCustomerSettingsViewModel(customerSettingsViewModel));
                 return this.CreatePutHttpResponse(customerSettingsResponse);
             }
-            var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Result<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePutHttpResponse(validationResponse);
         }
 

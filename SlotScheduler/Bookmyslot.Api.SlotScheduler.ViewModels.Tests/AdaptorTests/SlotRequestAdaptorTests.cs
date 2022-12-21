@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors;
+﻿using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors;
+using Bookmyslot.SharedKernel.Constants;
 using NUnit.Framework;
 using System;
 

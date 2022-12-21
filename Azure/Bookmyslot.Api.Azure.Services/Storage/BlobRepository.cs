@@ -2,10 +2,10 @@
 using Azure.Storage.Blobs.Models;
 using Bookmyslot.Api.Azure.Contracts.Interfaces;
 using Bookmyslot.Api.Azure.Services.Constants;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Configuration;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Azure.Services.Storage
             this.sha256SaltedHash = sha256SaltedHash;
             this.dbInterceptor = dbInterceptor;
         }
-        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
+        public async Task<Result<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
         {
             var containerName = BlobConstants.UploadProfilePictureContainer;
             var blobName = GenerateProfilePictureBlobName(customerId, firstName);
@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.Azure.Services.Storage
                 await this.dbInterceptor.GetQueryResults("SaveProfilePicture", parameters, () => blobClient.UploadAsync(stream, blobHttpHeaders));
             }
 
-            return new Response<string>() { Result = blobClient.Uri.AbsoluteUri };
+            return new Result<string>() { Value = blobClient.Uri.AbsoluteUri };
         }
 
 

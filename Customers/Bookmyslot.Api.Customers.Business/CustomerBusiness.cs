@@ -1,7 +1,7 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,13 +16,13 @@ namespace Bookmyslot.Api.Customers.Business
             this.customerRepository = customerRepository;
         }
 
-        public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
+        public async Task<Result<CustomerModel>> GetCustomerByEmail(string email)
         {
             email = email.ToLowerInvariant();
             return await customerRepository.GetCustomerByEmail(email);
         }
 
-        public async Task<Response<string>> GetCustomerIdByEmail(string email)
+        public async Task<Result<string>> GetCustomerIdByEmail(string email)
         {
             email = email.ToLowerInvariant();
             return await customerRepository.GetCustomerIdByEmail(email);
@@ -30,23 +30,23 @@ namespace Bookmyslot.Api.Customers.Business
 
 
 
-        public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
+        public async Task<Result<CustomerModel>> GetCustomerById(string customerId)
         {
             return await customerRepository.GetCustomerById(customerId);
         }
 
 
 
-        public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
+        public async Task<Result<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
         {
             customerIds = customerIds.Distinct();
             return await this.customerRepository.GetCustomersByCustomerIds(customerIds);
         }
 
-        public async Task<Response<CurrentUserModel>> GetCurrentUserByEmail(string email)
+        public async Task<Result<CurrentUserModel>> GetCurrentUserByEmail(string email)
         {
             var customerModelResponse = await this.customerRepository.GetCustomerByEmail(email);
-            return new Response<CurrentUserModel>() { Result = CreateCurrentUserModel(customerModelResponse.Result) };
+            return new Result<CurrentUserModel>() { Value = CreateCurrentUserModel(customerModelResponse.Value) };
         }
 
         private CurrentUserModel CreateCurrentUserModel(CustomerModel customerModel)

@@ -1,11 +1,11 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -36,9 +36,9 @@ namespace Bookmyslot.Api.Tests
             additionalProfileSettingsController = new AdditionalProfileSettingsController(additionalProfileSettingsBusinessMock.Object,
                 currentUserMock.Object, additionalProfileSettingsViewModelValidatorMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>()
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>()
             {
-                Result = new CurrentUserModel()
+                Value = new CurrentUserModel()
                 {
                     Id = CustomerId,
                     FirstName = ValidFirstName,
@@ -85,7 +85,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task UpdateAdditionalProfileSettings_ValidAdditionalProfileSettings_ReturnsSuccessResponse()
         {
-            Response<bool> additionalProfileSettingsBusinessMockResponse = new Response<bool>() { Result = true };
+            Result<bool> additionalProfileSettingsBusinessMockResponse = new Result<bool>() { Value = true };
             additionalProfileSettingsBusinessMock.Setup(a => a.UpdateAdditionalProfileSettings(It.IsAny<string>(), It.IsAny<AdditionalProfileSettingsModel>())).Returns(Task.FromResult(additionalProfileSettingsBusinessMockResponse));
             additionalProfileSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<AdditionalProfileSettingsViewModel>())).Returns(new ValidationResult());
 

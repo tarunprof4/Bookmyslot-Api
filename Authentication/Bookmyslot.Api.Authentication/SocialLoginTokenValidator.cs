@@ -1,6 +1,6 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication
@@ -15,12 +15,12 @@ namespace Bookmyslot.Api.Authentication
             this.facebookTokenValidator = facebookTokenValidator;
         }
 
-        public async Task<Response<SocialCustomerModel>> LoginWithFacebook(string authToken)
+        public async Task<Result<SocialCustomerModel>> LoginWithFacebook(string authToken)
         {
             return await this.facebookTokenValidator.ValidateAccessToken(authToken);
         }
 
-        public async Task<Response<SocialCustomerModel>> LoginWithGoogle(string idToken)
+        public async Task<Result<SocialCustomerModel>> LoginWithGoogle(string idToken)
         {
             return await this.googleTokenValidator.ValidateToken(idToken);
         }

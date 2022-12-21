@@ -1,6 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts.Event;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Domain.Constants;
+using Bookmyslot.SharedKernel.Event;
 
 namespace Bookmyslot.Api.Customers.Business.IntegrationEvents
 {

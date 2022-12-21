@@ -1,8 +1,8 @@
 ﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Logging.Constants;
-using Bookmyslot.Api.Common.Logging.Contracts;
+using Bookmyslot.SharedKernel.Contracts.Compression;
+using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.Logging.Constants;
+using Bookmyslot.SharedKernel.Logging.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using System;

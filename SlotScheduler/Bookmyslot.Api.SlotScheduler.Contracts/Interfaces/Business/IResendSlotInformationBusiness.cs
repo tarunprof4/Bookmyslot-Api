@@ -1,11 +1,11 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface IResendSlotInformationBusiness
     {
-        Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo);
+        Task<Result<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo);
     }
 }

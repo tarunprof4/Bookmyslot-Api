@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Email;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
+﻿using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Business;
 using Bookmyslot.BackgroundTasks.Api.Emails;
+using Bookmyslot.SharedKernel.Contracts.Email;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.BackgroundTasks.Api.Business
@@ -15,25 +15,25 @@ namespace Bookmyslot.BackgroundTasks.Api.Business
             this.emailInteraction = emailInteraction;
         }
 
-        public async Task<Response<bool>> SendCustomerRegisteredNotification(CustomerModel customerModel)
+        public async Task<Result<bool>> SendCustomerRegisteredNotification(CustomerModel customerModel)
         {
             var emailModel = CustomerEmailTemplateFactory.GetCustomerRegistrationWelcomeEmailTemplate(customerModel);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
-        public async Task<Response<bool>> SlotCancelledNotificatiion(SlotModel slotModel, CustomerModel cancelledBy, CustomerModel notCancelledBy)
+        public async Task<Result<bool>> SlotCancelledNotificatiion(SlotModel slotModel, CustomerModel cancelledBy, CustomerModel notCancelledBy)
         {
             var emailModel = CustomerEmailTemplateFactory.SlotCancelledEmailTemplate(slotModel, cancelledBy, notCancelledBy);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
-        public async Task<Response<bool>> SlotMeetingInformationNotification(SlotModel slotModel, CustomerModel resendTo)
+        public async Task<Result<bool>> SlotMeetingInformationNotification(SlotModel slotModel, CustomerModel resendTo)
         {
             var emailModel = CustomerEmailTemplateFactory.SlotMeetingInformationTemplate(slotModel, resendTo);
             return await this.emailInteraction.SendEmail(emailModel);
         }
 
-        public async Task<Response<bool>> SlotScheduledNotificatiion(SlotModel slotModel, CustomerModel createdBy, CustomerModel bookedBy)
+        public async Task<Result<bool>> SlotScheduledNotificatiion(SlotModel slotModel, CustomerModel createdBy, CustomerModel bookedBy)
         {
             var createdByEmailModel = CustomerEmailTemplateFactory.SlotScheduledEmailTemplate(slotModel, createdBy, bookedBy);
 

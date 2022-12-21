@@ -1,10 +1,11 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
@@ -36,7 +37,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             slotModel.Title = slotModel.Title.Trim();
             slotModel.BookedBy = string.Empty;
         }
-        public async Task<Response<string>> CreateSlot(SlotModel slotModel, string createdBy)
+        public async Task<Result<string>> CreateSlot(SlotModel slotModel, string createdBy)
         {
             slotModel.CreatedBy = createdBy;
 
@@ -52,16 +53,16 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             }
 
             else
-                return Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+                return Result<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
         }
 
 
 
-        public async Task<Response<bool>> CancelSlot(string slotId, string cancelledBy)
+        public async Task<Result<bool>> CancelSlot(string slotId, string cancelledBy)
         {
             if (string.IsNullOrWhiteSpace(slotId))
             {
-                return Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
+                return Result<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
             }
 
             var checkSlotExistsResponse = await CheckIfSlotExists(slotId);
@@ -72,17 +73,17 @@ namespace Bookmyslot.Api.SlotScheduler.Business
                 var cancelledSlotModel = CreateCancelledSlotModel(slotModel, cancelledBy);
 
                 var cancelledByCustomerModel = await this.customerBusiness.GetCustomerById(cancelledBy);
-                cancelledSlotModel.SlotCancelled(cancelledByCustomerModel.Result);
+                cancelledSlotModel.SlotCancelled(cancelledByCustomerModel.Value);
 
                 var cancelSlotTask = slotStatus == SlotConstants.DeleteSlot ? this.slotRepository.DeleteSlot(slotModel.Id) :
                    this.slotRepository.UpdateSlotBooking(slotModel);
                 var createCancelledSlotTask = this.customerCancelledSlotRepository.CreateCustomerCancelledSlot(cancelledSlotModel);
 
                 await Task.WhenAll(cancelSlotTask, createCancelledSlotTask);
-                return new Response<bool>() { Result = true };
+                return new Result<bool>() { Value = true };
             }
 
-            return Response<bool>.Empty(new List<string>() { AppBusinessMessagesConstants.SlotIdDoesNotExists });
+            return Result<bool>.Empty(new List<string>() { AppBusinessMessagesConstants.SlotIdDoesNotExists });
         }
 
         private CancelledSlotModel CreateCancelledSlotModel(SlotModel slotModel, string cancelledBy)
@@ -101,11 +102,11 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             };
         }
 
-        public async Task<Response<SlotModel>> GetSlot(string slotId)
+        public async Task<Result<SlotModel>> GetSlot(string slotId)
         {
             if (string.IsNullOrWhiteSpace(slotId))
             {
-                return Response<SlotModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
+                return Result<SlotModel>.ValidationError(new List<string>() { AppBusinessMessagesConstants.SlotIdInvalid });
             }
 
             return await this.slotRepository.GetSlot(slotId);
@@ -116,9 +117,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         {
             var slotModelResponse = await this.slotRepository.GetSlot(slotId);
             if (slotModelResponse.ResultType == ResultType.Success)
-                return new Tuple<bool, SlotModel>(true, slotModelResponse.Result);
+                return new Tuple<bool, SlotModel>(true, slotModelResponse.Value);
 
-            return new Tuple<bool, SlotModel>(false, slotModelResponse.Result);
+            return new Tuple<bool, SlotModel>(false, slotModelResponse.Value);
         }
 
 

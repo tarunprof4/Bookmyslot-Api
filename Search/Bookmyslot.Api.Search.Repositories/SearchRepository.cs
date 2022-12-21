@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Compression;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Search.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
+using Bookmyslot.SharedKernel.Contracts.Compression;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.Search.Repositories
             this.compression = compression;
         }
 
-        public async Task<Response<T>> GetPreProcessedSearchedResponse<T>(string searchType, string searchKey)
+        public async Task<Result<T>> GetPreProcessedSearchedResponse<T>(string searchType, string searchKey)
         {
 
             var parameters = new { SearchKey = CreateSearchKey(searchType, searchKey) };
@@ -37,13 +37,13 @@ namespace Bookmyslot.Api.Search.Repositories
             if (compressedSearchedCustomers != null)
             {
                 var deCompressedSearchCustomerModels = this.compression.Decompress<T>(compressedSearchedCustomers.Value);
-                return new Response<T>() { Result = deCompressedSearchCustomerModels };
+                return new Result<T>() { Value = deCompressedSearchCustomerModels };
             }
 
-            return Response<T>.Empty(new List<string>() { AppBusinessMessagesConstants.NoCustomerSearchResults });
+            return Result<T>.Empty(new List<string>() { AppBusinessMessagesConstants.NoCustomerSearchResults });
         }
 
-        public async Task<Response<bool>> SavePreProcessedSearchedResponse<T>(string searchType, string searchKey, T response)
+        public async Task<Result<bool>> SavePreProcessedSearchedResponse<T>(string searchType, string searchKey, T response)
         {
             var parameters = new
             {
@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Search.Repositories
 
             var searchCustomerEntities = await this.dbInterceptor.GetQueryResults("SavePreProcessedSearchedCustomers", parameters, () => this.connection.ExecuteAsync(sql, parameters));
 
-            return new Response<bool>() { Result = true };
+            return new Result<bool>() { Value = true };
         }
 
 

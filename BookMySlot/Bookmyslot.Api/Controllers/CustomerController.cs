@@ -44,7 +44,7 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var currentUserViewModelResponse = CurrentUserViewModel.CreateCurrentUserViewModel(currentUserResponse.Result);
+            var currentUserViewModelResponse = CurrentUserViewModel.CreateCurrentUserViewModel(currentUserResponse.Value);
             return this.CreateGetHttpResponse(currentUserViewModelResponse);
         }
     }

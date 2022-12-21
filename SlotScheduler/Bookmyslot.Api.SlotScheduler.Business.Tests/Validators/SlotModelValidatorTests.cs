@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.SlotScheduler.Business.Validations;
+﻿using Bookmyslot.Api.SlotScheduler.Business.Validations;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Helpers;
 using FluentValidation;
 using NodaTime;
 using NUnit.Framework;
@@ -45,9 +45,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests.Validators
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.SlotDurationInvalid));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidSlotDate));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotEndTimeInvalid));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotDurationInvalid));
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests.Validators
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.InValidSlotDate));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.SlotEndTimeInvalid));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.SlotDurationInvalid));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidSlotDate));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotEndTimeInvalid));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.SlotDurationInvalid));
         }
 
 
@@ -70,7 +70,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business.Tests.Validators
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.DayLightSavinngDateNotAllowed));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.DayLightSavinngDateNotAllowed));
         }
 
         [Test]

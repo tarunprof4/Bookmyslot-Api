@@ -1,12 +1,12 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.File.Contracts.Configuration;
 using Bookmyslot.Api.File.Contracts.Constants;
 using Bookmyslot.Api.File.Contracts.Interfaces;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.Tests
             fileConfigurationBusinessMock = new Mock<IFileConfigurationBusiness>();
             profilePictureController = new ProfilePictureController(profileSettingsBusinessMock.Object, currentUserMock.Object, fileConfigurationBusinessMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = ValidFirstName } };
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>() { Value = new CurrentUserModel() { Id = CustomerId, FirstName = ValidFirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -64,7 +64,7 @@ namespace Bookmyslot.Api.Tests
         public async Task UpdateProfilePicture_InValidProfilePicture_ReturnsValidationResponse()
         {
             fileConfigurationBusinessMock.Setup(a => a.GetImageConfigurationInformation()).Returns(DefaultImageConfigurationSingleton());
-            Response<string> profileSettingsBusinessMockResponse = new Response<string>() { Result = "Uri" };
+            Result<string> profileSettingsBusinessMockResponse = new Result<string>() { Value = "Uri" };
             profileSettingsBusinessMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             IFormFile file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file")), 0, 0, "Data", "dummy.txt");

@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Web.Filters;
+﻿using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -54,7 +54,7 @@ namespace Bookmyslot.Api.Controllers
                 return this.CreatePostHttpResponse(customerResponse);
             }
 
-            var validationResponse = Response<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Result<string>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePostHttpResponse(validationResponse);
         }
 

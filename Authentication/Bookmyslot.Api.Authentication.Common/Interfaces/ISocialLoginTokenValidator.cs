@@ -1,13 +1,12 @@
-﻿
-using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface ISocialLoginTokenValidator
     {
-        Task<Response<SocialCustomerModel>> LoginWithGoogle(string idToken);
+        Task<Result<SocialCustomerModel>> LoginWithGoogle(string idToken);
 
-        Task<Response<SocialCustomerModel>> LoginWithFacebook(string authToken);
+        Task<Result<SocialCustomerModel>> LoginWithFacebook(string authToken);
     }
 }

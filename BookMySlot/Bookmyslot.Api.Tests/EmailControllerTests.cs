@@ -1,12 +1,12 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -42,7 +42,7 @@ namespace Bookmyslot.Api.Tests
             emailController = new EmailController(symmetryEncryptionMock.Object, resendSlotInformationBusinessMock.Object,
                 currentUserMock.Object, resendSlotInformationViewModelValidatorMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>() { Value = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -94,7 +94,7 @@ namespace Bookmyslot.Api.Tests
             resendSlotInformationViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<ResendSlotInformationViewModel>())).Returns(new ValidationResult());
             var resendSlotInformationViewModel = new ResendSlotInformationViewModel() { ResendSlotModel = ValidResendSlotModel };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(resendSlotInformationViewModel));
-            Response<bool> resendSlotInformationBusinessMockResponse = new Response<bool>() { Result = true };
+            Result<bool> resendSlotInformationBusinessMockResponse = new Result<bool>() { Value = true };
             resendSlotInformationBusinessMock.Setup(a => a.ResendSlotMeetingInformation(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(resendSlotInformationBusinessMockResponse));
 
             var response = await emailController.ResendSlotMeetingInformation(resendSlotInformationViewModel);

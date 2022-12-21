@@ -1,11 +1,11 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface ICurrentUser
     {
-        Task<Response<CurrentUserModel>> GetCurrentUserFromCache();
+        Task<Result<CurrentUserModel>> GetCurrentUserFromCache();
 
         Task SetCurrentUserInCache(string email);
     }

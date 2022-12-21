@@ -1,6 +1,5 @@
-using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using Newtonsoft.Json;
@@ -61,9 +60,9 @@ namespace Bookmyslot.Api.Cache.Business.Tests
 
 
 
-        private Task<Response<string>> Invoke(string name)
+        private Task<Result<string>> Invoke(string name)
         {
-            var response = new Response<string>() { Result = name };
+            var response = new Result<string>() { Value = name };
             return Task.FromResult(response);
         }
 

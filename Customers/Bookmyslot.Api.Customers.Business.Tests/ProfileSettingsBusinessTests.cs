@@ -1,7 +1,8 @@
 using Bookmyslot.Api.Azure.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
@@ -55,7 +56,7 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task UpdateProfilePicture_InValidFile_ReturnsSuccessResponse()
         {
-            Response<string> blobRepositoryResponseMock = new Response<string>() { ResultType = ResultType.ValidationError };
+            Result<string> blobRepositoryResponseMock = new Result<string>() { ResultType = ResultType.ValidationError };
             blobRepositoryMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(blobRepositoryResponseMock));
 
             var profilePictureResponse = await profileSettingsBusiness.UpdateProfilePicture(null, CUSTOMERID, FIRSTNAME);
@@ -68,9 +69,9 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         [Test]
         public async Task UpdateProfilePicture_ValidFile_ReturnsSuccessResponse()
         {
-            Response<string> blobRepositoryResponseMock = new Response<string>() { ResultType = ResultType.Success };
+            Result<string> blobRepositoryResponseMock = new Result<string>() { ResultType = ResultType.Success };
             blobRepositoryMock.Setup(a => a.UpdateProfilePicture(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(blobRepositoryResponseMock));
-            Response<bool> profileSettingRepositoryResponseMock = new Response<bool>() { ResultType = ResultType.Success };
+            Result<bool> profileSettingRepositoryResponseMock = new Result<bool>() { ResultType = ResultType.Success };
             profileSettingRepositoryMock.Setup(a => a.UpdateProfilePicture(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingRepositoryResponseMock));
 
             var profilePictureResponse = await profileSettingsBusiness.UpdateProfilePicture(null, CUSTOMERID, FIRSTNAME);

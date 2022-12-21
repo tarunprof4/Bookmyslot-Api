@@ -1,7 +1,7 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Event;
-using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Event;
+using Bookmyslot.SharedKernel.Helpers;
 using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Business.IntegrationEvents

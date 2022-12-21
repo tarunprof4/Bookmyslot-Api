@@ -1,11 +1,11 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -39,7 +39,7 @@ namespace Bookmyslot.Api.Tests
             customerSettingsController = new CustomerSettingsController(customerSettingsBusinessMock.Object, currentUserMock.Object,
                 customerSettingsViewModelValidatorMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>() { Value = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -47,7 +47,7 @@ namespace Bookmyslot.Api.Tests
         [Test]
         public async Task GetCustomerSettings_ReturnsSuccessResponse()
         {
-            Response<CustomerSettingsModel> customerSettingsMockResponse = new Response<CustomerSettingsModel>() { Result = DefaultCustomerSettingsModel() };
+            Result<CustomerSettingsModel> customerSettingsMockResponse = new Result<CustomerSettingsModel>() { Value = DefaultCustomerSettingsModel() };
             customerSettingsBusinessMock.Setup(a => a.GetCustomerSettings(It.IsAny<string>())).Returns(Task.FromResult(customerSettingsMockResponse));
 
             var response = await customerSettingsController.Get();
@@ -87,7 +87,7 @@ namespace Bookmyslot.Api.Tests
         public async Task UpdateCustomerSettings_ValidCustomerSettingsViewModel_ReturnsValidationResponse()
         {
             customerSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<CustomerSettingsViewModel>())).Returns(new ValidationResult());
-            Response<bool> customerSettingsMockResponse = new Response<bool>() { Result = true };
+            Result<bool> customerSettingsMockResponse = new Result<bool>() { Value = true };
             customerSettingsBusinessMock.Setup(a => a.UpdateCustomerSettings(It.IsAny<string>(), It.IsAny<CustomerSettingsModel>())).Returns(Task.FromResult(customerSettingsMockResponse));
 
             var response = await customerSettingsController.Put(new CustomerSettingsViewModel() { Country = ValidCountry, TimeZone = ValidTimeZone });

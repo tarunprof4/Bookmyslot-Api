@@ -1,9 +1,9 @@
 ﻿using Bookmyslot.Api.Azure.Contracts.Configuration;
-using Bookmyslot.Api.Common.Contracts.Event;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.EventGrid;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Logging.Constants;
-using Bookmyslot.Api.Common.Logging.Contracts;
+using Bookmyslot.SharedKernel.Contracts.EventGrid;
+using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.Event;
+using Bookmyslot.SharedKernel.Logging.Constants;
+using Bookmyslot.SharedKernel.Logging.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.EventGrid;
 using Microsoft.Azure.EventGrid.Models;

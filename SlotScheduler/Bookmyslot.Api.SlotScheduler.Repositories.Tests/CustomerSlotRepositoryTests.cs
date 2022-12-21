@@ -1,7 +1,8 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -58,7 +59,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             var customersResponse = await customerSlotRepository.GetDistinctCustomersNearestSlotFromToday(DefaultPageParameterModel());
 
-            foreach (var customerResponse in customersResponse.Result)
+            foreach (var customerResponse in customersResponse.Value)
             {
                 Assert.AreEqual(customerResponse, CreatedBy);
             }
@@ -87,7 +88,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             var slotModelResponse = await customerSlotRepository.GetCustomerAvailableSlots(DefaultPageParameterModel(), Email);
 
-            foreach (var slotModel in slotModelResponse.Result)
+            foreach (var slotModel in slotModelResponse.Value)
             {
                 Assert.AreEqual(slotModel.Id, Id);
                 Assert.AreEqual(slotModel.Title, Title);
@@ -140,7 +141,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
         private PageParameterModel DefaultPageParameterModel()
         {
-            return new PageParameterModel();
+            return new PageParameterModel(0, 0);
         }
 
 

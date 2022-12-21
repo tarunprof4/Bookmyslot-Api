@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.Api.Common.Logging.Constants;
+﻿using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.Logging.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;

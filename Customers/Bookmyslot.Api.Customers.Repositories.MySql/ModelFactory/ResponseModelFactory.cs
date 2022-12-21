@@ -1,7 +1,7 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
+﻿using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Collections.Generic;
 
 namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
@@ -9,71 +9,71 @@ namespace Bookmyslot.Api.Customers.Repositories.ModelFactory
     internal class ResponseModelFactory
     {
 
-        internal static Response<ProfileSettingsModel> CreateProfileSettingsModelResponse(RegisterCustomerEntity registerCustomerEntity)
+        internal static Result<ProfileSettingsModel> CreateProfileSettingsModelResponse(RegisterCustomerEntity registerCustomerEntity)
         {
             if (registerCustomerEntity == null)
             {
-                return Response<ProfileSettingsModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
+                return Result<ProfileSettingsModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
             }
 
             var customerModel = ModelFactory.CreateProfileSettingsModel(registerCustomerEntity);
-            return Response<ProfileSettingsModel>.Success(customerModel);
+            return Result<ProfileSettingsModel>.Success(customerModel);
         }
 
-        internal static Response<AdditionalProfileSettingsModel> CreateAdditionalProfileSettingsModelResponse(RegisterCustomerEntity registerCustomerEntity)
+        internal static Result<AdditionalProfileSettingsModel> CreateAdditionalProfileSettingsModelResponse(RegisterCustomerEntity registerCustomerEntity)
         {
             if (registerCustomerEntity == null)
             {
-                return Response<AdditionalProfileSettingsModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
+                return Result<AdditionalProfileSettingsModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
             }
 
             var additionalProfileSettingsModel = ModelFactory.CreateAdditionalProfileSettingsModel(registerCustomerEntity);
-            return Response<AdditionalProfileSettingsModel>.Success(additionalProfileSettingsModel);
+            return Result<AdditionalProfileSettingsModel>.Success(additionalProfileSettingsModel);
         }
 
 
 
-        internal static Response<CustomerModel> CreateCustomerModelResponse(RegisterCustomerEntity registerCustomerEntity)
+        internal static Result<CustomerModel> CreateCustomerModelResponse(RegisterCustomerEntity registerCustomerEntity)
         {
             if (registerCustomerEntity == null)
             {
-                return Response<CustomerModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
+                return Result<CustomerModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
             }
 
             var customerModel = ModelFactory.CreateCustomerModel(registerCustomerEntity);
-            return Response<CustomerModel>.Success(customerModel);
+            return Result<CustomerModel>.Success(customerModel);
         }
 
-        internal static Response<List<CustomerModel>> CreateCustomerModelsResponse(IEnumerable<RegisterCustomerEntity> registerCustomerEntities)
+        internal static Result<List<CustomerModel>> CreateCustomerModelsResponse(IEnumerable<RegisterCustomerEntity> registerCustomerEntities)
         {
             var customerModels = ModelFactory.CreateCustomerModels(registerCustomerEntities);
             if (customerModels.Count == 0)
             {
-                return Response<List<CustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
+                return Result<List<CustomerModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound });
             }
 
-            return new Response<List<CustomerModel>>() { Result = customerModels };
+            return new Result<List<CustomerModel>>() { Value = customerModels };
         }
 
-        internal static Response<string> CreateCustomerIdResponse(RegisterCustomerEntity registerCustomerEntity)
+        internal static Result<string> CreateCustomerIdResponse(RegisterCustomerEntity registerCustomerEntity)
         {
             if (registerCustomerEntity == null)
             {
-                return Response<string>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
+                return Result<string>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerNotFound });
             }
 
-            return new Response<string>() { Result = registerCustomerEntity.Id };
+            return new Result<string>() { Value = registerCustomerEntity.Id };
         }
 
-        internal static Response<CustomerSettingsModel> CreateCustomerSettingsModelResponse(CustomerSettingsEntity customerSettingsEntity)
+        internal static Result<CustomerSettingsModel> CreateCustomerSettingsModelResponse(CustomerSettingsEntity customerSettingsEntity)
         {
             if (customerSettingsEntity == null)
             {
-                return Response<CustomerSettingsModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerSettingsNotFound });
+                return Result<CustomerSettingsModel>.Empty(new List<string>() { AppBusinessMessagesConstants.CustomerSettingsNotFound });
             }
 
             var customerSettingsModel = ModelFactory.CreateCustomerSettingsModel(customerSettingsEntity);
-            return Response<CustomerSettingsModel>.Success(customerSettingsModel);
+            return Result<CustomerSettingsModel>.Success(customerSettingsModel);
         }
     }
 

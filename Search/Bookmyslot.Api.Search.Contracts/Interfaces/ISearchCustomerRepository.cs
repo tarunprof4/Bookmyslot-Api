@@ -1,4 +1,4 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel.ValueObject;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,8 +6,8 @@ namespace Bookmyslot.Api.Search.Contracts.Interfaces
 {
     public interface ISearchCustomerRepository
     {
-        Task<Response<SearchCustomerModel>> SearchCustomersByUserName(string userName);
-        Task<Response<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel);
-        Task<Response<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel);
+        Task<Result<SearchCustomerModel>> SearchCustomersByUserName(string userName);
+        Task<Result<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel);
+        Task<Result<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel);
     }
 }

@@ -1,11 +1,11 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
+﻿using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
 using Bookmyslot.Api.SlotScheduler.Repositories.ModelFactory;
 using Bookmyslot.Api.SlotScheduler.Repositories.Queries;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Event;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
@@ -25,7 +25,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             this.eventDispatcher = eventDispatcher;
         }
 
-        public async Task<Response<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel)
+        public async Task<Result<bool>> CreateCustomerCancelledSlot(CancelledSlotModel cancelledSlotModel)
         {
             var cancelledSlotEntity = EntityFactory.EntityFactory.CreateCancelledSlotEntity(cancelledSlotModel);
 
@@ -51,11 +51,11 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
             await this.dbInterceptor.GetQueryResults("CreateCustomerCancelledSlot", parameters, () => this.connection.ExecuteAsync(sql, parameters));
             await this.eventDispatcher.DispatchEvents(cancelledSlotModel.Events);
 
-            return new Response<bool>() { Result = true };
+            return new Result<bool>() { Value = true };
         }
 
 
-        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerSharedCancelledSlots(string customerId)
+        public async Task<Result<IEnumerable<CancelledSlotModel>>> GetCustomerSharedCancelledSlots(string customerId)
         {
             var parameters = new { IsDeleted = true, CancelledBy = customerId };
             var sql = CancelledSlotTableQueries.GetCustomerSharedByCancelledSlotsQuery;
@@ -67,7 +67,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
 
 
-        public async Task<Response<IEnumerable<CancelledSlotModel>>> GetCustomerBookedCancelledSlots(string customerId)
+        public async Task<Result<IEnumerable<CancelledSlotModel>>> GetCustomerBookedCancelledSlots(string customerId)
         {
             var parameters = new { IsDeleted = true, CancelledBy = customerId, BookedBy = customerId };
             var sql = CancelledSlotTableQueries.GetCustomerBookedByCancelledSlotsQuery;

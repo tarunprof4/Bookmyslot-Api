@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
+﻿using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Authentication.Common.Interfaces
 {
     public interface IGoogleTokenValidator
     {
-        Task<Response<SocialCustomerModel>> ValidateToken(string idToken);
+        Task<Result<SocialCustomerModel>> ValidateToken(string idToken);
     }
 }

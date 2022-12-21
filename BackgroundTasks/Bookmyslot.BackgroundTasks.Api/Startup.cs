@@ -1,10 +1,10 @@
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
 using Bookmyslot.Api.Common.Web.ExceptionHandlers;
 using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Configuration;
 using Bookmyslot.BackgroundTasks.Api.Injections;
 using Bookmyslot.BackgroundTasks.Api.Logging.Enrichers;
 using Bookmyslot.Bookmyslot.Api.Common.Search.Constants;
+using Bookmyslot.SharedKernel.Contracts.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

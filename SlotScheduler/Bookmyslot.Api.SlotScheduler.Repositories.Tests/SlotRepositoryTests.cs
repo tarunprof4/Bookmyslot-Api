@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Event;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             var slotModelResponse = await slotRepository.DeleteSlot(DefaultSlotModel().Id);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelResponse.Result, true);
+            Assert.AreEqual(slotModelResponse.Value, true);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 
@@ -94,7 +94,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<SlotEntity>>>())).Returns(Task.FromResult(slotEntity));
 
             var slotModelResponse = await slotRepository.GetSlot(Guid.NewGuid().ToString());
-            var slotModel = slotModelResponse.Result;
+            var slotModel = slotModelResponse.Value;
             Assert.AreEqual(slotModel.Id, Id);
             Assert.AreEqual(slotModel.Title, Title);
             Assert.AreEqual(slotModel.CreatedBy, CreatedBy);
@@ -117,7 +117,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             var slotModelResponse = await slotRepository.UpdateSlotBooking(slotModel);
 
             Assert.AreEqual(slotModelResponse.ResultType, ResultType.Success);
-            Assert.AreEqual(slotModelResponse.Result, true);
+            Assert.AreEqual(slotModelResponse.Value, true);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<int>>>()), Times.Once);
         }
 

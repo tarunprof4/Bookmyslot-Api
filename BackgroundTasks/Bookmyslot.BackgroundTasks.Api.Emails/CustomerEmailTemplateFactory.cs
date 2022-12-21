@@ -1,6 +1,6 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
+﻿using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Emails.ViewModels;
+using Bookmyslot.SharedKernel;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.Collections.Generic;

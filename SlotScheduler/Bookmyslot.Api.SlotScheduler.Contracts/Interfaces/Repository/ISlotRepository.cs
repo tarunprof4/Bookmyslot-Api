@@ -1,14 +1,14 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface ISlotRepository
     {
-        Task<Response<SlotModel>> GetSlot(string slotId);
-        Task<Response<string>> CreateSlot(SlotModel slotModel);
-        Task<Response<bool>> UpdateSlotBooking(SlotModel slotModel);
-        Task<Response<bool>> DeleteSlot(string slotId);
+        Task<Result<SlotModel>> GetSlot(string slotId);
+        Task<Result<string>> CreateSlot(SlotModel slotModel);
+        Task<Result<bool>> UpdateSlotBooking(SlotModel slotModel);
+        Task<Result<bool>> DeleteSlot(string slotId);
     }
 }

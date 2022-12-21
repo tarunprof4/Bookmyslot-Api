@@ -1,10 +1,10 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -44,14 +44,14 @@ namespace Bookmyslot.Api.Tests
             profileSettingsController = new ProfileSettingsController(profileSettingsBusinessMock.Object, currentUserMock.Object,
                 profileSettingsViewModelValidatorMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = ValidFirstName } };
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>() { Value = new CurrentUserModel() { Id = CustomerId, FirstName = ValidFirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
         [Test]
         public async Task GetProfileSettings_ReturnsSuccessResponse()
         {
-            Response<ProfileSettingsModel> profileSettingsBusinessMockResponse = new Response<ProfileSettingsModel>() { Result = DefaultValidProfileSettingModel() };
+            Result<ProfileSettingsModel> profileSettingsBusinessMockResponse = new Result<ProfileSettingsModel>() { Value = DefaultValidProfileSettingModel() };
             profileSettingsBusinessMock.Setup(a => a.GetProfileSettingsByCustomerId(It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             var response = await profileSettingsController.Get();
@@ -92,7 +92,7 @@ namespace Bookmyslot.Api.Tests
         public async Task UpdateProfileSettings_ValidProfileSettings_ReturnsSuccessResponse()
         {
             profileSettingsViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<ProfileSettingsViewModel>())).Returns(new ValidationResult());
-            Response<bool> profileSettingsBusinessMockResponse = new Response<bool>() { Result = true };
+            Result<bool> profileSettingsBusinessMockResponse = new Result<bool>() { Value = true };
             profileSettingsBusinessMock.Setup(a => a.UpdateProfileSettings(It.IsAny<ProfileSettingsModel>(), It.IsAny<string>())).Returns(Task.FromResult(profileSettingsBusinessMockResponse));
 
             var response = await profileSettingsController.Put(DefaultValidProfileSettingViewModel()); ;

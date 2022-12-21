@@ -1,6 +1,7 @@
 ﻿using Bookmyslot.Api.Cache.Business;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
 using Bookmyslot.Api.Common.Contracts.Configuration;
+using Bookmyslot.SharedKernel.Contracts.Cache;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookmyslot.Api.Injections

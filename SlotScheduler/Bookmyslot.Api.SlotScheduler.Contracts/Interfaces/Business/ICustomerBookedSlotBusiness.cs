@@ -1,5 +1,5 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,10 +7,10 @@ namespace Bookmyslot.Api.SlotScheduler.Contracts.Interfaces
 {
     public interface ICustomerBookedSlotBusiness
     {
-        Task<Response<BookedSlotModel>> GetCustomerBookedSlots(string customerId);
+        Task<Result<BookedSlotModel>> GetCustomerBookedSlots(string customerId);
 
-        Task<Response<BookedSlotModel>> GetCustomerCompletedSlots(string customerId);
+        Task<Result<BookedSlotModel>> GetCustomerCompletedSlots(string customerId);
 
-        Task<Response<IEnumerable<CancelledSlotInformationModel>>> GetCustomerCancelledSlots(string customerId);
+        Task<Result<IEnumerable<CancelledSlotInformationModel>>> GetCustomerCancelledSlots(string customerId);
     }
 }

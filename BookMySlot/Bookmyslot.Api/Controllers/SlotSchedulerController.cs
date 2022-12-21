@@ -1,12 +1,12 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -56,15 +56,15 @@ namespace Bookmyslot.Api.Controllers
                 {
                     var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
 
-                    var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel, currentUserResponse.Result.Id);
+                    var slotScheduleResponse = await this.slotSchedulerBusiness.ScheduleSlot(customerSlotModel, currentUserResponse.Value.Id);
                     return this.CreatePostHttpResponse(slotScheduleResponse);
                 }
 
-                var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
+                var validationErrorResponse = Result<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
                 return this.CreatePostHttpResponse(validationErrorResponse);
             }
 
-            var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Result<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePostHttpResponse(validationResponse);
         }
 

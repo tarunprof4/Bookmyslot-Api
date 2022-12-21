@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Customers.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.Contracts.Event;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.SlotScheduler.Business
@@ -17,13 +17,13 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             this.customerBusiness = customerBusiness;
         }
 
-        public async Task<Response<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo)
+        public async Task<Result<bool>> ResendSlotMeetingInformation(SlotModel slotModel, string resendTo)
         {
             var resendToCustomerModel = await this.customerBusiness.GetCustomerById(resendTo);
-            slotModel.ResendSlotMeetingInformation(resendToCustomerModel.Result);
+            slotModel.ResendSlotMeetingInformation(resendToCustomerModel.Value);
             await this.eventDispatcher.DispatchEvents(slotModel.Events);
 
-            return new Response<bool>() { Result = true };
+            return new Result<bool>() { Value = true };
         }
     }
 

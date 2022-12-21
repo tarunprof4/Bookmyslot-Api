@@ -1,7 +1,8 @@
 ﻿using Bookmyslot.Api.Azure.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace Bookmyslot.Api.Customers.Business
             this.blobRepository = blobRepository;
         }
 
-        public async Task<Response<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
+        public async Task<Result<bool>> UpdateProfileSettings(ProfileSettingsModel profileSettingsModel, string customerId)
         {
             SanitizeProfileSettingsModel(profileSettingsModel);
             return await this.profileSettingsRepository.UpdateProfileSettings(profileSettingsModel, customerId);
@@ -32,21 +33,21 @@ namespace Bookmyslot.Api.Customers.Business
         }
 
 
-        public async Task<Response<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
+        public async Task<Result<ProfileSettingsModel>> GetProfileSettingsByCustomerId(string customerId)
         {
             return await profileSettingsRepository.GetProfileSettingsByCustomerId(customerId);
         }
 
-        public async Task<Response<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
+        public async Task<Result<string>> UpdateProfilePicture(IFormFile file, string customerId, string firstName)
         {
             var blobUpdateProfilePictureResponse = await this.blobRepository.UpdateProfilePicture(file, customerId, firstName);
 
             if (blobUpdateProfilePictureResponse.ResultType == ResultType.Success)
             {
-                var updateProfileResponse = await this.profileSettingsRepository.UpdateProfilePicture(customerId, blobUpdateProfilePictureResponse.Result);
+                var updateProfileResponse = await this.profileSettingsRepository.UpdateProfilePicture(customerId, blobUpdateProfilePictureResponse.Value);
                 if (updateProfileResponse.ResultType != ResultType.Success)
                 {
-                    return new Response<string>() { ResultType = updateProfileResponse.ResultType, Messages = updateProfileResponse.Messages };
+                    return new Result<string>() { ResultType = updateProfileResponse.ResultType, Messages = updateProfileResponse.Messages };
                 }
             }
 

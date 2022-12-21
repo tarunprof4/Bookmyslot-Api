@@ -1,7 +1,7 @@
-﻿using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Customers.ViewModels.Validations;
+﻿using Bookmyslot.Api.Customers.ViewModels.Validations;
 using Bookmyslot.Api.NodaTime.Contracts.Configuration;
 using Bookmyslot.Api.NodaTime.Interfaces;
+using Bookmyslot.SharedKernel.Constants;
 using FluentValidation;
 using Moq;
 using NUnit.Framework;
@@ -41,7 +41,7 @@ namespace Bookmyslot.Api.Customers.ViewModels.Tests.ValidatorTests
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.CustomerSettingsMissing));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.CustomerSettingsMissing));
         }
 
 
@@ -52,8 +52,8 @@ namespace Bookmyslot.Api.Customers.ViewModels.Tests.ValidatorTests
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.CountryRequired));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.TimeZoneRequired));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.CountryRequired));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.TimeZoneRequired));
         }
 
         [Test]
@@ -63,8 +63,8 @@ namespace Bookmyslot.Api.Customers.ViewModels.Tests.ValidatorTests
             var validationErrorMessages = validationResult.Errors.Select(a => a.ErrorMessage).ToList();
 
             Assert.IsFalse(validationResult.IsValid);
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.InValidCountry));
-            Assert.IsTrue(validationErrorMessages.Contains(AppBusinessMessagesConstants.InValidTimeZone));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidCountry));
+            Assert.IsTrue(validationErrorMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.InValidTimeZone));
         }
 
         [Test]

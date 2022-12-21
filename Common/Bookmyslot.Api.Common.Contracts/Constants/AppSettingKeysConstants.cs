@@ -10,13 +10,6 @@
         public const string CacheDatabase = "CacheDatabase";
         public const string BlobStorage = "BlobStorage";
 
-
-        public const string EmailSettings = "EmailSettings";
-        public const string EmailSmtpHost = "SmtpHost";
-        public const string EmailPort = "EmailPort";
-        public const string EmailUserName = "EmailUserName";
-        public const string EmailPassword = "EmailPassword";
-
         public const string LogSettings = "LogSettings";
         public const string LogOutPutTemplate = "logoutputTemplate";
         public const string StaticLogOutPutTemplate = "staticLogOutputTemplate";
@@ -50,12 +43,6 @@
         public const string FacebookAuthenticationSettings = "FacebookAuthenticationSettings";
         public const string FacebookTokenValidationUrl = "TokenValidationUrl";
         public const string FacebookUserInfoUrl = "UserInfoUrl";
-
-        public const string EncryptionSettings = "EncryptionSettings";
-        public const string HashSaltLength = "HashSaltLength";
-        public const string SymmetryEncryptionKey = "SymmetryEncryptionKey";
-        public const string SymmetryEncryptionIv = "SymmetryEncryptionIv";
-
 
         public const string AzureSettings = "AzureSettings";
         public const string EventGridSettings = "EventGridSettings";

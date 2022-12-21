@@ -1,10 +1,10 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.ViewModels;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Controllers
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
 
-            var additionalProfileSettingsViewModel = new Response<AdditionalProfileSettingsViewModel>() { Result = new AdditionalProfileSettingsViewModel(currentUserResponse.Result.BioHeadLine) };
+            var additionalProfileSettingsViewModel = new Result<AdditionalProfileSettingsViewModel>() { Value = new AdditionalProfileSettingsViewModel(currentUserResponse.Value.BioHeadLine) };
             return this.CreateGetHttpResponse(additionalProfileSettingsViewModel);
         }
 
@@ -85,12 +85,12 @@ namespace Bookmyslot.Api.Controllers
             if (results.IsValid)
             {
                 var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                var customerId = currentUserResponse.Result.Id;
+                var customerId = currentUserResponse.Value.Id;
 
                 var customerResponse = await this.additionalProfileSettingsBusiness.UpdateAdditionalProfileSettings(customerId, CreateAdditionalProfileSettingsModel(additionalProfileSettingsViewModel));
                 return this.CreatePutHttpResponse(customerResponse);
             }
-            var validationResponse = Response<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Result<bool>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreatePutHttpResponse(validationResponse);
         }
 

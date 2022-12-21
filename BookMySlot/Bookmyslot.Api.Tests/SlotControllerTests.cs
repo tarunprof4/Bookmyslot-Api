@@ -1,13 +1,13 @@
 using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.RequestAdaptors.Interfaces;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -59,7 +59,7 @@ namespace Bookmyslot.Api.Tests
                 slotRequestAdaptorMock.Object, slotViewModelValidatorMock.Object, cancelSlotViewModelValidatorMock.Object);
 
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>() { Value = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -90,7 +90,7 @@ namespace Bookmyslot.Api.Tests
         {
             slotViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<SlotViewModel>())).Returns(new ValidationResult());
             var guid = Guid.NewGuid().ToString();
-            Response<string> slotBusinessMockResponse = new Response<string>() { Result = guid };
+            Result<string> slotBusinessMockResponse = new Result<string>() { Value = guid };
             slotBusinessMock.Setup(a => a.CreateSlot(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
 
             var postResponse = await slotController.Post(DefaultValidSlotViewModel());
@@ -133,7 +133,7 @@ namespace Bookmyslot.Api.Tests
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
-            Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.CorruptData));
+            Assert.IsTrue(validationMessages.Contains(Common.Contracts.Constants.AppBusinessMessagesConstants.CorruptData));
             symmetryEncryptionMock.Verify(a => a.Decrypt(It.IsAny<string>()), Times.Once());
             currentUserMock.Verify((m => m.GetCurrentUserFromCache()), Times.Never());
             slotBusinessMock.Verify((m => m.CancelSlot(It.IsAny<string>(), It.IsAny<string>())), Times.Never());
@@ -147,7 +147,7 @@ namespace Bookmyslot.Api.Tests
             cancelSlotViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<CancelSlotViewModel>())).Returns(new ValidationResult());
             var cancelSlotViewModel = new CancelSlotViewModel() { SlotKey = ValidSlotKey };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(cancelSlotViewModel));
-            Response<bool> slotBusinessMockResponse = new Response<bool>() { Result = true };
+            Result<bool> slotBusinessMockResponse = new Result<bool>() { Value = true };
             slotBusinessMock.Setup(a => a.CancelSlot(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(slotBusinessMockResponse));
 
             var response = await slotController.CancelSlot(cancelSlotViewModel);

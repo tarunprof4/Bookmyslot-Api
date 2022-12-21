@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.SlotScheduler.Domain;
+﻿using Bookmyslot.Api.SlotScheduler.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 
 namespace Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces
 {
     public interface IBookedSlotResponseAdaptor
     {
-        Response<BookedSlotViewModel> CreateBookedSlotViewModel(Response<BookedSlotModel> bookedSlotModelResponse);
+        Result<BookedSlotViewModel> CreateBookedSlotViewModel(Result<BookedSlotModel> bookedSlotModelResponse);
     }
 }

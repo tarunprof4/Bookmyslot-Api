@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Event.Interfaces;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Customers.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Repositories.Queries;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Event;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using System.Data;
 using System.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             this.eventDispatcher = eventDispatcher;
         }
 
-        public async Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
+        public async Task<Result<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel)
         {
             var registerCustomerEntity = EntityFactory.EntityFactory.CreateRegisterCustomerEntity(registerCustomerModel);
             var sql = RegisterCustomerTableQueries.RegisterCustomerQuery;
@@ -44,7 +44,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             await this.eventDispatcher.DispatchEvents(registerCustomerModel.Events);
 
 
-            return new Response<string>() { Result = registerCustomerModel.Email };
+            return new Result<string>() { Value = registerCustomerModel.Email };
         }
 
 

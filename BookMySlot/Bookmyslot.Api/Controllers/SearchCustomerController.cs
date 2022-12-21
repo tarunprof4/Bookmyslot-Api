@@ -1,14 +1,13 @@
-﻿using Bookmyslot.Api.Cache.Contracts;
-using Bookmyslot.Api.Cache.Contracts.Configuration;
+﻿using Bookmyslot.Api.Cache.Contracts.Configuration;
 using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.Search.Contracts;
 using Bookmyslot.Api.Search.Contracts.Constants.cs;
 using Bookmyslot.Api.Search.Contracts.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,17 +52,17 @@ namespace Bookmyslot.Api.Controllers
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {
-                var validationResponse = Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidSearchKey });
+                var validationResponse = Result<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidSearchKey });
                 return this.CreateGetHttpResponse(validationResponse);
             }
 
             if (SearchConstants.SearchCustomerMinKeyLength > searchKey.Length - 1)
             {
-                var validationResponse = Response<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidCustomerSearchKeyMinLength });
+                var validationResponse = Result<List<SearchCustomerModel>>.ValidationError(new List<string>() { AppBusinessMessagesConstants.InValidCustomerSearchKeyMinLength });
                 return this.CreateGetHttpResponse(validationResponse);
             }
 
-            var pageParameterModel = new PageParameterModel() { PageNumber = pageNumber, PageSize = pageSize };
+            var pageParameterModel = new PageParameterModel(pageNumber, pageSize);
 
             var cacheModel = CreateCacheModel(searchKey, pageParameterModel);
 

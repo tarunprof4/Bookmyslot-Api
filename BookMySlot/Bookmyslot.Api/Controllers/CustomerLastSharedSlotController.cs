@@ -1,9 +1,10 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces.Business;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,16 +44,16 @@ namespace Bookmyslot.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-            var customerId = currentUserResponse.Result.Id;
+            var customerId = currentUserResponse.Value.Id;
             var customerLastSlotResponse = await this.customerLastSharedSlotBusiness.GetCustomerLatestSharedSlot(customerId);
             if (customerLastSlotResponse.ResultType == ResultType.Success)
             {
-                var customerLastSharedSlotViewModelResponse = new Response<CustomerLastSharedSlotViewModel>()
-                { Result = CustomerLastSharedSlotViewModel.CreateCurrentUserViewModel(customerLastSlotResponse.Result) };
+                var customerLastSharedSlotViewModelResponse = new Result<CustomerLastSharedSlotViewModel>()
+                { Value = CustomerLastSharedSlotViewModel.CreateCurrentUserViewModel(customerLastSlotResponse.Value) };
                 return this.CreateGetHttpResponse(customerLastSharedSlotViewModelResponse);
             }
 
-            return this.CreateGetHttpResponse(new Response<CustomerLastSharedSlotViewModel>()
+            return this.CreateGetHttpResponse(new Result<CustomerLastSharedSlotViewModel>()
             { ResultType = customerLastSlotResponse.ResultType, Messages = customerLastSlotResponse.Messages });
         }
 

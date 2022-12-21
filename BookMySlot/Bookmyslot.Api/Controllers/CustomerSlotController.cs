@@ -1,19 +1,18 @@
 ﻿using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Cache.Contracts;
 using Bookmyslot.Api.Cache.Contracts.Configuration;
 using Bookmyslot.Api.Cache.Contracts.Constants.cs;
 using Bookmyslot.Api.Cache.Contracts.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
-using Bookmyslot.Api.Common.ViewModels;
-using Bookmyslot.Api.Common.ViewModels.Validations;
 using Bookmyslot.Api.Common.Web.Filters;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
 using Bookmyslot.Api.SlotScheduler.ViewModels.Adaptors.ResponseAdaptors.Interfaces;
 using Bookmyslot.Api.Web.Common;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.Validator;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -90,19 +89,19 @@ namespace Bookmyslot.Api.Controllers
 
                 if (customerSlotModels.ResultType == ResultType.Success)
                 {
-                    var customerViewModelResponse = new Response<IEnumerable<CustomerViewModel>>()
-                    { Result = this.customerResponseAdaptor.CreateCustomerViewModels(customerSlotModels.Result) };
+                    var customerViewModelResponse = new Result<IEnumerable<CustomerViewModel>>()
+                    { Value = this.customerResponseAdaptor.CreateCustomerViewModels(customerSlotModels.Value) };
                     return this.CreateGetHttpResponse(customerViewModelResponse);
 
                 }
-                return this.CreateGetHttpResponse(new Response<IEnumerable<CustomerViewModel>>()
+                return this.CreateGetHttpResponse(new Result<IEnumerable<CustomerViewModel>>()
                 {
                     ResultType = customerSlotModels.ResultType,
                     Messages = customerSlotModels.Messages
                 });
             }
 
-            var validationResponse = Response<CustomerSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Result<CustomerSlotModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreateGetHttpResponse(validationResponse);
         }
 
@@ -147,7 +146,7 @@ namespace Bookmyslot.Api.Controllers
                 if (createdByUser != string.Empty)
                 {
                     var currentUserResponse = await this.currentUser.GetCurrentUserFromCache();
-                    var customerId = currentUserResponse.Result.Id;
+                    var customerId = currentUserResponse.Value.Id;
 
                     var pageParameterModel = CreatePageParameterModel(pageParameterViewModel);
                     var bookAvailableSlotModelResponse = await this.customerSlotBusiness.GetCustomerAvailableSlots(pageParameterModel, customerId, createdByUser);
@@ -156,17 +155,17 @@ namespace Bookmyslot.Api.Controllers
                     return this.CreateGetHttpResponse(bookAvailableSlotViewModelResponse);
                 }
 
-                var validationErrorResponse = Response<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
+                var validationErrorResponse = Result<bool>.ValidationError(new List<string>() { AppBusinessMessagesConstants.CorruptData });
                 return this.CreateGetHttpResponse(validationErrorResponse);
             }
 
-            var validationResponse = Response<BookAvailableSlotViewModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
+            var validationResponse = Result<BookAvailableSlotViewModel>.ValidationError(results.Errors.Select(a => a.ErrorMessage).ToList());
             return this.CreateGetHttpResponse(validationResponse);
         }
 
         private PageParameterModel CreatePageParameterModel(PageParameterViewModel pageParameterViewModel)
         {
-            return new PageParameterModel() { PageNumber = pageParameterViewModel.PageNumber, PageSize = pageParameterViewModel.PageSize };
+            return new PageParameterModel(pageParameterViewModel.PageNumber, pageParameterViewModel.PageSize);
         }
     }
 }

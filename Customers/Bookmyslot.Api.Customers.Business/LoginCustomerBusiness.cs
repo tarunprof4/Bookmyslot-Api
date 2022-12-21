@@ -1,10 +1,11 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Constants;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace Bookmyslot.Api.Customers.Business
             socialCustomerLoginModel.Provider = socialCustomerLoginModel.Provider.Trim().ToLowerInvariant();
         }
 
-        public async Task<Response<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel)
+        public async Task<Result<string>> LoginSocialCustomer(SocialCustomerLoginModel socialCustomerLoginModel)
         {
             ValidationResult results = this.socialLoginCustomerValidator.Validate(socialCustomerLoginModel);
 
@@ -47,7 +48,7 @@ namespace Bookmyslot.Api.Customers.Business
                 var validateTokenResponse = await ValidateSocialCustomerToken(socialCustomerLoginModel);
                 if (validateTokenResponse.ResultType == ResultType.Success)
                 {
-                    var validatedSocialCustomer = validateTokenResponse.Result;
+                    var validatedSocialCustomer = validateTokenResponse.Value;
 
                     var tokenResponse = await AllowLoginOrRegistration(validatedSocialCustomer);
                     if (tokenResponse.ResultType == ResultType.Success)
@@ -57,13 +58,13 @@ namespace Bookmyslot.Api.Customers.Business
                     return tokenResponse;
                 }
 
-                return new Response<string>() { ResultType = ResultType.ValidationError, Messages = validateTokenResponse.Messages };
+                return new Result<string>() { ResultType = ResultType.ValidationError, Messages = validateTokenResponse.Messages };
             }
 
-            return new Response<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
+            return new Result<string>() { ResultType = ResultType.ValidationError, Messages = results.Errors.Select(a => a.ErrorMessage).ToList() };
         }
 
-        private async Task<Response<SocialCustomerModel>> ValidateSocialCustomerToken(SocialCustomerLoginModel socialCustomerLoginModel)
+        private async Task<Result<SocialCustomerModel>> ValidateSocialCustomerToken(SocialCustomerLoginModel socialCustomerLoginModel)
         {
             if (socialCustomerLoginModel.Provider == LoginConstants.ProviderGoogle)
             {
@@ -75,11 +76,11 @@ namespace Bookmyslot.Api.Customers.Business
                 return await this.socialLoginTokenValidator.LoginWithFacebook(socialCustomerLoginModel.AuthToken);
             }
 
-            return new Response<SocialCustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.InValidTokenProvider } };
+            return new Result<SocialCustomerModel>() { ResultType = ResultType.ValidationError, Messages = new List<string>() { AppBusinessMessagesConstants.InValidTokenProvider } };
         }
 
 
-        private async Task<Response<string>> AllowLoginOrRegistration(SocialCustomerModel socialCustomerModel)
+        private async Task<Result<string>> AllowLoginOrRegistration(SocialCustomerModel socialCustomerModel)
         {
             var checkIfCustomerExistsResponse = CheckIfCustomerExists(socialCustomerModel.Email);
             if (checkIfCustomerExistsResponse.Result)
@@ -96,13 +97,13 @@ namespace Bookmyslot.Api.Customers.Business
                 return CreateJwtToken(registerCustomerModel.Email);
             }
 
-            return Response<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
+            return Result<string>.ValidationError(new List<string>() { AppBusinessMessagesConstants.LoginFailed });
         }
 
-        private Response<string> CreateJwtToken(string email)
+        private Result<string> CreateJwtToken(string email)
         {
             var jwtToken = this.jwtTokenProvider.GenerateToken(email);
-            return new Response<string>() { Result = jwtToken };
+            return new Result<string>() { Value = jwtToken };
         }
 
         private RegisterCustomerModel CreateRegisterCustomerModel(SocialCustomerModel socialCustomer)

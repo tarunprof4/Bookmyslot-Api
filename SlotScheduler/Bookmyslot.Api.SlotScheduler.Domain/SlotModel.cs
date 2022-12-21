@@ -1,8 +1,8 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Helpers;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.SlotScheduler.Domain.Constants;
 using Bookmyslot.Api.SlotScheduler.Domain.DomainEvents;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Helpers;
 using NodaTime;
 using System;
 

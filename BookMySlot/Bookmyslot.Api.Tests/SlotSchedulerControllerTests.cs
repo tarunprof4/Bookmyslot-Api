@@ -1,12 +1,12 @@
 ﻿using Bookmyslot.Api.Authentication.Common;
 using Bookmyslot.Api.Authentication.Common.Interfaces;
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Encryption;
 using Bookmyslot.Api.Controllers;
 using Bookmyslot.Api.SlotScheduler.Contracts.Interfaces;
 using Bookmyslot.Api.SlotScheduler.Domain;
 using Bookmyslot.Api.SlotScheduler.ViewModels;
+using Bookmyslot.SharedKernel.Contracts.Encryption;
+using Bookmyslot.SharedKernel.ValueObject;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
@@ -44,7 +44,7 @@ namespace Bookmyslot.Api.Tests
             slotSchedulerController = new SlotSchedulerController(slotSchedulerBusinessMock.Object, symmetryEncryptionMock.Object,
                 currentUserMock.Object, slotSchedulerViewModelValidatorMock.Object);
 
-            Response<CurrentUserModel> currentUserMockResponse = new Response<CurrentUserModel>() { Result = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
+            Result<CurrentUserModel> currentUserMockResponse = new Result<CurrentUserModel>() { Value = new CurrentUserModel() { Id = CustomerId, FirstName = FirstName } };
             currentUserMock.Setup(a => a.GetCurrentUserFromCache()).Returns(Task.FromResult(currentUserMockResponse));
         }
 
@@ -94,7 +94,7 @@ namespace Bookmyslot.Api.Tests
             slotSchedulerViewModelValidatorMock.Setup(a => a.Validate(It.IsAny<SlotSchedulerViewModel>())).Returns(new ValidationResult());
             var slotSchedulerViewModel = new SlotSchedulerViewModel() { SlotModelKey = ValidSlotSchedulerSlotModelKey };
             symmetryEncryptionMock.Setup(a => a.Decrypt(It.IsAny<string>())).Returns(JsonConvert.SerializeObject(slotSchedulerViewModel));
-            Response<bool> slotSchedulerBusinessMockResponse = new Response<bool>() { Result = true };
+            Result<bool> slotSchedulerBusinessMockResponse = new Result<bool>() { Value = true };
             slotSchedulerBusinessMock.Setup(a => a.ScheduleSlot(It.IsAny<SlotModel>(), It.IsAny<string>())).Returns(Task.FromResult(slotSchedulerBusinessMockResponse));
 
             var response = await slotSchedulerController.Post(new SlotSchedulerViewModel() { SlotModelKey = InValidSlotSchedulerSlotModelKey });

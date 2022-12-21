@@ -1,11 +1,11 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Customers.Domain;
+﻿using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using System.Threading.Tasks;
 
 namespace Bookmyslot.Api.Customers.Contracts.Interfaces
 {
     public interface IRegisterCustomerRepository
     {
-        Task<Response<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel);
+        Task<Result<string>> RegisterCustomer(RegisterCustomerModel registerCustomerModel);
     }
 }

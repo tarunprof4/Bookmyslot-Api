@@ -1,7 +1,7 @@
-using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Constants;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
 using Bookmyslot.Api.SlotScheduler.Repositories.Enitites;
+using Bookmyslot.SharedKernel;
+using Bookmyslot.SharedKernel.Constants;
+using Bookmyslot.SharedKernel.Contracts.Database;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -57,7 +57,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             var slotModelResponse = await customerSharedSlotRepository.GetCustomerYetToBeBookedSlots(CustomerId);
 
-            foreach (var slotModel in slotModelResponse.Result)
+            foreach (var slotModel in slotModelResponse.Value)
             {
                 Assert.AreEqual(slotModel.Id, Id);
                 Assert.AreEqual(slotModel.Title, Title);
@@ -93,7 +93,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             var slotModelResponse = await customerSharedSlotRepository.GetCustomerBookedSlots(CustomerId);
 
-            foreach (var slotModel in slotModelResponse.Result)
+            foreach (var slotModel in slotModelResponse.Value)
             {
                 Assert.AreEqual(slotModel.Id, Id);
                 Assert.AreEqual(slotModel.Title, Title);
@@ -128,7 +128,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
 
             var slotModelResponse = await customerSharedSlotRepository.GetCustomerCompletedSlots(CustomerId);
 
-            foreach (var slotModel in slotModelResponse.Result)
+            foreach (var slotModel in slotModelResponse.Value)
             {
                 Assert.AreEqual(slotModel.Id, Id);
                 Assert.AreEqual(slotModel.Title, Title);

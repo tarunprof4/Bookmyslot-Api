@@ -1,6 +1,6 @@
-using Bookmyslot.Api.Common.Contracts;
 using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
+using Bookmyslot.SharedKernel.ValueObject;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -65,11 +65,11 @@ namespace Bookmyslot.Api.Customers.Business.Tests
         public async Task GetCurrentUserByEmail_ValidCustomer_ReturnsCustomerSuccessResponse()
         {
             var customerModel = DefaultCustomerModel();
-            Response<CustomerModel> customerModelResponseMock = new Response<CustomerModel>() { Result = customerModel };
+            Result<CustomerModel> customerModelResponseMock = new Result<CustomerModel>() { Value = customerModel };
             customerRepositoryMock.Setup(a => a.GetCustomerByEmail(It.IsAny<string>())).Returns(Task.FromResult(customerModelResponseMock));
 
             var currentUserModelResponse = await customerBusiness.GetCurrentUserByEmail(EMAIL);
-            var currentUserModel = currentUserModelResponse.Result;
+            var currentUserModel = currentUserModelResponse.Value;
 
             Assert.AreEqual(customerModel.Id, currentUserModel.Id);
             Assert.AreEqual(customerModel.FirstName, currentUserModel.FirstName);

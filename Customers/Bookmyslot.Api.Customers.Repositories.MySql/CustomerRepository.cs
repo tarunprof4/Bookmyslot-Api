@@ -1,10 +1,10 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Customers.Contracts.Interfaces;
+﻿using Bookmyslot.Api.Customers.Contracts.Interfaces;
 using Bookmyslot.Api.Customers.Domain;
 using Bookmyslot.Api.Customers.Repositories.Enitites;
 using Bookmyslot.Api.Customers.Repositories.ModelFactory;
 using Bookmyslot.Api.Customers.Repositories.Queries;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.ValueObject;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         }
 
 
-        public async Task<Response<CustomerModel>> GetCustomerByEmail(string email)
+        public async Task<Result<CustomerModel>> GetCustomerByEmail(string email)
         {
             var parameters = new { Email = email.ToLowerInvariant() };
             var sql = RegisterCustomerTableQueries.GetCustomerByEmailQuery;
@@ -34,7 +34,7 @@ namespace Bookmyslot.Api.Customers.Repositories
         }
 
 
-        public async Task<Response<string>> GetCustomerIdByEmail(string email)
+        public async Task<Result<string>> GetCustomerIdByEmail(string email)
         {
             var parameters = new { Email = email.ToLowerInvariant() };
             var sql = RegisterCustomerTableQueries.GetCustomerIdByEmailQuery;
@@ -43,7 +43,7 @@ namespace Bookmyslot.Api.Customers.Repositories
             return ResponseModelFactory.CreateCustomerIdResponse(registerCustomerEntity);
         }
 
-        public async Task<Response<CustomerModel>> GetCustomerById(string customerId)
+        public async Task<Result<CustomerModel>> GetCustomerById(string customerId)
         {
             var parameters = new { CustomerId = customerId };
             var sql = RegisterCustomerTableQueries.GetCustomerByIdQuery;
@@ -55,7 +55,7 @@ namespace Bookmyslot.Api.Customers.Repositories
 
 
 
-        public async Task<Response<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
+        public async Task<Result<List<CustomerModel>>> GetCustomersByCustomerIds(IEnumerable<string> customerIds)
         {
             var parameters = new { CustomerIds = customerIds };
             var sql = RegisterCustomerTableQueries.GetCustomersByCustomerIdsQuery;

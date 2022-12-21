@@ -1,9 +1,9 @@
-﻿using Bookmyslot.Api.Common.Contracts;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Database;
-using Bookmyslot.Api.Common.Contracts.Infrastructure.Interfaces.Logging;
-using Bookmyslot.BackgroundTasks.Api.Contracts;
+﻿using Bookmyslot.BackgroundTasks.Api.Contracts;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Constants;
 using Bookmyslot.BackgroundTasks.Api.Contracts.Interfaces.Repository;
+using Bookmyslot.SharedKernel.Contracts.Database;
+using Bookmyslot.SharedKernel.Contracts.Logging;
+using Bookmyslot.SharedKernel.ValueObject;
 using Nest;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,26 +21,26 @@ namespace Bookmyslot.BackgroundTasks.Api.Repositories
             this.dbInterceptor = dbInterceptor;
             this.loggerService = loggerService;
         }
-        public async Task<Response<bool>> CreateCustomer(CustomerModel customerModel)
+        public async Task<Result<bool>> CreateCustomer(CustomerModel customerModel)
         {
             return await CreateUpdateCustomer(customerModel, "CreateCustomer", AppBusinessMessagesConstants.CreateCustomerFailed);
         }
 
-        public async Task<Response<bool>> UpdateCustomer(CustomerModel customerModel)
+        public async Task<Result<bool>> UpdateCustomer(CustomerModel customerModel)
         {
             return await CreateUpdateCustomer(customerModel, "UpdateCustomer", AppBusinessMessagesConstants.UpdateCustomerFailed);
         }
 
-        private async Task<Response<bool>> CreateUpdateCustomer(CustomerModel customerModel, string operationName, string operationFailedMessage)
+        private async Task<Result<bool>> CreateUpdateCustomer(CustomerModel customerModel, string operationName, string operationFailedMessage)
         {
             var createCustomerResponse = await this.dbInterceptor.GetQueryResults(operationName, customerModel, () => this.elasticClient.IndexDocumentAsync(customerModel));
             if (createCustomerResponse.IsValid)
             {
-                return new Response<bool>() { Result = true };
+                return new Result<bool>() { Value = true };
             }
 
             this.loggerService.Error(createCustomerResponse.OriginalException, string.Empty);
-            return Response<bool>.Error(new List<string>() { operationFailedMessage });
+            return Result<bool>.Error(new List<string>() { operationFailedMessage });
         }
     }
 }
