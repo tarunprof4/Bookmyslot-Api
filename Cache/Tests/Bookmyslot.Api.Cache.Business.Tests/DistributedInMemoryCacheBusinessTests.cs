@@ -66,9 +66,9 @@ namespace Bookmyslot.Api.Cache.Business.Tests
             return Task.FromResult(response);
         }
 
-        private CacheModel GetDefaultCacheModel()
+        private CacheKeyExpiry GetDefaultCacheModel()
         {
-            var cacheModel = new CacheModel();
+            var cacheModel = new CacheKeyExpiry();
             cacheModel.Key = KEY;
             cacheModel.ExpiryTime = TimeSpan.FromSeconds(20);
             cacheModel.IsSlidingExpiry = false;

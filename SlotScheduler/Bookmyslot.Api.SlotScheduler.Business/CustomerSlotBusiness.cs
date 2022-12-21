@@ -26,7 +26,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
         }
 
 
-        public async Task<Result<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
+        public async Task<Result<List<CustomerSlotModel>>> GetDistinctCustomersNearestSlotFromToday(PageParameter pageParameterModel)
         {
             var allCustomerSlotsResponse = await this.customerSlotRepository.GetDistinctCustomersNearestSlotFromToday(pageParameterModel);
             if (allCustomerSlotsResponse.ResultType == ResultType.Success)
@@ -51,7 +51,7 @@ namespace Bookmyslot.Api.SlotScheduler.Business
             return Result<List<CustomerSlotModel>>.Empty(new List<string>() { AppBusinessMessagesConstants.NoRecordsFound }); ;
         }
 
-        public async Task<Result<BookAvailableSlotModel>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string customerId, string createdBy)
+        public async Task<Result<BookAvailableSlotModel>> GetCustomerAvailableSlots(PageParameter pageParameterModel, string customerId, string createdBy)
         {
             if (string.IsNullOrWhiteSpace(createdBy))
             {

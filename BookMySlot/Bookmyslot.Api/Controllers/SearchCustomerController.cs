@@ -62,7 +62,7 @@ namespace Bookmyslot.Api.Controllers
                 return this.CreateGetHttpResponse(validationResponse);
             }
 
-            var pageParameterModel = new PageParameterModel(pageNumber, pageSize);
+            var pageParameterModel = new PageParameter(pageNumber, pageSize);
 
             var cacheModel = CreateCacheModel(searchKey, pageParameterModel);
 
@@ -73,10 +73,10 @@ namespace Bookmyslot.Api.Controllers
             return this.CreateGetHttpResponse(customerResponse);
         }
 
-        private CacheModel CreateCacheModel(string searchKey, PageParameterModel pageParameterModel)
+        private CacheKeyExpiry CreateCacheModel(string searchKey, PageParameter pageParameterModel)
         {
-            var cacheModel = new CacheModel();
-            var cacheSearchKey = CacheModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
+            var cacheModel = new CacheKeyExpiry();
+            var cacheSearchKey = CacheKeyExpiry.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
             cacheModel.Key = string.Format(CacheConstants.CustomerSearchKey, cacheSearchKey);
             cacheModel.ExpiryTime = TimeSpan.FromSeconds(this.cacheConfiguration.CustomerSearchInSeconds);
             return cacheModel;

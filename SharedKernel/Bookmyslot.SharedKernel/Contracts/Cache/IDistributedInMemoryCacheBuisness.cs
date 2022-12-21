@@ -7,6 +7,6 @@ namespace Bookmyslot.Api.Cache.Contracts.Interfaces
 
     public interface IDistributedInMemoryCacheBuisness
     {
-        Task<Result<T>> GetFromCacheAsync<T>(CacheModel cacheModel, Func<Task<Result<T>>> retrieveValues, bool refresh = false) where T : class;
+        Task<Result<T>> GetFromCacheAsync<T>(CacheKeyExpiry cacheModel, Func<Task<Result<T>>> retrieveValues, bool refresh = false) where T : class;
     }
 }

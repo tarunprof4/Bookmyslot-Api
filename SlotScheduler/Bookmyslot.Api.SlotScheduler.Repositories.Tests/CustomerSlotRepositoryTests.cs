@@ -139,9 +139,9 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories.Tests
             return slotEntities;
         }
 
-        private PageParameterModel DefaultPageParameterModel()
+        private PageParameter DefaultPageParameterModel()
         {
-            return new PageParameterModel(0, 0);
+            return new PageParameter(0, 0);
         }
 
 

@@ -70,7 +70,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel(0, 0));
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameter(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);
@@ -84,7 +84,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameterModel(0, 0));
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByName(SearchByName, new PageParameter(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);
@@ -99,7 +99,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameterModel(0, 0));
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameter(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Empty);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);
@@ -113,7 +113,7 @@ namespace Bookmyslot.Api.Search.Repositories.Tests
             mockSearchResponse.Setup(x => x.Documents).Returns(searchCustomerModels);
             dbInterceptorMock.Setup(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>())).Returns(Task.FromResult(mockSearchResponse.Object));
 
-            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameterModel(0, 0));
+            var searchCustomersModelResponse = await searchCustomerRepository.SearchCustomersByBioHeadLine(SearchByBioHeadLine, new PageParameter(0, 0));
 
             Assert.AreEqual(searchCustomersModelResponse.ResultType, ResultType.Success);
             dbInterceptorMock.Verify(m => m.GetQueryResults(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<Func<Task<ISearchResponse<SearchCustomerModel>>>>()), Times.Once);

@@ -105,9 +105,9 @@ namespace Bookmyslot.Api.Controllers
             return this.CreateGetHttpResponse(validationResponse);
         }
 
-        private CacheModel CreateCacheModel(PageParameterModel pageParameterModel)
+        private CacheKeyExpiry CreateCacheModel(PageParameter pageParameterModel)
         {
-            var cacheModel = new CacheModel();
+            var cacheModel = new CacheKeyExpiry();
             var sha256SaltedHashKey = this.sha256SaltedHash.Create(JsonConvert.SerializeObject(pageParameterModel));
             cacheModel.Key = string.Format(CacheConstants.GetDistinctCustomersNearestSlotFromTodayCacheKey, sha256SaltedHashKey);
 
@@ -163,9 +163,9 @@ namespace Bookmyslot.Api.Controllers
             return this.CreateGetHttpResponse(validationResponse);
         }
 
-        private PageParameterModel CreatePageParameterModel(PageParameterViewModel pageParameterViewModel)
+        private PageParameter CreatePageParameterModel(PageParameterViewModel pageParameterViewModel)
         {
-            return new PageParameterModel(pageParameterViewModel.PageNumber, pageParameterViewModel.PageSize);
+            return new PageParameter(pageParameterViewModel.PageNumber, pageParameterViewModel.PageSize);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Search.Repositories
         }
 
 
-        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersByName(string name, PageParameter pageParameterModel)
         {
             var firstNameField = Infer.Field<SearchCustomerModel>(f => f.FirstName);
             var lastNameField = Infer.Field<SearchCustomerModel>(f => f.LastName);
@@ -69,7 +69,7 @@ namespace Bookmyslot.Api.Search.Repositories
 
 
 
-        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersByBioHeadLine(string bioHeadLine, PageParameter pageParameterModel)
         {
             var request = new SearchRequest<SearchCustomerModel>()
             {

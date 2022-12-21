@@ -24,7 +24,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
         }
 
 
-        public async Task<Result<IEnumerable<string>>> GetDistinctCustomersNearestSlotFromToday(PageParameterModel pageParameterModel)
+        public async Task<Result<IEnumerable<string>>> GetDistinctCustomersNearestSlotFromToday(PageParameter pageParameterModel)
         {
             var parameters = new { IsDeleted = false, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetDistinctCustomersNearestSlotFromTodayQuery;
@@ -36,7 +36,7 @@ namespace Bookmyslot.Api.SlotScheduler.Repositories
 
 
 
-        public async Task<Result<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameterModel pageParameterModel, string email)
+        public async Task<Result<IEnumerable<SlotModel>>> GetCustomerAvailableSlots(PageParameter pageParameterModel, string email)
         {
             var parameters = new { IsDeleted = false, CreatedBy = email, PageNumber = pageParameterModel.PageNumber, PageSize = pageParameterModel.PageSize };
             var sql = SlotTableQueries.GetCustomerAvailableSlotsFromTodayQuery;

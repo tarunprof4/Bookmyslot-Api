@@ -6,6 +6,6 @@ namespace Bookmyslot.Api.Search.Contracts.Interfaces
 {
     public interface ISearchCustomerBusiness
     {
-        Task<Result<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameterModel pageParameterModel);
+        Task<Result<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameter pageParameterModel);
     }
 }

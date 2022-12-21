@@ -49,16 +49,16 @@ namespace Bookmyslot.Api.Authentication
         }
 
 
-        private async Task<Result<CurrentUserModel>> GetCurrentUserResponse(string email, CacheModel cacheModel, bool refresh = false)
+        private async Task<Result<CurrentUserModel>> GetCurrentUserResponse(string email, CacheKeyExpiry cacheModel, bool refresh = false)
         {
             return await this.distributedInMemoryCacheBuisness.GetFromCacheAsync(
                                   cacheModel,
                                   () => this.customerBusiness.GetCurrentUserByEmail(email), refresh);
         }
 
-        private CacheModel CreateCacheModel(string email)
+        private CacheKeyExpiry CreateCacheModel(string email)
         {
-            var cacheModel = new CacheModel();
+            var cacheModel = new CacheKeyExpiry();
             cacheModel.Key = string.Format(CacheConstants.CustomerInfomationCacheKey, email);
             cacheModel.ExpiryTime = TimeSpan.FromHours(authenticationConfiguration.TokenExpiryInHours);
             return cacheModel;

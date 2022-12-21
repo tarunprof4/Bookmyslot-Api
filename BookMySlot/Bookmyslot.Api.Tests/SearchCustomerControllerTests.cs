@@ -49,7 +49,7 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidSearchKey));
-            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Never());
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheKeyExpiry>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Never());
         }
 
 
@@ -62,35 +62,35 @@ namespace Bookmyslot.Api.Tests
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status400BadRequest);
             Assert.IsTrue(validationMessages.Contains(AppBusinessMessagesConstants.InValidCustomerSearchKeyMinLength));
-            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Never());
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheKeyExpiry>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Never());
         }
 
         [Test]
         public async Task SearchCustomer_ValidSearchKeyHasNoRecords_ReturnsEmptyResponse()
         {
             Result<List<SearchCustomerModel>> distributedInMemoryCacheBuisnessMockResponse = new Result<List<SearchCustomerModel>>() { ResultType = ResultType.Empty };
-            distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
+            distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheKeyExpiry>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
 
             var response = await searchCustomerController.Get(ValidSearchKey, 0, 0);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status404NotFound);
-            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Once());
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheKeyExpiry>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Once());
         }
 
         [Test]
         public async Task SearchCustomer_ValidSearchKeyHasRecords_ReturnsSuccessResponse()
         {
             Result<List<SearchCustomerModel>> distributedInMemoryCacheBuisnessMockResponse = new Result<List<SearchCustomerModel>>() { ResultType = ResultType.Success };
-            distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
+            distributedInMemoryCacheBuisnessMock.Setup(a => a.GetFromCacheAsync(It.IsAny<CacheKeyExpiry>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())).Returns(Task.FromResult(distributedInMemoryCacheBuisnessMockResponse));
 
             var response = await searchCustomerController.Get(ValidSearchKey, 0, 100);
 
             var objectResult = response as ObjectResult;
             var validationMessages = objectResult.Value as List<string>;
             Assert.AreEqual(objectResult.StatusCode, StatusCodes.Status200OK);
-            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheModel>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Once());
+            distributedInMemoryCacheBuisnessMock.Verify((m => m.GetFromCacheAsync(It.IsAny<CacheKeyExpiry>(), It.IsAny<Func<Task<Result<List<SearchCustomerModel>>>>>(), It.IsAny<bool>())), Times.Once());
         }
 
     }

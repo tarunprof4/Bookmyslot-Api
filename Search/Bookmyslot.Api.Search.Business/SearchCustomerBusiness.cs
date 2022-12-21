@@ -17,10 +17,10 @@ namespace Bookmyslot.Api.Search.Business
             this.searchRepository = searchRepository;
             this.searchCustomerRepository = searchCustomerRepository;
         }
-        public async Task<Result<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomers(string searchKey, PageParameter pageParameterModel)
         {
             searchKey = searchKey.ToLowerInvariant();
-            var cacheSearchKey = CacheModel.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
+            var cacheSearchKey = CacheKeyExpiry.GetSearchCustomerCacehKey(searchKey, pageParameterModel);
 
             var preProcessedSearchedCustomers = await this.searchRepository.GetPreProcessedSearchedResponse<List<SearchCustomerModel>>(SearchConstants.SearchCustomer, cacheSearchKey);
             if (preProcessedSearchedCustomers.ResultType == ResultType.Success)
@@ -38,7 +38,7 @@ namespace Bookmyslot.Api.Search.Business
         }
 
 
-        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersBySearchIntent(string searchKey, PageParameterModel pageParameterModel)
+        public async Task<Result<List<SearchCustomerModel>>> SearchCustomersBySearchIntent(string searchKey, PageParameter pageParameterModel)
         {
             if (searchKey[0] == SearchConstants.SearchCustomerByNameIdentifier)
             {
