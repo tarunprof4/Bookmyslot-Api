@@ -8,7 +8,7 @@ using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain
 {
-    public class SlotModel : BaseEventModel
+    public class SlotModel : BaseEntity<string>
     {
         public string Id { get; set; }
 

@@ -6,7 +6,7 @@ using System;
 
 namespace Bookmyslot.Api.SlotScheduler.Domain
 {
-    public class CancelledSlotModel : BaseEventModel
+    public class CancelledSlotModel : BaseEntity<string>
     {
         public string Id { get; set; }
 

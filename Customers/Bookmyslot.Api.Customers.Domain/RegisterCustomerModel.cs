@@ -3,7 +3,7 @@ using Bookmyslot.SharedKernel;
 
 namespace Bookmyslot.Api.Customers.Domain
 {
-    public class RegisterCustomerModel : BaseEventModel
+    public class RegisterCustomerModel : BaseEntity<string>
     {
         public string Id { get; set; }
 

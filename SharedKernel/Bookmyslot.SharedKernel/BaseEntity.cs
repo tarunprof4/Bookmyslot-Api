@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Bookmyslot.SharedKernel
 {
-    public class BaseEventModel
+    public class BaseEntity<T>
     {
-        public string EventId { get; set; }
+        public T EventId { get; set; }
 
         public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
     }
